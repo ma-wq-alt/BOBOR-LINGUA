@@ -13,18 +13,27 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json({ limit: "10mb" })); // Увеличил лимит для аудио
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.json({ limit: "10mb" }));
+app.use(express.static(__dirname));
+app.use("/data", express.static(path.join(__dirname, "data")));
 
-// --- ПОДКЛЮЧЕНИЕ К TURSO ---
 const TURSO_URL = process.env.TURSO_URL;
 const TURSO_TOKEN = process.env.TURSO_TOKEN;
 const db = (TURSO_URL && TURSO_TOKEN) ? createClient({ url: TURSO_URL, authToken: TURSO_TOKEN }) : null;
 
+const ADMIN_EMAIL = "mar.maks999@gmail.com";
+const ADMIN_PASS = "1495";
+
 async function initDB() {
   if (!db) return console.log("⚠️ Turso не настроен");
   try {
-    // Таблица для аудио
+    await db.execute(`
+      CREATE TABLE IF NOT EXISTS users (
+        email TEXT PRIMARY KEY,
+        password TEXT,
+        role TEXT DEFAULT 'user'
+      )
+    `);
     await db.execute(`
       CREATE TABLE IF NOT EXISTS bobor_audio (
         audio_key TEXT PRIMARY KEY,
@@ -32,8 +41,6 @@ async function initDB() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
-
-    // Таблица прогресса
     await db.execute(`
       CREATE TABLE IF NOT EXISTS bobor_progress (
         username TEXT PRIMARY KEY,
@@ -45,16 +52,54 @@ async function initDB() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✅ База данных готова");
+    // Создаем админа, если его нет
+    const adm = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [ADMIN_EMAIL] });
+    if (adm.rows.length === 0) {
+      await db.execute({
+        sql: "INSERT INTO users (email, password, role) VALUES (?, ?, ?)",
+        args: [ADMIN_EMAIL, ADMIN_PASS, "admin"]
+      });
+    }
+    console.log("✅ База готова, админ создан");
   } catch (e) {
     console.error("❌ Ошибка БД:", e.message);
   }
 }
 initDB();
 
-// --- API ДЛЯ АУДИО ---
+// --- АВТОРИЗАЦИЯ ---
+app.post("/api/register", async (req, res) => {
+  const { email, password } = req.body;
+  if (!db) return res.status(500).json({ error: "Нет БД" });
+  try {
+    const check = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [email] });
+    if (check.rows.length > 0) return res.status(400).json({ error: "Email уже занят" });
+    await db.execute({
+      sql: "INSERT INTO users (email, password, role) VALUES (?, ?, 'user')",
+      args: [email, password]
+    });
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+  if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
+    return res.json({ success: true, user: { email, role: "admin" } });
+  }
+  if (!db) return res.status(500).json({ error: "Нет БД" });
+  try {
+    const u = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [email] });
+    if (u.rows.length === 0) return res.status(401).json({ error: "Аккаунт не найден" });
+    if (u.rows[0].password !== password) return res.status(401).json({ error: "Неверный пароль" });
+    res.json({ success: true, user: { email: u.rows[0].email, role: u.rows[0].role } });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// --- АУДИО ---
 app.post("/api/save-audio", async (req, res) => {
-  const { key, audioBase64 } = req.body;
+  const { key, audioBase64, role } = req.body;
+  if (role !== "admin") return res.status(403).json({ error: "Только админ может записывать" });
   if (!db) return res.json({ success: false, error: "no_db" });
   try {
     await db.execute({
@@ -62,9 +107,7 @@ app.post("/api/save-audio", async (req, res) => {
       args: [key, audioBase64, audioBase64]
     });
     res.json({ success: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get("/api/get-audio/:key", async (req, res) => {
@@ -76,12 +119,20 @@ app.get("/api/get-audio/:key", async (req, res) => {
     });
     if (r.rows.length === 0) return res.json({ audio: null });
     res.json({ audio: r.rows[0].audio_data });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// --- API ДЛЯ ПРОГРЕССА ---
+app.post("/api/delete-audio", async (req, res) => {
+  const { key, role } = req.body;
+  if (role !== "admin") return res.status(403).json({ error: "Только админ" });
+  if (!db) return res.json({ success: false });
+  try {
+    await db.execute({ sql: "DELETE FROM bobor_audio WHERE audio_key = ?", args: [key] });
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+// --- ПРОГРЕСС И ИИ ---
 app.post("/api/sync-progress", async (req, res) => {
   const { username, xp, streak, medals, last_daily, units_done } = req.body;
   if (!db) return res.json({ success: false });
@@ -94,25 +145,9 @@ app.post("/api/sync-progress", async (req, res) => {
              xp, streak, JSON.stringify(medals), last_daily, JSON.stringify(units_done)]
     });
     res.json({ success: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-app.get("/api/get-progress/:username", async (req, res) => {
-  if (!db) return res.json(null);
-  try {
-    const r = await db.execute({
-      sql: "SELECT * FROM bobor_progress WHERE username = ?",
-      args: [req.params.username]
-    });
-    res.json(r.rows[0] || null);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-// --- GEMINI AI ---
 let openai = null;
 if (process.env.GEMINI_API_KEY) {
   openai = new OpenAI({
@@ -131,13 +166,11 @@ app.post("/api/chat", async (req, res) => {
       max_tokens: 100
     });
     res.json({ reply: completion.choices[0].message.content });
-  } catch (e) {
-    res.json({ reply: "Ошибка AI" });
-  }
+  } catch (e) { res.json({ reply: "Ошибка AI" }); }
 });
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  res.sendFile(path.join(__dirname, "index.html"));
 });
 
-app.listen(PORT, () => console.log(`🦫 Сервер запущен на порту ${PORT}`));
+app.listen(PORT, () => console.log(`🦫 Сервер на порту ${PORT}`));
