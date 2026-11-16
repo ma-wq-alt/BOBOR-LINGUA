@@ -816,6 +816,7 @@ const COURSES = {
     ]
   },
   // --- [КАРКАС] tt: кириллица + латиница 2012 ---
+   // --- ПОЛНЫЙ КОНТЕНТ: tt (Татарский) ---
   tt: {
     code: "tt", name: "Татарский", flag: "🏳️", speechLang: "tt-RU",
     scripts: [
@@ -825,71 +826,489 @@ const COURSES = {
     alphabet: [
       { cyr: "А", cyrSm: "а", lat: "A", latSm: "a", sound: "а", ex: "ана", exRu: "мать" },
       { cyr: "Ә", cyrSm: "ә", lat: "Ä", latSm: "ä", sound: "э", ex: "әни", exRu: "мама" },
-      { cyr: "Б", cyrSm: "б", lat: "B", latSm: "b", sound: "б", ex: "бала", exRu: "ребёнок" }
-      // TODO: остальные буквы (кириллица 39 / латиница 2012)
+      { cyr: "Б", cyrSm: "б", lat: "B", latSm: "b", sound: "б", ex: "бала", exRu: "ребёнок" },
+      { cyr: "В", cyrSm: "в", lat: "V", latSm: "v", sound: "в", ex: "вакыт", exRu: "время" },
+      { cyr: "Г", cyrSm: "г", lat: "G", latSm: "g", sound: "г", ex: "гөл", exRu: "цветок" },
+      { cyr: "Д", cyrSm: "д", lat: "D", latSm: "d", sound: "д", ex: "дала", exRu: "степь" },
+      { cyr: "Е", cyrSm: "е", lat: "E", latSm: "e", sound: "е", ex: "елга", exRu: "река" },
+      { cyr: "Ё", cyrSm: "ё", lat: "Yo", latSm: "yo", sound: "ё", ex: "ёлка", exRu: "ёлка" },
+      { cyr: "Ж", cyrSm: "ж", lat: "J", latSm: "j", sound: "ж", ex: "җир", exRu: "земля" },
+      { cyr: "Җ", cyrSm: "җ", lat: "C", latSm: "c", sound: "дж", ex: "җәй", exRu: "лето" },
+      { cyr: "З", cyrSm: "з", lat: "Z", latSm: "z", sound: "з", ex: "зат", exRu: "вещь" },
+      { cyr: "И", cyrSm: "и", lat: "İ", latSm: "i", sound: "и", ex: "итек", exRu: "сапог" },
+      { cyr: "Й", cyrSm: "й", lat: "Y", latSm: "y", sound: "й", ex: "йод", exRu: "йод" },
+      { cyr: "К", cyrSm: "к", lat: "K", latSm: "k", sound: "к", ex: "китап", exRu: "книга" },
+      { cyr: "Л", cyrSm: "л", lat: "L", latSm: "l", sound: "л", ex: "ләлә", exRu: "тюльпан" },
+      { cyr: "М", cyrSm: "м", lat: "M", latSm: "m", sound: "м", ex: "малай", exRu: "мальчик" },
+      { cyr: "Н", cyrSm: "н", lat: "N", latSm: "n", sound: "н", ex: "нәрсә", exRu: "что" },
+      { cyr: "Ң", cyrSm: "ң", lat: "Ñ", latSm: "ñ", sound: "нг", ex: "таң", exRu: "рассвет" },
+      { cyr: "О", cyrSm: "о", lat: "O", latSm: "o", sound: "о", ex: "он", exRu: "мука" },
+      { cyr: "Ө", cyrSm: "ө", lat: "Ö", latSm: "ö", sound: "ё", ex: "өй", exRu: "дом" },
+      { cyr: "П", cyrSm: "п", lat: "P", latSm: "p", sound: "п", ex: "поезд", exRu: "поезд" },
+      { cyr: "Р", cyrSm: "р", lat: "R", latSm: "r", sound: "р", ex: "рәхмәт", exRu: "спасибо" },
+      { cyr: "С", cyrSm: "с", lat: "S", latSm: "s", sound: "с", ex: "су", exRu: "вода" },
+      { cyr: "Т", cyrSm: "т", lat: "T", latSm: "t", sound: "т", ex: "тау", exRu: "гора" },
+      { cyr: "У", cyrSm: "у", lat: "U", latSm: "u", sound: "у", ex: "урам", exRu: "улица" },
+      { cyr: "Ү", cyrSm: "ү", lat: "Ü", latSm: "ü", sound: "ю", ex: "үзенчәлек", exRu: "особенность" },
+      { cyr: "Ф", cyrSm: "ф", lat: "F", latSm: "f", sound: "ф", ex: "футбол", exRu: "футбол" },
+      { cyr: "Х", cyrSm: "х", lat: "X", latSm: "x", sound: "х", ex: "халык", exRu: "народ" },
+      { cyr: "Һ", cyrSm: "һ", lat: "H", latSm: "h", sound: "х", ex: "һава", exRu: "воздух" },
+      { cyr: "Ц", cyrSm: "ц", lat: "Ts", latSm: "ts", sound: "ц", ex: "цирк", exRu: "цирк" },
+      { cyr: "Ч", cyrSm: "ч", lat: "Ç", latSm: "ç", sound: "ч", ex: "чәй", exRu: "чай" },
+      { cyr: "Ш", cyrSm: "ш", lat: "Ş", latSm: "ş", sound: "ш", ex: "шәһәр", exRu: "город" },
+      { cyr: "Щ", cyrSm: "щ", lat: "Shch", latSm: "shch", sound: "щ", ex: "щетка", exRu: "щётка" },
+      { cyr: "Ъ", cyrSm: "ъ", lat: "\"", latSm: "\"", sound: "твердый знак", ex: "объект", exRu: "объект" },
+      { cyr: "Ы", cyrSm: "ы", lat: "I", latSm: "ı", sound: "ы", ex: "ызан", exRu: "межа" },
+      { cyr: "Ь", cyrSm: "ь", lat: "'", latSm: "'", sound: "мягкий знак", ex: "роль", exRu: "роль" },
+      { cyr: "Э", cyrSm: "э", lat: "E", latSm: "e", sound: "э", ex: "экран", exRu: "экран" },
+      { cyr: "Ю", cyrSm: "ю", lat: "Yu", latSm: "yu", sound: "ю", ex: "юрист", exRu: "юрист" },
+      { cyr: "Я", cyrSm: "я", lat: "Ya", latSm: "ya", sound: "я", ex: "яшел", exRu: "зелёный" }
     ],
     vocab: {
       greetings: { name: "Сәламләү", emoji: "👋", color: "#3b82f6", words: [
         { sr: "Сәлам", tr: "[sälam]", ru: "Привет" },
-        { sr: "Хәерле көн", tr: "[xäyerle kön]", ru: "Добрый день" }
+        { sr: "Исәнмесез", tr: "[isänmesez]", ru: "Здравствуйте" },
+        { sr: "Хәерле иртә", tr: "[xäyerle irtä]", ru: "Доброе утро" },
+        { sr: "Хәерле көн", tr: "[xäyerle kön]", ru: "Добрый день" },
+        { sr: "Хәерле кич", tr: "[xäyerle kiç]", ru: "Добрый вечер" },
+        { sr: "Тәүфикъ", tr: "[täwfiq]", ru: "Успеха" },
+        { sr: "Сау бул", tr: "[sau bul]", ru: "Пока" },
+        { sr: "Күрешергә", tr: "[küreşergä]", ru: "До встречи" },
+        { sr: "Хәлләр ничек?", tr: "[xällär niçek?]", ru: "Как дела?" },
+        { sr: "Яхшы", tr: "[yaxşı]", ru: "Хорошо" },
+        { sr: "Рәхмәт", tr: "[räxmät]", ru: "Спасибо" }
+      ]},
+      numbers: { name: "Саннар", emoji: "🔢", color: "#10b981", words: [
+        { sr: "Бер", tr: "[ber]", ru: "Один" },
+        { sr: "Ике", tr: "[ike]", ru: "Два" },
+        { sr: "Өч", tr: "[öç]", ru: "Три" },
+        { sr: "Дүрт", tr: "[dürt]", ru: "Четыре" },
+        { sr: "Биш", tr: "[biş]", ru: "Пять" },
+        { sr: "Алты", tr: "[altı]", ru: "Шесть" },
+        { sr: "Җиде", tr: "[cide]", ru: "Семь" },
+        { sr: "Сигез", tr: "[sigez]", ru: "Восемь" },
+        { sr: "Тугыз", tr: "[tuğız]", ru: "Девять" },
+        { sr: "Ун", tr: "[un]", ru: "Десять" }
+      ]},
+      colors: { name: "Төсләр", emoji: "🎨", color: "#a855f7", words: [
+        { sr: "Кызыл", tr: "[qızıl]", ru: "Красный" },
+        { sr: "Зәңгәр", tr: "[zäñgär]", ru: "Синий" },
+        { sr: "Яшел", tr: "[yaşel]", ru: "Зелёный" },
+        { sr: "Сары", tr: "[sarı]", ru: "Жёлтый" },
+        { sr: "Кара", tr: "[qara]", ru: "Чёрный" },
+        { sr: "Ак", tr: "[aq]", ru: "Белый" }
+      ]},
+      family: { name: "Гаилә", emoji: "👨‍👩‍👧", color: "#ec4899", words: [
+        { sr: "Әни", tr: "[äni]", ru: "Мама" },
+        { sr: "Әти", tr: "[äti]", ru: "Папа" },
+        { sr: "Абый", tr: "[abıy]", ru: "Старший брат" },
+        { sr: "Апа", tr: "[apa]", ru: "Старшая сестра" },
+        { sr: "Ул", tr: "[ul]", ru: "Сын" },
+        { sr: "Кыз", tr: "[qız]", ru: "Дочь" }
+      ]},
+      food: { name: "Ашамлыклар", emoji: "🍽️", color: "#f59e0b", words: [
+        { sr: "Су", tr: "[su]", ru: "Вода" },
+        { sr: "Икмәк", tr: "[ikmäk]", ru: "Хлеб" },
+        { sr: "Сөт", tr: "[söt]", ru: "Молоко" },
+        { sr: "Каһвә", tr: "[kahwä]", ru: "Кофе" },
+        { sr: "Чәй", tr: "[çäy]", ru: "Чай" },
+        { sr: "Ит", tr: "[it]", ru: "Мясо" },
+        { sr: "Балык", tr: "[balıq]", ru: "Рыба" }
+      ]},
+      travel: { name: "Сәяхәт", emoji: "✈️", color: "#06b6d4", words: [
+        { sr: "Аэропорт", tr: "[aeroport]", ru: "Аэропорт" },
+        { sr: "Вокзал", tr: "[vokzal]", ru: "Вокзал" },
+        { sr: "Поезд", tr: "[poezd]", ru: "Поезд" },
+        { sr: "Автобус", tr: "[avtobus]", ru: "Автобус" },
+        { sr: "Билет", tr: "[bilet]", ru: "Билет" },
+        { sr: "Кунакханә", tr: "[qunaqxanä]", ru: "Гостиница" }
+      ]},
+      verbs: { name: "Фигыльләр", emoji: "🏃", color: "#6366f1", words: [
+        { sr: "Булу", tr: "[bulu]", ru: "Быть" },
+        { sr: "Бару", tr: "[baru]", ru: "Идти" },
+        { sr: "Килү", tr: "[kilü]", ru: "Приходить" },
+        { sr: "Эшләү", tr: "[eşläw]", ru: "Работать" },
+        { sr: "Сөйләү", tr: "[söyläw]", ru: "Говорить" },
+        { sr: "Белү", tr: "[belü]", ru: "Знать" }
+      ]},
+      questions: { name: "Сораулар", emoji: "❓", color: "#0ea5e9", words: [
+        { sr: "Нәрсә", tr: "[närsä]", ru: "Что" },
+        { sr: "Кем", tr: "[kem]", ru: "Кто" },
+        { sr: "Кайда", tr: "[qayda]", ru: "Где" },
+        { sr: "Кайчан", tr: "[qayçan]", ru: "Когда" },
+        { sr: "Ничек", tr: "[niçek]", ru: "Как" },
+        { sr: "Ни өчен", tr: "[ni öçen]", ru: "Почему" }
       ]}
     },
-    grammar: [{ id: "tt-pronouns", title: "Зат алмашлыклары", icon: "👤",
-      rules: [{ text: "TODO: контент татарской грамматики." }],
-      examples: [{ sr: "Мин студент.", ru: "Я студент." }] }],
-    dialogues: [{ id: "tt-meet", title: "Танышу", icon: "🤝",
-      lines: [{ sr: "Сәлам! Синең исемең ничек?", ru: "Привет! Как тебя зовут?" }, { sr: "Минем исемем Марк. Ә синең?", ru: "Меня зовут Марк. А тебя?" }],
-      quiz: [{ q: "«Синең исемең ничек?» дигән...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 }] }]
+    grammar: [
+      { id: "tt-pronouns", title: "Зат алмашлыклары", icon: "👤",
+        rules: [{ text: "В татарском языке местоимения изменяются по лицам и числам." }],
+        table: [["Мин","Я"],["Син","Ты"],["Ул","Он/Она"],["Без","Мы"],["Сез","Вы"],["Алар","Они"]],
+        examples: [{ sr: "Мин студент.", ru: "Я студент." }, { sr: "Син укытучы.", ru: "Ты учитель." }, { sr: "Ул табиб.", ru: "Он врач." }] },
+      { id: "tt-plural", title: "Күплек саны", icon: "🔢",
+        rules: [{ text: "Присоединяется суффикс -лар/-ләр/-нар/-нәр в зависимости от последней буквы." }],
+        examples: [{ sr: "Китаплар", ru: "Книги" }, { sr: "Өйләр", ru: "Дома" }, { sr: "Балалар", ru: "Дети" }] },
+      { id: "tt-cases", title: "Килешләр", icon: "🔀",
+        rules: [{ text: "В татарском 6 падежей. Именительный (Кем? Нәрсә?) без окончания." }],
+        examples: [{ sr: "Мәктәп (школа) -> Мәктәпкә (в школу)", ru: "Направление" }, { sr: "Өй (дом) -> Өйдә (в доме)", ru: "Место" }] },
+      { id: "tt-possessive", title: "Тартым", icon: "🤝",
+        rules: [{ text: "Обозначает принадлежность. Минем (мой), синең (твой) и т.д." }],
+        examples: [{ sr: "Минем китабым", ru: "Моя книга" }, { sr: "Синең өең", ru: "Твой дом" }] },
+      { id: "tt-verbs", title: "Хәзерге заман", icon: "🏃",
+        rules: [{ text: "Образуется с помощью суффиксов -а/-ә, -ый/-и + личные окончания." }],
+        examples: [{ sr: "Мин барам", ru: "Я иду" }, { sr: "Син киләсең", ru: "Ты приходишь" }] }
+    ],
+    dialogues: [
+      { id: "tt-meet", title: "Танышу", icon: "🤝",
+        lines: [
+          { sr: "Сәлам! Синең исемең ничек?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Минем исемем Марк. Ә синең?", ru: "Меня зовут Марк. А тебя?" },
+          { sr: "Минем исемем Айгөл. Танышуыбызга шатмын.", ru: "Меня зовут Айгуль. Рада знакомству." },
+          { sr: "Мин дә. Син кайдан?", ru: "Я тоже. Откуда ты?" },
+          { sr: "Мин Татарстаннан. Ә син?", ru: "Я из Татарстана. А ты?" }
+        ],
+        quiz: [
+          { q: "«Синең исемең ничек?» дигән...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Минем исемем...» дигән...", options: ["Меня зовут...","Я знаю...","Я вижу...","Я хочу..."], correct: 0 },
+          { q: "«Кайдан?» дигән...", options: ["Как дела?","Откуда ты?","Где ты?","Кто ты?"], correct: 1 }
+        ] },
+      { id: "tt-cafe", title: "Кафеда", icon: "☕",
+        lines: [
+          { sr: "Хәерле көн! Нәрсә аласыз?", ru: "Добрый день! Что будете брать?" },
+          { sr: "Миңа бер чәй бирегез әле.", ru: "Дайте мне, пожалуйста, один чай." },
+          { sr: "Сөт беләнме, әллә сөтсезме?", ru: "С молоком или без молока?" },
+          { sr: "Сөтсез, рәхмәт.", ru: "Без молока, спасибо." },
+          { sr: "Тагын берәр нәрсә кирәкме?", ru: "Что-нибудь ещё нужно?" },
+          { sr: "Юк, рәхмәт. Күпме тора?", ru: "Нет, спасибо. Сколько стоит?" }
+        ],
+        quiz: [
+          { q: "«Күпме тора?» дигән...", options: ["Как дела?","Сколько стоит?","Что это?","Где это?"], correct: 1 },
+          { q: "«Сөт белән» дигән...", options: ["без молока","с молоком","молоко","пожалуйста молоко"], correct: 1 },
+          { q: "«Тагын берәр нәрсә?» дигән...", options: ["Ещё что-то?","Это не то","Ничего","Всё хорошо"], correct: 0 }
+        ] }
+    ]
   },
-
   // --- [КАРКАС] pl: только латиница ---
+   // --- ПОЛНЫЙ КОНТЕНТ: pl (Польский) ---
   pl: {
     code: "pl", name: "Польский", flag: "🇵🇱", speechLang: "pl-PL",
     scripts: [{ id: "lat", name: "Латиница", field: "lat", alt: null }],
     alphabet: [
       { cyr: null, cyrSm: null, lat: "A", latSm: "a", sound: "а", ex: "auto", exRu: "машина" },
-      { cyr: null, cyrSm: null, lat: "Ą", latSm: "ą", sound: "он", ex: "ąka", exRu: "TODO" },
-      { cyr: null, cyrSm: null, lat: "B", latSm: "b", sound: "б", ex: "brat", exRu: "брат" }
-      // TODO: остальные буквы польского алфавита (35)
+      { cyr: null, cyrSm: null, lat: "Ą", latSm: "ą", sound: "он", ex: "wąż", exRu: "змея" },
+      { cyr: null, cyrSm: null, lat: "B", latSm: "b", sound: "б", ex: "brat", exRu: "брат" },
+      { cyr: null, cyrSm: null, lat: "C", latSm: "c", sound: "ц", ex: "cukier", exRu: "сахар" },
+      { cyr: null, cyrSm: null, lat: "Ć", latSm: "ć", sound: "чь", ex: "ćma", exRu: "бабочка" },
+      { cyr: null, cyrSm: null, lat: "D", latSm: "d", sound: "д", ex: "dom", exRu: "дом" },
+      { cyr: null, cyrSm: null, lat: "E", latSm: "e", sound: "э", ex: "ekran", exRu: "экран" },
+      { cyr: null, cyrSm: null, lat: "Ę", latSm: "ę", sound: "эн", ex: "gęś", exRu: "гусь" },
+      { cyr: null, cyrSm: null, lat: "F", latSm: "f", sound: "ф", ex: "fajka", exRu: "трубка" },
+      { cyr: null, cyrSm: null, lat: "G", latSm: "g", sound: "г", ex: "góra", exRu: "гора" },
+      { cyr: null, cyrSm: null, lat: "H", latSm: "h", sound: "х", ex: "hak", exRu: "крюк" },
+      { cyr: null, cyrSm: null, lat: "I", latSm: "i", sound: "и", ex: "igła", exRu: "игла" },
+      { cyr: null, cyrSm: null, lat: "J", latSm: "j", sound: "й", ex: "jabłko", exRu: "яблоко" },
+      { cyr: null, cyrSm: null, lat: "K", latSm: "k", sound: "к", ex: "kot", exRu: "кот" },
+      { cyr: null, cyrSm: null, lat: "L", latSm: "l", sound: "ль", ex: "lampa", exRu: "лампа" },
+      { cyr: null, cyrSm: null, lat: "Ł", latSm: "ł", sound: "у краткое", ex: "łyżka", exRu: "ложка" },
+      { cyr: null, cyrSm: null, lat: "M", latSm: "m", sound: "м", ex: "matka", exRu: "мать" },
+      { cyr: null, cyrSm: null, lat: "N", latSm: "n", sound: "н", ex: "noc", exRu: "ночь" },
+      { cyr: null, cyrSm: null, lat: "Ń", latSm: "ń", sound: "нь", ex: "koń", exRu: "конь" },
+      { cyr: null, cyrSm: null, lat: "O", latSm: "o", sound: "о", ex: "oko", exRu: "глаз" },
+      { cyr: null, cyrSm: null, lat: "Ó", latSm: "ó", sound: "у", ex: "ósmy", exRu: "восьмой" },
+      { cyr: null, cyrSm: null, lat: "P", latSm: "p", sound: "п", ex: "pies", exRu: "собака" },
+      { cyr: null, cyrSm: null, lat: "R", latSm: "r", sound: "р", ex: "ryba", exRu: "рыба" },
+      { cyr: null, cyrSm: null, lat: "S", latSm: "s", sound: "с", ex: "sól", exRu: "соль" },
+      { cyr: null, cyrSm: null, lat: "Ś", latSm: "ś", sound: "щь", ex: "świat", exRu: "мир" },
+      { cyr: null, cyrSm: null, lat: "T", latSm: "t", sound: "т", ex: "tata", exRu: "папа" },
+      { cyr: null, cyrSm: null, lat: "U", latSm: "u", sound: "у", ex: "ulica", exRu: "улица" },
+      { cyr: null, cyrSm: null, lat: "W", latSm: "w", sound: "в", ex: "woda", exRu: "вода" },
+      { cyr: null, cyrSm: null, lat: "Y", latSm: "y", sound: "ы", ex: "syn", exRu: "сын" },
+      { cyr: null, cyrSm: null, lat: "Z", latSm: "z", sound: "з", ex: "zamek", exRu: "замок" },
+      { cyr: null, cyrSm: null, lat: "Ź", latSm: "ź", sound: "жь", ex: "źródło", exRu: "источник" },
+      { cyr: null, cyrSm: null, lat: "Ż", latSm: "ż", sound: "ж", ex: "żaba", exRu: "жаба" }
     ],
     vocab: {
       greetings: { name: "Powitania", emoji: "👋", color: "#3b82f6", words: [
         { sr: "Cześć", tr: "[cheshch]", ru: "Привет" },
-        { sr: "Dzień dobry", tr: "[jen dobry]", ru: "Добрый день" }
+        { sr: "Dzień dobry", tr: "[jen dobry]", ru: "Добрый день" },
+        { sr: "Dobry wieczór", tr: "[dobry vechur]", ru: "Добрый вечер" },
+        { sr: "Dobranoc", tr: "[dobranots]", ru: "Спокойной ночи" },
+        { sr: "Do widzenia", tr: "[do vidzenya]", ru: "До свидания" },
+        { sr: "Jak się masz?", tr: "[yak she mash?]", ru: "Как дела?" },
+        { sr: "Dobrze", tr: "[dobzhe]", ru: "Хорошо" },
+        { sr: "Dziękuję", tr: "[jenkuye]", ru: "Спасибо" }
+      ]},
+      numbers: { name: "Liczby", emoji: "🔢", color: "#10b981", words: [
+        { sr: "Jeden", tr: "[eden]", ru: "Один" },
+        { sr: "Dwa", tr: "[dva]", ru: "Два" },
+        { sr: "Trzy", tr: "[tshy]", ru: "Три" },
+        { sr: "Cztery", tr: "[chtery]", ru: "Четыре" },
+        { sr: "Pięć", tr: "[pyench]", ru: "Пять" },
+        { sr: "Sześć", tr: "[sheshch]", ru: "Шесть" },
+        { sr: "Siedem", tr: "[shedem]", ru: "Семь" },
+        { sr: "Osiem", tr: "[oshem]", ru: "Восемь" },
+        { sr: "Dziewięć", tr: "[jevrench]", ru: "Девять" },
+        { sr: "Dziesięć", tr: "[jeshench]", ru: "Десять" }
+      ]},
+      colors: { name: "Kolory", emoji: "🎨", color: "#a855f7", words: [
+        { sr: "Czerwony", tr: "[chervony]", ru: "Красный" },
+        { sr: "Niebieski", tr: "[nebeski]", ru: "Синий" },
+        { sr: "Zielony", tr: "[zhelony]", ru: "Зелёный" },
+        { sr: "Żółty", tr: "[zhouty]", ru: "Жёлтый" },
+        { sr: "Czarny", tr: "[charny]", ru: "Чёрный" },
+        { sr: "Biały", tr: "[byawy]", ru: "Белый" }
+      ]},
+      family: { name: "Rodzina", emoji: "👨‍👩‍👧", color: "#ec4899", words: [
+        { sr: "Mama", tr: "[mama]", ru: "Мама" },
+        { sr: "Tata", tr: "[tata]", ru: "Папа" },
+        { sr: "Brat", tr: "[brat]", ru: "Брат" },
+        { sr: "Siostra", tr: "[shostra]", ru: "Сестра" },
+        { sr: "Syn", tr: "[syn]", ru: "Сын" },
+        { sr: "Córka", tr: "[tsurka]", ru: "Дочь" }
+      ]},
+      food: { name: "Jedzenie", emoji: "🍽️", color: "#f59e0b", words: [
+        { sr: "Woda", tr: "[voda]", ru: "Вода" },
+        { sr: "Chleb", tr: "[khleb]", ru: "Хлеб" },
+        { sr: "Mleko", tr: "[mleko]", ru: "Молоко" },
+        { sr: "Kawa", tr: "[kava]", ru: "Кофе" },
+        { sr: "Herbata", tr: "[herbata]", ru: "Чай" },
+        { sr: "Mięso", tr: "[myenso]", ru: "Мясо" },
+        { sr: "Ryba", tr: "[ryba]", ru: "Рыба" }
+      ]},
+      travel: { name: "Podróże", emoji: "✈️", color: "#06b6d4", words: [
+        { sr: "Lotnisko", tr: "[lotnisko]", ru: "Аэропорт" },
+        { sr: "Dworzec", tr: "[dvozhets]", ru: "Вокзал" },
+        { sr: "Pociąg", tr: "[pochyong]", ru: "Поезд" },
+        { sr: "Autobus", tr: "[autobus]", ru: "Автобус" },
+        { sr: "Bilet", tr: "[bilet]", ru: "Билет" },
+        { sr: "Hotel", tr: "[hotel]", ru: "Отель" }
+      ]},
+      verbs: { name: "Czasowniki", emoji: "🏃", color: "#6366f1", words: [
+        { sr: "Być", tr: "[bych]", ru: "Быть" },
+        { sr: "Mieć", tr: "[myech]", ru: "Иметь" },
+        { sr: "Pracować", tr: "[pratsovach]", ru: "Работать" },
+        { sr: "Mówić", tr: "[movich]", ru: "Говорить" },
+        { sr: "Wiedzieć", tr: "[vedzech]", ru: "Знать" },
+        { sr: "Iść", tr: "[ishch]", ru: "Идти" }
+      ]},
+      questions: { name: "Pytania", emoji: "❓", color: "#0ea5e9", words: [
+        { sr: "Co", tr: "[tso]", ru: "Что" },
+        { sr: "Kto", tr: "[kto]", ru: "Кто" },
+        { sr: "Gdzie", tr: "[gdzhe]", ru: "Где" },
+        { sr: "Kiedy", tr: "[keda]", ru: "Когда" },
+        { sr: "Dlaczego", tr: "[dlachego]", ru: "Почему" },
+        { sr: "Jak", tr: "[yak]", ru: "Как" }
       ]}
     },
-    grammar: [{ id: "pl-pronouns", title: "Zaimki osobowe", icon: "👤",
-      rules: [{ text: "TODO: контент польской грамматики." }],
-      examples: [{ sr: "Jestem studentem.", ru: "Я студент." }] }],
-    dialogues: [{ id: "pl-meet", title: "Poznanie", icon: "🤝",
-      lines: [{ sr: "Cześć! Jak masz na imię?", ru: "Привет! Как тебя зовут?" }, { sr: "Mam na imię Marek. A ty?", ru: "Меня зовут Марек. А тебя?" }],
-      quiz: [{ q: "«Jak masz na imię?» значит...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 }] }]
+    grammar: [
+      { id: "pl-pronouns", title: "Zaimki osobowe", icon: "👤",
+        rules: [{ text: "В польском 7 падежей. Начнём с именительного." }],
+        table: [["ja","я"],["ty","ты"],["on","он"],["ona","она"],["my","мы"],["wy","вы"],["oni/one","они"]],
+        examples: [{ sr: "Jestem studentem.", ru: "Я студент." }, { sr: "Jesteś dobry.", ru: "Ты хороший." }, { sr: "Jesteśmy przyjaciółmi.", ru: "Мы друзья." }] },
+      { id: "pl-bytc", title: "Czasownik «być»", icon: "🔗",
+        rules: [{ text: "Самый важный глагол — «быть»." }],
+        table: [["ja jestem","я есть"],["ty jesteś","ты есть"],["on/ona jest","он/она есть"],["my jesteśmy","мы есть"],["wy jesteście","вы есть"],["oni są","они есть"]],
+        examples: [{ sr: "Jestem z Rosji.", ru: "Я из России." }, { sr: "Ona jest lekarzem.", ru: "Она врач." }, { sr: "Oni są w domu.", ru: "Они дома." }] },
+      { id: "pl-gender", title: "Rodzaj rzeczowników", icon: "⚧️",
+        rules: [{ text: "Мужской род часто заканчивается на согласную (dom)." }, { text: "Женский — на -а (kobieta)." }, { text: "Средний — на -о/-е (okno)." }],
+        examples: [{ sr: "Duży dom", ru: "Большой дом (м.р.)" }, { sr: "Duża kobieta", ru: "Большая женщина (ж.р.)" }, { sr: "Duże okno", ru: "Большое окно (с.р.)" }] },
+      { id: "pl-negation", title: "Przeczenie", icon: "🚫",
+        rules: [{ text: "Отрицание — частица «nie» перед глаголом." }],
+        examples: [{ sr: "Nie wiem.", ru: "Не знаю." }, { sr: "Nie rozumiem.", ru: "Не понимаю." }, { sr: "On nie jest tutaj.", ru: "Он не здесь." }] },
+      { id: "pl-questions", title: "Pytania", icon: "❓",
+        rules: [{ text: "Вопросительные слова: co, kto, gdzie, kiedy, dlaczego, jak." }],
+        examples: [{ sr: "Co to jest?", ru: "Что это?" }, { sr: "Gdzie jest stacja?", ru: "Где станция?" }, { sr: "Jak się nazywasz?", ru: "Как тебя зовут?" }] }
+    ],
+    dialogues: [
+      { id: "pl-meet", title: "Poznanie", icon: "🤝",
+        lines: [
+          { sr: "Cześć! Jak masz na imię?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Mam na imię Marek. A ty?", ru: "Меня зовут Марек. А тебя?" },
+          { sr: "Jestem Anna. Miło mi.", ru: "Я Анна. Приятно познакомиться." },
+          { sr: "Miło mi, Anno. Skąd jesteś?", ru: "Приятно, Анна. Откуда ты?" },
+          { sr: "Jestem z Rosji. A ty?", ru: "Я из России. А ты?" },
+          { sr: "Jestem z Polski.", ru: "Я из Польши." }
+        ],
+        quiz: [
+          { q: "«Jak masz na imię?» значит...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Skąd jesteś?» значит...", options: ["Как дела?","Откуда ты?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Miło mi» — это...", options: ["Мне дорого","Приятно познакомиться","Я рад","Мне жаль"], correct: 1 }
+        ] },
+      { id: "pl-cafe", title: "W kawiarni", icon: "☕",
+        lines: [
+          { sr: "Dzień dobry! Co podać?", ru: "Добрый день! Что подать?" },
+          { sr: "Poproszę jedną kawę.", ru: "Одну кофе, пожалуйста." },
+          { sr: "Z mlekiem czy bez?", ru: "С молоком или без?" },
+          { sr: "Z mlekiem, proszę.", ru: "С молоком, пожалуйста." },
+          { sr: "Proszę. Coś jeszcze?", ru: "Пожалуйста. Что-нибудь ещё?" },
+          { sr: "Nie, dziękuję. Ile to kosztuje?", ru: "Нет, спасибо. Сколько стоит?" }
+        ],
+        quiz: [
+          { q: "«Ile to kosztuje?» значит...", options: ["Как дела?","Сколько стоит?","Что это?","Где это?"], correct: 1 },
+          { q: "«Z mlekiem» — это...", options: ["без молока","с молоком","молоко","пожалуйста молоко"], correct: 1 },
+          { q: "«Coś jeszcze?» — это...", options: ["Ещё что-то?","Это не то","Ничего","Всё хорошо"], correct: 0 }
+        ] }
+    ]
   },
-
   // --- [КАРКАС] tr: только латиница ---
+   // --- ПОЛНЫЙ КОНТЕНТ: tr (Турецкий) ---
   tr: {
     code: "tr", name: "Турецкий", flag: "🇹🇷", speechLang: "tr-TR",
     scripts: [{ id: "lat", name: "Lâtin alfabesi", field: "lat", alt: null }],
     alphabet: [
       { cyr: null, cyrSm: null, lat: "A", latSm: "a", sound: "а", ex: "araba", exRu: "машина" },
       { cyr: null, cyrSm: null, lat: "B", latSm: "b", sound: "б", ex: "baba", exRu: "отец" },
-      { cyr: null, cyrSm: null, lat: "C", latSm: "c", sound: "дж", ex: "cam", exRu: "стекло" }
-      // TODO: остальные 29 букв турецкого алфавита
+      { cyr: null, cyrSm: null, lat: "C", latSm: "c", sound: "дж", ex: "cam", exRu: "стекло" },
+      { cyr: null, cyrSm: null, lat: "Ç", latSm: "ç", sound: "ч", ex: "çay", exRu: "чай" },
+      { cyr: null, cyrSm: null, lat: "D", latSm: "d", sound: "д", ex: "deniz", exRu: "море" },
+      { cyr: null, cyrSm: null, lat: "E", latSm: "e", sound: "э", ex: "elma", exRu: "яблоко" },
+      { cyr: null, cyrSm: null, lat: "F", latSm: "f", sound: "ф", ex: "fil", exRu: "слон" },
+      { cyr: null, cyrSm: null, lat: "G", latSm: "g", sound: "г", ex: "gül", exRu: "роза" },
+      { cyr: null, cyrSm: null, lat: "Ğ", latSm: "ğ", sound: "мягкий г", ex: "dağ", exRu: "гора" },
+      { cyr: null, cyrSm: null, lat: "H", latSm: "h", sound: "х", ex: "hava", exRu: "воздух" },
+      { cyr: null, cyrSm: null, lat: "I", latSm: "ı", sound: "ы", ex: "ırmak", exRu: "река" },
+      { cyr: null, cyrSm: null, lat: "İ", latSm: "i", sound: "и", ex: "iyi", exRu: "хорошо" },
+      { cyr: null, cyrSm: null, lat: "J", latSm: "j", sound: "ж", ex: "jandarma", exRu: "жандарм" },
+      { cyr: null, cyrSm: null, lat: "K", latSm: "k", sound: "к", ex: "kitap", exRu: "книга" },
+      { cyr: null, cyrSm: null, lat: "L", latSm: "l", sound: "л", ex: "lale", exRu: "тюльпан" },
+      { cyr: null, cyrSm: null, lat: "M", latSm: "m", sound: "м", ex: "masa", exRu: "стол" },
+      { cyr: null, cyrSm: null, lat: "N", latSm: "n", sound: "н", ex: "nar", exRu: "гранат" },
+      { cyr: null, cyrSm: null, lat: "O", latSm: "o", sound: "о", ex: "okul", exRu: "школа" },
+      { cyr: null, cyrSm: null, lat: "Ö", latSm: "ö", sound: "ё", ex: "göz", exRu: "глаз" },
+      { cyr: null, cyrSm: null, lat: "P", latSm: "p", sound: "п", ex: "pazar", exRu: "базар" },
+      { cyr: null, cyrSm: null, lat: "R", latSm: "r", sound: "р", ex: "resim", exRu: "картина" },
+      { cyr: null, cyrSm: null, lat: "S", latSm: "s", sound: "с", ex: "su", exRu: "вода" },
+      { cyr: null, cyrSm: null, lat: "Ş", latSm: "ş", sound: "ш", ex: "şehir", exRu: "город" },
+      { cyr: null, cyrSm: null, lat: "T", latSm: "t", sound: "т", ex: "tarih", exRu: "история" },
+      { cyr: null, cyrSm: null, lat: "U", latSm: "u", sound: "у", ex: "uçak", exRu: "самолет" },
+      { cyr: null, cyrSm: null, lat: "Ü", latSm: "ü", sound: "ю", ex: "üzüm", exRu: "виноград" },
+      { cyr: null, cyrSm: null, lat: "V", latSm: "v", sound: "в", ex: "vazo", exRu: "ваза" },
+      { cyr: null, cyrSm: null, lat: "Y", latSm: "y", sound: "й", ex: "yol", exRu: "дорога" },
+      { cyr: null, cyrSm: null, lat: "Z", latSm: "z", sound: "з", ex: "zaman", exRu: "время" }
     ],
     vocab: {
-      greetings: { name: "Selamlaşma", emoji: "👋", color: "#3b82f6", words: [
+      greetings: { name: "Приветствия", emoji: "👋", color: "#3b82f6", words: [
         { sr: "Merhaba", tr: "[merhaba]", ru: "Привет" },
-        { sr: "İyi günler", tr: "[iyi günler]", ru: "Добрый день" }
+        { sr: "Günaydın", tr: "[günaydın]", ru: "Доброе утро" },
+        { sr: "İyi günler", tr: "[iyi günler]", ru: "Добрый день" },
+        { sr: "İyi akşamlar", tr: "[iyi akşamlar]", ru: "Добрый вечер" },
+        { sr: "İyi geceler", tr: "[iyi geceler]", ru: "Спокойной ночи" },
+        { sr: "Hoşça kal", tr: "[hoşça kal]", ru: "Пока" },
+        { sr: "Görüşürüz", tr: "[görüşürüz]", ru: "Увидимся" },
+        { sr: "Nasılsın?", tr: "[nasılsın?]", ru: "Как дела?" },
+        { sr: "İyiyim", tr: "[iyiyim]", ru: "Я в порядке" },
+        { sr: "Teşekkürler", tr: "[teşekkürler]", ru: "Спасибо" }
+      ]},
+      numbers: { name: "Числа", emoji: "🔢", color: "#10b981", words: [
+        { sr: "Bir", tr: "[bir]", ru: "Один" },
+        { sr: "İki", tr: "[iki]", ru: "Два" },
+        { sr: "Üç", tr: "[üç]", ru: "Три" },
+        { sr: "Dört", tr: "[dört]", ru: "Четыре" },
+        { sr: "Beş", tr: "[beş]", ru: "Пять" },
+        { sr: "Altı", tr: "[altı]", ru: "Шесть" },
+        { sr: "Yedi", tr: "[yedi]", ru: "Семь" },
+        { sr: "Sekiz", tr: "[sekiz]", ru: "Восемь" },
+        { sr: "Dokuz", tr: "[dokuz]", ru: "Девять" },
+        { sr: "On", tr: "[on]", ru: "Десять" }
+      ]},
+      colors: { name: "Цвета", emoji: "🎨", color: "#a855f7", words: [
+        { sr: "Kırmızı", tr: "[kırmızı]", ru: "Красный" },
+        { sr: "Mavi", tr: "[mavi]", ru: "Синий" },
+        { sr: "Yeşil", tr: "[yeşil]", ru: "Зелёный" },
+        { sr: "Sarı", tr: "[sarı]", ru: "Жёлтый" },
+        { sr: "Siyah", tr: "[siyah]", ru: "Чёрный" },
+        { sr: "Beyaz", tr: "[beyaz]", ru: "Белый" }
+      ]},
+      family: { name: "Семья", emoji: "👨‍👩‍👧", color: "#ec4899", words: [
+        { sr: "Anne", tr: "[anne]", ru: "Мама" },
+        { sr: "Baba", tr: "[baba]", ru: "Папа" },
+        { sr: "Kardeş", tr: "[kardeş]", ru: "Брат/Сестра" },
+        { sr: "Abla", tr: "[abla]", ru: "Старшая сестра" },
+        { sr: "Oğul", tr: "[oğul]", ru: "Сын" },
+        { sr: "Kız", tr: "[kız]", ru: "Дочь" }
+      ]},
+      food: { name: "Еда", emoji: "🍽️", color: "#f59e0b", words: [
+        { sr: "Su", tr: "[su]", ru: "Вода" },
+        { sr: "Ekmek", tr: "[ekmek]", ru: "Хлеб" },
+        { sr: "Süt", tr: "[süt]", ru: "Молоко" },
+        { sr: "Kahve", tr: "[kahve]", ru: "Кофе" },
+        { sr: "Çay", tr: "[çay]", ru: "Чай" },
+        { sr: "Et", tr: "[et]", ru: "Мясо" },
+        { sr: "Balık", tr: "[balık]", ru: "Рыба" }
+      ]},
+      travel: { name: "Путешествия", emoji: "✈️", color: "#06b6d4", words: [
+        { sr: "Havalimanı", tr: "[havalimanı]", ru: "Аэропорт" },
+        { sr: "İstasyon", tr: "[istasyon]", ru: "Станция" },
+        { sr: "Tren", tr: "[tren]", ru: "Поезд" },
+        { sr: "Otobüs", tr: "[otobüs]", ru: "Автобус" },
+        { sr: "Bilet", tr: "[bilet]", ru: "Билет" },
+        { sr: "Otel", tr: "[otel]", ru: "Отель" }
+      ]},
+      verbs: { name: "Глаголы", emoji: "🏃", color: "#6366f1", words: [
+        { sr: "Olmak", tr: "[olmak]", ru: "Быть" },
+        { sr: "Sahip olmak", tr: "[sahip olmak]", ru: "Иметь" },
+        { sr: "Çalışmak", tr: "[çalışmak]", ru: "Работать" },
+        { sr: "Konuşmak", tr: "[konuşmak]", ru: "Говорить" },
+        { sr: "Bilmek", tr: "[bilmek]", ru: "Знать" },
+        { sr: "Gitmek", tr: "[gitmek]", ru: "Идти" }
+      ]},
+      questions: { name: "Вопросы", emoji: "❓", color: "#0ea5e9", words: [
+        { sr: "Ne", tr: "[ne]", ru: "Что" },
+        { sr: "Kim", tr: "[kim]", ru: "Кто" },
+        { sr: "Nerede", tr: "[nerede]", ru: "Где" },
+        { sr: "Ne zaman", tr: "[ne zaman]", ru: "Когда" },
+        { sr: "Neden", tr: "[neden]", ru: "Почему" },
+        { sr: "Nasıl", tr: "[nasıl]", ru: "Как" }
       ]}
     },
-    grammar: [{ id: "tr-pronouns", title: "Kişi zamirleri", icon: "👤",
-      rules: [{ text: "TODO: контент турецкой грамматики." }],
-      examples: [{ sr: "Ben öğrenciyim.", ru: "Я студент." }] }],
-    dialogues: [{ id: "tr-meet", title: "Tanışma", icon: "🤝",
-      lines: [{ sr: "Merhaba! Adın ne?", ru: "Привет! Как тебя зовут?" }, { sr: "Benim adım Mark. Senin?", ru: "Меня зовут Марк. А тебя?" }],
-      quiz: [{ q: "«Adın ne?» значит...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 }] }]
+    grammar: [
+      { id: "tr-pronouns", title: "Kişi zamirleri", icon: "👤",
+        rules: [{ text: "В турецком языке местоимения изменяются по лицам и числам." }],
+        table: [["Ben","Я"],["Sen","Ты"],["O","Он/Она"],["Biz","Мы"],["Siz","Вы"],["Onlar","Они"]],
+        examples: [{ sr: "Ben öğrenciyim.", ru: "Я студент." }, { sr: "Sen öğretmensin.", ru: "Ты учитель." }, { sr: "O doktor.", ru: "Он врач." }] },
+      { id: "tr-plural", title: "Çoğul eki", icon: "🔢",
+        rules: [{ text: "Присоединяется суффикс -lar/-ler в зависимости от последней гласной." }],
+        examples: [{ sr: "Kitaplar", ru: "Книги" }, { sr: "Evler", ru: "Дома" }, { sr: "Çocuklar", ru: "Дети" }] },
+      { id: "tr-cases", title: "Hal ekleri", icon: "🔀",
+        rules: [{ text: "В турецком 6 падежей. Именительный (Kim? Ne?) без окончания." }],
+        examples: [{ sr: "Okul (школа) -> Okula (в школу)", ru: "Направление" }, { sr: "Ev (дом) -> Evde (в доме)", ru: "Место" }] },
+      { id: "tr-possessive", title: "İyelik ekleri", icon: "🤝",
+        rules: [{ text: "Обозначает принадлежность. Benim (мой), senin (твой) и т.д." }],
+        examples: [{ sr: "Benim kitabım", ru: "Моя книга" }, { sr: "Senin evin", ru: "Твой дом" }] },
+      { id: "tr-verbs", title: "Şimdiki zaman", icon: "🏃",
+        rules: [{ text: "Образуется с помощью суффикса -yor + личные окончания." }],
+        examples: [{ sr: "Ben gidiyorum", ru: "Я иду" }, { sr: "Sen geliyorsun", ru: "Ты приходишь" }] }
+    ],
+    dialogues: [
+      { id: "tr-meet", title: "Tanışma", icon: "🤝",
+        lines: [
+          { sr: "Merhaba! Adın ne?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Benim adım Mark. Senin?", ru: "Меня зовут Марк. А тебя?" },
+          { sr: "Benim adım Ayşe. Tanıştığıma memnun oldum.", ru: "Меня зовут Айше. Рада знакомству." },
+          { sr: "Ben de. Nerelisin?", ru: "Я тоже. Откуда ты?" },
+          { sr: "Ben Türkiye'denim. Sen?", ru: "Я из Турции. А ты?" }
+        ],
+        quiz: [
+          { q: "«Adın ne?» значит...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Nerelisin?» значит...", options: ["Как дела?","Откуда ты?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Tanıştığıma memnun oldum» — это...", options: ["Мне дорого","Приятно познакомиться","Я рад","Мне жаль"], correct: 1 }
+        ] },
+      { id: "tr-cafe", title: "Kafede", icon: "☕",
+        lines: [
+          { sr: "İyi günler! Ne alırsınız?", ru: "Добрый день! Что будете брать?" },
+          { sr: "Bir kahve lütfen.", ru: "Один кофе, пожалуйста." },
+          { sr: "Sütlü mü, sütsüz mü?", ru: "С молоком или без молока?" },
+          { sr: "Sütsüz, lütfen.", ru: "Без молока, пожалуйста." },
+          { sr: "Buyurun. Başka bir şey?", ru: "Пожалуйста. Что-нибудь ещё?" },
+          { sr: "Hayır, teşekkürler. Ne kadar?", ru: "Нет, спасибо. Сколько стоит?" }
+        ],
+        quiz: [
+          { q: "«Ne kadar?» значит...", options: ["Как дела?","Сколько стоит?","Что это?","Где это?"], correct: 1 },
+          { q: "«Sütlü» — это...", options: ["без молока","с молоком","молоко","пожалуйста молоко"], correct: 1 },
+          { q: "«Başka bir şey?» — это...", options: ["Ещё что-то?","Это не то","Ничего","Всё хорошо"], correct: 0 }
+        ] }
+    ]
   }
-};
 
 const MEDALS = [
   { id: "common", name: "Обычная", emoji: "🥉", price: 1200 },
