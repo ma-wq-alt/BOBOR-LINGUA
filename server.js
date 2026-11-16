@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createClient } from "@libsql/client"; 
+import { createClient } from "@libsql/client";
 
 dotenv.config();
 
@@ -49,44 +49,33 @@ async function initDB() {
         medals TEXT DEFAULT '[]',
         last_daily TEXT,
         units_done TEXT DEFAULT '[]',
+        lessons_today INTEGER DEFAULT 0,
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    // Создаем админа, если его нет
     const adm = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [ADMIN_EMAIL] });
     if (adm.rows.length === 0) {
-      await db.execute({
-        sql: "INSERT INTO users (email, password, role) VALUES (?, ?, ?)",
-        args: [ADMIN_EMAIL, ADMIN_PASS, "admin"]
-      });
+      await db.execute({ sql: "INSERT INTO users (email, password, role) VALUES (?, ?, ?)", args: [ADMIN_EMAIL, ADMIN_PASS, "admin"] });
     }
-    console.log("✅ База готова, админ создан");
-  } catch (e) {
-    console.error("❌ Ошибка БД:", e.message);
-  }
+    console.log("✅ База готова");
+  } catch (e) { console.error("❌ Ошибка БД:", e.message); }
 }
 initDB();
 
-// --- АВТОРИЗАЦИЯ ---
 app.post("/api/register", async (req, res) => {
   const { email, password } = req.body;
   if (!db) return res.status(500).json({ error: "Нет БД" });
   try {
     const check = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [email] });
     if (check.rows.length > 0) return res.status(400).json({ error: "Email уже занят" });
-    await db.execute({
-      sql: "INSERT INTO users (email, password, role) VALUES (?, ?, 'user')",
-      args: [email, password]
-    });
+    await db.execute({ sql: "INSERT INTO users (email, password, role) VALUES (?, ?, 'user')", args: [email, password] });
     res.json({ success: true });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
-  if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
-    return res.json({ success: true, user: { email, role: "admin" } });
-  }
+  if (email === ADMIN_EMAIL && password === ADMIN_PASS) return res.json({ success: true, user: { email, role: "admin" } });
   if (!db) return res.status(500).json({ error: "Нет БД" });
   try {
     const u = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [email] });
@@ -96,16 +85,12 @@ app.post("/api/login", async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// --- АУДИО ---
 app.post("/api/save-audio", async (req, res) => {
   const { key, audioBase64, role } = req.body;
-  if (role !== "admin") return res.status(403).json({ error: "Только админ может записывать" });
-  if (!db) return res.json({ success: false, error: "no_db" });
+  if (role !== "admin") return res.status(403).json({ error: "Только админ" });
+  if (!db) return res.json({ success: false });
   try {
-    await db.execute({
-      sql: `INSERT INTO bobor_audio (audio_key, audio_data) VALUES (?, ?) ON CONFLICT(audio_key) DO UPDATE SET audio_data = ?`,
-      args: [key, audioBase64, audioBase64]
-    });
+    await db.execute({ sql: `INSERT INTO bobor_audio (audio_key, audio_data) VALUES (?, ?) ON CONFLICT(audio_key) DO UPDATE SET audio_data = ?`, args: [key, audioBase64, audioBase64] });
     res.json({ success: true });
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
@@ -113,10 +98,7 @@ app.post("/api/save-audio", async (req, res) => {
 app.get("/api/get-audio/:key", async (req, res) => {
   if (!db) return res.json({ audio: null });
   try {
-    const r = await db.execute({
-      sql: "SELECT audio_data FROM bobor_audio WHERE audio_key = ?",
-      args: [req.params.key]
-    });
+    const r = await db.execute({ sql: "SELECT audio_data FROM bobor_audio WHERE audio_key = ?", args: [req.params.key] });
     if (r.rows.length === 0) return res.json({ audio: null });
     res.json({ audio: r.rows[0].audio_data });
   } catch (e) { res.status(500).json({ error: e.message }); }
@@ -132,17 +114,16 @@ app.post("/api/delete-audio", async (req, res) => {
   } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
-// --- ПРОГРЕСС И ИИ ---
 app.post("/api/sync-progress", async (req, res) => {
-  const { username, xp, streak, medals, last_daily, units_done } = req.body;
+  const { username, xp, streak, medals, last_daily, units_done, lessons_today } = req.body;
   if (!db) return res.json({ success: false });
   try {
     await db.execute({
-      sql: `INSERT INTO bobor_progress (username, xp, streak, medals, last_daily, units_done) 
-            VALUES (?, ?, ?, ?, ?, ?) 
-            ON CONFLICT(username) DO UPDATE SET xp=?, streak=?, medals=?, last_daily=?, units_done=?`,
-      args: [username, xp, streak, JSON.stringify(medals), last_daily, JSON.stringify(units_done),
-             xp, streak, JSON.stringify(medals), last_daily, JSON.stringify(units_done)]
+      sql: `INSERT INTO bobor_progress (username, xp, streak, medals, last_daily, units_done, lessons_today) 
+            VALUES (?, ?, ?, ?, ?, ?, ?) 
+            ON CONFLICT(username) DO UPDATE SET xp=?, streak=?, medals=?, last_daily=?, units_done=?, lessons_today=?`,
+      args: [username, xp, streak, JSON.stringify(medals), last_daily, JSON.stringify(units_done), lessons_today,
+             xp, streak, JSON.stringify(medals), last_daily, JSON.stringify(units_done), lessons_today]
     });
     res.json({ success: true });
   } catch (e) { res.status(500).json({ error: e.message }); }
@@ -150,10 +131,7 @@ app.post("/api/sync-progress", async (req, res) => {
 
 let openai = null;
 if (process.env.GEMINI_API_KEY) {
-  openai = new OpenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-    baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
-  });
+  openai = new OpenAI({ apiKey: process.env.GEMINI_API_KEY, baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/" });
 }
 
 app.post("/api/chat", async (req, res) => {
@@ -169,8 +147,5 @@ app.post("/api/chat", async (req, res) => {
   } catch (e) { res.json({ reply: "Ошибка AI" }); }
 });
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "index.html"));
-});
-
+app.get("*", (req, res) => { res.sendFile(path.join(__dirname, "index.html")); });
 app.listen(PORT, () => console.log(`🦫 Сервер на порту ${PORT}`));
