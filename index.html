@@ -1194,20 +1194,26 @@ async function loadCourse() {
         /* ============================================
            УТИЛИТА СОЗДАНИЯ ЭЛЕМЕНТОВ
            ============================================ */
-        const el = (tag, attrs = {}, children = []) => {
-            const e = document.createElement(tag);
-            for (let k in attrs) {
-                if (k === 'class') e.className = attrs[k];
-                else if (k === 'html') e.innerHTML = attrs[k];
-                else if (k.startsWith('on')) e.addEventListener(k.slice(2), attrs[k]);
-                else if (k === 'style') e.style.cssText = attrs[k];
-                else e.setAttribute(k, attrs[k]);
-            }
-            (Array.isArray(children) ? children : [children]).forEach(c => {
-                if (c != null && c !== false) {
-                    e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
-                }
-            });
+       const el = (tag, attrs = {}, children = []) => {
+    const e = document.createElement(tag);
+    for (let k in attrs) {
+        if (k === 'class') e.className = attrs[k];
+        else if (k === 'html') e.innerHTML = attrs[k];
+        else if (k.startsWith('on')) e.addEventListener(k.slice(2), attrs[k]);
+        else if (k === 'style') e.style.cssText = attrs[k];
+        else e.setAttribute(k, attrs[k]);
+    }
+    const flatChildren = Array.isArray(children) ? children.flat(Infinity) : [children];
+    flatChildren.forEach(c => {
+        if (c == null || c === false) return;
+        if (typeof c === 'string' || typeof c === 'number') {
+            e.appendChild(document.createTextNode(String(c)));
+        } else if (c instanceof Node) {
+            e.appendChild(c);
+        }
+    });
+    return e;
+};
             return e;
         };
 
