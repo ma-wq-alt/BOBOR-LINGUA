@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import { createClient } from "@libsql/client";
-import fs from "fs";
+import fs from "fs"; // Добавили модуль файловой системы
 
 dotenv.config();
 
@@ -16,30 +16,19 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json({ limit: "10mb" }));
 
-// Статика: сначала ищем в текущей директории, потом в data
-app.use(express.static(__dirname));
+// Явно указываем пути для статики
+app.use(express.static(path.join(__dirname)));
 app.use("/data", express.static(path.join(__dirname, "data")));
 
 const TURSO_URL = process.env.TURSO_URL;
 const TURSO_TOKEN = process.env.TURSO_TOKEN;
-
-let db = null;
-if (TURSO_URL && TURSO_TOKEN) {
-    try {
-        db = createClient({ url: TURSO_URL, authToken: TURSO_TOKEN });
-        console.log("✅ Подключение к Turso настроено");
-    } catch (e) {
-        console.error("❌ Ошибка подключения к Turso:", e.message);
-    }
-} else {
-    console.log("⚠️ Turso не настроен (нет переменных окружения)");
-}
+const db = (TURSO_URL && TURSO_TOKEN) ? createClient({ url: TURSO_URL, authToken: TURSO_TOKEN }) : null;
 
 const ADMIN_EMAIL = "mar.maks999@gmail.com";
 const ADMIN_PASS = "1495";
 
 async function initDB() {
-    if (!db) return;
+    if (!db) return console.log("⚠️ Turso не настроен");
     try {
         await db.execute(`CREATE TABLE IF NOT EXISTS users ( email TEXT PRIMARY KEY, password TEXT, role TEXT DEFAULT 'user' )`);
         await db.execute(`CREATE TABLE IF NOT EXISTS bobor_audio ( audio_key TEXT PRIMARY KEY, audio_data TEXT, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP )`);
@@ -48,17 +37,13 @@ async function initDB() {
         const adm = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [ADMIN_EMAIL] });
         if (adm.rows.length === 0) {
             await db.execute({ sql: "INSERT INTO users (email, password, role) VALUES (?, ?, ?)", args: [ADMIN_EMAIL, ADMIN_PASS, "admin"] });
-            console.log("✅ Админ создан");
         }
-    } catch (e) { 
-        console.error("❌ Ошибка инициализации БД: ", e.message); 
-    }
+        console.log("✅ База готова");
+    } catch (e) { console.error("❌ Ошибка БД: ", e.message); }
 }
-
 initDB();
 
 // --- API Routes ---
-
 app.post("/api/register", async (req, res) => {
     const { email, password } = req.body;
     if (!db) return res.status(500).json({ error: "Нет БД" });
@@ -72,10 +57,7 @@ app.post("/api/register", async (req, res) => {
 
 app.post("/api/login", async (req, res) => {
     const { email, password } = req.body;
-    // Хардкод админа для надежности
-    if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
-        return res.json({ success: true, user: { email, role: "admin" } });
-    }
+    if (email === ADMIN_EMAIL && password === ADMIN_PASS) return res.json({ success: true, user: { email, role: "admin" } });
     if (!db) return res.status(500).json({ error: "Нет БД" });
     try {
         const u = await db.execute({ sql: "SELECT * FROM users WHERE email = ?", args: [email] });
@@ -90,10 +72,7 @@ app.post("/api/save-audio", async (req, res) => {
     if (role !== "admin") return res.status(403).json({ error: "Только админ" });
     if (!db) return res.json({ success: false });
     try {
-        await db.execute({ 
-            sql: `INSERT INTO bobor_audio (audio_key, audio_data) VALUES (?, ?) ON CONFLICT(audio_key) DO UPDATE SET audio_data = ?`, 
-            args: [key, audioBase64, audioBase64] 
-        });
+        await db.execute({ sql: `INSERT INTO bobor_audio (audio_key, audio_data) VALUES (?, ?) ON CONFLICT(audio_key) DO UPDATE SET audio_data = ?`, args: [key, audioBase64, audioBase64] });
         res.json({ success: true });
     } catch (e) { res.status(500).json({ error: e.message }); }
 });
@@ -141,20 +120,27 @@ app.post("/api/chat", async (req, res) => {
     try {
         const completion = await openai.chat.completions.create({
             model: "gemini-2.0-flash",
-            messages: [{ role: "system", content: `Отвечай кратко и полезно на языке курса: ${course}` }, { role: "user", content: message }],
-            max_tokens: 150
+            messages: [{ role: "system", content: `Отвечай на языке: ${course}` }, { role: "user", content: message }],
+            max_tokens: 100
         });
         res.json({ reply: completion.choices[0].message.content });
     } catch (e) { res.json({ reply: "Ошибка AI" }); }
 });
 
-// Catch-all для SPA
+// --- SPA Fallback (Исправлено) ---
 app.get("*", (req, res) => {
-    const indexPath = path.join(__dirname, "index.html");
+    const indexPath = path.resolve(__dirname, "index.html");
+    
+    // Проверяем, существует ли файл физически
     if (fs.existsSync(indexPath)) {
         res.sendFile(indexPath);
     } else {
-        res.status(404).send("index.html not found. Check your deployment structure.");
+        // Если файла нет, отдаем понятную ошибку вместо 500
+        res.status(404).send(`
+            <h1>Ошибка деплоя</h1>
+            <p>Файл index.html не найден по пути: ${indexPath}</p>
+            <p>Проверьте, что файл лежит в корне репозитория.</p>
+        `);
     }
 });
 
