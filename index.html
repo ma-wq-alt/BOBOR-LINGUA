@@ -1153,20 +1153,31 @@
         /* ============================================
            ЗАГРУЗКА КУРСА
            ============================================ */
-        async function loadCourse() {
-            state.loading = true;
-            render();
-            try {
-                const r = await fetch(`/data/${state.course}.json`);
-                state.data = await r.json();
-                // Очистка пробелов в ключах JSON
-                state.data = cleanJsonKeys(state.data);
-            } catch (e) {
-                state.data = { name: "Ошибка", units: [] };
-            }
-            state.loading = false;
-            render();
-        }
+function cleanJson(obj) {
+    if (typeof obj !== 'object' || obj === null) return obj;
+    if (Array.isArray(obj)) return obj.map(cleanJson);
+    const cleaned = {};
+    for (const [key, value] of Object.entries(obj)) {
+        const cleanKey = key.trim();
+        const cleanValue = typeof value === 'string' ? value.trim() : cleanJson(value);
+        cleaned[cleanKey] = cleanValue;
+    }
+    return cleaned;
+}
+
+async function loadCourse() {
+    state.loading = true;
+    render();
+    try {
+        const r = await fetch(`/data/${state.course}.json`);
+        const raw = await r.json();
+        state.data = cleanJson(raw);
+    } catch (e) {
+        state.data = { name: "Ошибка", units: [] };
+    }
+    state.loading = false;
+    render();
+}
 
         function cleanJsonKeys(obj) {
             if (typeof obj !== 'object' || obj === null) return obj;
