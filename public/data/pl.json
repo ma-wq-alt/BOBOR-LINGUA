@@ -1,45 +1,158 @@
 {
   "code": "pl",
-  "name": "Польский",
+  "name": "Польский (0-B2)",
   "flag": "🇵🇱",
   "speechLang": "pl-PL",
   "units": [
     {
       "id": "u1",
-      "title": "Алфавит и Приветствия",
-      "icon": "👋",
-      "words": [
-        { "sr": "Cześć", "tr": "[cheshch]", "ru": "Привет" },
-        { "sr": "Dzień dobry", "tr": "[jen dobry]", "ru": "Добрый день" },
-        { "sr": "Dobry wieczór", "tr": "[dobry vechur]", "ru": "Добрый вечер" },
-        { "sr": "Dziękuję", "tr": "[jenkuye]", "ru": "Спасибо" },
-        { "sr": "Proszę", "tr": "[proshe]", "ru": "Пожалуйста" },
-        { "sr": "Przepraszam", "tr": "[psheprasham]", "ru": "Извините" },
-        { "sr": "Do widzenia", "tr": "[do vidzenya]", "ru": "До свидания" },
-        { "sr": "Tak", "tr": "[tak]", "ru": "Да" },
-        { "sr": "Nie", "tr": "[nye]", "ru": "Нет" }
-      ],
-      "grammar": {
-        "title": "Алфавит",
-        "rules": "В польском 32 буквы. Особые: Ą (он), Ć (чь), Ę (эн), Ł (у), Ń (нь), Ó (у), Ś (щь), Ź (жь), Ż (ж).",
-        "examples": [
-          { "sr": "Ł = У", "ru": "Łyżka - ложка" },
-          { "sr": "Ś = Щь", "ru": "Świat - мир" },
-          { "sr": "Ż = Ж", "ru": "Żaba - жаба" }
+      "title": "Алфавит: Латиница (Основной)",
+      "icon": "🔤",
+      "alphabet": {
+        "title": "Польский алфавит",
+        "rules": "32 буквы. Основан на латинице. Особые буквы: Ą, Ć, Ę, Ł, Ń, Ó, Ś, Ź, Ż. Ударение обычно на предпоследний слог.",
+        "table": [
+          { "char": "A a", "sound": "а", "ex": "Auto" },
+          { "char": "Ą ą", "sound": "он", "ex": "Bąk" },
+          { "char": "B b", "sound": "б", "ex": "Bal" },
+          { "char": "C c", "sound": "ц", "ex": "Co" },
+          { "char": "Ć ć", "sound": "чь", "ex": "Ćma" },
+          { "char": "D d", "sound": "д", "ex": "Dom" },
+          { "char": "E e", "sound": "э", "ex": "Ekran" },
+          { "char": "Ę ę", "sound": "эн", "ex": "Rękawica" },
+          { "char": "F f", "sound": "ф", "ex": "Film" },
+          { "char": "G g", "sound": "г", "ex": "Góra" },
+          { "char": "H h", "sound": "х", "ex": "Hak" },
+          { "char": "I i", "sound": "и", "ex": "Imię" },
+          { "char": "J j", "sound": "й", "ex": "Jajko" },
+          { "char": "K k", "sound": "к", "ex": "Kot" },
+          { "char": "L l", "sound": "л", "ex": "Las" },
+          { "char": "Ł ł", "sound": "у", "ex": "Łódź" },
+          { "char": "M m", "sound": "м", "ex": "Mama" },
+          { "char": "N n", "sound": "н", "ex": "Noga" },
+          { "char": "Ń ń", "sound": "нь", "ex": "Koń" },
+          { "char": "O o", "sound": "о", "ex": "Okno" },
+          { "char": "Ó ó", "sound": "у", "ex": "Ósmy" },
+          { "char": "P p", "sound": "п", "ex": "Pan" },
+          { "char": "R r", "sound": "р", "ex": "Ryba" },
+          { "char": "S s", "sound": "с", "ex": "Ser" },
+          { "char": "Ś ś", "sound": "шь", "ex": "Śnieg" },
+          { "char": "T t", "sound": "т", "ex": "Tak" },
+          { "char": "U u", "sound": "у", "ex": "Ucho" },
+          { "char": "W w", "sound": "в", "ex": "Woda" },
+          { "char": "Y y", "sound": "ы", "ex": "Syn" },
+          { "char": "Z z", "sound": "з", "ex": "Zima" },
+          { "char": "Ź ź", "sound": "жь", "ex": "Źródło" },
+          { "char": "Ż ż", "sound": "ж", "ex": "Żaba" }
         ]
       },
-      "quiz": [
-        { "q": "Как сказать «Спасибо»?", "options": ["Proszę", "Dziękuję", "Cześć", "Tak"], "correct": 1 },
-        { "q": "Что означает «Dzień dobry»?", "options": ["Добрый вечер", "До свидания", "Добрый день", "Как дела"], "correct": 2 },
-        { "q": "Какая буква читается как «У»?", "options": ["Ó", "Ł", "Ą", "Ę"], "correct": 1 }
-      ]
+      "words": [],
+      "grammar": { "title": "Фонетика", "rules": "Польский алфавит содержит 32 буквы. Ударение фиксированное - на предпоследний слог.", "examples": [] },
+      "quiz": []
     },
     {
       "id": "u2",
-      "title": "Числа и Местоимения",
-      "icon": "🔢",
+      "title": "Сложные звуки и Диграфы",
+      "icon": "🗣️",
+      "alphabet": {
+        "title": "Диграфы и сочетания",
+        "rules": "В польском много сочетаний букв, дающих один звук: Cz (ч), Sz (ш), Rz/Ż (ж), Ch/H (х), Dz (дз), Dż (дж), Dź (дзь).",
+        "table": [
+          { "char": "Ch", "sound": "х", "ex": "Chleb" },
+          { "char": "Cz", "sound": "ч", "ex": "Czas" },
+          { "char": "Dz", "sound": "дз", "ex": "Dzwon" },
+          { "char": "Dź", "sound": "дзь", "ex": "Dźwięk" },
+          { "char": "Dż", "sound": "дж", "ex": "Dżem" },
+          { "char": "Rz", "sound": "ж", "ex": "Rzeka" },
+          { "char": "Sz", "sound": "ш", "ex": "Szkoła" }
+        ]
+      },
+      "words": [],
+      "grammar": { "title": "Произношение", "rules": "Rz и Ż звучат одинаково (ж), но пишутся по-разному из-за этимологии. Ch и H тоже звучат одинаково (х).", "examples": [] },
+      "quiz": []
+    },
+    {
+      "id": "u3",
+      "title": "Семья и Дом (A1)",
+      "icon": "🏠",
       "words": [
-        { "sr": "Jeden", "tr": "[eden]", "ru": "Один" },
+        { "sr": "Rodzina", "tr": "[rodzina]", "ru": "Семья" },
+        { "sr": "Matka", "tr": "[matka]", "ru": "Мама" },
+        { "sr": "Ojciec", "tr": "[ojciec]", "ru": "Папа" },
+        { "sr": "Brat", "tr": "[brat]", "ru": "Брат" },
+        { "sr": "Siostra", "tr": "[siostra]", "ru": "Сестра" },
+        { "sr": "Syn", "tr": "[syn]", "ru": "Сын" },
+        { "sr": "Córka", "tr": "[córka]", "ru": "Дочь" },
+        { "sr": "Babcia", "tr": "[babcia]", "ru": "Бабушка" },
+        { "sr": "Dziadek", "tr": "[dziadek]", "ru": "Дедушка" },
+        { "sr": "Wujek", "tr": "[wujek]", "ru": "Дядя" },
+        { "sr": "Ciotka", "tr": "[ciotka]", "ru": "Тётя" },
+        { "sr": "Kuzyn", "tr": "[kuzyn]", "ru": "Двоюродный брат" },
+        { "sr": "Mąż", "tr": "[mąż]", "ru": "Муж" },
+        { "sr": "Żona", "tr": "[żona]", "ru": "Жена" },
+        { "sr": "Dom", "tr": "[dom]", "ru": "Дом" },
+        { "sr": "Mieszkanie", "tr": "[mieszkanie]", "ru": "Квартира" },
+        { "sr": "Pokój", "tr": "[pokój]", "ru": "Комната" },
+        { "sr": "Kuchnia", "tr": "[kuchnia]", "ru": "Кухня" },
+        { "sr": "Łazienka", "tr": "[łazienka]", "ru": "Ванная" },
+        { "sr": "Salon", "tr": "[salon]", "ru": "Гостиная" },
+        { "sr": "Sypialnia", "tr": "[sypialnia]", "ru": "Спальня" },
+        { "sr": "Stół", "tr": "[stół]", "ru": "Стол" },
+        { "sr": "Krzesło", "tr": "[krzesło]", "ru": "Стул" },
+        { "sr": "Łóżko", "tr": "[łóżko]", "ru": "Кровать" },
+        { "sr": "Szafa", "tr": "[szafa]", "ru": "Шкаф" },
+        { "sr": "Okno", "tr": "[okno]", "ru": "Окно" },
+        { "sr": "Drzwi", "tr": "[drzwi]", "ru": "Дверь" },
+        { "sr": "Klucz", "tr": "[klucz]", "ru": "Ключ" },
+        { "sr": "Sąsiad", "tr": "[sąsiad]", "ru": "Сосед" }
+      ],
+      "grammar": { "title": "Род существительных", "rules": "Мужской (согласная), Женский (-а), Средний (-о/-е). Множественное число делится на личное и неличное.", "examples": [{ "sr": "Ten dom (м), Ta kobieta (ж), To dziecko (ср)", "ru": "Указательные местоимения" }] },
+      "quiz": [{ "q": "Как сказать «Дом»?", "options": ["Mieszkanie", "Dom", "Pokój", "Okno"], "correct": 1 }]
+    },
+    {
+      "id": "u4",
+      "title": "Еда и Ресторан (A1)",
+      "icon": "🍽️",
+      "words": [
+        { "sr": "Woda", "tr": "[voda]", "ru": "Вода" },
+        { "sr": "Chleb", "tr": "[chleb]", "ru": "Хлеб" },
+        { "sr": "Mleko", "tr": "[mleko]", "ru": "Молоко" },
+        { "sr": "Mięso", "tr": "[mięso]", "ru": "Мясо" },
+        { "sr": "Ryba", "tr": "[ryba]", "ru": "Рыба" },
+        { "sr": "Jabłko", "tr": "[jabłko]", "ru": "Яблоко" },
+        { "sr": "Ser", "tr": "[ser]", "ru": "Сыр" },
+        { "sr": "Jajko", "tr": "[jajko]", "ru": "Яйцо" },
+        { "sr": "Kawa", "tr": "[kava]", "ru": "Кофе" },
+        { "sr": "Herbata", "tr": "[herbata]", "ru": "Чай" },
+        { "sr": "Wino", "tr": "[vino]", "ru": "Вино" },
+        { "sr": "Piwo", "tr": "[pivo]", "ru": "Пиво" },
+        { "sr": "Cukier", "tr": "[cukier]", "ru": "Сахар" },
+        { "sr": "Sól", "tr": "[sul]", "ru": "Соль" },
+        { "sr": "Pieprz", "tr": "[pyepzh]", "ru": "Перец" },
+        { "sr": "Masło", "tr": "[maswo]", "ru": "Масло" },
+        { "sr": "Warzywa", "tr": "[varzhyva]", "ru": "Овощи" },
+        { "sr": "Owoce", "tr": "[ovotse]", "ru": "Фрукты" },
+        { "sr": "Śniadanie", "tr": "[snyadanye]", "ru": "Завтрак" },
+        { "sr": "Obiad", "tr": "[obyad]", "ru": "Обед" },
+        { "sr": "Kolacja", "tr": "[kalatse]", "ru": "Ужин" },
+        { "sr": "Restauracja", "tr": "[restauratse]", "ru": "Ресторан" },
+        { "sr": "Menu", "tr": "[menu]", "ru": "Меню" },
+        { "sr": "Rachunek", "tr": "[rakhunek]", "ru": "Счёт" },
+        { "sr": "Kelner", "tr": "[kelner]", "ru": "Официант" },
+        { "sr": "Widelec", "tr": "[vydyelets]", "ru": "Вилка" },
+        { "sr": "Nóż", "tr": "[nuzh]", "ru": "Нож" },
+        { "sr": "Łyżka", "tr": "[wyzhka]", "ru": "Ложка" },
+        { "sr": "Talerz", "tr": "[talyesh]", "ru": "Тарелка" }
+      ],
+      "grammar": { "title": "Отрицание", "rules": "Частица «nie» перед глаголом. При отрицании часто используется родительный падеж (Genitive).", "examples": [{ "sr": "Nie mam wody.", "ru": "У меня нет воды." }] },
+      "quiz": [{ "q": "Как сказать «Счёт»?", "options": ["Rachunek", "Pieniądze", "Cena", "Kasa"], "correct": 0 }]
+    },
+    {
+      "id": "u5",
+      "title": "Числа и Время (A1-A2)",
+      "icon": "⏰",
+      "words": [
+        { "sr": "Jeden", "tr": "[yeden]", "ru": "Один" },
         { "sr": "Dwa", "tr": "[dva]", "ru": "Два" },
         { "sr": "Trzy", "tr": "[tshy]", "ru": "Три" },
         { "sr": "Cztery", "tr": "[chtery]", "ru": "Четыре" },
@@ -48,148 +161,20 @@
         { "sr": "Siedem", "tr": "[shedem]", "ru": "Семь" },
         { "sr": "Osiem", "tr": "[oshem]", "ru": "Восемь" },
         { "sr": "Dziewięć", "tr": "[jevrench]", "ru": "Девять" },
-        { "sr": "Dziesięć", "tr": "[jeshench]", "ru": "Десять" }
-      ],
-      "grammar": {
-        "title": "Личные местоимения",
-        "rules": "Ja (я), Ty (ты), On (он), Ona (она), My (мы), Wy (вы), Oni/One (они).",
-        "examples": [
-          { "sr": "Jestem studentem.", "ru": "Я студент." },
-          { "sr": "Jesteś dobry.", "ru": "Ты хороший." },
-          { "sr": "On jest lekarzem.", "ru": "Он врач." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как будет «Пять»?", "options": ["Trzy", "Cztery", "Pięć", "Dwa"], "correct": 2 },
-        { "q": "Что означает «Ja»?", "options": ["Ты", "Он", "Мы", "Я"], "correct": 3 },
-        { "q": "Как сказать «Ты хороший»?", "options": ["Jestem dobry", "Jesteś dobry", "On jest dobry", "My jesteśmy dobrzy"], "correct": 1 }
-      ]
-    },
-    {
-      "id": "u3",
-      "title": "Семья и Глагол «Быть»",
-      "icon": "👨‍👩‍👧",
-      "words": [
-        { "sr": "Mama", "tr": "[mama]", "ru": "Мама" },
-        { "sr": "Tata", "tr": "[tata]", "ru": "Папа" },
-        { "sr": "Brat", "tr": "[brat]", "ru": "Брат" },
-        { "sr": "Siostra", "tr": "[shostra]", "ru": "Сестра" },
-        { "sr": "Syn", "tr": "[syn]", "ru": "Сын" },
-        { "sr": "Córka", "tr": "[tsurka]", "ru": "Дочь" },
-        { "sr": "Rodzina", "tr": "[rodzina]", "ru": "Семья" },
-        { "sr": "Babcia", "tr": "[babcha]", "ru": "Бабушка" },
-        { "sr": "Dziadek", "tr": "[jadek]", "ru": "Дедушка" }
-      ],
-      "grammar": {
-        "title": "Глагол «Быть» (Być)",
-        "rules": "Ja jestem (я есть), Ty jesteś (ты есть), On/Ona jest (он/она есть), My jesteśmy (мы есть), Wy jesteście (вы есть), Oni są (они есть).",
-        "examples": [
-          { "sr": "Jestem z Rosji.", "ru": "Я из России." },
-          { "sr": "Ona jest moją siostrą.", "ru": "Она моя сестра." },
-          { "sr": "Jesteśmy rodziną.", "ru": "Мы семья." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Сестра»?", "options": ["Brat", "Córka", "Siostra", "Mama"], "correct": 2 },
-        { "q": "Как будет «Мы семья»?", "options": ["Jestem rodziną", "Jesteś rodziną", "Jesteśmy rodziną", "Oni są rodziną"], "correct": 2 },
-        { "q": "Что означает «Syn»?", "options": ["Дочь", "Сын", "Брат", "Отец"], "correct": 1 }
-      ]
-    },
-    {
-      "id": "u4",
-      "title": "Еда и Отрицание",
-      "icon": "🍽️",
-      "words": [
-        { "sr": "Woda", "tr": "[voda]", "ru": "Вода" },
-        { "sr": "Chleb", "tr": "[khleb]", "ru": "Хлеб" },
-        { "sr": "Mleko", "tr": "[mleko]", "ru": "Молоко" },
-        { "sr": "Kawa", "tr": "[kava]", "ru": "Кофе" },
-        { "sr": "Herbata", "tr": "[herbata]", "ru": "Чай" },
-        { "sr": "Wino", "tr": "[vino]", "ru": "Вино" },
-        { "sr": "Mięso", "tr": "[myenso]", "ru": "Мясо" },
-        { "sr": "Ryba", "tr": "[ryba]", "ru": "Рыба" },
-        { "sr": "Jabłko", "tr": "[jabwko]", "ru": "Яблоко" }
-      ],
-      "grammar": {
-        "title": "Отрицание",
-        "rules": "Отрицание — частица «nie» перед глаголом. Nie wiem (Не знаю).",
-        "examples": [
-          { "sr": "Nie wiem.", "ru": "Не знаю." },
-          { "sr": "Nie rozumiem.", "ru": "Не понимаю." },
-          { "sr": "On nie jest tutaj.", "ru": "Он не здесь." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Вода»?", "options": ["Chleb", "Woda", "Mleko", "Kawa"], "correct": 1 },
-        { "q": "Что означает «Nie wiem»?", "options": ["Я знаю", "Не знаю", "Не понимаю", "Не хочу"], "correct": 1 },
-        { "q": "Как будет «Он не здесь»?", "options": ["On jest tutaj", "On nie jest tutaj", "Ja nie jestem tutaj", "Ty nie jesteś tutaj"], "correct": 1 }
-      ]
-    },
-    {
-      "id": "u5",
-      "title": "Путешествия и Вопросы",
-      "icon": "✈️",
-      "words": [
-        { "sr": "Lotnisko", "tr": "[lotnisko]", "ru": "Аэропорт" },
-        { "sr": "Dworzec", "tr": "[dvozhets]", "ru": "Вокзал" },
-        { "sr": "Pociąg", "tr": "[pochyong]", "ru": "Поезд" },
-        { "sr": "Autobus", "tr": "[autobus]", "ru": "Автобус" },
-        { "sr": "Bilet", "tr": "[bilet]", "ru": "Билет" },
-        { "sr": "Hotel", "tr": "[hotel]", "ru": "Отель" },
-        { "sr": "Miasto", "tr": "[myasto]", "ru": "Город" },
-        { "sr": "Ulica", "tr": "[ulitsa]", "ru": "Улица" }
-      ],
-      "grammar": {
-        "title": "Вопросительные слова",
-        "rules": "Co (Что), Kto (Кто), Gdzie (Где), Kiedy (Когда), Dlaczego (Почему), Jak (Как), Ile (Сколько).",
-        "examples": [
-          { "sr": "Co to jest?", "ru": "Что это?" },
-          { "sr": "Gdzie jest dworzec?", "ru": "Где вокзал?" },
-          { "sr": "Ile to kosztuje?", "ru": "Сколько стоит?" }
-        ]
-      },
-      "quiz": [
-        { "q": "Как будет «Поезд»?", "options": ["Pociąg", "Autobus", "Lotnisko", "Bilet"], "correct": 0 },
-        { "q": "Что означает «Gdzie jest dworzec?»", "options": ["Что это?", "Где вокзал?", "Сколько стоит?", "Кто это?"], "correct": 1 },
-        { "q": "Как спросить «Сколько стоит?»", "options": ["Co to jest?", "Gdzie jest hotel?", "Ile to kosztuje?", "Jak się masz?"], "correct": 2 }
-      ]
-    },
-    {
-      "id": "u6",
-      "title": "Цвета и Диалоги",
-      "icon": "🎨",
-      "words": [
-        { "sr": "Czerwony", "tr": "[chervony]", "ru": "Красный" },
-        { "sr": "Niebieski", "tr": "[nebeski]", "ru": "Синий" },
-        { "sr": "Zielony", "tr": "[zhelony]", "ru": "Зелёный" },
-        { "sr": "Żółty", "tr": "[zhouty]", "ru": "Жёлтый" },
-        { "sr": "Czarny", "tr": "[charny]", "ru": "Чёрный" },
-        { "sr": "Biały", "tr": "[byawy]", "ru": "Белый" },
-        { "sr": "Kolor", "tr": "[kolor]", "ru": "Цвет" }
-      ],
-      "grammar": {
-        "title": "Как представиться",
-        "rules": "Jak masz na imię? (Как тебя зовут?) - Mam na imię... (Меня зовут...).",
-        "examples": [
-          { "sr": "Mam na imię Marek.", "ru": "Меня зовут Марек." },
-          { "sr": "Jak masz na imię?", "ru": "Как тебя зовут?" },
-          { "sr": "Miło mi.", "ru": "Приятно познакомиться." }
-        ]
-      },
-      "quiz": [
-        { "q": "Какой цвет «Czerwony»?", "options": ["Синий", "Зелёный", "Красный", "Чёрный"], "correct": 2 },
-        { "q": "Как сказать «Меня зовут Марек»?", "options": ["Jestem Marek", "Mam na imię Marek", "Ty jesteś Marek", "On jest Marek"], "correct": 1 },
-        { "q": "Что означает «Miło mi»?", "options": ["До свидания", "Как дела", "Приятно познакомиться", "Спасибо"], "correct": 2 }
-      ]
-    },
-    {
-      "id": "u7",
-      "title": "Время и Дни недели",
-      "icon": "⏰",
-      "words": [
-        { "sr": "Dzisiaj", "tr": "[dzishay]", "ru": "Сегодня" },
+        { "sr": "Dziesięć", "tr": "[jeshench]", "ru": "Десять" },
+        { "sr": "Dwadzieścia", "tr": "[dvadzyeshcha]", "ru": "Двадцать" },
+        { "sr": "Sto", "tr": "[sto]", "ru": "Сто" },
+        { "sr": "Tysiąc", "tr": "[tysyench]", "ru": "Тысяча" },
+        { "sr": "Dziś", "tr": "[dzish]", "ru": "Сегодня" },
         { "sr": "Jutro", "tr": "[yutro]", "ru": "Завтра" },
         { "sr": "Wczoraj", "tr": "[fchoray]", "ru": "Вчера" },
+        { "sr": "Teraz", "tr": "[terash]", "ru": "Сейчас" },
+        { "sr": "Później", "tr": "[puzhnyey]", "ru": "Позже" },
+        { "sr": "Godzina", "tr": "[godzina]", "ru": "Час" },
+        { "sr": "Minuta", "tr": "[minuta]", "ru": "Минута" },
+        { "sr": "Tydzień", "tr": "[tygodnyen]", "ru": "Неделя" },
+        { "sr": "Miesiąc", "tr": "[myeshench]", "ru": "Месяц" },
+        { "sr": "Rok", "tr": "[rok]", "ru": "Год" },
         { "sr": "Poniedziałek", "tr": "[ponedzyawlek]", "ru": "Понедельник" },
         { "sr": "Wtorek", "tr": "[ftorek]", "ru": "Вторник" },
         { "sr": "Środa", "tr": "[shroda]", "ru": "Среда" },
@@ -198,237 +183,351 @@
         { "sr": "Sobota", "tr": "[sobota]", "ru": "Суббота" },
         { "sr": "Niedziela", "tr": "[nedzhela]", "ru": "Воскресенье" }
       ],
-      "grammar": {
-        "title": "Настоящее время (Глаголы)",
-        "rules": "Глаголы меняются по лицам. Например, «wiedzieć» (знать): wiem (я знаю), wiesz (ты знаешь), wie (он/она знает).",
-        "examples": [
-          { "sr": "Ja wiem.", "ru": "Я знаю." },
-          { "sr": "Ty wiesz.", "ru": "Ты знаешь." },
-          { "sr": "My wiemy.", "ru": "Мы знаем." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Завтра»?", "options": ["Dzisiaj", "Wczoraj", "Jutro", "Piątek"], "correct": 2 },
-        { "q": "Что означает «Poniedziałek»?", "options": ["Воскресенье", "Понедельник", "Среда", "Пятница"], "correct": 1 },
-        { "q": "Как будет «Ты знаешь»?", "options": ["Ja wiem", "Ty wiesz", "On wie", "My wiemy"], "correct": 1 }
-      ]
+      "grammar": { "title": "Настоящее время", "rules": "Спряжение глаголов. Пример: być (быть) - jestem, jesteś, jest, jesteśmy, jesteście, są.", "examples": [{ "sr": "Ja pracuję, ty pracujesz.", "ru": "Я работаю, ты работаешь." }] },
+      "quiz": [{ "q": "Как сказать «Завтра»?", "options": ["Wczoraj", "Dziś", "Jutro", "Teraz"], "correct": 2 }]
     },
     {
-      "id": "u8",
-      "title": "Тело и Здоровье",
-      "icon": "🏥",
+      "id": "u6",
+      "title": "Город и Транспорт (A2)",
+      "icon": "✈️",
       "words": [
-        { "sr": "Głowa", "tr": "[gwova]", "ru": "Голова" },
-        { "sr": "Oko", "tr": "[oko]", "ru": "Глаз" },
-        { "sr": "Ręka", "tr": "[renka]", "ru": "Рука" },
-        { "sr": "Noga", "tr": "[noga]", "ru": "Нога" },
-        { "sr": "Serce", "tr": "[sertse]", "ru": "Сердце" },
-        { "sr": "Lekarz", "tr": "[lekarzh]", "ru": "Врач" },
-        { "sr": "Szpital", "tr": "[shpital]", "ru": "Больница" }
+        { "sr": "Miasto", "tr": "[myasto]", "ru": "Город" },
+        { "sr": "Ulica", "tr": "[ulitsa]", "ru": "Улица" },
+        { "sr": "Plac", "tr": "[plats]", "ru": "Площадь" },
+        { "sr": "Park", "tr": "[park]", "ru": "Парк" },
+        { "sr": "Most", "tr": "[most]", "ru": "Мост" },
+        { "sr": "Rzeka", "tr": "[zheka]", "ru": "Река" },
+        { "sr": "Lotnisko", "tr": "[lotnisko]", "ru": "Аэропорт" },
+        { "sr": "Dworzec", "tr": "[dvozhets]", "ru": "Вокзал" },
+        { "sr": "Pociąg", "tr": "[pochyong]", "ru": "Поезд" },
+        { "sr": "Autobus", "tr": "[autobus]", "ru": "Автобус" },
+        { "sr": "Tramwaj", "tr": "[tramfay]", "ru": "Трамвай" },
+        { "sr": "Metro", "tr": "[metro]", "ru": "Метро" },
+        { "sr": "Taksówka", "tr": "[taksufka]", "ru": "Такси" },
+        { "sr": "Samochód", "tr": "[samokhud]", "ru": "Автомобиль" },
+        { "sr": "Bilet", "tr": "[bilet]", "ru": "Билет" },
+        { "sr": "Hotel", "tr": "[hotel]", "ru": "Отель" },
+        { "sr": "Podróż", "tr": "[podruz]", "ru": "Путешествие" },
+        { "sr": "Lewo", "tr": "[levo]", "ru": "Налево" },
+        { "sr": "Prawo", "tr": "[pravo]", "ru": "Направо" },
+        { "sr": "Prosto", "tr": "[prosto]", "ru": "Прямо" },
+        { "sr": "Daleko", "tr": "[daleko]", "ru": "Далеко" },
+        { "sr": "Blisko", "tr": "[blisko]", "ru": "Близко" },
+        { "sr": "Paszport", "tr": "[pashport]", "ru": "Паспорт" },
+        { "sr": "Wiza", "tr": "[viza]", "ru": "Виза" },
+        { "sr": "Bagaż", "tr": "[bagazh]", "ru": "Багаж" },
+        { "sr": "Rezerwacja", "tr": "[rezervatse]", "ru": "Бронирование" },
+        { "sr": "Kierunek", "tr": "[kyerunek]", "ru": "Направление" },
+        { "sr": "Wakacje", "tr": "[vakatse]", "ru": "Отпуск" },
+        { "sr": "Mapa", "tr": "[mapa]", "ru": "Карта" }
       ],
-      "grammar": {
-        "title": "Модальные глаголы",
-        "rules": "Móc (мочь) и chcieć (хотеть). Ja mogę (я могу), Ja chcę (я хочу).",
-        "examples": [
-          { "sr": "Mogę pomóc.", "ru": "Я могу помочь." },
-          { "sr": "Chcę wodę.", "ru": "Я хочу воду." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Голова»?", "options": ["Oko", "Głowa", "Ręka", "Noga"], "correct": 1 },
-        { "q": "Что означает «Lekarz»?", "options": ["Больница", "Сердце", "Врач", "Глаз"], "correct": 2 },
-        { "q": "Как сказать «Я хочу»?", "options": ["Mogę", "Chcę", "Wiem", "Robię"], "correct": 1 }
-      ]
+      "grammar": { "title": "Будущее время", "rules": "Будущее время: będę + инфинитив или będę + причастие. Пример: będę pracować / będę pracował.", "examples": [{ "sr": "Będę pracować jutro.", "ru": "Я буду работать завтра." }] },
+      "quiz": [{ "q": "Как сказать «Налево»?", "options": ["Prawo", "Lewo", "Prosto", "Naprzód"], "correct": 1 }]
     },
     {
-      "id": "u9",
-      "title": "Погода и Природа",
-      "icon": "☀️",
-      "words": [
-        { "sr": "Słońce", "tr": "[swon-tse]", "ru": "Солнце" },
-        { "sr": "Deszcz", "tr": "[deshch]", "ru": "Дождь" },
-        { "sr": "Śnieg", "tr": "[shnyeg]", "ru": "Снег" },
-        { "sr": "Wiatr", "tr": "[vyatr]", "ru": "Ветер" },
-        { "sr": "Pogoda", "tr": "[pogoda]", "ru": "Погода" },
-        { "sr": "Ciepło", "tr": "[chepwo]", "ru": "Тепло" },
-        { "sr": "Zimno", "tr": "[zimno]", "ru": "Холодно" }
-      ],
-      "grammar": {
-        "title": "Прошедшее время",
-        "rules": "Прошедшее время: byłem (я был), byłam (я была).",
-        "examples": [
-          { "sr": "Byłem tam.", "ru": "Я был там." },
-          { "sr": "Ona była tutaj.", "ru": "Она была здесь." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Солнце»?", "options": ["Deszcz", "Słońce", "Śnieg", "Wiatr"], "correct": 1 },
-        { "q": "Что означает «Ciepło»?", "options": ["Холодно", "Ветрено", "Тепло", "Солнечно"], "correct": 2 },
-        { "q": "Как сказать «Я был»?", "options": ["Byłem", "Byłam", "Byłeś", "Był"], "correct": 0 }
-      ]
-    },
-    {
-      "id": "u10",
-      "title": "Одежда и Магазины",
-      "icon": "🛍️",
-      "words": [
-        { "sr": "Ubranie", "tr": "[ubranye]", "ru": "Одежда" },
-        { "sr": "Koszulka", "tr": "[koshulka]", "ru": "Футболка" },
-        { "sr": "Spodnie", "tr": "[spodnye]", "ru": "Брюки" },
-        { "sr": "Buty", "tr": "[buty]", "ru": "Обувь" },
-        { "sr": "Sklep", "tr": "[sklep]", "ru": "Магазин" },
-        { "sr": "Pieniądze", "tr": "[penyondze]", "ru": "Деньги" },
-        { "sr": "Drogo", "tr": "[drogo]", "ru": "Дорого" },
-        { "sr": "Tanio", "tr": "[tanio]", "ru": "Дешево" }
-      ],
-      "grammar": {
-        "title": "Вежливая просьба",
-        "rules": "Proszę (пожалуйста). ... proszę (Я прошу...).",
-        "examples": [
-          { "sr": "Proszę jedną kawę.", "ru": "Одну кофе, пожалуйста." },
-          { "sr": "Ile to kosztuje?", "ru": "Сколько стоит?" }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Деньги»?", "options": ["Pieniądze", "Ubranie", "Sklep", "Buty"], "correct": 0 },
-        { "q": "Что означает «Drogo»?", "options": ["Дешево", "Дорого", "Красиво", "Удобно"], "correct": 1 },
-        { "q": "Как сказать «Сколько стоит?»", "options": ["Co to jest?", "Ile to kosztuje?", "Gdzie jest sklep?", "Jak się masz?"], "correct": 1 }
-      ]
-    },
-    {
-      "id": "u11",
-      "title": "Профессии и Работа",
+      "id": "u7",
+      "title": "Работа и Бизнес (B1)",
       "icon": "💼",
       "words": [
         { "sr": "Praca", "tr": "[pratsa]", "ru": "Работа" },
-        { "sr": "Nauczyciel", "tr": "[nauchitsel]", "ru": "Учитель" },
-        { "sr": "Inżynier", "tr": "[inzhener]", "ru": "Инженер" },
-        { "sr": "Student", "tr": "[student]", "ru": "Студент" },
-        { "sr": "Pracować", "tr": "[pratsovach]", "ru": "Работать" },
-        { "sr": "Biuro", "tr": "[biuro]", "ru": "Офис" }
+        { "sr": "Pieniądze", "tr": "[penyondze]", "ru": "Деньги" },
+        { "sr": "Pensja", "tr": "[pensya]", "ru": "Зарплата" },
+        { "sr": "Bank", "tr": "[bank]", "ru": "Банк" },
+        { "sr": "Umowa", "tr": "[umova]", "ru": "Договор" },
+        { "sr": "Klient", "tr": "[klyent]", "ru": "Клиент" },
+        { "sr": "Biuro", "tr": "[byuro]", "ru": "Офис" },
+        { "sr": "Spotkanie", "tr": "[spotkanye]", "ru": "Встреча" },
+        { "sr": "Projekt", "tr": "[proyekt]", "ru": "Проект" },
+        { "sr": "Inwestycja", "tr": "[investytsya]", "ru": "Инвестиция" },
+        { "sr": "Gospodarka", "tr": "[gospodarka]", "ru": "Экономика" },
+        { "sr": "Rynek", "tr": "[rynek]", "ru": "Рынок" },
+        { "sr": "Kryzys", "tr": "[kshyzys]", "ru": "Кризис" },
+        { "sr": "Bezrobocie", "tr": "[bezrobotse]", "ru": "Безработица" },
+        { "sr": "Podatek", "tr": "[podatek]", "ru": "Налог" },
+        { "sr": "Zysk", "tr": "[zysk]", "ru": "Прибыль" },
+        { "sr": "Strata", "tr": "[strata]", "ru": "Убыток" },
+        { "sr": "Kapitał", "tr": "[kapitau]", "ru": "Капитал" },
+        { "sr": "Kredyt", "tr": "[kredyt]", "ru": "Кредит" },
+        { "sr": "Konto", "tr": "[konto]", "ru": "Счёт" },
+        { "sr": "Dyrektor", "tr": "[dyrektor]", "ru": "Директор" },
+        { "sr": "Pracownik", "tr": "[pratsovnyk]", "ru": "Сотрудник" },
+        { "sr": "Ogłoszenie", "tr": "[ogwoshenye]", "ru": "Объявление" },
+        { "sr": "Kariera", "tr": "[karyera]", "ru": "Карьера" },
+        { "sr": "Doświadczenie", "tr": "[doshvyadchenye]", "ru": "Опыт" }
       ],
-      "grammar": {
-        "title": "Будущее время",
-        "rules": "Будущее время: będę (я буду), będziesz (ты будешь), będzie (он/она будет).",
-        "examples": [
-          { "sr": "Będę pracować.", "ru": "Я буду работать." },
-          { "sr": "Będziesz się uczyć.", "ru": "Ты будешь учиться." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Работа»?", "options": ["Szkoła", "Praca", "Biuro", "Student"], "correct": 1 },
-        { "q": "Что означает «Nauczyciel»?", "options": ["Студент", "Инженер", "Учитель", "Врач"], "correct": 2 },
-        { "q": "Как сказать «Я буду работать»?", "options": ["Pracuję", "Pracowałem", "Będę pracować", "Mogę pracować"], "correct": 2 }
-      ]
+      "grammar": { "title": "Сослагательное наклонение", "rules": "Образуется с помощью бы + причастие. Выражает нереальное условие.", "examples": [{ "sr": "Gdybym miał pieniądze, kupiłbym dom.", "ru": "Если бы у меня были деньги, я бы купил дом." }] },
+      "quiz": [{ "q": "Как сказать «Деньги»?", "options": ["Pieniądze", "Praca", "Pensja", "Konto"], "correct": 0 }]
+    },
+    {
+      "id": "u8",
+      "title": "Технологии и Наука (B1-B2)",
+      "icon": "🔬",
+      "words": [
+        { "sr": "Gazeta", "tr": "[gazeta]", "ru": "Газета" },
+        { "sr": "Wiadomości", "tr": "[vyadomoshchi]", "ru": "Новости" },
+        { "sr": "Internet", "tr": "[internet]", "ru": "Интернет" },
+        { "sr": "Telefon", "tr": "[telefon]", "ru": "Телефон" },
+        { "sr": "Komputer", "tr": "[komputer]", "ru": "Компьютер" },
+        { "sr": "Aplikacja", "tr": "[aplykatse]", "ru": "Приложение" },
+        { "sr": "Dane", "tr": "[dane]", "ru": "Данные" },
+        { "sr": "Technologia", "tr": "[tehnoloya]", "ru": "Технология" },
+        { "sr": "Badanie", "tr": "[badanye]", "ru": "Исследование" },
+        { "sr": "Naukowiec", "tr": "[naukovyets]", "ru": "Учёный" },
+        { "sr": "Sztuczna inteligencja", "tr": "[shtuchna intelygentse]", "ru": "Искусственный интеллект" },
+        { "sr": "Źródło", "tr": "[zhudwo]", "ru": "Источник" },
+        { "sr": "Dziennikarz", "tr": "[dzyennikazh]", "ru": "Журналист" },
+        { "sr": "Artykuł", "tr": "[artykul]", "ru": "Статья" },
+        { "sr": "Media", "tr": "[medya]", "ru": "СМИ" },
+        { "sr": "Oprogramowanie", "tr": "[oprogramovanye]", "ru": "Программное обеспечение" },
+        { "sr": "Sieć", "tr": "[shench]", "ru": "Сеть" },
+        { "sr": "Bezpieczeństwo", "tr": "[byespyechenystvo]", "ru": "Безопасность" },
+        { "sr": "Eksperyment", "tr": "[eksperyment]", "ru": "Эксперимент" },
+        { "sr": "Teoria", "tr": "[teorya]", "ru": "Теория" },
+        { "sr": "Odkrycie", "tr": "[odkrytse]", "ru": "Открытие" },
+        { "sr": "Rozwój", "tr": "[rozvuy]", "ru": "Развитие" },
+        { "sr": "Innowacja", "tr": "[inovatsya]", "ru": "Инновация" },
+        { "sr": "Laboratorium", "tr": "[laboratoryum]", "ru": "Лаборатория" },
+        { "sr": "Hipoteza", "tr": "[hypoteza]", "ru": "Гипотеза" }
+      ],
+      "grammar": { "title": "Прошедшее время", "rules": "Прошедшее время образуется с помощью глагоła być + причастие. Byłem, byłaś, był.", "examples": [{ "sr": "Kiedy przyszedłem, on już wyszedł.", "ru": "Когда я пришёл, он уже ушёл." }] },
+      "quiz": [{ "q": "Что означает «Sztuczna inteligencja»?", "options": ["Искусственный интеллект", "Компьютер", "Интернет", "Приложение"], "correct": 0 }]
+    },
+    {
+      "id": "u9",
+      "title": "Политика и Общество (B2)",
+      "icon": "🏛️",
+      "words": [
+        { "sr": "Władza", "tr": "[vwadza]", "ru": "Власть" },
+        { "sr": "Opozycja", "tr": "[apazytsya]", "ru": "Оппозиция" },
+        { "sr": "Wybory", "tr": "[vybory]", "ru": "Выборы" },
+        { "sr": "Społeczeństwo", "tr": "[spawechenystvo]", "ru": "Общество" },
+        { "sr": "Prawo", "tr": "[pravo]", "ru": "Закон" },
+        { "sr": "Wolność", "tr": "[volnyench]", "ru": "Свобода" },
+        { "sr": "Odpowiedzialność", "tr": "[atpyevedzyalnyench]", "ru": "Ответственность" },
+        { "sr": "Krytyka", "tr": "[krytyka]", "ru": "Критика" },
+        { "sr": "Stanowisko", "tr": "[stanovisko]", "ru": "Позиция" },
+        { "sr": "Prawa", "tr": "[prava]", "ru": "Права" },
+        { "sr": "Demokracja", "tr": "[demokratse]", "ru": "Демократия" },
+        { "sr": "Obywatel", "tr": "[obyvatel]", "ru": "Гражданин" },
+        { "sr": "Państwo", "tr": "[panyentstvo]", "ru": "Государство" },
+        { "sr": "Parlament", "tr": "[parlament]", "ru": "Парламент" },
+        { "sr": "Protest", "tr": "[protest]", "ru": "Протест" },
+        { "sr": "Kampania", "tr": "[kampanya]", "ru": "Кампания" },
+        { "sr": "Głosowanie", "tr": "[gwosovanye]", "ru": "Голосование" },
+        { "sr": "Decyzja", "tr": "[detsyzya]", "ru": "Решение" },
+        { "sr": "Reforma", "tr": "[reforma]", "ru": "Реформа" },
+        { "sr": "Publiczność", "tr": "[publyechneyench]", "ru": "Общественность" },
+        { "sr": "Konstytucja", "tr": "[konstytutse]", "ru": "Конституция" },
+        { "sr": "Minister", "tr": "[minister]", "ru": "Министр" },
+        { "sr": "Polityka", "tr": "[polityka]", "ru": "Политика" },
+        { "sr": "Granica", "tr": "[granitsa]", "ru": "Граница" },
+        { "sr": "Porozumienie", "tr": "[porozumyene]", "ru": "Соглашение" }
+      ],
+      "grammar": { "title": "Пассивный залог", "rules": "Пассивный залог образуется с помощью się + глагол в 3-м лице.", "examples": [{ "sr": "Tu się nie pali.", "ru": "Здесь не курят." }] },
+      "quiz": [{ "q": "Что значит «Tu się mówi po polsku»?", "options": ["Здесь говорят по-польски", "Здесь учат польский", "Здесь живут поляки"], "correct": 0 }]
+    },
+    {
+      "id": "u10",
+      "title": "Экология (B2)",
+      "icon": "🌍",
+      "words": [
+        { "sr": "Środowisko", "tr": "[shrodovisko]", "ru": "Окружающая среда" },
+        { "sr": "Zanieczyszczenie", "tr": "[zanyechyshchenye]", "ru": "Загрязнение" },
+        { "sr": "Zrównoważony rozwój", "tr": "[zrunnovazhony rozvuy]", "ru": "Устойчивое развитие" },
+        { "sr": "Zmiany klimatyczne", "tr": "[zmiany klymatychne]", "ru": "Изменение климата" },
+        { "sr": "Recykling", "tr": "[retsekhlyng]", "ru": "Переработка" },
+        { "sr": "Energia", "tr": "[energя]", "ru": "Энергия" },
+        { "sr": "Zasoby naturalne", "tr": "[zasoby naturalne]", "ru": "Природные ресурсы" },
+        { "sr": "Ochrona", "tr": "[okhrona]", "ru": "Защита" },
+        { "sr": "Ekosystem", "tr": "[ekosystem]", "ru": "Экосистема" },
+        { "sr": "Bioróżnorodność", "tr": "[byoroznoorodneyench]", "ru": "Биоразнообразие" },
+        { "sr": "Las", "tr": "[las]", "ru": "Лес" },
+        { "sr": "Powietrze", "tr": "[povyethzhe]", "ru": "Воздух" },
+        { "sr": "Odpady", "tr": "[atpadы]", "ru": "Отходы" },
+        { "sr": "Globalne ocieplenie", "tr": "[globalne atseplyenye]", "ru": "Глобальное потепление" },
+        { "sr": "Emisja", "tr": "[emіsya]", "ru": "Выброс" },
+        { "sr": "Odpowiedzialne zachowanie", "tr": "[atpyevedzyalne zakhovanye]", "ru": "Ответственное поведение" },
+        { "sr": "Planeta", "tr": "[planeta]", "ru": "Планета" },
+        { "sr": "Środki", "tr": "[shrodki]", "ru": "Меры" },
+        { "sr": "Odnawialne źródła", "tr": "[adnavyalne zhudwа]", "ru": "Возобновляемые источники" },
+        { "sr": "Odpady plastikowe", "tr": "[atpadы plastikovye]", "ru": "Пластиковые отходы" },
+        { "sr": "Zanieczyszczenie wody", "tr": "[zanyechyshchenye vody]", "ru": "Загрязнение воды" },
+        { "sr": "Zielona energia", "tr": "[zyelona energя]", "ru": "Зелёная энергия" },
+        { "sr": "Ekologia", "tr": "[ekologя]", "ru": "Экология" },
+        { "sr": "Natura", "tr": "[natura]", "ru": "Природа" }
+      ],
+      "grammar": { "title": "Сложные союзы", "rules": "Chociaż (хотя), Podczas gdy (в то время как), Ponieważ (так как). Используются для сложных предложений.", "examples": [{ "sr": "Chociaż pada deszcz, idziemy na spacer.", "ru": "Хотя идёт дождь, мы идём на прогулку." }] },
+      "quiz": [{ "q": "Что означает «Chociaż»?", "options": ["Потому что", "Хотя", "Пока", "Если"], "correct": 1 }]
+    },
+    {
+      "id": "u11",
+      "title": "Медицина (B1-B2)",
+      "icon": "🏥",
+      "words": [
+        { "sr": "Zdrowie", "tr": "[zdrowye]", "ru": "Здравоохранение" },
+        { "sr": "Objaw", "tr": "[abyaf]", "ru": "Симптом" },
+        { "sr": "Diagnoza", "tr": "[dyagnoza]", "ru": "Диагноз" },
+        { "sr": "Lek", "tr": "[lek]", "ru": "Лекарство" },
+        { "sr": "Operacja", "tr": "[operatse]", "ru": "Операция" },
+        { "sr": "Odporność", "tr": "[atpornench]", "ru": "Иммунитет" },
+        { "sr": "Szpital", "tr": "[shpytal]", "ru": "Больница" },
+        { "sr": "Lekarz", "tr": "[lekazh]", "ru": "Врач" },
+        { "sr": "Pacjent", "tr": "[patseynt]", "ru": "Пациент" },
+        { "sr": "Terapia", "tr": "[terapя]", "ru": "Терапия" },
+        { "sr": "Recepta", "tr": "[retsepta]", "ru": "Рецепт" },
+        { "sr": "Apteka", "tr": "[apteka]", "ru": "Аптека" },
+        { "sr": "Choroba", "tr": "[khорoba]", "ru": "Болезнь" },
+        { "sr": "Infekcja", "tr": "[infektse]", "ru": "Инфекция" },
+        { "sr": "Wirus", "tr": "[virys]", "ru": "Вирус" },
+        { "sr": "Szczepionka", "tr": "[shchepyonka]", "ru": "Вакцина" },
+        { "sr": "Zdrowie", "tr": "[zdrowye]", "ru": "Здоровье" },
+        { "sr": "Ból", "tr": "[bul]", "ru": "Боль" },
+        { "sr": "Temperatura", "tr": "[temperatura]", "ru": "Температура" },
+        { "sr": "Ciśnienie krwi", "tr": "[tshyshnye kryf]", "ru": "Давление" },
+        { "sr": "Pogotowie", "tr": "[pogotovy]", "ru": "Скорая помощь" },
+        { "sr": "Badanie", "tr": "[badanye]", "ru": "Осмотр" },
+        { "sr": "Rekonwalescencja", "tr": "[rekonvalesentse]", "ru": "Выздоровление" },
+        { "sr": "Alergia", "tr": "[alergя]", "ru": "Аллергия" },
+        { "sr": "Ubezpieczenie", "tr": "[ubyespechenye]", "ru": "Страховка" }
+      ],
+      "grammar": { "title": "Модальные глаголы", "rules": "Musić (должен), Trzeba (нужно), Mogę (могу), Chcę (хочу). Часто с конструкцией 'żeby' + глагол.", "examples": [{ "sr": "Muszę iść do lekarza.", "ru": "Я должен пойти к врачу." }] },
+      "quiz": [{ "q": "Как сказать «Я должен»?", "options": ["Mogę", "Muszę", "Chcę", "Wiem"], "correct": 1 }]
     },
     {
       "id": "u12",
-      "title": "Дом и Мебель",
-      "icon": "🏠",
+      "title": "Спорт (B1)",
+      "icon": "⚽",
       "words": [
-        { "sr": "Dom", "tr": "[dom]", "ru": "Дом" },
-        { "sr": "Mieszkanie", "tr": "[myeshkanye]", "ru": "Квартира" },
-        { "sr": "Pokój", "tr": "[pokuy]", "ru": "Комната" },
-        { "sr": "Stół", "tr": "[stuw]", "ru": "Стол" },
-        { "sr": "Krzesło", "tr": "[ksheswo]", "ru": "Стул" },
-        { "sr": "Okno", "tr": "[okno]", "ru": "Окно" },
-        { "sr": "Drzwi", "tr": "[dzhvi]", "ru": "Дверь" }
+        { "sr": "Zawody", "tr": "[zavody]", "ru": "Соревнование" },
+        { "sr": "Trening", "tr": "[trening]", "ru": "Тренировка" },
+        { "sr": "Zwycięstwo", "tr": "[zvytsementstvo]", "ru": "Победа" },
+        { "sr": "Porażka", "tr": "[porazhka]", "ru": "Поражение" },
+        { "sr": "Drużyna", "tr": "[druzhyyna]", "ru": "Команда" },
+        { "sr": "Trener", "tr": "[trener]", "ru": "Тренер" },
+        { "sr": "Zawodnik", "tr": "[zavodnyk]", "ru": "Игрок" },
+        { "sr": "Boisko", "tr": "[boyisko]", "ru": "Поле" },
+        { "sr": "Stadion", "tr": "[stadyon]", "ru": "Стадион" },
+        { "sr": "Kibic", "tr": "[kibits]", "ru": "Болельщик" },
+        { "sr": "Wynik", "tr": "[vynik]", "ru": "Результат" },
+        { "sr": "Gol", "tr": "[gol]", "ru": "Гол" },
+        { "sr": "Piłka nożna", "tr": "[pywka nozhna]", "ru": "Футбол" },
+        { "sr": "Koszykówka", "tr": "[koshykufka]", "ru": "Баскетбол" },
+        { "sr": "Tenis", "tr": "[tenis]", "ru": "Теннис" },
+        { "sr": "Pływanie", "tr": "[pwyvanye]", "ru": "Плавание" },
+        { "sr": "Lekkoatletyka", "tr": "[lekkoatletyka]", "ru": "Атлетика" },
+        { "sr": "Fitness", "tr": "[fitness]", "ru": "Фитнес" },
+        { "sr": "Dieta", "tr": "[dyeta]", "ru": "Питание" },
+        { "sr": "Ćwiczenie", "tr": "[chvytshenye]", "ru": "Упражнение" },
+        { "sr": "Medal", "tr": "[medal]", "ru": "Медаль" },
+        { "sr": "Mistrz", "tr": "[mistzh]", "ru": "Чемпион" },
+        { "sr": "Reguły", "tr": "[reguly]", "ru": "Правила" },
+        { "sr": "Sędzia", "tr": "[sendzya]", "ru": "Судья" },
+        { "sr": "Rekord", "tr": "[rekord]", "ru": "Рекорд" }
       ],
-      "grammar": {
-        "title": "Предлоги места",
-        "rules": "W (в), Na (на), Przy (у/около), Pod (под), Nad (над).",
-        "examples": [
-          { "sr": "Książka jest na stole.", "ru": "Книга на столе." },
-          { "sr": "Jestem w pokoju.", "ru": "Я в комнате." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Дом»?", "options": ["Mieszkanie", "Pokój", "Dom", "Stół"], "correct": 2 },
-        { "q": "Что означает «Okno»?", "options": ["Дверь", "Окно", "Стол", "Стул"], "correct": 1 },
-        { "q": "Как сказать «Книга на столе»?", "options": ["Książka jest w pokoju", "Książka jest na stole", "Książka jest w domu", "Książka jest pod stołem"], "correct": 1 }
-      ]
+      "grammar": { "title": "Степени сравнения", "rules": "Сравнительная: dobry -> lepszy. Превосходная: najlepszy.", "examples": [{ "sr": "On jest lepszym graczem ode mnie.", "ru": "Он лучший игрок, чем я." }] },
+      "quiz": [{ "q": "Как сказать «Лучший»?", "options": ["Dobry", "Lepszy", "Najlepszy", "Dobrze"], "correct": 2 }]
     },
     {
       "id": "u13",
-      "title": "Хобби и Спорт",
-      "icon": "⚽",
+      "title": "Право (B2)",
+      "icon": "⚖️",
       "words": [
-        { "sr": "Sport", "tr": "[sport]", "ru": "Спорт" },
-        { "sr": "Piłka nożna", "tr": "[piwka nozhna]", "ru": "Футбол" },
-        { "sr": "Muzyka", "tr": "[muzika]", "ru": "Музыка" },
-        { "sr": "Książka", "tr": "[ksyonzhka]", "ru": "Книга" },
-        { "sr": "Film", "tr": "[film]", "ru": "Фильм" },
-        { "sr": "Grać", "tr": "[grach]", "ru": "Играть" },
-        { "sr": "Czytać", "tr": "[chytach]", "ru": "Читать" }
+        { "sr": "Sąd", "tr": "[sond]", "ru": "Суд" },
+        { "sr": "Adwokat", "tr": "[advokat]", "ru": "Адвокат" },
+        { "sr": "Wyrok", "tr": "[vыrok]", "ru": "Приговор" },
+        { "sr": "Wina", "tr": "[vina]", "ru": "Вина" },
+        { "sr": "Świadek", "tr": "[shvyadek]", "ru": "Свидетель" },
+        { "sr": "Dowód", "tr": "[dovud]", "ru": "Доказательство" },
+        { "sr": "Prokurator", "tr": "[prokurator]", "ru": "Прокурор" },
+        { "sr": "Obrona", "tr": "[abrona]", "ru": "Защита" },
+        { "sr": "Oskarżenie", "tr": "[askazhenye]", "ru": "Обвинение" },
+        { "sr": "Przestępstwo", "tr": "[pshestempstvo]", "ru": "Преступление" },
+        { "sr": "Kara", "tr": "[kara]", "ru": "Наказание" },
+        { "sr": "Więzienie", "tr": "[venzyenye]", "ru": "Тюрьма" },
+        { "sr": "Prawo", "tr": "[pravo]", "ru": "Право" },
+        { "sr": "Obowiązek", "tr": "[abyovyazek]", "ru": "Обязанность" },
+        { "sr": "Umowa", "tr": "[umova]", "ru": "Соглашение" },
+        { "sr": "Strona", "tr": "[strona]", "ru": "Сторона" },
+        { "sr": "Postępowanie", "tr": "[postempanye]", "ru": "Процесс" },
+        { "sr": "Skarga", "tr": "[skarga]", "ru": "Жалоба" },
+        { "sr": "Śledztwo", "tr": "[shledztvo]", "ru": "Расследование" },
+        { "sr": "Misja", "tr": "[mіsya]", "ru": "Миссия" },
+        { "sr": "Policja", "tr": "[polіtsya]", "ru": "Полиция" },
+        { "sr": "Przestępca", "tr": "[pshestempsa]", "ru": "Преступник" },
+        { "sr": "Ofiara", "tr": "[afyra]", "ru": "Жертва" },
+        { "sr": "Przesłuchanie", "tr": "[pseshlukhanye]", "ru": "Допрос" },
+        { "sr": "Sprawiedliwość", "tr": "[spravyedlіvіench]", "ru": "Справедливость" }
       ],
-      "grammar": {
-        "title": "Инфинитив",
-        "rules": "Инфинитив обычно заканчивается на -ć (grać, czytać, pracować).",
-        "examples": [
-          { "sr": "Lubię grać w piłkę nożną.", "ru": "Я люблю играть в футбол." },
-          { "sr": "On lubi czytać książki.", "ru": "Он любит читать книги." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Спорт»?", "options": ["Muzyka", "Piłka nożna", "Sport", "Film"], "correct": 2 },
-        { "q": "Что означает «Czytać»?", "options": ["Играть", "Читать", "Петь", "Танцевать"], "correct": 1 },
-        { "q": "Как сказать «Я люблю играть»?", "options": ["Lubię czytać", "Lubię grać", "Lubię muzykę", "Gram"], "correct": 1 }
-      ]
+      "grammar": { "title": "Косвенная речь", "rules": "Передаётся с помощью союза «że» + глагол в соответствующем времени.", "examples": [{ "sr": "Dziennikarz powiedział, że będą wiadomości.", "ru": "Журналист сказал, что будут новости." }] },
+      "quiz": [{ "q": "Как сказать «Он сказал, что придёт»?", "options": ["Powiedział, że przyjdzie", "Powiedział, że przyszedł", "Powiedział, że przychodzi"], "correct": 0 }]
     },
     {
       "id": "u14",
-      "title": "Транспорт и Город",
-      "icon": "🚌",
+      "title": "Культура и Эмоции (B2)",
+      "icon": "❤️",
       "words": [
-        { "sr": "Samochód", "tr": "[samokhud]", "ru": "Автомобиль" },
-        { "sr": "Rower", "tr": "[rover]", "ru": "Велосипед" },
-        { "sr": "Taksówka", "tr": "[taksuvka]", "ru": "Такси" },
-        { "sr": "Park", "tr": "[park]", "ru": "Парк" },
-        { "sr": "Restauracja", "tr": "[restauratsya]", "ru": "Ресторан" },
-        { "sr": "Piekarnia", "tr": "[pekarnya]", "ru": "Пекарня" },
-        { "sr": "Apteka", "tr": "[apteka]", "ru": "Аптека" }
+        { "sr": "Miłość", "tr": "[mіvіench]", "ru": "Любовь" },
+        { "sr": "Szczęście", "tr": "[shchenchye]", "ru": "Счастье" },
+        { "sr": "Smutek", "tr": "[smutek]", "ru": "Грусть" },
+        { "sr": "Strach", "tr": "[strakh]", "ru": "Страх" },
+        { "sr": "Nadzieja", "tr": "[nadzyeya]", "ru": "Надежда" },
+        { "sr": "Zaufanie", "tr": "[zaufanye]", "ru": "Доверие" },
+        { "sr": "Relacja", "tr": "[relatse]", "ru": "Отношение" },
+        { "sr": "Partner", "tr": "[partner]", "ru": "Партнёр" },
+        { "sr": "Przyjaźń", "tr": "[pshyazhany]", "ru": "Дружба" },
+        { "sr": "Kultura", "tr": "[kultura]", "ru": "Культура" },
+        { "sr": "Sztuka", "tr": "[shtuka]", "ru": "Искусство" },
+        { "sr": "Muzyka", "tr": "[muzika]", "ru": "Музыка" },
+        { "sr": "Film", "tr": "[film]", "ru": "Фильм" },
+        { "sr": "Książka", "tr": "[kshyonzhka]", "ru": "Книга" },
+        { "sr": "Tradycja", "tr": "[tradіtsya]", "ru": "Традиция" },
+        { "sr": "Styl", "tr": "[styl]", "ru": "Стиль" },
+        { "sr": "Wystawa", "tr": "[vystava]", "ru": "Выставка" },
+        { "sr": "Publiczność", "tr": "[publyechneyench]", "ru": "Публика" },
+        { "sr": "Inspiracja", "tr": "[іnіspіratse]", "ru": "Вдохновение" },
+        { "sr": "Talent", "tr": "[talent]", "ru": "Талант" },
+        { "sr": "Emocja", "tr": "[emotse]", "ru": "Эмоция" },
+        { "sr": "Pamięć", "tr": "[pamyench]", "ru": "Воспоминание" },
+        { "sr": "Teatr", "tr": "[teatr]", "ru": "Театр" },
+        { "sr": "Obraz", "tr": "[abraz]", "ru": "Картина" },
+        { "sr": "Dziedzictwo", "tr": "[dzyedzіtstvo]", "ru": "Наследие" }
       ],
-      "grammar": {
-        "title": "Направление",
-        "rules": "Gdzie jest...? (Где находится...?) и Jak dojść do...? (Как добраться до...?).",
-        "examples": [
-          { "sr": "Gdzie jest park?", "ru": "Где парк?" },
-          { "sr": "Jak dojść do restauracji?", "ru": "Как добраться до ресторана?" }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Автомобиль»?", "options": ["Rower", "Taksówka", "Samochód", "Pociąg"], "correct": 2 },
-        { "q": "Что означает «Piekarnia»?", "options": ["Аптека", "Ресторан", "Пекарня", "Парк"], "correct": 2 },
-        { "q": "Как спросить «Где парк?»", "options": ["Co to jest park?", "Gdzie jest park?", "Jak jest park?", "Ile kosztuje park?"], "correct": 1 }
-      ]
+      "grammar": { "title": "Относительные местоимения", "rules": "Który, która, które (который, которая, которое). Согласуются с существительным.", "examples": [{ "sr": "Książka, która jest na stole, jest moja.", "ru": "Книга, которая на столе, моя." }] },
+      "quiz": [{ "q": "Как сказать «Книга, которая на столе»?", "options": ["Książka, która jest na stole", "Książka, którą jest na stole", "Książka, które jest na stole"], "correct": 0 }]
     },
     {
       "id": "u15",
-      "title": "Эмоции и Характер",
-      "icon": "😊",
+      "title": "Финансы (B2)",
+      "icon": "💰",
       "words": [
-        { "sr": "Szczęśliwy", "tr": "[shchen-shlivy]", "ru": "Счастливый" },
-        { "sr": "Smutny", "tr": "[smutny]", "ru": "Грустный" },
-        { "sr": "Zły", "tr": "[zwy]", "ru": "Злой" },
-        { "sr": "Zmęczony", "tr": "[zmenchony]", "ru": "Уставший" },
-        { "sr": "Dobry", "tr": "[dobry]", "ru": "Хороший" },
-        { "sr": "Zły", "tr": "[zwy]", "ru": "Плохой" },
-        { "sr": "Inteligentny", "tr": "[inteligentny]", "ru": "Умный" }
+        { "sr": "Kapitał", "tr": "[kapіtal]", "ru": "Капитал" },
+        { "sr": "Kredyt", "tr": "[kredyt]", "ru": "Кредит" },
+        { "sr": "Bank", "tr": "[bank]", "ru": "Банк" },
+        { "sr": "Kurs", "tr": "[kurs]", "ru": "Курс" },
+        { "sr": "Płatność", "tr": "[pwatnych]", "ru": "Платёж" },
+        { "sr": "Konto", "tr": "[konto]", "ru": "Счёт" },
+        { "sr": "Podatek", "tr": "[podatek]", "ru": "Налог" },
+        { "sr": "Zarobek", "tr": "[zarobek]", "ru": "Заработок" },
+        { "sr": "Oferta", "tr": "[aferta]", "ru": "Предложение" },
+        { "sr": "Popyt", "tr": "[popыt]", "ru": "Спрос" },
+        { "sr": "Produkt", "tr": "[produkt]", "ru": "Продукт" },
+        { "sr": "Usługa", "tr": "[uswuga]", "ru": "Услуга" },
+        { "sr": "Konkurencja", "tr": "[konkurentse]", "ru": "Конкуренция" },
+        { "sr": "Sukces", "tr": "[sukces]", "ru": "Успех" },
+        { "sr": "Wzrost", "tr": "[fzrost]", "ru": "Рост" },
+        { "sr": "Spadek", "tr": "[spadek]", "ru": "Падение" },
+        { "sr": "Finanse", "tr": "[fіnanse]", "ru": "Финансы" },
+        { "sr": "Budżet", "tr": "[budzhіt]", "ru": "Бюджет" },
+        { "sr": "Oszczędności", "tr": "[ashchenzhyench]", "ru": "Сбережения" },
+        { "sr": "Odsetki", "tr": "[atsetki]", "ru": "Проценты" },
+        { "sr": "Dywidenda", "tr": "[dyvіdenda]", "ru": "Дивиденды" },
+        { "sr": "Giełda", "tr": "[gyeўda]", "ru": "Биржа" },
+        { "sr": "Akcja", "tr": "[aktsya]", "ru": "Акция" },
+        { "sr": "Transakcja", "tr": "[transaktsya]", "ru": "Транзакция" },
+        { "sr": "Ekonomia", "tr": "[ekonomіya]", "ru": "Экономика" }
       ],
-      "grammar": {
-        "title": "Прилагательные",
-        "rules": "Прилагательные согласуются с существительными в роде, числе и падеже. Dobry (м.р.), Dobra (ж.р.), Dobre (с.р.).",
-        "examples": [
-          { "sr": "On jest dobry.", "ru": "Он хороший." },
-          { "sr": "Ona jest dobra.", "ru": "Она хорошая." },
-          { "sr": "Jestem szczęśliwy.", "ru": "Я счастлив." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Счастливый»?", "options": ["Smutny", "Szczęśliwy", "Zły", "Zmęczony"], "correct": 1 },
-        { "q": "Что означает «Zmęczony»?", "options": ["Злой", "Уставший", "Умный", "Хороший"], "correct": 1 },
-        { "q": "Как сказать «Она хорошая»?", "options": ["On jest dobry", "Ona jest dobra", "Jestem dobry", "Oni są dobrzy"], "correct": 1 }
-      ]
+      "grammar": { "title": "Условные предложения", "rules": "Jeśli + настоящее время, + будущее время. Выражает реальное условие.", "examples": [{ "sr": "Jeśli zainwestujesz kapitał, będziesz miał zysk.", "ru": "Если вложишь капитал, получишь прибыль." }] },
+      "quiz": [{ "q": "Как сказать «Если будешь работать, заработаешь»?", "options": ["Jeśli pracujesz, zarobisz", "Jeśli będziesz pracował, zarobisz", "Jeśli pracowałeś, zarobiłeś"], "correct": 1 }]
     }
   ]
 }
