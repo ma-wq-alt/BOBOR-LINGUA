@@ -475,28 +475,168 @@ const COURSES = {
   },
 /* ===== БЛОК 2: ПРОДОЛЖЕНИЕ (be/kk/tt/pl/tr) ===== */
    // --- [КАРКАС] be: только кириллица ---
+   // --- ПОЛНЫЙ КОНТЕНТ: be (Белорусский) ---
   be: {
     code: "be", name: "Белорусский", flag: "🇧🇾", speechLang: "be-BY",
     scripts: [{ id: "cyr", name: "Кириллица", field: "cyr", alt: null }],
     alphabet: [
       { cyr: "А", cyrSm: "а", lat: null, latSm: null, sound: "а", ex: "аўта", exRu: "машина" },
       { cyr: "Б", cyrSm: "б", lat: null, latSm: null, sound: "б", ex: "брат", exRu: "брат" },
-      { cyr: "В", cyrSm: "в", lat: null, latSm: null, sound: "в", ex: "вада", exRu: "вода" }
-      // TODO: остальные буквы белорусского алфавита (32)
+      { cyr: "В", cyrSm: "в", lat: null, latSm: null, sound: "в", ex: "вада", exRu: "вода" },
+      { cyr: "Г", cyrSm: "г", lat: null, latSm: null, sound: "г", ex: "горад", exRu: "город" },
+      { cyr: "Д", cyrSm: "д", lat: null, latSm: null, sound: "д", ex: "дом", exRu: "дом" },
+      { cyr: "Е", cyrSm: "е", lat: null, latSm: null, sound: "е", ex: "еднасць", exRu: "единство" },
+      { cyr: "Ё", cyrSm: "ё", lat: null, latSm: null, sound: "ё", ex: "ёлка", exRu: "ёлка" },
+      { cyr: "Ж", cyrSm: "ж", lat: null, latSm: null, sound: "ж", ex: "жыццё", exRu: "жизнь" },
+      { cyr: "З", cyrSm: "з", lat: null, latSm: null, sound: "з", ex: "зорка", exRu: "звезда" },
+      { cyr: "І", cyrSm: "і", lat: null, latSm: null, sound: "и", ex: "імгла", exRu: "мгла" },
+      { cyr: "Й", cyrSm: "й", lat: null, latSm: null, sound: "й", ex: "йод", exRu: "йод" },
+      { cyr: "К", cyrSm: "к", lat: null, latSm: null, sound: "к", ex: "кніга", exRu: "книга" },
+      { cyr: "Л", cyrSm: "л", lat: null, latSm: null, sound: "л", ex: "леў", exRu: "лев" },
+      { cyr: "М", cyrSm: "м", lat: null, latSm: null, sound: "м", ex: "маці", exRu: "мать" },
+      { cyr: "Н", cyrSm: "н", lat: null, latSm: null, sound: "н", ex: "нос", exRu: "нос" },
+      { cyr: "О", cyrSm: "о", lat: null, latSm: null, sound: "о", ex: "вока", exRu: "глаз" },
+      { cyr: "П", cyrSm: "п", lat: null, latSm: null, sound: "п", ex: "пяць", exRu: "пять" },
+      { cyr: "Р", cyrSm: "р", lat: null, latSm: null, sound: "р", ex: "рука", exRu: "рука" },
+      { cyr: "С", cyrSm: "с", lat: null, latSm: null, sound: "с", ex: "сонца", exRu: "солнце" },
+      { cyr: "Т", cyrSm: "т", lat: null, latSm: null, sound: "т", ex: "тата", exRu: "папа" },
+      { cyr: "У", cyrSm: "у", lat: null, latSm: null, sound: "у", ex: "вуха", exRu: "ухо" },
+      { cyr: "Ў", cyrSm: "ў", lat: null, latSm: null, sound: "у краткое", ex: "воўк", exRu: "волк" },
+      { cyr: "Ф", cyrSm: "ф", lat: null, latSm: null, sound: "ф", ex: "футбол", exRu: "футбол" },
+      { cyr: "Х", cyrSm: "х", lat: null, latSm: null, sound: "х", ex: "хлеб", exRu: "хлеб" },
+      { cyr: "Ц", cyrSm: "ц", lat: null, latSm: null, sound: "ц", ex: "цар", exRu: "царь" },
+      { cyr: "Ч", cyrSm: "ч", lat: null, latSm: null, sound: "ч", ex: "час", exRu: "время" },
+      { cyr: "Ш", cyrSm: "ш", lat: null, latSm: null, sound: "ш", ex: "школа", exRu: "школа" },
+      { cyr: "Ы", cyrSm: "ы", lat: null, latSm: null, sound: "ы", ex: "быць", exRu: "быть" },
+      { cyr: "Ь", cyrSm: "ь", lat: null, latSm: null, sound: "мягкий знак", ex: "дзьмуць", exRu: "дуть" },
+      { cyr: "Э", cyrSm: "э", lat: null, latSm: null, sound: "э", ex: "экран", exRu: "экран" },
+      { cyr: "Ю", cyrSm: "ю", lat: null, latSm: null, sound: "ю", ex: "юнак", exRu: "юноша" },
+      { cyr: "Я", cyrSm: "я", lat: null, latSm: null, sound: "я", ex: "яблык", exRu: "яблоко" }
     ],
     vocab: {
       greetings: { name: "Прывітанні", emoji: "👋", color: "#3b82f6", words: [
         { sr: "Прывітанне", tr: "[pryvitanne]", ru: "Привет" },
-        { sr: "Добры дзень", tr: "[dobry dzen]", ru: "Добрый день" }
-        // TODO: расширить
+        { sr: "Добры дзень", tr: "[dobry dzen]", ru: "Добрый день" },
+        { sr: "Добрай раніцы", tr: "[dobraj ranitsy]", ru: "Доброе утро" },
+        { sr: "Добры вечар", tr: "[dobry vechar]", ru: "Добрый вечер" },
+        { sr: "Дабранач", tr: "[dabranach]", ru: "Спокойной ночи" },
+        { sr: "Бывай", tr: "[byvaj]", ru: "Пока" },
+        { sr: "Да пабачэння", tr: "[da pabachennya]", ru: "До свидания" },
+        { sr: "Як справы?", tr: "[yak spravy?]", ru: "Как дела?" },
+        { sr: "Добра", tr: "[dobra]", ru: "Хорошо" },
+        { sr: "Дзякуй", tr: "[dzyakuj]", ru: "Спасибо" }
+      ]},
+      numbers: { name: "Лікі", emoji: "🔢", color: "#10b981", words: [
+        { sr: "Адзін", tr: "[adzin]", ru: "Один" },
+        { sr: "Два", tr: "[dva]", ru: "Два" },
+        { sr: "Тры", tr: "[try]", ru: "Три" },
+        { sr: "Чатыры", tr: "[chatyry]", ru: "Четыре" },
+        { sr: "Пяць", tr: "[pyats']", ru: "Пять" },
+        { sr: "Шэсць", tr: "[shests']", ru: "Шесть" },
+        { sr: "Сем", tr: "[sem]", ru: "Семь" },
+        { sr: "Восем", tr: "[vosem]", ru: "Восемь" },
+        { sr: "Дзевяць", tr: "[dzevyats']", ru: "Девять" },
+        { sr: "Дзесяць", tr: "[dzesyats']", ru: "Десять" }
+      ]},
+      colors: { name: "Колеры", emoji: "🎨", color: "#a855f7", words: [
+        { sr: "Чырвоны", tr: "[chyrvony]", ru: "Красный" },
+        { sr: "Сіні", tr: "[sini]", ru: "Синий" },
+        { sr: "Зялёны", tr: "[zyalyony]", ru: "Зелёный" },
+        { sr: "Жоўты", tr: "[zhowty]", ru: "Жёлтый" },
+        { sr: "Чорны", tr: "[chorny]", ru: "Чёрный" },
+        { sr: "Белы", tr: "[bely]", ru: "Белый" }
+      ]},
+      family: { name: "Сям'я", emoji: "👨‍👩‍👧", color: "#ec4899", words: [
+        { sr: "Мама", tr: "[mama]", ru: "Мама" },
+        { sr: "Тата", tr: "[tata]", ru: "Папа" },
+        { sr: "Брат", tr: "[brat]", ru: "Брат" },
+        { sr: "Сястра", tr: "[syastra]", ru: "Сестра" },
+        { sr: "Сын", tr: "[syn]", ru: "Сын" },
+        { sr: "Дачка", tr: "[dachka]", ru: "Дочь" }
+      ]},
+      food: { name: "Ежа", emoji: "🍽️", color: "#f59e0b", words: [
+        { sr: "Вада", tr: "[vada]", ru: "Вода" },
+        { sr: "Хлеб", tr: "[khleb]", ru: "Хлеб" },
+        { sr: "Малако", tr: "[malako]", ru: "Молоко" },
+        { sr: "Кава", tr: "[kava]", ru: "Кофе" },
+        { sr: "Чай", tr: "[chaj]", ru: "Чай" },
+        { sr: "Мяса", tr: "[myasa]", ru: "Мясо" },
+        { sr: "Рыба", tr: "[ryba]", ru: "Рыба" }
+      ]},
+      travel: { name: "Падарожжы", emoji: "✈️", color: "#06b6d4", words: [
+        { sr: "Аэрапорт", tr: "[aeraport]", ru: "Аэропорт" },
+        { sr: "Вакзал", tr: "[vakzal]", ru: "Вокзал" },
+        { sr: "Цягнік", tr: "[tsyahnik]", ru: "Поезд" },
+        { sr: "Аўтобус", tr: "[autobus]", ru: "Автобус" },
+        { sr: "Білет", tr: "[bilet]", ru: "Билет" },
+        { sr: "Гатэль", tr: "[hatel']", ru: "Отель" }
+      ]},
+      verbs: { name: "Дзеясловы", emoji: "🏃", color: "#6366f1", words: [
+        { sr: "Быць", tr: "[byts']", ru: "Быть" },
+        { sr: "Мець", tr: "[mets']", ru: "Иметь" },
+        { sr: "Працаваць", tr: "[pratsavats']", ru: "Работать" },
+        { sr: "Гаварыць", tr: "[havaryts']", ru: "Говорить" },
+        { sr: "Ведаць", tr: "[vedats']", ru: "Знать" },
+        { sr: "Ісці", tr: "[istsi]", ru: "Идти" }
+      ]},
+      questions: { name: "Пытанні", emoji: "❓", color: "#0ea5e9", words: [
+        { sr: "Што", tr: "[shto]", ru: "Что" },
+        { sr: "Хто", tr: "[khto]", ru: "Кто" },
+        { sr: "Дзе", tr: "[dze]", ru: "Где" },
+        { sr: "Калі", tr: "[kali]", ru: "Когда" },
+        { sr: "Чаму", tr: "[chamu]", ru: "Почему" },
+        { sr: "Як", tr: "[yak]", ru: "Как" }
       ]}
     },
-    grammar: [{ id: "be-pronouns", title: "Асабовыя займеннікі", icon: "👤",
-      rules: [{ text: "TODO: контент белорусской грамматики." }],
-      examples: [{ sr: "Я студэнт.", ru: "Я студент." }] }],
-    dialogues: [{ id: "be-meet", title: "Знаёмства", icon: "🤝",
-      lines: [{ sr: "Прывітанне! Як цябе завуць?", ru: "Привет! Как тебя зовут?" }, { sr: "Мяне завуць Марк. А цябе?", ru: "Меня зовут Марк. А тебя?" }],
-      quiz: [{ q: "«Як цябе завуць?» значыць...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 }] }]
+    grammar: [
+      { id: "be-pronouns", title: "Асабовыя займеннікі", icon: "👤",
+        rules: [{ text: "В белорусском 6 падежей. Начнём с именительного." }],
+        table: [["я","я"],["ты","ты"],["ён","он"],["яна","она"],["мы","мы"],["вы","вы"],["яны","они"]],
+        examples: [{ sr: "Я студэнт.", ru: "Я студент." }, { sr: "Ты добры.", ru: "Ты хороший." }, { sr: "Мы сябры.", ru: "Мы друзья." }] },
+      { id: "be-bytc", title: "Дзеяслоў «быць»", icon: "🔗",
+        rules: [{ text: "Самый важный глагол — «быть»." }],
+        table: [["я ёсць","я есть"],["ты ёсць","ты есть"],["ён ёсць","он есть"],["мы ёсць","мы есть"],["вы ёсць","вы есть"],["яны ёсць","они есть"]],
+        examples: [{ sr: "Я з Расіі.", ru: "Я из России." }, { sr: "Яна лекар.", ru: "Она врач." }, { sr: "Яны дома.", ru: "Они дома." }] },
+      { id: "be-gender", title: "Род назоўнікаў", icon: "⚧️",
+        rules: [{ text: "Мужской род — на согласную (горад)." }, { text: "Женский — на -а/-я (жанчына)." }, { text: "Средний — на -о/-е (слова)." }],
+        examples: [{ sr: "Вялікі горад", ru: "Большой город (м.р.)" }, { sr: "Вялікая хата", ru: "Большой дом (ж.р.)" }, { sr: "Вялікае слова", ru: "Большое слово (с.р.)" }] },
+      { id: "be-negation", title: "Адмаўленне", icon: "🚫",
+        rules: [{ text: "Отрицание — частица «не» перед глаголом." }],
+        examples: [{ sr: "Не ведаю.", ru: "Не знаю." }, { sr: "Не разумею.", ru: "Не понимаю." }, { sr: "Ён не тут.", ru: "Он не здесь." }] },
+      { id: "be-questions", title: "Пытанні", icon: "❓",
+        rules: [{ text: "Вопросительные слова: што, хто, дзе, калі, чаму, як." }],
+        examples: [{ sr: "Што гэта?", ru: "Что это?" }, { sr: "Дзе станцыя?", ru: "Где станция?" }, { sr: "Як цябе завуць?", ru: "Как тебя зовут?" }] }
+    ],
+    dialogues: [
+      { id: "be-meet", title: "Знаёмства", icon: "🤝",
+        lines: [
+          { sr: "Прывітанне! Як цябе завуць?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Мяне завуць Марк. А цябе?", ru: "Меня зовут Марк. А тебя?" },
+          { sr: "Я Ана. Прыемна пазнаёміцца.", ru: "Я Ана. Приятно познакомиться." },
+          { sr: "Прыемна, Ана. Адкуль ты?", ru: "Приятно, Ана. Откуда ты?" },
+          { sr: "Я з Расіі. А ты?", ru: "Я из России. А ты?" },
+          { sr: "Я з Беларусі.", ru: "Я из Беларуси." }
+        ],
+        quiz: [
+          { q: "«Як цябе завуць?» значыць...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Адкуль ты?» значыць...", options: ["Как дела?","Откуда ты?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Прыемна пазнаёміцца» — гэта...", options: ["Мне дорого","Приятно познакомиться","Я рад","Мне жаль"], correct: 1 }
+        ] },
+      { id: "be-cafe", title: "У кафе", icon: "☕",
+        lines: [
+          { sr: "Добры дзень! Што жадаеце?", ru: "Добрый день! Что желаете?" },
+          { sr: "Калі ласка, адну каву.", ru: "Одну кофе, пожалуйста." },
+          { sr: "З малаком ці без?", ru: "С молоком или без?" },
+          { sr: "З малаком, калі ласка.", ru: "С молоком, пожалуйста." },
+          { sr: "Калі ласка. Яшчэ нешта?", ru: "Пожалуйста. Что-нибудь ещё?" },
+          { sr: "Не, дзякуй. Колькі каштуе?", ru: "Нет, спасибо. Сколько стоит?" }
+        ],
+        quiz: [
+          { q: "«Колькі каштуе?» значыць...", options: ["Как дела?","Сколько стоит?","Что это?","Где это?"], correct: 1 },
+          { q: "«З малаком» — гэта...", options: ["без молока","с молоком","молоко","пожалуйста молоко"], correct: 1 },
+          { q: "«Яшчэ нешта?» — гэта...", options: ["Ещё что-то?","Это не то","Ничего","Всё хорошо"], correct: 0 }
+        ] }
+    ]
   },
 
   // --- [КАРКАС] kk: кириллица + латиница (проект 2021) ---
