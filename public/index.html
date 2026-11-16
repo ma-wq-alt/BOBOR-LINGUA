@@ -36,29 +36,53 @@
   .stats-pill.streak .val { color: var(--serbian2); }
   .icon-btn { width: 38px; height: 38px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); color: var(--text); cursor: pointer; display: grid; place-items: center; font-size: 1rem; transition: all 0.2s; font-family: inherit; }
 
+  /* ЯЗЫКИ */
+  .lang-selector { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; }
+  .lang-btn { background: var(--card); border: 2px solid var(--border); border-radius: 16px; padding: 10px 16px; font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 6px; color: var(--text); }
+  .lang-btn:hover { border-color: var(--serbian); }
+  .lang-btn.active { border-color: var(--serbian); background: rgba(198,54,60,0.1); }
+
   /* ГЛАВНАЯ */
   .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
   .home-card { background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 30px 20px; text-align: center; cursor: pointer; transition: all 0.25s; }
   .home-card:hover { transform: translateY(-4px); border-color: var(--serbian); box-shadow: var(--shadow); }
-  .home-card .icon { font-size: 3.5rem; margin-bottom: 12px; display: block; }
-  .home-card h2 { font-size: 1.2rem; font-weight: 800; }
+  .home-card .icon { font-size: 3rem; margin-bottom: 12px; display: block; }
+  .home-card h2 { font-size: 1.1rem; font-weight: 800; }
   .home-card p { font-size: 0.8rem; color: var(--muted); }
 
-  /* ОБУЧЕНИЕ */
-  .unit-list { display: flex; flex-direction: column; gap: 16px; }
-  .unit-card { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 20px; display: flex; align-items: center; gap: 16px; position: relative; transition: all 0.2s; }
-  .unit-card.locked { opacity: 0.5; filter: grayscale(1); cursor: not-allowed; }
-  .unit-card.completed { border-color: var(--green); background: rgba(16,185,129,0.05); }
-  .unit-card .u-icon { font-size: 2.2rem; width: 60px; height: 60px; display: grid; place-items: center; background: var(--card2); border-radius: 16px; flex-shrink: 0; }
-  .unit-card .u-content { flex: 1; }
-  .unit-card .u-title { font-weight: 800; font-size: 1.05rem; margin-bottom: 4px; }
-  .unit-card .u-sub { font-size: 0.8rem; color: var(--muted); }
-  .unit-card .u-status { font-size: 1.5rem; }
+  /* ОБУЧЕНИЕ (ДУОЛИНГО) */
+  .path-container { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 20px 0; position: relative; }
+  .path-line { position: absolute; top: 0; bottom: 0; width: 8px; background: var(--card2); border-radius: 4px; z-index: 0; left: 50%; transform: translateX(-50%); }
+  .path-node { width: 70px; height: 70px; border-radius: 50%; background: var(--card); border: 4px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; position: relative; z-index: 1; transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+  .path-node:hover:not(.locked) { transform: scale(1.1); border-color: var(--serbian); }
+  .path-node.locked { background: var(--card2); border-color: var(--border); cursor: not-allowed; filter: grayscale(1); opacity: 0.6; }
+  .path-node.done { border-color: var(--green); background: rgba(16,185,129,0.1); color: var(--green); }
+  .path-node.offset-left { margin-right: 100px; }
+  .path-node.offset-right { margin-left: 100px; }
 
   /* УРОК */
   .lesson-header { text-align: center; margin-bottom: 24px; }
   .lesson-header h2 { font-size: 1.6rem; font-weight: 900; margin-bottom: 4px; }
   .lesson-header p { color: var(--muted); font-size: 0.9rem; }
+  
+  .alpha-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-bottom: 24px; }
+  .alpha-btn { aspect-ratio: 1; background: var(--card); border: 2px solid var(--border); border-radius: 16px; font-size: 1.8rem; font-weight: 900; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s; position: relative; color: var(--text); }
+  .alpha-btn:hover { transform: translateY(-3px); border-color: var(--serbian); background: var(--card2); }
+  .alpha-btn .pair { font-size: 0.7rem; color: var(--muted); margin-top: 2px; font-weight: 600; }
+  .alpha-btn .check { position: absolute; top: -6px; right: -6px; width: 22px; height: 22px; background: var(--green); border-radius: 50%; display: grid; place-items: center; font-size: 0.7rem; color: #fff; border: 2px solid var(--bg); }
+  .alpha-btn.done { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); }
+
+  .letter-display { text-align: center; background: var(--card); border-radius: 24px; padding: 30px; margin-bottom: 24px; border: 1px solid var(--border); }
+  .letter-display .big-char { font-size: 5rem; font-weight: 900; color: var(--serbian2); line-height: 1; margin-bottom: 10px; }
+  .letter-display .sound { font-size: 1.2rem; color: var(--blue); font-weight: 700; margin-bottom: 20px; }
+  .letter-display .example { background: var(--bg2); border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+  .letter-display .example .word { font-size: 1.3rem; font-weight: 800; }
+  .letter-display .example .trans { color: var(--muted); font-size: 0.9rem; }
+  
+  .custom-audio-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
+  .custom-audio-btn:hover { background: var(--border); }
+  .custom-audio-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
   .word-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
   .word-row { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s; }
   .word-row:hover { border-color: var(--serbian); }
@@ -71,14 +95,7 @@
   .grammar-box .ex { background: var(--bg2); padding: 12px 16px; border-radius: 10px; margin-bottom: 8px; font-size: 0.9rem; }
   .grammar-box .ex b { color: var(--green); }
 
-  /* АЛФАВИТ */
-  .alpha-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
-  .alpha-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; text-align: center; }
-  .alpha-char { font-size: 2rem; font-weight: 900; color: var(--blue); margin-bottom: 4px; }
-  .alpha-sound { font-size: 0.9rem; font-weight: 800; color: var(--gold); margin-bottom: 4px; }
-  .alpha-ex { font-size: 0.75rem; color: var(--muted); }
-
-  /* ТЕСТ */
+  /* ТЕСТЫ */
   .quiz-option { background: var(--card); border: 2px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; font-weight: 600; }
   .quiz-option:hover:not(.disabled) { border-color: var(--blue); }
   .quiz-option.correct { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); }
@@ -89,6 +106,21 @@
   .lib-item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
   .lib-item h4 { font-size: 1rem; margin-bottom: 8px; color: var(--gold); }
   .lib-item p { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
+
+  /* МАГАЗИН */
+  .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .shop-item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; text-align: center; }
+  .shop-item .s-icon { font-size: 2rem; margin-bottom: 8px; }
+  .shop-item .s-name { font-weight: 800; font-size: 0.9rem; margin-bottom: 4px; }
+  .shop-item .s-price { color: var(--yellow); font-weight: 800; font-size: 0.85rem; margin-bottom: 12px; }
+  .shop-item.owned { border-color: var(--green); }
+
+  /* РАНКЕД */
+  .rank-row { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 16px; margin-bottom: 8px; }
+  .rank-row.me { border-color: var(--serbian); background: rgba(198,54,60,0.08); }
+  .rank-pos { font-weight: 900; font-size: 1rem; width: 24px; color: var(--muted); }
+  .rank-name { flex: 1; font-weight: 800; font-size: 0.9rem; }
+  .rank-xp { font-weight: 800; color: var(--purple); font-size: 0.85rem; }
 
   /* КНОПКИ */
   .btn { border: none; border-radius: 14px; padding: 16px 24px; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; font-family: inherit; width: 100%; display: block; text-align: center; }
@@ -108,6 +140,8 @@
   
   @media (max-width: 480px) {
     .home-grid { grid-template-columns: 1fr; }
+    .path-node.offset-left { margin-right: 60px; }
+    .path-node.offset-right { margin-left: 60px; }
   }
 </style>
 </head>
@@ -115,42 +149,68 @@
 <div id="root"></div>
 
 <script>
+const COURSES_META = {
+  sr: { flag: "🇷🇸", name: "Сербский" },
+  tr: { flag: "🇹🇷", name: "Турецкий" },
+  pl: { flag: "🇵🇱", name: "Польский" },
+  be: { flag: "🇧🇾", name: "Белорусский" },
+  kk: { flag: "🇰🇿", name: "Казахский" },
+  tt: { flag: "🏳️", name: "Татарский" }
+};
+
 const state = {
   screen: "auth",
   user: null,
   settings: { theme: "dark" },
   xp: 0,
   streak: 0,
-  course: "sr",
-  unitsDone: new Set(),
+  currentCourse: "sr",
+  progress: {},
+  alphaProgress: {},
+  medals: [],
   currentUnit: null,
   lessonStep: "words",
+  currentAlphaLetter: null,
   quizIdx: 0,
   lastDaily: null,
   courseData: null,
-  loading: false
+  loading: false,
+  lessonsToday: 0,
+  lastLessonDate: null
 };
 
 function saveState() {
-  localStorage.setItem("bobor_state_v2", JSON.stringify({
+  const progObj = {};
+  for (const k in state.progress) progObj[k] = [...state.progress[k]];
+  const alphaObj = {};
+  for (const k in state.alphaProgress) alphaObj[k] = [...state.alphaProgress[k]];
+  
+  localStorage.setItem("bobor_state_v4", JSON.stringify({
     user: state.user, settings: state.settings,
-    xp: state.xp, streak: state.streak, course: state.course,
-    unitsDone: [...state.unitsDone], lastDaily: state.lastDaily
+    xp: state.xp, streak: state.streak, currentCourse: state.currentCourse,
+    progress: progObj, alphaProgress: alphaObj, medals: state.medals, 
+    lastDaily: state.lastDaily, lessonsToday: state.lessonsToday, lastLessonDate: state.lastLessonDate
   }));
 }
 
 function loadState() {
   try {
-    const raw = localStorage.getItem("bobor_state_v2") || localStorage.getItem("bobor_state");
+    const raw = localStorage.getItem("bobor_state_v4");
     if (!raw) return;
     const data = JSON.parse(raw);
     if (data.user) state.user = data.user;
     if (data.settings) state.settings = { ...state.settings, ...data.settings };
     state.xp = data.xp || 0;
     state.streak = data.streak || 0;
-    state.course = data.course || "sr";
-    state.unitsDone = new Set(data.unitsDone || []);
+    state.currentCourse = data.currentCourse || "sr";
+    state.medals = data.medals || [];
     state.lastDaily = data.lastDaily || null;
+    state.lessonsToday = data.lessonsToday || 0;
+    state.lastLessonDate = data.lastLessonDate || null;
+    
+    if (data.progress) for (const k in data.progress) state.progress[k] = new Set(data.progress[k]);
+    if (data.alphaProgress) for (const k in data.alphaProgress) state.alphaProgress[k] = new Set(data.alphaProgress[k]);
+    
     if (state.user) state.screen = "home";
   } catch (e) {}
 }
@@ -158,14 +218,17 @@ function loadState() {
 function getUfaDate() {
   const now = new Date();
   const ufaTime = new Date(now.getTime() + (5 * 60 * 60 * 1000));
-  if (ufaTime.getUTCHours() < 7) {
-    ufaTime.setUTCDate(ufaTime.getUTCDate() - 1);
-  }
+  if (ufaTime.getUTCHours() < 7) ufaTime.setUTCDate(ufaTime.getUTCDate() - 1);
   return ufaTime.toISOString().split('T')[0];
 }
 
 function checkDailyStreak() {
   const today = getUfaDate();
+  if (state.lastLessonDate !== today) {
+    state.lessonsToday = 0;
+    state.lastLessonDate = today;
+  }
+  
   if (!state.lastDaily) {
     state.streak = 1;
     state.lastDaily = today;
@@ -178,11 +241,9 @@ function checkDailyStreak() {
   const now = new Date(today);
   const diffDays = Math.round((now - last) / 86400000);
   
-  if (diffDays === 1) {
-    state.streak += 1;
-  } else if (diffDays > 1) {
-    state.streak = 1;
-  }
+  if (diffDays === 1) state.streak += 1;
+  else if (diffDays > 1) state.streak = 1;
+  
   state.lastDaily = today;
   saveState();
 }
@@ -203,20 +264,38 @@ const el = (tag, attrs = {}, children = []) => {
   return e;
 };
 
+function renderAudioButton(text) {
+  return el("button", { class: "custom-audio-btn", onclick: () => {
+    // ЗДЕСЬ БУДЕТ ТВОЙ КОД ДЛЯ ВОСПРОИЗВЕДЕНИЯ
+    console.log("Озвучить: " + text);
+    alert("Озвучка: " + text);
+  } }, [
+    el("span", { html: "&#128266;" }),
+    el("span", {}, "Озвучить")
+  ]);
+}
+
 async function loadCourseData() {
-  if (state.courseData && state.courseData.code === state.course) return;
   state.loading = true;
   render();
   try {
-    const res = await fetch(`/data/${state.course}.json`);
+    const res = await fetch(`/data/${state.currentCourse}.json`);
     if (!res.ok) throw new Error("Файл не найден");
     state.courseData = await res.json();
   } catch (e) {
-    console.error("Ошибка загрузки курса:", e);
-    state.courseData = { code: state.course, name: "Курс", flag: "🏳️", units: [] };
+    console.error("Ошибка загрузки:", e);
+    state.courseData = { code: state.currentCourse, name: "Курс", flag: "🏳️", units: [] };
   }
   state.loading = false;
   render();
+}
+
+function changeLanguage(langCode) {
+  state.currentCourse = langCode;
+  state.courseData = null;
+  saveState();
+  if (state.screen === "learn" || state.screen === "library") loadCourseData();
+  else render();
 }
 
 const root = document.getElementById("root");
@@ -224,18 +303,13 @@ const root = document.getElementById("root");
 function render() {
   root.innerHTML = "";
   document.documentElement.setAttribute("data-theme", state.settings.theme);
-  
   if (!state.user && state.screen !== "auth") state.screen = "auth";
 
   const screens = {
-    auth: renderAuth,
-    home: renderHome,
-    learn: renderLearn,
-    lesson: renderLesson,
-    library: renderLibrary,
-    settings: renderSettings
+    auth: renderAuth, home: renderHome, learn: renderLearn,
+    lesson: renderLesson, library: renderLibrary, shop: renderShop,
+    ranked: renderRanked, settings: renderSettings
   };
-  
   const fn = screens[state.screen] || renderHome;
   fn();
 }
@@ -284,25 +358,34 @@ function renderHome() {
   const app = el("div", { class: "app" });
   app.appendChild(renderTopbar());
 
-  app.appendChild(el("h1", { style: "font-size:1.8rem;font-weight:900;margin-bottom:8px;" }, "Привет, " + (state.user?.username || "друг") + "!"));
+  app.appendChild(el("h3", { style: "font-size:0.9rem;color:var(--muted);margin-bottom:8px;" }, "Текущий язык:"));
+  const langBar = el("div", { class: "lang-selector" });
+  for (const code in COURSES_META) {
+    const meta = COURSES_META[code];
+    langBar.appendChild(el("div", { 
+      class: "lang-btn" + (state.currentCourse === code ? " active" : ""),
+      onclick: () => changeLanguage(code)
+    }, [el("span", {}, meta.flag), el("span", {}, meta.name)]));
+  }
+  app.appendChild(langBar);
+
+  app.appendChild(el("h1", { style: "font-size:1.8rem;font-weight:900;margin-bottom:8px;margin-top:20px;" }, "Привет, " + (state.user?.username || "друг") + "!"));
   app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;" }, "Выбери режим"));
 
   app.appendChild(el("div", { class: "home-grid" }, [
     el("div", { class: "home-card", onclick: () => { state.screen = "learn"; loadCourseData(); } }, [
-      el("span", { class: "icon" }, "🎓"),
-      el("h2", {}, "Обучение"),
-      el("p", {}, "Пошаговый путь")
+      el("span", { class: "icon" }, "🎓"), el("h2", {}, "Обучение"), el("p", {}, "Пошаговый путь")
     ]),
     el("div", { class: "home-card", onclick: () => { state.screen = "library"; loadCourseData(); } }, [
-      el("span", { class: "icon" }, "📚"),
-      el("h2", {}, "Библиотека"),
-      el("p", {}, "Справочник")
+      el("span", { class: "icon" }, "📚"), el("h2", {}, "Библиотека"), el("p", {}, "Справочник")
+    ]),
+    el("div", { class: "home-card", onclick: () => { state.screen = "shop"; render(); } }, [
+      el("span", { class: "icon" }, "🛒"), el("h2", {}, "Магазин"), el("p", {}, "Медали и заморозки")
+    ]),
+    el("div", { class: "home-card", onclick: () => { state.screen = "ranked"; render(); } }, [
+      el("span", { class: "icon" }, "🏆"), el("h2", {}, "Ранкед"), el("p", {}, "Лидерборд")
     ])
   ]));
-
-  if (state.courseData) {
-    app.appendChild(el("div", { style: "margin-top:30px;text-align:center;color:var(--muted);font-size:0.9rem;" }, `Текущий язык: ${state.courseData.flag} ${state.courseData.name}`));
-  }
 
   root.appendChild(app);
 }
@@ -318,44 +401,43 @@ function renderLearn() {
     return;
   }
 
-  app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:4px;" }, "Обучение"));
-  app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;" }, "Пройди все юниты, чтобы стать мастером"));
+  app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:4px;text-align:center;" }, "Обучение: " + state.courseData.name));
+  app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;text-align:center;" }, "Пройди все юниты, чтобы стать мастером"));
 
-  const list = el("div", { class: "unit-list" });
+  const path = el("div", { class: "path-container" });
+  path.appendChild(el("div", { class: "path-line" }));
+
+  const courseProgress = state.progress[state.currentCourse] || new Set();
   let prevDone = true;
 
   state.courseData.units.forEach((unit, idx) => {
-    const isDone = state.unitsDone.has(unit.id);
+    const isDone = courseProgress.has(unit.id);
     const isLocked = !prevDone;
+    const offsetClass = idx % 2 === 0 ? "offset-left" : "offset-right";
     
-    let statusIcon = "🔒";
-    if (isDone) statusIcon = "✅";
-    else if (!isLocked) statusIcon = "▶️";
+    let icon = "🔒";
+    if (isDone) icon = "✅";
+    else if (!isLocked) icon = "▶️";
 
-    const card = el("div", { 
-      class: `unit-card ${isLocked ? 'locked' : ''} ${isDone ? 'completed' : ''}`,
+    const node = el("div", { 
+      class: `path-node ${isLocked ? 'locked' : ''} ${isDone ? 'done' : ''} ${offsetClass}`,
       onclick: () => {
         if (isLocked) return;
         state.currentUnit = unit;
-        state.lessonStep = unit.alphabet ? "alphabet" : "words";
+        state.lessonStep = unit.alphabet ? "alphabet_grid" : "words";
         state.quizIdx = 0;
+        state.currentAlphaLetter = null;
         state.screen = "lesson";
         render();
       }
-    }, [
-      el("div", { class: "u-icon", html: unit.icon || "📖" }),
-      el("div", { class: "u-content" }, [
-        el("div", { class: "u-title" }, unit.title),
-        el("div", { class: "u-sub" }, `${unit.words.length} слов · грамматика`)
-      ]),
-      el("div", { class: "u-status" }, statusIcon)
-    ]);
-
-    list.appendChild(card);
+    }, [el("span", {}, icon)]);
+    
+    node.appendChild(el("div", { style: "position:absolute;top:80px;font-size:0.7rem;font-weight:800;color:var(--muted);white-space:nowrap;" }, unit.title));
+    path.appendChild(node);
     prevDone = isDone;
   });
 
-  app.appendChild(list);
+  app.appendChild(path);
   root.appendChild(app);
 }
 
@@ -367,66 +449,150 @@ function renderLesson() {
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "learn"; render(); } })]));
 
-  if (state.lessonStep === "alphabet") {
+  if (state.lessonStep === "alphabet_grid") {
     app.appendChild(el("div", { class: "lesson-header" }, [
-      el("h2", {}, unit.alphabet.title),
-      el("p", {}, unit.alphabet.rules)
+      el("h2", {}, "Алфавит"), el("p", {}, "Нажми на каждую букву, чтобы выучить её")
     ]));
 
     const grid = el("div", { class: "alpha-grid" });
-    unit.alphabet.table.forEach(a => {
-      grid.appendChild(el("div", { class: "alpha-card" }, [
-        el("div", { class: "alpha-char" }, a.char),
-        el("div", { class: "alpha-sound" }, `[${a.sound}]`),
-        el("div", { class: "alpha-ex" }, a.ex)
-      ]));
+    const learned = state.alphaProgress[state.currentCourse] || new Set();
+
+    unit.alphabet.table.forEach((a, i) => {
+      const isDone = learned.has(i);
+      const btn = el("div", { 
+        class: "alpha-btn" + (isDone ? " done" : ""),
+        onclick: () => {
+          state.currentAlphaLetter = a;
+          state.lessonStep = "alphabet_card";
+          render();
+        }
+      }, [
+        el("div", {}, a.char),
+        el("div", { class: "pair" }, `[${a.sound}]`),
+        isDone ? el("div", { class: "check", html: "✓" }) : null
+      ]);
+      grid.appendChild(btn);
     });
     app.appendChild(grid);
-    app.appendChild(el("button", { class: "btn btn-primary", onclick: () => { state.lessonStep = "words"; render(); } }, "Дальше: Слова"));
+
+    if (learned.size === unit.alphabet.table.length) {
+      app.appendChild(el("button", { class: "btn btn-green", onclick: () => {
+        state.lessonStep = "alphabet_quiz";
+        state.quizIdx = 0;
+        render();
+      } }, "Пройти тест (50 XP)"));
+    } else {
+      app.appendChild(el("p", { style: "text-align:center;color:var(--muted);margin-bottom:16px;" }, `Изучено: ${learned.size} из ${unit.alphabet.table.length}`));
+    }
   }
 
-  else if (state.lessonStep === "words") {
-    app.appendChild(el("div", { class: "lesson-header" }, [
-      el("h2", {}, "Слова"),
-      el("p", {}, unit.title)
+  else if (state.lessonStep === "alphabet_card") {
+    const a = state.currentAlphaLetter;
+    app.appendChild(el("div", { class: "letter-display" }, [
+      el("div", { class: "big-char" }, a.char),
+      el("div", { class: "sound" }, `Звук: [${a.sound}]`),
+      renderAudioButton(a.ex),
+      el("div", { class: "example" }, [
+        el("div", { class: "word" }, a.ex),
+        el("div", { class: "trans" }, "Пример использования")
+      ])
     ]));
-    
+
+    app.appendChild(el("button", { class: "btn btn-primary", onclick: () => {
+      if (!state.alphaProgress[state.currentCourse]) state.alphaProgress[state.currentCourse] = new Set();
+      const idx = unit.alphabet.table.findIndex(x => x.char === a.char);
+      state.alphaProgress[state.currentCourse].add(idx);
+      saveState();
+      state.lessonStep = "alphabet_grid";
+      render();
+    } }, "Я выучил эту букву"));
+  }
+
+  else if (state.lessonStep === "alphabet_quiz") {
+    if (state.quizIdx >= 10) {
+      if (state.progress[state.currentCourse] === undefined) state.progress[state.currentCourse] = new Set();
+      state.progress[state.currentCourse].add(unit.id);
+      state.xp += 50;
+      checkDailyStreak();
+      saveState();
+      
+      app.appendChild(el("div", { class: "success-screen" }, [
+        el("div", { class: "emoji" }, "🏆"),
+        el("h2", {}, "Алфавит пройден!"),
+        el("p", {}, `Ты заработал 50 XP за знание всех букв!`),
+        el("button", { class: "btn btn-green", onclick: () => { state.screen = "learn"; render(); } }, "К списку юнитов")
+      ]));
+      root.appendChild(app);
+      return;
+    }
+
+    const randomLetter = unit.alphabet.table[Math.floor(Math.random() * unit.alphabet.table.length)];
+    const wrongOptions = unit.alphabet.table.filter(x => x.sound !== randomLetter.sound).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.sound);
+    const options = [randomLetter.sound, ...wrongOptions].sort(() => 0.5 - Math.random());
+
+    app.appendChild(el("div", { class: "lesson-header" }, [
+      el("h2", {}, "Тест"), el("p", {}, `Вопрос ${state.quizIdx + 1} из 10`)
+    ]));
+
+    app.appendChild(el("div", { style: "font-size:2rem;font-weight:900;text-align:center;margin-bottom:20px;" }, randomLetter.char));
+    app.appendChild(el("div", { style: "text-align:center;color:var(--muted);margin-bottom:20px;" }, "Какой звук обозначает эта буква?"));
+
+    options.forEach(opt => {
+      const btn = el("div", { class: "quiz-option" }, opt);
+      btn.onclick = () => {
+        if (btn.classList.contains("disabled")) return;
+        document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
+        
+        if (opt === randomLetter.sound) btn.classList.add("correct");
+        else {
+          btn.classList.add("wrong");
+          Array.from(document.querySelectorAll(".quiz-option")).forEach(b => {
+            if (b.textContent === randomLetter.sound) b.classList.add("correct");
+          });
+        }
+        
+        setTimeout(() => { state.quizIdx++; render(); }, 1000);
+      };
+      app.appendChild(btn);
+    });
+  }
+  
+  else if (state.lessonStep === "words") {
+    app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Слова"), el("p", {}, unit.title)]));
     const grid = el("div", { class: "word-grid" });
     unit.words.forEach(w => {
-      grid.appendChild(el("div", { class: "word-row", onclick: () => { state.xp += 1; saveState(); } }, [
-        el("div", { class: "w-sr" }, w.sr),
-        el("div", { class: "w-ru" }, w.ru)
+      grid.appendChild(el("div", { class: "word-row" }, [
+        el("div", {}, [
+          el("div", { class: "w-sr" }, w.sr),
+          el("div", { class: "w-ru" }, w.ru)
+        ]),
+        renderAudioButton(w.sr)
       ]));
     });
     app.appendChild(grid);
     app.appendChild(el("button", { class: "btn btn-primary", onclick: () => { state.lessonStep = "grammar"; render(); } }, "Дальше: Грамматика"));
   }
-
+  
   else if (state.lessonStep === "grammar") {
-    app.appendChild(el("div", { class: "lesson-header" }, [
-      el("h2", {}, "Грамматика"),
-      el("p", {}, unit.grammar.title)
-    ]));
-
-    const box = el("div", { class: "grammar-box" }, [
-      el("h3", {}, unit.grammar.title),
-      el("div", { class: "rule" }, unit.grammar.rules)
-    ]);
-
+    app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Грамматика"), el("p", {}, unit.grammar.title)]));
+    const box = el("div", { class: "grammar-box" }, [el("h3", {}, unit.grammar.title), el("div", { class: "rule" }, unit.grammar.rules)]);
     unit.grammar.examples.forEach(ex => {
       box.appendChild(el("div", { class: "ex" }, [
-        el("b", {}, ex.sr),
+        el("div", { style: "display:flex;justify-content:space-between;align-items:center;" }, [
+          el("b", {}, ex.sr),
+          renderAudioButton(ex.sr)
+        ]),
         el("span", { style: "color:var(--muted);display:block;margin-top:4px;font-size:0.85rem;" }, ex.ru)
       ]));
     });
-
     app.appendChild(box);
     app.appendChild(el("button", { class: "btn btn-blue", onclick: () => { state.lessonStep = "quiz"; render(); } }, "Дальше: Тест"));
   }
-
+  
   else if (state.lessonStep === "quiz") {
-    if (state.quizIdx >= unit.quiz.length) {
-      state.unitsDone.add(unit.id);
+    if (state.quizIdx >= 10) {
+      if (state.progress[state.currentCourse] === undefined) state.progress[state.currentCourse] = new Set();
+      state.progress[state.currentCourse].add(unit.id);
       state.xp += 20;
       checkDailyStreak();
       saveState();
@@ -442,11 +608,7 @@ function renderLesson() {
     }
 
     const q = unit.quiz[state.quizIdx];
-    app.appendChild(el("div", { class: "lesson-header" }, [
-      el("h2", {}, "Тест"),
-      el("p", {}, `Вопрос ${state.quizIdx + 1} из ${unit.quiz.length}`)
-    ]));
-
+    app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Тест"), el("p", {}, `Вопрос ${state.quizIdx + 1} из 10`)]));
     app.appendChild(el("div", { style: "font-size:1.2rem;font-weight:800;margin-bottom:20px;text-align:center;" }, q.q));
 
     q.options.forEach((opt, i) => {
@@ -454,18 +616,12 @@ function renderLesson() {
       btn.onclick = () => {
         if (btn.classList.contains("disabled")) return;
         document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
-        
-        if (i === q.correct) {
-          btn.classList.add("correct");
-        } else {
+        if (i === q.correct) btn.classList.add("correct");
+        else {
           btn.classList.add("wrong");
           document.querySelectorAll(".quiz-option")[q.correct].classList.add("correct");
         }
-        
-        setTimeout(() => {
-          state.quizIdx++;
-          render();
-        }, 1000);
+        setTimeout(() => { state.quizIdx++; render(); }, 1000);
       };
       app.appendChild(btn);
     });
@@ -478,20 +634,15 @@ function renderLibrary() {
   const app = el("div", { class: "app" });
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-
   app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:4px;" }, "Библиотека"));
   app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;" }, "Только то, что ты уже прошел"));
 
-  if (state.loading || !state.courseData) {
-    app.appendChild(el("p", {}, "Загрузка..."));
-    root.appendChild(app);
-    return;
-  }
-
-  const doneUnits = state.courseData.units.filter(u => state.unitsDone.has(u.id));
+  if (state.loading || !state.courseData) { root.appendChild(app); return; }
+  const courseProgress = state.progress[state.currentCourse] || new Set();
+  const doneUnits = state.courseData.units.filter(u => courseProgress.has(u.id));
   
   if (doneUnits.length === 0) {
-    app.appendChild(el("p", { style: "text-align:center;color:var(--muted);margin-top:40px;" }, "Тут пусто. Начни обучение, чтобы открыть материалы!"));
+    app.appendChild(el("p", { style: "text-align:center;color:var(--muted);margin-top:40px;" }, "Тут пусто. Начни обучение!"));
   } else {
     doneUnits.forEach(u => {
       app.appendChild(el("div", { class: "lib-item" }, [
@@ -505,7 +656,66 @@ function renderLibrary() {
       ]));
     });
   }
+  root.appendChild(app);
+}
 
+function renderShop() {
+  const app = el("div", { class: "app" });
+  app.appendChild(renderTopbar());
+  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
+  app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:24px;" }, "Магазин"));
+  
+  const medals = [
+    { id: "m1", name: "Обычная", emoji: "🥉", price: 1200 },
+    { id: "m2", name: "Деревянная", emoji: "🪵", price: 2000 },
+    { id: "m3", name: "Железная", emoji: "⚙️", price: 3400 },
+    { id: "m4", name: "Алмазная", emoji: "💎", price: 4000 },
+    { id: "m5", name: "Незерит", emoji: "🔥", price: 5000 }
+  ];
+
+  const grid = el("div", { class: "shop-grid" });
+  medals.forEach(m => {
+    const owned = state.medals.includes(m.id);
+    const item = el("div", { class: "shop-item" + (owned ? " owned" : "") }, [
+      el("div", { class: "s-icon" }, m.emoji),
+      el("div", { class: "s-name" }, m.name),
+      el("div", { class: "s-price" }, `⚡ ${m.price}`),
+      el("button", { class: "btn " + (owned ? "btn-ghost" : "btn-primary"), onclick: () => {
+        if (owned) return;
+        if (state.xp >= m.price) {
+          state.xp -= m.price;
+          state.medals.push(m.id);
+          saveState(); render();
+        } else alert("Не хватает XP!");
+      } }, owned ? "Куплено" : "Купить")
+    ]);
+    grid.appendChild(item);
+  });
+  app.appendChild(grid);
+  root.appendChild(app);
+}
+
+function renderRanked() {
+  const app = el("div", { class: "app" });
+  app.appendChild(renderTopbar());
+  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
+  app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:24px;" }, "Ранкед"));
+  
+  const fakeRanks = [
+    { name: "Marko", xp: 1500 },
+    { name: "Ana", xp: 1200 },
+    { name: state.user.username, xp: state.xp },
+    { name: "Ivan", xp: 500 },
+    { name: "Petar", xp: 200 }
+  ].sort((a, b) => b.xp - a.xp);
+
+  fakeRanks.forEach((r, i) => {
+    app.appendChild(el("div", { class: "rank-row" + (r.name === state.user.username ? " me" : "") }, [
+      el("div", { class: "rank-pos" }, `${i + 1}`),
+      el("div", { class: "rank-name" }, r.name),
+      el("div", { class: "rank-xp" }, `⚡ ${r.xp}`)
+    ]));
+  });
   root.appendChild(app);
 }
 
@@ -514,7 +724,7 @@ function renderSettings() {
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
   app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:24px;" }, "Настройки"));
-
+  
   app.appendChild(el("div", { style: "margin-bottom:20px;padding:20px;background:var(--card);border-radius:16px;" }, [
     el("h3", { style: "font-size:1rem;margin-bottom:8px;" }, "Профиль"),
     el("p", { style: "color:var(--muted);" }, `Никнейм: ${state.user?.username}`),
@@ -533,7 +743,6 @@ function renderSettings() {
   root.appendChild(app);
 }
 
-// --- СТАРТ ---
 loadState();
 render();
 </script>
