@@ -59,7 +59,7 @@
   .brand-name { display: flex; flex-direction: column; line-height: 1.1; }
   .brand-name span:first-child { font-size: 1rem; font-weight: 900; letter-spacing: 0.5px; }
   .brand-name span:last-child { font-size: 0.62rem; color: var(--muted); font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
-  .stats-group { display: flex; gap: 6px; align-items: center; }
+  .stats-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
   .stats-pill {
     display: flex; align-items: center; gap: 5px; background: var(--card);
     border: 1px solid var(--border); padding: 7px 12px; border-radius: 20px;
@@ -67,6 +67,8 @@
   }
   .stats-pill .val { color: var(--yellow); }
   .stats-pill.streak .val { color: var(--serbian2); }
+  .stats-pill.season .val { color: var(--purple); }
+  .stats-pill.medal { padding: 7px 9px; }
   .icon-btn {
     width: 38px; height: 38px; border-radius: 12px; background: var(--card);
     border: 1px solid var(--border); color: var(--text); cursor: pointer;
@@ -90,6 +92,7 @@
   }
   .menu-card:hover:not(.locked) { transform: translateY(-3px); border-color: var(--accent, var(--serbian)); box-shadow: var(--shadow); }
   .menu-card:hover:not(.locked)::before { opacity: 0.08; }
+  .menu-card.locked { opacity: 0.5; cursor: not-allowed; }
   .menu-icon {
     width: 60px; height: 60px; border-radius: 16px; display: grid; place-items: center;
     font-size: 1.8rem; flex-shrink: 0;
@@ -354,6 +357,60 @@
     font-family: inherit; cursor: pointer; outline: none;
   }
 
+  /* ===== [НОВОЕ] МАГАЗИН / РАНКЕД / МОДУЛИ ===== */
+  .medal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; }
+  .medal-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 18px 16px; text-align: center; position: relative;
+  }
+  .medal-card .medal-emoji { font-size: 2.4rem; margin-bottom: 8px; display: block; }
+  .medal-card .medal-name { font-weight: 800; font-size: 0.92rem; margin-bottom: 2px; }
+  .medal-card .medal-price { color: var(--yellow); font-size: 0.82rem; font-weight: 800; margin-bottom: 10px; }
+  .medal-card.owned { border-color: var(--green); }
+  .medal-card.active { border-color: var(--gold); box-shadow: 0 0 0 2px var(--gold) inset; }
+  .medal-card .medal-badge { position: absolute; top: 8px; right: 8px; font-size: 0.7rem; font-weight: 800; color: var(--green); }
+  .rank-row {
+    display: flex; align-items: center; gap: 12px; background: var(--card);
+    border: 1px solid var(--border); border-radius: 14px; padding: 12px 16px; margin-bottom: 8px;
+  }
+  .rank-row .rank-pos { font-weight: 900; font-size: 1rem; width: 28px; color: var(--muted); text-align: center; }
+  .rank-row.top1 .rank-pos { color: var(--gold); }
+  .rank-row.top2 .rank-pos { color: #c0c0c0; }
+  .rank-row.top3 .rank-pos { color: #cd7f32; }
+  .rank-row .rank-name { flex: 1; font-weight: 800; font-size: 0.92rem; }
+  .rank-row .rank-xp { font-weight: 800; color: var(--purple); font-size: 0.88rem; }
+  .rank-row.me { border-color: var(--serbian); background: rgba(198,54,60,0.08); }
+  .module-card {
+    background: var(--card); border: 1px solid var(--border); border-radius: 18px;
+    padding: 18px; margin-bottom: 12px; display: flex; align-items: center; gap: 14px;
+  }
+  .module-card.locked { opacity: 0.55; }
+  .module-card .mod-icon { font-size: 1.8rem; width: 48px; text-align: center; }
+  .module-card .mod-body { flex: 1; min-width: 0; }
+  .module-card .mod-title { font-weight: 800; font-size: 0.98rem; margin-bottom: 4px; }
+  .module-card .mod-bar { height: 8px; background: var(--card2); border-radius: 6px; overflow: hidden; margin-top: 8px; }
+  .module-card .mod-bar-inner { height: 100%; background: linear-gradient(90deg, var(--green), var(--green2)); }
+  .module-card .mod-pct { font-size: 0.78rem; color: var(--muted); font-weight: 700; margin-top: 4px; }
+  .course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-bottom: 20px; }
+  .course-card {
+    background: var(--card); border: 2px solid var(--border); border-radius: 18px;
+    padding: 18px 14px; text-align: center; cursor: pointer; transition: all 0.2s;
+    color: var(--text); font-family: inherit;
+  }
+  .course-card:hover { transform: translateY(-2px); border-color: var(--serbian); }
+  .course-card.active { border-color: var(--serbian); box-shadow: 0 0 0 2px var(--serbian) inset; }
+  .course-card .cc-flag { font-size: 2rem; margin-bottom: 8px; display: block; }
+  .course-card .cc-name { font-weight: 800; font-size: 0.92rem; }
+  .course-card .cc-code { font-size: 0.7rem; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+  .speak-btn {
+    background: var(--card2); border: 1px solid var(--border); border-radius: 50%;
+    width: 34px; height: 34px; display: inline-grid; place-items: center; cursor: pointer;
+    font-size: 0.9rem; color: var(--text); transition: all 0.2s; font-family: inherit;
+    flex-shrink: 0;
+  }
+  .speak-btn:hover { border-color: var(--serbian); background: var(--card); }
+  .speak-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
   .hidden { display: none !important; }
   ::-webkit-scrollbar { width: 8px; height: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
@@ -385,215 +442,396 @@
 /* ============================================================
    ДАННЫЕ
    ============================================================ */
-const ALPHABET = [
-  { cyr: "А", cyrSm: "а", lat: "A", latSm: "a", sound: "а", ex: "ауто", exRu: "машина" },
-  { cyr: "Б", cyrSm: "б", lat: "B", latSm: "b", sound: "б", ex: "брат", exRu: "брат" },
-  { cyr: "В", cyrSm: "в", lat: "V", latSm: "v", sound: "в", ex: "вода", exRu: "вода" },
-  { cyr: "Г", cyrSm: "г", lat: "G", latSm: "g", sound: "г", ex: "град", exRu: "город" },
-  { cyr: "Д", cyrSm: "д", lat: "D", latSm: "d", sound: "д", ex: "дан", exRu: "день" },
-  { cyr: "Ђ", cyrSm: "ђ", lat: "Đ", latSm: "đ", sound: "джь", ex: "ђак", exRu: "школьник" },
-  { cyr: "Е", cyrSm: "е", lat: "E", latSm: "e", sound: "э", ex: "економија", exRu: "экономия" },
-  { cyr: "Ж", cyrSm: "ж", lat: "Ž", latSm: "ž", sound: "ж", ex: "живот", exRu: "жизнь" },
-  { cyr: "З", cyrSm: "з", lat: "Z", latSm: "z", sound: "з", ex: "земља", exRu: "земля" },
-  { cyr: "И", cyrSm: "и", lat: "I", latSm: "i", sound: "и", ex: "име", exRu: "имя" },
-  { cyr: "Ј", cyrSm: "ј", lat: "J", latSm: "j", sound: "й", ex: "ја", exRu: "я" },
-  { cyr: "К", cyrSm: "к", lat: "K", latSm: "k", sound: "к", ex: "кућа", exRu: "дом" },
-  { cyr: "Л", cyrSm: "л", lat: "L", latSm: "l", sound: "л", ex: "лепо", exRu: "красиво" },
-  { cyr: "Љ", cyrSm: "љ", lat: "Lj", latSm: "lj", sound: "ль", ex: "љубав", exRu: "любовь" },
-  { cyr: "М", cyrSm: "м", lat: "M", latSm: "m", sound: "м", ex: "мама", exRu: "мама" },
-  { cyr: "Н", cyrSm: "н", lat: "N", latSm: "n", sound: "н", ex: "нас", exRu: "нас" },
-  { cyr: "Њ", cyrSm: "њ", lat: "Nj", latSm: "nj", sound: "нь", ex: "њива", exRu: "поле" },
-  { cyr: "О", cyrSm: "о", lat: "O", latSm: "o", sound: "о", ex: "око", exRu: "глаз" },
-  { cyr: "П", cyrSm: "п", lat: "P", latSm: "p", sound: "п", ex: "пет", exRu: "пять" },
-  { cyr: "Р", cyrSm: "р", lat: "R", latSm: "r", sound: "р", ex: "рука", exRu: "рука" },
-  { cyr: "С", cyrSm: "с", lat: "S", latSm: "s", sound: "с", ex: "сунце", exRu: "солнце" },
-  { cyr: "Т", cyrSm: "т", lat: "T", latSm: "t", sound: "т", ex: "тата", exRu: "папа" },
-  { cyr: "Ћ", cyrSm: "ћ", lat: "Ć", latSm: "ć", sound: "чь", ex: "ћерка", exRu: "дочь" },
-  { cyr: "У", cyrSm: "у", lat: "U", latSm: "u", sound: "у", ex: "ухо", exRu: "ухо" },
-  { cyr: "Ф", cyrSm: "ф", lat: "F", latSm: "f", sound: "ф", ex: "филм", exRu: "фильм" },
-  { cyr: "Х", cyrSm: "х", lat: "H", latSm: "h", sound: "х", ex: "хлеб", exRu: "хлеб" },
-  { cyr: "Ц", cyrSm: "ц", lat: "C", latSm: "c", sound: "ц", ex: "цвет", exRu: "цветок" },
-  { cyr: "Ч", cyrSm: "ч", lat: "Č", latSm: "č", sound: "ч", ex: "чај", exRu: "чай" },
-  { cyr: "Џ", cyrSm: "џ", lat: "Dž", latSm: "dž", sound: "дж", ex: "џем", exRu: "джем" },
-  { cyr: "Ш", cyrSm: "ш", lat: "Š", latSm: "š", sound: "ш", ex: "школа", exRu: "школа" }
-];
 
-const VOCAB = {
-  greetings: { name: "Приветствия", emoji: "👋", color: "#3b82f6", words: [
-    { sr: "Здраво", tr: "[zdravo]", ru: "Привет" },
-    { sr: "Добар дан", tr: "[dobar dan]", ru: "Добрый день" },
-    { sr: "Добро јутро", tr: "[dobro jutro]", ru: "Доброе утро" },
-    { sr: "Добро вече", tr: "[dobro veče]", ru: "Добрый вечер" },
-    { sr: "Лаку ноћ", tr: "[laku noć]", ru: "Спокойной ночи" },
-    { sr: "Довиђења", tr: "[doviđenja]", ru: "До свидания" },
-    { sr: "Видимо се", tr: "[vidimo se]", ru: "Увидимся" },
-    { sr: "Како си?", tr: "[kako si?]", ru: "Как ты?" },
-    { sr: "Добро сам", tr: "[dobro sam]", ru: "Я в порядке" },
-    { sr: "Хвала", tr: "[hvala]", ru: "Спасибо" },
-    { sr: "Молим", tr: "[molim]", ru: "Пожалуйста" },
-    { sr: "Извини", tr: "[izvini]", ru: "Извини" }
-  ]},
-  politeness: { name: "Вежливость", emoji: "🙏", color: "#8b5cf6", words: [
-    { sr: "Извините", tr: "[izvinite]", ru: "Извините" },
-    { sr: "Опростите", tr: "[oprostite]", ru: "Простите" },
-    { sr: "Нема на чему", tr: "[nema na čemu]", ru: "Не за что" },
-    { sr: "Хвала пуно", tr: "[hvala puno]", ru: "Большое спасибо" },
-    { sr: "Изволите", tr: "[izvolite]", ru: "Пожалуйста (при передаче)" },
-    { sr: "Са задовољством", tr: "[sa zadovoljstvom]", ru: "С удовольствием" },
-    { sr: "Жао ми је", tr: "[žao mi je]", ru: "Мне жаль" },
-    { sr: "Нема проблема", tr: "[nema problema]", ru: "Нет проблем" }
-  ]},
-  numbers: { name: "Числа", emoji: "🔢", color: "#10b981", words: [
-    { sr: "Један", tr: "[jedan]", ru: "Один" },
-    { sr: "Два", tr: "[dva]", ru: "Два" },
-    { sr: "Три", tr: "[tri]", ru: "Три" },
-    { sr: "Четири", tr: "[četiri]", ru: "Четыре" },
-    { sr: "Пет", tr: "[pet]", ru: "Пять" },
-    { sr: "Шест", tr: "[šest]", ru: "Шесть" },
-    { sr: "Седам", tr: "[sedam]", ru: "Семь" },
-    { sr: "Осам", tr: "[osam]", ru: "Восемь" },
-    { sr: "Девет", tr: "[devet]", ru: "Девять" },
-    { sr: "Десет", tr: "[deset]", ru: "Десять" }
-  ]},
-  colors: { name: "Цвета", emoji: "🎨", color: "#a855f7", words: [
-    { sr: "Црвена", tr: "[crvena]", ru: "Красный" },
-    { sr: "Плава", tr: "[plava]", ru: "Синий" },
-    { sr: "Зелена", tr: "[zelena]", ru: "Зелёный" },
-    { sr: "Жута", tr: "[žuta]", ru: "Жёлтый" },
-    { sr: "Црна", tr: "[crna]", ru: "Чёрный" },
-    { sr: "Бела", tr: "[bela]", ru: "Белый" }
-  ]},
-  family: { name: "Семья", emoji: "👨‍👩‍👧", color: "#ec4899", words: [
-    { sr: "Мама", tr: "[mama]", ru: "Мама" },
-    { sr: "Тата", tr: "[tata]", ru: "Папа" },
-    { sr: "Брат", tr: "[brat]", ru: "Брат" },
-    { sr: "Сестра", tr: "[sestra]", ru: "Сестра" },
-    { sr: "Син", tr: "[sin]", ru: "Сын" },
-    { sr: "Ћерка", tr: "[ćerka]", ru: "Дочь" }
-  ]},
-  food: { name: "Еда", emoji: "🍽️", color: "#f59e0b", words: [
-    { sr: "Вода", tr: "[voda]", ru: "Вода" },
-    { sr: "Хлеб", tr: "[hleb]", ru: "Хлеб" },
-    { sr: "Млеко", tr: "[mleko]", ru: "Молоко" },
-    { sr: "Кафа", tr: "[kafa]", ru: "Кофе" },
-    { sr: "Чај", tr: "[čaj]", ru: "Чай" },
-    { sr: "Вино", tr: "[vino]", ru: "Вино" },
-    { sr: "Месо", tr: "[meso]", ru: "Мясо" },
-    { sr: "Риба", tr: "[riba]", ru: "Рыба" }
-  ]},
-  travel: { name: "Путешествия", emoji: "✈️", color: "#06b6d4", words: [
-    { sr: "Аеродром", tr: "[aerodrom]", ru: "Аэропорт" },
-    { sr: "Станица", tr: "[stanica]", ru: "Станция" },
-    { sr: "Воз", tr: "[voz]", ru: "Поезд" },
-    { sr: "Аутобус", tr: "[autobus]", ru: "Автобус" },
-    { sr: "Карта", tr: "[karta]", ru: "Билет" },
-    { sr: "Хотел", tr: "[hotel]", ru: "Отель" },
-    { sr: "Град", tr: "[grad]", ru: "Город" },
-    { sr: "Улица", tr: "[ulica]", ru: "Улица" }
-  ]},
-  verbs: { name: "Глаголы", emoji: "🏃", color: "#6366f1", words: [
-    { sr: "Бити", tr: "[biti]", ru: "Быть" },
-    { sr: "Имати", tr: "[imati]", ru: "Иметь" },
-    { sr: "Радити", tr: "[raditi]", ru: "Работать" },
-    { sr: "Говорити", tr: "[govoriti]", ru: "Говорить" },
-    { sr: "Знати", tr: "[znati]", ru: "Знать" },
-    { sr: "Моћи", tr: "[moći]", ru: "Мочь" },
-    { sr: "Хтети", tr: "[hteti]", ru: "Хотеть" },
-    { sr: "Ићи", tr: "[ići]", ru: "Идти" }
-  ]},
-  questions: { name: "Вопросы", emoji: "❓", color: "#0ea5e9", words: [
-    { sr: "Шта", tr: "[šta]", ru: "Что" },
-    { sr: "Ко", tr: "[ko]", ru: "Кто" },
-    { sr: "Где", tr: "[gde]", ru: "Где" },
-    { sr: "Када", tr: "[kada]", ru: "Когда" },
-    { sr: "Зашто", tr: "[zašto]", ru: "Почему" },
-    { sr: "Како", tr: "[kako]", ru: "Как" },
-    { sr: "Колико", tr: "[koliko]", ru: "Сколько" },
-    { sr: "Одакле", tr: "[odakle]", ru: "Откуда" }
-  ]}
+// --- [НОВОЕ] Аудио-хелпер (гибрид: файл -> speechSynthesis -> недоступно) ---
+const AUDIO_BASE = "audio";
+const audioCache = {};
+function canSpeak() {
+  return typeof window !== "undefined" && "speechSynthesis" in window;
+}
+function speakText(text, langCode) {
+  if (!text) return;
+  // 1) Пробуем файл: audio/<course>/<slug>.mp3
+  const slug = encodeURIComponent(String(text).toLowerCase().replace(/\s+/g, "_").replace(/[^\p{L}\p{N}_-]/gu, ""));
+  const src = `${AUDIO_BASE}/${langCode}/${slug}.mp3`;
+  if (!audioCache[src]) {
+    const audio = new Audio();
+    audio.src = src;
+    audio.addEventListener("error", () => { audioCache[src] = null; });
+    audio.addEventListener("canplaythrough", () => { audioCache[src] = audio; });
+    audio.load();
+  }
+  const cached = audioCache[src];
+  if (cached) { try { cached.currentTime = 0; cached.play(); return; } catch (e) {} }
+  // 2) Fallback: speechSynthesis
+  if (canSpeak()) {
+    const langMap = { sr: "sr-RS", be: "be-BY", kk: "kk-KZ", tt: "tt-RU" };
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = langMap[langCode] || "sr-RS";
+    u.rate = 0.95;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(u);
+  }
+}
+function speakAvailable(text) {
+  // Кнопка активна, если есть файл или есть speechSynthesis
+  return !!text && (canSpeak() || true);
+}
+function makeSpeakBtn(text, langCode) {
+  const btn = el("button", {
+    class: "speak-btn",
+    title: "Прослушать",
+    html: "▶️",
+    onclick: (e) => { e.stopPropagation(); speakText(text, langCode); }
+  });
+  return btn;
+}
+
+// --- [НОВОЕ] КУРСЫ ---
+// Полный сербский + каркас be/kk/tt (TODO: расширять контент)
+const COURSES = {
+  sr: {
+    code: "sr",
+    name: "Сербский",
+    flag: "🇷🇸",
+    speechLang: "sr-RS",
+    alphabet: [
+      { cyr: "А", cyrSm: "а", lat: "A", latSm: "a", sound: "а", ex: "ауто", exRu: "машина" },
+      { cyr: "Б", cyrSm: "б", lat: "B", latSm: "b", sound: "б", ex: "брат", exRu: "брат" },
+      { cyr: "В", cyrSm: "в", lat: "V", latSm: "v", sound: "в", ex: "вода", exRu: "вода" },
+      { cyr: "Г", cyrSm: "г", lat: "G", latSm: "g", sound: "г", ex: "град", exRu: "город" },
+      { cyr: "Д", cyrSm: "д", lat: "D", latSm: "d", sound: "д", ex: "дан", exRu: "день" },
+      { cyr: "Ђ", cyrSm: "ђ", lat: "Đ", latSm: "đ", sound: "джь", ex: "ђак", exRu: "школьник" },
+      { cyr: "Е", cyrSm: "е", lat: "E", latSm: "e", sound: "э", ex: "економија", exRu: "экономия" },
+      { cyr: "Ж", cyrSm: "ж", lat: "Ž", latSm: "ž", sound: "ж", ex: "живот", exRu: "жизнь" },
+      { cyr: "З", cyrSm: "з", lat: "Z", latSm: "z", sound: "з", ex: "земља", exRu: "земля" },
+      { cyr: "И", cyrSm: "и", lat: "I", latSm: "i", sound: "и", ex: "име", exRu: "имя" },
+      { cyr: "Ј", cyrSm: "ј", lat: "J", latSm: "j", sound: "й", ex: "ја", exRu: "я" },
+      { cyr: "К", cyrSm: "к", lat: "K", latSm: "k", sound: "к", ex: "кућа", exRu: "дом" },
+      { cyr: "Л", cyrSm: "л", lat: "L", latSm: "l", sound: "л", ex: "лепо", exRu: "красиво" },
+      { cyr: "Љ", cyrSm: "љ", lat: "Lj", latSm: "lj", sound: "ль", ex: "љубав", exRu: "любовь" },
+      { cyr: "М", cyrSm: "м", lat: "M", latSm: "m", sound: "м", ex: "мама", exRu: "мама" },
+      { cyr: "Н", cyrSm: "н", lat: "N", latSm: "n", sound: "н", ex: "нас", exRu: "нас" },
+      { cyr: "Њ", cyrSm: "њ", lat: "Nj", latSm: "nj", sound: "нь", ex: "њива", exRu: "поле" },
+      { cyr: "О", cyrSm: "о", lat: "O", latSm: "o", sound: "о", ex: "око", exRu: "глаз" },
+      { cyr: "П", cyrSm: "п", lat: "P", latSm: "p", sound: "п", ex: "пет", exRu: "пять" },
+      { cyr: "Р", cyrSm: "р", lat: "R", latSm: "r", sound: "р", ex: "рука", exRu: "рука" },
+      { cyr: "С", cyrSm: "с", lat: "S", latSm: "s", sound: "с", ex: "сунце", exRu: "солнце" },
+      { cyr: "Т", cyrSm: "т", lat: "T", latSm: "t", sound: "т", ex: "тата", exRu: "папа" },
+      { cyr: "Ћ", cyrSm: "ћ", lat: "Ć", latSm: "ć", sound: "чь", ex: "ћерка", exRu: "дочь" },
+      { cyr: "У", cyrSm: "у", lat: "U", latSm: "u", sound: "у", ex: "ухо", exRu: "ухо" },
+      { cyr: "Ф", cyrSm: "ф", lat: "F", latSm: "f", sound: "ф", ex: "филм", exRu: "фильм" },
+      { cyr: "Х", cyrSm: "х", lat: "H", latSm: "h", sound: "х", ex: "хлеб", exRu: "хлеб" },
+      { cyr: "Ц", cyrSm: "ц", lat: "C", latSm: "c", sound: "ц", ex: "цвет", exRu: "цветок" },
+      { cyr: "Ч", cyrSm: "ч", lat: "Č", latSm: "č", sound: "ч", ex: "чај", exRu: "чай" },
+      { cyr: "Џ", cyrSm: "џ", lat: "Dž", latSm: "dž", sound: "дж", ex: "џем", exRu: "джем" },
+      { cyr: "Ш", cyrSm: "ш", lat: "Š", latSm: "š", sound: "ш", ex: "школа", exRu: "школа" }
+    ],
+    vocab: {
+      greetings: { name: "Приветствия", emoji: "👋", color: "#3b82f6", words: [
+        { sr: "Здраво", tr: "[zdravo]", ru: "Привет" },
+        { sr: "Добар дан", tr: "[dobar dan]", ru: "Добрый день" },
+        { sr: "Добро јутро", tr: "[dobro jutro]", ru: "Доброе утро" },
+        { sr: "Добро вече", tr: "[dobro veče]", ru: "Добрый вечер" },
+        { sr: "Лаку ноћ", tr: "[laku noć]", ru: "Спокойной ночи" },
+        { sr: "Довиђења", tr: "[doviđenja]", ru: "До свидания" },
+        { sr: "Видимо се", tr: "[vidimo se]", ru: "Увидимся" },
+        { sr: "Како си?", tr: "[kako si?]", ru: "Как ты?" },
+        { sr: "Добро сам", tr: "[dobro sam]", ru: "Я в порядке" },
+        { sr: "Хвала", tr: "[hvala]", ru: "Спасибо" },
+        { sr: "Молим", tr: "[molim]", ru: "Пожалуйста" },
+        { sr: "Извини", tr: "[izvini]", ru: "Извини" }
+      ]},
+      politeness: { name: "Вежливость", emoji: "🙏", color: "#8b5cf6", words: [
+        { sr: "Извините", tr: "[izvinite]", ru: "Извините" },
+        { sr: "Опростите", tr: "[oprostite]", ru: "Простите" },
+        { sr: "Нема на чему", tr: "[nema na čemu]", ru: "Не за что" },
+        { sr: "Хвала пуно", tr: "[hvala puno]", ru: "Большое спасибо" },
+        { sr: "Изволите", tr: "[izvolite]", ru: "Пожалуйста (при передаче)" },
+        { sr: "Са задовољством", tr: "[sa zadovoljstvom]", ru: "С удовольствием" },
+        { sr: "Жао ми је", tr: "[žao mi je]", ru: "Мне жаль" },
+        { sr: "Нема проблема", tr: "[nema problema]", ru: "Нет проблем" }
+      ]},
+      numbers: { name: "Числа", emoji: "🔢", color: "#10b981", words: [
+        { sr: "Један", tr: "[jedan]", ru: "Один" },
+        { sr: "Два", tr: "[dva]", ru: "Два" },
+        { sr: "Три", tr: "[tri]", ru: "Три" },
+        { sr: "Четири", tr: "[četiri]", ru: "Четыре" },
+        { sr: "Пет", tr: "[pet]", ru: "Пять" },
+        { sr: "Шест", tr: "[šest]", ru: "Шесть" },
+        { sr: "Седам", tr: "[sedam]", ru: "Семь" },
+        { sr: "Осам", tr: "[osam]", ru: "Восемь" },
+        { sr: "Девет", tr: "[devet]", ru: "Девять" },
+        { sr: "Десет", tr: "[deset]", ru: "Десять" }
+      ]},
+      colors: { name: "Цвета", emoji: "🎨", color: "#a855f7", words: [
+        { sr: "Црвена", tr: "[crvena]", ru: "Красный" },
+        { sr: "Плава", tr: "[plava]", ru: "Синий" },
+        { sr: "Зелена", tr: "[zelena]", ru: "Зелёный" },
+        { sr: "Жута", tr: "[žuta]", ru: "Жёлтый" },
+        { sr: "Црна", tr: "[crna]", ru: "Чёрный" },
+        { sr: "Бела", tr: "[bela]", ru: "Белый" }
+      ]},
+      family: { name: "Семья", emoji: "👨‍👩‍👧", color: "#ec4899", words: [
+        { sr: "Мама", tr: "[mama]", ru: "Мама" },
+        { sr: "Тата", tr: "[tata]", ru: "Папа" },
+        { sr: "Брат", tr: "[brat]", ru: "Брат" },
+        { sr: "Сестра", tr: "[sestra]", ru: "Сестра" },
+        { sr: "Син", tr: "[sin]", ru: "Сын" },
+        { sr: "Ћерка", tr: "[ćerka]", ru: "Дочь" }
+      ]},
+      food: { name: "Еда", emoji: "🍽️", color: "#f59e0b", words: [
+        { sr: "Вода", tr: "[voda]", ru: "Вода" },
+        { sr: "Хлеб", tr: "[hleb]", ru: "Хлеб" },
+        { sr: "Млеко", tr: "[mleko]", ru: "Молоко" },
+        { sr: "Кафа", tr: "[kafa]", ru: "Кофе" },
+        { sr: "Чај", tr: "[čaj]", ru: "Чай" },
+        { sr: "Вино", tr: "[vino]", ru: "Вино" },
+        { sr: "Месо", tr: "[meso]", ru: "Мясо" },
+        { sr: "Риба", tr: "[riba]", ru: "Рыба" }
+      ]},
+      travel: { name: "Путешествия", emoji: "✈️", color: "#06b6d4", words: [
+        { sr: "Аеродром", tr: "[aerodrom]", ru: "Аэропорт" },
+        { sr: "Станица", tr: "[stanica]", ru: "Станция" },
+        { sr: "Воз", tr: "[voz]", ru: "Поезд" },
+        { sr: "Аутобус", tr: "[autobus]", ru: "Автобус" },
+        { sr: "Карта", tr: "[karta]", ru: "Билет" },
+        { sr: "Хотел", tr: "[hotel]", ru: "Отель" },
+        { sr: "Град", tr: "[grad]", ru: "Город" },
+        { sr: "Улица", tr: "[ulica]", ru: "Улица" }
+      ]},
+      verbs: { name: "Глаголы", emoji: "🏃", color: "#6366f1", words: [
+        { sr: "Бити", tr: "[biti]", ru: "Быть" },
+        { sr: "Имати", tr: "[imati]", ru: "Иметь" },
+        { sr: "Радити", tr: "[raditi]", ru: "Работать" },
+        { sr: "Говорити", tr: "[govoriti]", ru: "Говорить" },
+        { sr: "Знати", tr: "[znati]", ru: "Знать" },
+        { sr: "Моћи", tr: "[moći]", ru: "Мочь" },
+        { sr: "Хтети", tr: "[hteti]", ru: "Хотеть" },
+        { sr: "Ићи", tr: "[ići]", ru: "Идти" }
+      ]},
+      questions: { name: "Вопросы", emoji: "❓", color: "#0ea5e9", words: [
+        { sr: "Шта", tr: "[šta]", ru: "Что" },
+        { sr: "Ко", tr: "[ko]", ru: "Кто" },
+        { sr: "Где", tr: "[gde]", ru: "Где" },
+        { sr: "Када", tr: "[kada]", ru: "Когда" },
+        { sr: "Зашто", tr: "[zašto]", ru: "Почему" },
+        { sr: "Како", tr: "[kako]", ru: "Как" },
+        { sr: "Колико", tr: "[koliko]", ru: "Сколько" },
+        { sr: "Одакле", tr: "[odakle]", ru: "Откуда" }
+      ]}
+    },
+    grammar: [
+      { id: "pronouns", title: "Личные местоимения", icon: "👤",
+        rules: [{ text: "В сербском 7 падежей. Начнём с именительного." }],
+        table: [["ја","я"],["ти","ты"],["он","он"],["она","она"],["ми","мы"],["ви","вы"],["они","они"]],
+        examples: [
+          { sr: "Ја сам студент.", ru: "Я студент." },
+          { sr: "Ти си добар.", ru: "Ты хороший." },
+          { sr: "Ми смо пријатељи.", ru: "Мы друзья." }
+        ]
+      },
+      { id: "biti", title: "Глагол «бити»", icon: "🔗",
+        rules: [{ text: "Самый важный глагол — «быть»." }],
+        table: [["ја сам","я есть"],["ти си","ты есть"],["он је","он есть"],["ми смо","мы есть"],["ви сте","вы есть"],["они су","они есть"]],
+        examples: [
+          { sr: "Ја сам из Русије.", ru: "Я из России." },
+          { sr: "Она је лекар.", ru: "Она врач." },
+          { sr: "Они су код куће.", ru: "Они дома." }
+        ]
+      },
+      { id: "gender", title: "Род существительных", icon: "⚧️",
+        rules: [
+          { text: "Мужской род — на согласную (град)." },
+          { text: "Женский — на -а (жена)." },
+          { text: "Средний — на -о/-е (село)." }
+        ],
+        examples: [
+          { sr: "Велики град", ru: "Большой город (м.р.)" },
+          { sr: "Велика кућа", ru: "Большой дом (ж.р.)" },
+          { sr: "Велико село", ru: "Большое село (с.р.)" }
+        ]
+      },
+      { id: "negation", title: "Отрицание", icon: "🚫",
+        rules: [{ text: "Отрицание — частица «не» перед глаголом. Бити: нисам, ниси, није, нисмо, нисте, нису." }],
+        examples: [
+          { sr: "Не знам.", ru: "Не знаю." },
+          { sr: "Не разумем.", ru: "Не понимаю." },
+          { sr: "Он није ту.", ru: "Он не здесь." }
+        ]
+      },
+      { id: "questions", title: "Вопросы", icon: "❓",
+        rules: [{ text: "Вопросительные слова: шта, ко, где, када, зашто, како, колико." }],
+        examples: [
+          { sr: "Шта је ово?", ru: "Что это?" },
+          { sr: "Где је станица?", ru: "Где станция?" },
+          { sr: "Како се зовеш?", ru: "Как тебя зовут?" }
+        ]
+      }
+    ],
+    dialogues: [
+      { id: "meet", title: "Знакомство", icon: "🤝",
+        lines: [
+          { sr: "Здраво! Како се зовеш?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Зовем се Марко. А ти?", ru: "Меня зовут Марко. А тебя?" },
+          { sr: "Ја сам Ана. Драго ми је.", ru: "Я Ана. Приятно познакомиться." },
+          { sr: "Драго ми је, Ана. Одакле си?", ru: "Приятно, Ана. Откуда ты?" },
+          { sr: "Из Русије сам. А ти?", ru: "Из России. А ты?" },
+          { sr: "Ја сам из Србије.", ru: "Я из Сербии." }
+        ],
+        quiz: [
+          { q: "«Зовем се Марко» значит...", options: ["Меня зовут Марко","Я знаю Марко","Я вижу Марко","Марко зовёт"], correct: 0 },
+          { q: "«Одакле си?» значит...", options: ["Как дела?","Откуда ты?","Где ты?","Кто ты?"], correct: 1 },
+          { q: "«Драго ми је» — это...", options: ["Мне дорого","Приятно познакомиться","Я рад","Мне жаль"], correct: 1 }
+        ]
+      },
+      { id: "cafe", title: "В кафе", icon: "☕",
+        lines: [
+          { sr: "Добар дан! Шта желите?", ru: "Добрый день! Что желаете?" },
+          { sr: "Молим Вас једну кафу.", ru: "Одну кофе, пожалуйста." },
+          { sr: "Са млеком или без?", ru: "С молоком или без?" },
+          { sr: "Са млеком, молим.", ru: "С молоком, пожалуйста." },
+          { sr: "Изволите. Још нешто?", ru: "Пожалуйста. Что-нибудь ещё?" },
+          { sr: "Не, хвала. Колико кошта?", ru: "Нет, спасибо. Сколько стоит?" }
+        ],
+        quiz: [
+          { q: "«Колико кошта?» значит...", options: ["Как дела?","Сколько стоит?","Что это?","Где это?"], correct: 1 },
+          { q: "«Са млеком» — это...", options: ["без молока","с молоком","молоко","пожалуйста молоко"], correct: 1 },
+          { q: "«Још нешто?» — это...", options: ["Ещё что-то?","Это не то","Ничего","Всё хорошо"], correct: 0 }
+        ]
+      }
+    ]
+  },
+
+  // --- [НОВОЕ] Каркас белорусского (TODO: расширять контент) ---
+  be: {
+    code: "be",
+    name: "Белорусский",
+    flag: "🇧🇾",
+    speechLang: "be-BY",
+    alphabet: [
+      { cyr: "А", cyrSm: "а", lat: "A", latSm: "a", sound: "а", ex: "аўта", exRu: "машина" },
+      { cyr: "Б", cyrSm: "б", lat: "B", latSm: "b", sound: "б", ex: "брат", exRu: "брат" },
+      { cyr: "В", cyrSm: "в", lat: "V", latSm: "v", sound: "в", ex: "вада", exRu: "вода" }
+      // TODO: добавить остальные буквы
+    ],
+    vocab: {
+      greetings: { name: "Прывітанні", emoji: "👋", color: "#3b82f6", words: [
+        { sr: "Прывітанне", tr: "[pryvitanne]", ru: "Привет" },
+        { sr: "Добры дзень", tr: "[dobry dzen]", ru: "Добрый день" }
+        // TODO: расширить
+      ]}
+      // TODO: добавить категории
+    },
+    grammar: [
+      { id: "be-pronouns", title: "Асабовыя займеннікі", icon: "👤",
+        rules: [{ text: "TODO: контент белорусской грамматики." }],
+        examples: [{ sr: "Я студэнт.", ru: "Я студент." }]
+      }
+    ],
+    dialogues: [
+      { id: "be-meet", title: "Знаёмства", icon: "🤝",
+        lines: [
+          { sr: "Прывітанне! Як цябе завуць?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Мяне завуць Марк. А цябе?", ru: "Меня зовут Марк. А тебя?" }
+        ],
+        quiz: [
+          { q: "«Як цябе завуць?» значыць...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 }
+        ]
+      }
+    ]
+  },
+
+  // --- [НОВОЕ] Каркас казахского (TODO: расширять контент) ---
+  kk: {
+    code: "kk",
+    name: "Казахский",
+    flag: "🇰🇿",
+    speechLang: "kk-KZ",
+    alphabet: [
+      { cyr: "А", cyrSm: "а", lat: "A", latSm: "a", sound: "а", ex: "ана", exRu: "мать" },
+      { cyr: "Ә", cyrSm: "ә", lat: "Ä", latSm: "ä", sound: "э", ex: "әке", exRu: "отец" },
+      { cyr: "Б", cyrSm: "б", lat: "B", latSm: "b", sound: "б", ex: "бала", exRu: "ребёнок" }
+      // TODO: добавить остальные буквы
+    ],
+    vocab: {
+      greetings: { name: "Сәлемдесу", emoji: "👋", color: "#3b82f6", words: [
+        { sr: "Сәлем", tr: "[sälem]", ru: "Привет" },
+        { sr: "Қайырлы күн", tr: "[qaiyrly kün]", ru: "Добрый день" }
+        // TODO: расширить
+      ]}
+      // TODO: добавить категории
+    },
+    grammar: [
+      { id: "kk-pronouns", title: "Жіктеу есімдіктері", icon: "👤",
+        rules: [{ text: "TODO: контент казахской грамматики." }],
+        examples: [{ sr: "Мен студентпін.", ru: "Я студент." }]
+      }
+    ],
+    dialogues: [
+      { id: "kk-meet", title: "Танысу", icon: "🤝",
+        lines: [
+          { sr: "Сәлем! Сенің атың кім?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Менің атым Марк. Ал сенің?", ru: "Меня зовут Марк. А тебя?" }
+        ],
+        quiz: [
+          { q: "«Сенің атың кім?» дегені...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 }
+        ]
+      }
+    ]
+  },
+
+  // --- [НОВОЕ] Каркас татарского (TODO: расширять контент) ---
+  tt: {
+    code: "tt",
+    name: "Татарский",
+    flag: "🏳️",
+    speechLang: "tt-RU",
+    alphabet: [
+      { cyr: "А", cyrSm: "а", lat: "A", latSm: "a", sound: "а", ex: "ана", exRu: "мать" },
+      { cyr: "Ә", cyrSm: "ә", lat: "Ä", latSm: "ä", sound: "э", ex: "әни", exRu: "мама" },
+      { cyr: "Б", cyrSm: "б", lat: "B", latSm: "b", sound: "б", ex: "бала", exRu: "ребёнок" }
+      // TODO: добавить остальные буквы
+    ],
+    vocab: {
+      greetings: { name: "Сәламләү", emoji: "👋", color: "#3b82f6", words: [
+        { sr: "Сәлам", tr: "[sälam]", ru: "Привет" },
+        { sr: "Хәерле көн", tr: "[xäyerle kön]", ru: "Добрый день" }
+        // TODO: расширить
+      ]}
+      // TODO: добавить категории
+    },
+    grammar: [
+      { id: "tt-pronouns", title: "Зат алмашлыклары", icon: "👤",
+        rules: [{ text: "TODO: контент татарской грамматики." }],
+        examples: [{ sr: "Мин студент.", ru: "Я студент." }]
+      }
+    ],
+    dialogues: [
+      { id: "tt-meet", title: "Танышу", icon: "🤝",
+        lines: [
+          { sr: "Сәлам! Синең исемең ничек?", ru: "Привет! Как тебя зовут?" },
+          { sr: "Минем исемем Марк. Ә синең?", ru: "Меня зовут Марк. А тебя?" }
+        ],
+        quiz: [
+          { q: "«Синең исемең ничек?» дигән...", options: ["Как дела?","Как тебя зовут?","Где ты?","Кто ты?"], correct: 1 }
+        ]
+      }
+    ]
+  }
 };
 
-const GRAMMAR = [
-  { id: "pronouns", title: "Личные местоимения", icon: "👤",
-    rules: [{ text: "В сербском 7 падежей. Начнём с именительного." }],
-    table: [["ја","я"],["ти","ты"],["он","он"],["она","она"],["ми","мы"],["ви","вы"],["они","они"]],
-    examples: [
-      { sr: "Ја сам студент.", ru: "Я студент." },
-      { sr: "Ти си добар.", ru: "Ты хороший." },
-      { sr: "Ми смо пријатељи.", ru: "Мы друзья." }
-    ]
-  },
-  { id: "biti", title: "Глагол «бити»", icon: "🔗",
-    rules: [{ text: "Самый важный глагол — «быть»." }],
-    table: [["ја сам","я есть"],["ти си","ты есть"],["он је","он есть"],["ми смо","мы есть"],["ви сте","вы есть"],["они су","они есть"]],
-    examples: [
-      { sr: "Ја сам из Русије.", ru: "Я из России." },
-      { sr: "Она је лекар.", ru: "Она врач." },
-      { sr: "Они су код куће.", ru: "Они дома." }
-    ]
-  },
-  { id: "gender", title: "Род существительных", icon: "⚧️",
-    rules: [
-      { text: "Мужской род — на согласную (град)." },
-      { text: "Женский — на -а (жена)." },
-      { text: "Средний — на -о/-е (село)." }
-    ],
-    examples: [
-      { sr: "Велики град", ru: "Большой город (м.р.)" },
-      { sr: "Велика кућа", ru: "Большой дом (ж.р.)" },
-      { sr: "Велико село", ru: "Большое село (с.р.)" }
-    ]
-  },
-  { id: "negation", title: "Отрицание", icon: "🚫",
-    rules: [{ text: "Отрицание — частица «не» перед глаголом. Бити: нисам, ниси, није, нисмо, нисте, нису." }],
-    examples: [
-      { sr: "Не знам.", ru: "Не знаю." },
-      { sr: "Не разумем.", ru: "Не понимаю." },
-      { sr: "Он није ту.", ru: "Он не здесь." }
-    ]
-  },
-  { id: "questions", title: "Вопросы", icon: "❓",
-    rules: [{ text: "Вопросительные слова: шта, ко, где, када, зашто, како, колико." }],
-    examples: [
-      { sr: "Шта је ово?", ru: "Что это?" },
-      { sr: "Где је станица?", ru: "Где станция?" },
-      { sr: "Како се зовеш?", ru: "Как тебя зовут?" }
-    ]
-  }
+// --- [НОВОЕ] Магазин медалей ---
+const MEDALS = [
+  { id: "common", name: "Обычная", emoji: "🥉", price: 1200, color: "#9ca3af" },
+  { id: "wooden", name: "Деревянная", emoji: "🪵", price: 2000, color: "#b45309" },
+  { id: "iron", name: "Железная", emoji: "⚙️", price: 3400, color: "#6b7280" },
+  { id: "diamond", name: "Алмазная", emoji: "💎", price: 4000, color: "#22d3ee" },
+  { id: "netherite", name: "Незеритовая", emoji: "🔥", price: 5000, color: "#a855f7" }
 ];
-
-const DIALOGUES = [
-  { id: "meet", title: "Знакомство", icon: "🤝",
-    lines: [
-      { sr: "Здраво! Како се зовеш?", ru: "Привет! Как тебя зовут?" },
-      { sr: "Зовем се Марко. А ти?", ru: "Меня зовут Марко. А тебя?" },
-      { sr: "Ја сам Ана. Драго ми је.", ru: "Я Ана. Приятно познакомиться." },
-      { sr: "Драго ми је, Ана. Одакле си?", ru: "Приятно, Ана. Откуда ты?" },
-      { sr: "Из Русије сам. А ти?", ru: "Из России. А ты?" },
-      { sr: "Ја сам из Србије.", ru: "Я из Сербии." }
-    ],
-    quiz: [
-      { q: "«Зовем се Марко» значит...", options: ["Меня зовут Марко","Я знаю Марко","Я вижу Марко","Марко зовёт"], correct: 0 },
-      { q: "«Одакле си?» значит...", options: ["Как дела?","Откуда ты?","Где ты?","Кто ты?"], correct: 1 },
-      { q: "«Драго ми је» — это...", options: ["Мне дорого","Приятно познакомиться","Я рад","Мне жаль"], correct: 1 }
-    ]
-  },
-  { id: "cafe", title: "В кафе", icon: "☕",
-    lines: [
-      { sr: "Добар дан! Шта желите?", ru: "Добрый день! Что желаете?" },
-      { sr: "Молим Вас једну кафу.", ru: "Одну кофе, пожалуйста." },
-      { sr: "Са млеком или без?", ru: "С молоком или без?" },
-      { sr: "Са млеком, молим.", ru: "С молоком, пожалуйста." },
-      { sr: "Изволите. Још нешто?", ru: "Пожалуйста. Что-нибудь ещё?" },
-      { sr: "Не, хвала. Колико кошта?", ru: "Нет, спасибо. Сколько стоит?" }
-    ],
-    quiz: [
-      { q: "«Колико кошта?» значит...", options: ["Как дела?","Сколько стоит?","Что это?","Где это?"], correct: 1 },
-      { q: "«Са млеком» — это...", options: ["без молока","с молоком","молоко","пожалуйста молоко"], correct: 1 },
-      { q: "«Још нешто?» — это...", options: ["Ещё что-то?","Это не то","Ничего","Всё хорошо"], correct: 0 }
-    ]
-  }
-];
+const FREEZE_PRICE = 520;
+const FREEZE_MAX = 3;
+const RANKED_WIN_BONUS = 300;
 
 /* ============================================================
    СОСТОЯНИЕ
@@ -605,9 +843,21 @@ const state = {
   settings: { theme: "dark", lang: "ru" },
   xp: 0,
   streak: 0,
+  // --- [НОВОЕ] ---
+  seasonXp: 0,
+  seasonId: null,
+  course: "sr",
+  medals: new Set(),
+  activeMedal: null,
+  freezeCount: 0,
+  lastDaily: null,
   learnedLetters: new Set(),
   learnedGaeva: new Set(),
   learnedWords: new Set(),
+  modulesDone: new Set(),
+  // --- [НОВОЕ] прогресс по курсам (миграция ниже) ---
+  progressByCourse: { sr: { learnedLetters: [], learnedGaeva: [], learnedWords: [], modulesDone: [] } },
+  // старое
   currentLetter: null,
   currentGaeva: null,
   currentCat: null,
@@ -636,6 +886,17 @@ function saveState() {
       settings: state.settings,
       xp: state.xp,
       streak: state.streak,
+      // --- [НОВОЕ] ---
+      seasonXp: state.seasonXp,
+      seasonId: state.seasonId,
+      course: state.course,
+      medals: [...state.medals],
+      activeMedal: state.activeMedal,
+      freezeCount: state.freezeCount,
+      lastDaily: state.lastDaily,
+      modulesDone: [...state.modulesDone],
+      progressByCourse: state.progressByCourse,
+      // старое
       learnedLetters: [...state.learnedLetters],
       learnedGaeva: [...state.learnedGaeva],
       learnedWords: [...state.learnedWords],
@@ -657,8 +918,48 @@ function loadState() {
     state.learnedGaeva = new Set(data.learnedGaeva || []);
     state.learnedWords = new Set(data.learnedWords || []);
     state.chatHistory = data.chatHistory || [];
+    // --- [НОВОЕ] ---
+    state.seasonXp = data.seasonXp || 0;
+    state.seasonId = data.seasonId || null;
+    state.course = data.course || "sr";
+    state.medals = new Set(data.medals || []);
+    state.activeMedal = data.activeMedal || null;
+    state.freezeCount = data.freezeCount || 0;
+    state.lastDaily = data.lastDaily || null;
+    state.modulesDone = new Set(data.modulesDone || []);
+    if (data.progressByCourse) state.progressByCourse = data.progressByCourse;
+    // Миграция: если старых данных по курсам нет, кладём текущее в sr
+    if (!state.progressByCourse.sr) {
+      state.progressByCourse.sr = {
+        learnedLetters: [...state.learnedLetters],
+        learnedGaeva: [...state.learnedGaeva],
+        learnedWords: [...state.learnedWords],
+        modulesDone: [...state.modulesDone]
+      };
+    }
     if (state.user) state.screen = "home";
   } catch (e) { console.warn("Load failed", e); }
+}
+
+// --- [НОВОЕ] Переключение курса с сохранением/загрузкой прогресса ---
+function switchCourse(code) {
+  if (!COURSES[code]) return;
+  // сохраняем текущий прогресс в текущий курс
+  if (!state.progressByCourse[state.course]) state.progressByCourse[state.course] = {};
+  state.progressByCourse[state.course] = {
+    learnedLetters: [...state.learnedLetters],
+    learnedGaeva: [...state.learnedGaeva],
+    learnedWords: [...state.learnedWords],
+    modulesDone: [...state.modulesDone]
+  };
+  state.course = code;
+  const p = state.progressByCourse[code] || {};
+  state.learnedLetters = new Set(p.learnedLetters || []);
+  state.learnedGaeva = new Set(p.learnedGaeva || []);
+  state.learnedWords = new Set(p.learnedWords || []);
+  state.modulesDone = new Set(p.modulesDone || []);
+  saveState();
+  syncRanked();
 }
 
 /* ============================================================
@@ -694,6 +995,95 @@ function applyTheme() {
   document.documentElement.setAttribute("data-theme", state.settings.theme);
 }
 
+// --- [НОВОЕ] Курс-хелперы ---
+function currentCourse() {
+  return COURSES[state.course] || COURSES.sr;
+}
+
+// --- [НОВОЕ] Начисление XP (идёт и в общий, и в сезонный) ---
+function addXp(n) {
+  if (!n || n <= 0) return;
+  state.xp += n;
+  state.seasonXp += n;
+  saveState();
+  syncRanked();
+}
+
+// --- [НОВОЕ] Синхронизация ранкеда с сервером ---
+async function syncRanked() {
+  if (!state.user) return;
+  try {
+    await fetch("/api/ranked/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: state.user.username,
+        seasonXp: state.seasonXp,
+        seasonId: state.seasonId,
+        course: state.course
+      })
+    });
+  } catch (e) { /* офлайн — не страшно */ }
+}
+
+// --- [НОВОЕ] Ежедневная серия ---
+function todayStr() {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+}
+function checkDailyStreak() {
+  const today = todayStr();
+  if (!state.lastDaily) {
+    state.streak = Math.max(state.streak, 1);
+    state.lastDaily = today;
+    saveState();
+    return;
+  }
+  if (state.lastDaily === today) return;
+  const last = new Date(state.lastDaily + "T00:00:00");
+  const now = new Date(today + "T00:00:00");
+  const diffDays = Math.round((now - last) / 86400000);
+  if (diffDays === 1) {
+    state.streak += 1;
+    state.lastDaily = today;
+    saveState();
+  } else if (diffDays > 1) {
+    // пропуск: тратим заморозку, если есть
+    if (state.freezeCount > 0) {
+      state.freezeCount -= 1;
+      state.streak += 1; // считаем, что день «заморожен»
+      state.lastDaily = today;
+      saveState();
+      syncProfile();
+    } else {
+      state.streak = 1;
+      state.lastDaily = today;
+      saveState();
+    }
+  }
+}
+
+// --- [НОВОЕ] Синхронизация профиля (медали, заморозки, серия, курс) ---
+async function syncProfile() {
+  if (!state.user) return;
+  try {
+    await fetch("/api/profile/sync", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: state.user.username,
+        medals: [...state.medals],
+        activeMedal: state.activeMedal,
+        freezeCount: state.freezeCount,
+        lastDaily: state.lastDaily,
+        seasonXp: state.seasonXp,
+        seasonId: state.seasonId,
+        course: state.course
+      })
+    });
+  } catch (e) { /* офлайн */ }
+}
+
 /* ============================================================
    РОУТЕР
    ============================================================ */
@@ -720,7 +1110,12 @@ function render() {
     dialogue: renderDialogue,
     "dialogue-quiz": renderDialogueQuiz,
     chat: renderChat,
-    settings: renderSettings
+    settings: renderSettings,
+    // --- [НОВОЕ] ---
+    shop: renderShop,
+    ranked: renderRanked,
+    modules: renderModules,
+    courses: renderCourses
   };
   
   const fn = screens[state.screen];
@@ -738,6 +1133,24 @@ function render() {
    TOPBAR
    ============================================================ */
 function renderTopbar() {
+  const stats = [
+    el("div", { class: "stats-pill streak", title: "Серия" }, [
+      el("span", { html: "🔥" }), el("span", { class: "val" }, String(state.streak))
+    ]),
+    el("div", { class: "stats-pill", title: "Молнии (XP)" }, [
+      el("span", { html: "⚡" }), el("span", { class: "val" }, String(state.xp))
+    ]),
+    // --- [НОВОЕ] сезонный счёт и медаль ---
+    el("div", { class: "stats-pill season", title: "Сезонный счёт" }, [
+      el("span", { html: "🏆" }), el("span", { class: "val" }, String(state.seasonXp))
+    ])
+  ];
+  if (state.activeMedal) {
+    const m = MEDALS.find(x => x.id === state.activeMedal);
+    if (m) stats.push(el("div", { class: "stats-pill medal", title: m.name }, [el("span", { html: m.emoji })]));
+  }
+  stats.push(el("button", { class: "icon-btn", title: "Настройки", html: "⚙️", onclick: () => { state.screen = "settings"; render(); } }));
+
   return el("div", { class: "topbar" }, [
     el("div", { class: "brand", onclick: () => { state.screen = "home"; render(); } }, [
       el("div", { class: "brand-logo", html: "🦫" }),
@@ -746,15 +1159,7 @@ function renderTopbar() {
         el("span", {}, "LINGUO")
       ])
     ]),
-    el("div", { class: "stats-group" }, [
-      el("div", { class: "stats-pill streak", title: "Серия" }, [
-        el("span", { html: "🔥" }), el("span", { class: "val" }, String(state.streak))
-      ]),
-      el("div", { class: "stats-pill", title: "Опыт" }, [
-        el("span", { html: "⚡" }), el("span", { class: "val" }, String(state.xp))
-      ]),
-      el("button", { class: "icon-btn", title: "Настройки", html: "⚙️", onclick: () => { state.screen = "settings"; render(); } })
-    ])
+    el("div", { class: "stats-group" }, stats)
   ]);
 }
 
@@ -783,7 +1188,7 @@ function renderAuth() {
     el("div", { class: "auth-logo" }, [
       el("div", { class: "auth-logo-big", html: "🦫" }),
       el("h1", {}, "BOBOR-LINGUO"),
-      el("p", {}, "Учи сербский с бобром")
+      el("p", {}, "Учи сербский, белорусский, казахский, татарский")
     ]),
     el("div", { class: "auth-tabs" }, [
       el("button", {
@@ -809,6 +1214,8 @@ function renderAuth() {
         saveState();
         state.screen = "home";
         render();
+        syncProfile();
+        syncRanked();
       }
     }, [
       el("input", { class: "auth-input", name: "username", placeholder: "Логин", required: "true", autocomplete: "username" }),
@@ -828,14 +1235,19 @@ function renderHome() {
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
   app.appendChild(el("h1", { class: "section-title" }, "Привет, " + state.user.username + "!"));
-  app.appendChild(el("p", { class: "section-sub" }, "Продолжай учить сербский"));
+  app.appendChild(el("p", { class: "section-sub" }, "Продолжай учить " + currentCourse().name.toLowerCase()));
   
   const items = [
-    { id: "alphabet", icon: "🔤", title: "Алфавит", desc: `Кириллица и гаевица · ${state.learnedLetters.size + state.learnedGaeva.size}/60`, color: "#3b82f6" },
-    { id: "grammar", icon: "📐", title: "Грамматика", desc: `${GRAMMAR.length} тем`, color: "#8b5cf6" },
-    { id: "vocab", icon: "📚", title: "Слова", desc: `${Object.keys(VOCAB).length} категорий`, color: "#10b981" },
-    { id: "dialogues", icon: "💬", title: "Диалоги", desc: `${DIALOGUES.length} ситуаций`, color: "#f59e0b" },
-    { id: "chat", icon: "🦫", title: "Чат с Марко", desc: "Настоящая нейросеть на сербском", color: "#ec4899" }
+    { id: "alphabet", icon: "🔤", title: "Алфавит", desc: `Кириллица и гаевица · ${state.learnedLetters.size + state.learnedGaeva.size}/${currentCourse().alphabet.length * 2}`, color: "#3b82f6" },
+    { id: "grammar", icon: "📐", title: "Грамматика", desc: `${currentCourse().grammar.length} тем`, color: "#8b5cf6" },
+    { id: "vocab", icon: "📚", title: "Слова", desc: `${Object.keys(currentCourse().vocab).length} категорий`, color: "#10b981" },
+    { id: "dialogues", icon: "💬", title: "Диалоги", desc: `${currentCourse().dialogues.length} ситуаций`, color: "#f59e0b" },
+    { id: "chat", icon: "🦫", title: "Чат с Марко", desc: "Настоящая нейросеть на сербском", color: "#ec4899" },
+    // --- [НОВОЕ] ---
+    { id: "modules", icon: "🧩", title: "Модули", desc: "Пошаговое обучение по темам", color: "#14b8a6" },
+    { id: "shop", icon: "🛒", title: "Магазин", desc: "Медали и заморозка серии", color: "#f59e0b" },
+    { id: "ranked", icon: "🏆", title: "Ранкед", desc: "Соревнование по сезону", color: "#a855f7" },
+    { id: "courses", icon: "🌍", title: "Курсы", desc: `Сейчас: ${currentCourse().flag} ${currentCourse().name}`, color: "#3b82f6" }
   ];
   
   const menu = el("div", { class: "menu-grid" });
@@ -862,29 +1274,30 @@ function renderHome() {
    ============================================================ */
 function renderAlphabet() {
   const app = el("div", { class: "app slide-in" });
+  const course = currentCourse();
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [
     el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
   ]));
-  app.appendChild(el("h1", { class: "section-title" }, "Алфавит"));
+  app.appendChild(el("h1", { class: "section-title" }, "Алфавит · " + course.name));
   app.appendChild(el("p", { class: "section-sub" }, "Сербский алфавит: кириллица и латиница"));
   
   const tabs = el("div", { class: "tabs" }, [
     el("button", {
       class: "tab" + (state.alphabetTab === "cyr" ? " active" : ""),
       onclick: () => { state.alphabetTab = "cyr"; render(); }
-    }, `Кириллица · ${state.learnedLetters.size}/30`),
+    }, `Кириллица · ${state.learnedLetters.size}/${course.alphabet.length}`),
     el("button", {
       class: "tab" + (state.alphabetTab === "lat" ? " active" : ""),
       onclick: () => { state.alphabetTab = "lat"; render(); }
-    }, `Гаевица · ${state.learnedGaeva.size}/30`)
+    }, `Гаевица · ${state.learnedGaeva.size}/${course.alphabet.length}`)
   ]);
   app.appendChild(tabs);
   
   const isCyr = state.alphabetTab === "cyr";
   const grid = el("div", { class: "letter-grid" });
   
-  ALPHABET.forEach(a => {
+  course.alphabet.forEach(a => {
     const done = isCyr ? state.learnedLetters.has(a.cyr) : state.learnedGaeva.has(a.lat);
     const mainChar = isCyr ? a.cyr + a.cyrSm : a.lat + a.latSm;
     const pairChar = isCyr ? a.lat + a.latSm : a.cyr + a.cyrSm;
@@ -908,6 +1321,7 @@ function renderAlphabet() {
 function renderLetter() {
   const a = state.currentLetter;
   if (!a) { state.screen = "alphabet"; render(); return; }
+  const course = currentCourse();
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
   app.appendChild(renderBackBar("", 0, 0, () => { state.screen = "alphabet"; render(); }));
@@ -915,6 +1329,9 @@ function renderLetter() {
     el("div", { class: "big-display" }, [
       el("div", { class: "main-char" }, a.cyr + " " + a.cyrSm),
       el("div", { class: "lat-char" }, `${a.lat} ${a.latSm} · звук [${a.sound}]`),
+      el("div", { style: "display:flex;justify-content:center;margin:10px 0;" }, [
+        makeSpeakBtn(a.cyr, course.code)
+      ]),
       el("div", { class: "example-box" }, [
         el("div", { class: "ex-word" }, a.ex),
         el("div", { class: "ex-trans" }, a.exRu)
@@ -925,7 +1342,7 @@ function renderLetter() {
   app.appendChild(el("button", {
     class: "btn " + (done ? "btn-green" : "btn-primary") + " btn-block",
     onclick: () => {
-      if (!done) { state.learnedLetters.add(a.cyr); state.xp += 3; saveState(); }
+      if (!done) { state.learnedLetters.add(a.cyr); addXp(3); saveState(); }
       state.screen = "alphabet"; render();
     }
   }, done ? "✓ Уже выучено" : "✓ Выучил (+3 XP)"));
@@ -935,6 +1352,7 @@ function renderLetter() {
 function renderGaevaLetter() {
   const a = state.currentGaeva;
   if (!a) { state.screen = "alphabet"; render(); return; }
+  const course = currentCourse();
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
   app.appendChild(renderBackBar("", 0, 0, () => { state.screen = "alphabet"; render(); }));
@@ -942,6 +1360,9 @@ function renderGaevaLetter() {
     el("div", { class: "big-display" }, [
       el("div", { class: "main-char" }, a.lat + " " + a.latSm),
       el("div", { class: "lat-char" }, `${a.cyr} ${a.cyrSm} · звук [${a.sound}]`),
+      el("div", { style: "display:flex;justify-content:center;margin:10px 0;" }, [
+        makeSpeakBtn(a.lat, course.code)
+      ]),
       el("div", { class: "example-box" }, [
         el("div", { class: "ex-word" }, a.ex),
         el("div", { class: "ex-trans" }, a.exRu)
@@ -952,7 +1373,7 @@ function renderGaevaLetter() {
   app.appendChild(el("button", {
     class: "btn " + (done ? "btn-green" : "btn-primary") + " btn-block",
     onclick: () => {
-      if (!done) { state.learnedGaeva.add(a.lat); state.xp += 3; saveState(); }
+      if (!done) { state.learnedGaeva.add(a.lat); addXp(3); saveState(); }
       state.screen = "alphabet"; render();
     }
   }, done ? "✓ Уже выучено" : "✓ Выучил (+3 XP)"));
@@ -964,14 +1385,15 @@ function renderGaevaLetter() {
    ============================================================ */
 function renderGrammar() {
   const app = el("div", { class: "app slide-in" });
+  const course = currentCourse();
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [
     el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
   ]));
-  app.appendChild(el("h1", { class: "section-title" }, "Грамматика"));
-  app.appendChild(el("p", { class: "section-sub" }, `${GRAMMAR.length} тем`));
+  app.appendChild(el("h1", { class: "section-title" }, "Грамматика · " + course.name));
+  app.appendChild(el("p", { class: "section-sub" }, `${course.grammar.length} тем`));
   
-  GRAMMAR.forEach(topic => {
+  course.grammar.forEach(topic => {
     app.appendChild(el("div", {
       class: "menu-card",
       style: "--accent: #8b5cf6; --icon-bg: rgba(139,92,246,0.15); --icon-border: rgba(139,92,246,0.3);",
@@ -988,6 +1410,7 @@ function renderGrammar() {
 function renderGrammarTopic() {
   const t = state.currentGrammar;
   if (!t) { state.screen = "grammar"; render(); return; }
+  const course = currentCourse();
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
   app.appendChild(renderBackBar("", 0, 0, () => { state.screen = "grammar"; render(); }));
@@ -1024,15 +1447,16 @@ function renderGrammarTopic() {
    ============================================================ */
 function renderVocab() {
   const app = el("div", { class: "app slide-in" });
+  const course = currentCourse();
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [
     el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
   ]));
-  app.appendChild(el("h1", { class: "section-title" }, "Слова"));
-  app.appendChild(el("p", { class: "section-sub" }, `${Object.keys(VOCAB).length} категорий`));
+  app.appendChild(el("h1", { class: "section-title" }, "Слова · " + course.name));
+  app.appendChild(el("p", { class: "section-sub" }, `${Object.keys(course.vocab).length} категорий`));
   
   const grid = el("div", { class: "cat-grid" });
-  Object.entries(VOCAB).forEach(([key, cat]) => {
+  Object.entries(course.vocab).forEach(([key, cat]) => {
     const learned = cat.words.filter(w => state.learnedWords.has(w.sr)).length;
     const isDone = learned === cat.words.length;
     grid.appendChild(el("button", {
@@ -1051,7 +1475,7 @@ function renderVocab() {
 }
 
 function renderVocabCat() {
-  const cat = VOCAB[state.currentCat];
+  const cat = currentCourse().vocab[state.currentCat];
   if (!cat) { state.screen = "vocab"; render(); return; }
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
@@ -1086,7 +1510,7 @@ function renderVocabCat() {
       class: "word-item",
       onclick: () => {
         if (!state.learnedWords.has(w.sr)) {
-          state.learnedWords.add(w.sr); state.xp += 2; saveState(); render();
+          state.learnedWords.add(w.sr); addXp(2); saveState(); render();
         }
       }
     }, [
@@ -1094,14 +1518,17 @@ function renderVocabCat() {
         el("div", { class: "wi-main", html: w.sr + (learned ? ' <span style="color:var(--green);">✓</span>' : '') }),
         el("div", { class: "wi-tr" }, w.tr)
       ]),
-      el("div", { class: "wi-ru" }, w.ru)
+      el("div", { style: "display:flex;align-items:center;gap:8px;" }, [
+        makeSpeakBtn(w.sr, currentCourse().code),
+        el("div", { class: "wi-ru" }, w.ru)
+      ])
     ]));
   });
   root.appendChild(app);
 }
 
 function renderVocabLearn() {
-  const cat = VOCAB[state.currentCat];
+  const cat = currentCourse().vocab[state.currentCat];
   if (!cat) { state.screen = "vocab"; render(); return; }
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
@@ -1142,7 +1569,7 @@ function renderVocabLearn() {
     app.appendChild(fc);
     app.appendChild(el("div", { class: "btn-row" }, [
       el("button", { class: "btn btn-primary", onclick: () => {
-        state.xp += 2; state.learnedWords.add(word.sr); saveState();
+        addXp(2); state.learnedWords.add(word.sr); saveState();
         state.cardIdx++; render();
       } }, "✓ Знаю"),
       el("button", { class: "btn btn-ghost", onclick: () => { state.cardIdx++; render(); } }, "→ Дальше")
@@ -1166,7 +1593,7 @@ function renderVocabLearn() {
           if (b.textContent === word.ru) b.classList.add("correct");
         });
         if (opt.ru === word.ru) {
-          state.quizCorrect++; state.xp += 5; state.learnedWords.add(word.sr); saveState();
+          state.quizCorrect++; addXp(5); state.learnedWords.add(word.sr); saveState();
         } else {
           state.quizWrong++; btn.classList.add("wrong", "shake");
         }
@@ -1188,14 +1615,15 @@ function renderVocabLearn() {
    ============================================================ */
 function renderDialogues() {
   const app = el("div", { class: "app slide-in" });
+  const course = currentCourse();
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [
     el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
   ]));
-  app.appendChild(el("h1", { class: "section-title" }, "Диалоги"));
-  app.appendChild(el("p", { class: "section-sub" }, `${DIALOGUES.length} ситуаций`));
+  app.appendChild(el("h1", { class: "section-title" }, "Диалоги · " + course.name));
+  app.appendChild(el("p", { class: "section-sub" }, `${course.dialogues.length} ситуаций`));
   
-  DIALOGUES.forEach((d, i) => {
+  course.dialogues.forEach((d, i) => {
     app.appendChild(el("div", {
       class: "menu-card",
       style: "--accent: #f59e0b; --icon-bg: rgba(245,158,11,0.15); --icon-border: rgba(245,158,11,0.3);",
@@ -1213,7 +1641,7 @@ function renderDialogues() {
 }
 
 function renderDialogue() {
-  const d = DIALOGUES[state.currentDialogue];
+  const d = currentCourse().dialogues[state.currentDialogue];
   if (!d) { state.screen = "dialogues"; render(); return; }
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
@@ -1239,7 +1667,7 @@ function renderDialogue() {
 }
 
 function renderDialogueQuiz() {
-  const d = DIALOGUES[state.currentDialogue];
+  const d = currentCourse().dialogues[state.currentDialogue];
   if (!d) { state.screen = "dialogues"; render(); return; }
   const app = el("div", { class: "app slide-in" });
   app.appendChild(renderTopbar());
@@ -1255,7 +1683,7 @@ function renderDialogueQuiz() {
       el("button", {
         class: "btn btn-primary",
         onclick: () => {
-          state.xp += score * 3; saveState();
+          addXp(score * 3); saveState();
           state.screen = "dialogues"; render();
         }
       }, `Забрать ${score * 3} XP`)
@@ -1449,7 +1877,7 @@ function renderSettings() {
     el("div", { class: "settings-row" }, [
       el("div", {}, [
         el("div", { class: "label" }, state.user.username),
-        el("div", { class: "desc" }, `XP: ${state.xp} · Серия: ${state.streak}`)
+        el("div", { class: "desc" }, `XP: ${state.xp} · Серия: ${state.streak} · Сезон: ${state.seasonXp}`)
       ])
     ]),
     el("div", { class: "settings-row" }, [
@@ -1497,12 +1925,26 @@ function renderSettings() {
       ])
     ])
   ]));
+
+  // --- [НОВОЕ] выбор курса в настройках ---
+  app.appendChild(el("div", { class: "settings-section" }, [
+    el("h3", {}, ["📚", el("span", {}, "Изучаемый язык")]),
+    el("div", { class: "settings-row" }, [
+      el("div", {}, [el("div", { class: "label" }, "Курс")]),
+      el("select", {
+        class: "select-input",
+        onchange: (e) => { switchCourse(e.target.value); render(); }
+      }, Object.values(COURSES).map(c =>
+        el("option", { value: c.code, selected: state.course === c.code ? "true" : null }, `${c.flag} ${c.name}`)
+      ))
+    ])
+  ]));
   
   app.appendChild(el("div", { class: "settings-section" }, [
     el("h3", {}, ["🦫", el("span", {}, "О BOBOR-LINGUO")]),
     el("div", { class: "settings-row" }, [
       el("div", { class: "label" }, "Версия"),
-      el("div", { class: "desc" }, "1.0.0")
+      el("div", { class: "desc" }, "1.1.0")
     ]),
     el("div", { class: "settings-row" }, [
       el("div", { class: "label" }, "ИИ-режим"),
@@ -1514,12 +1956,281 @@ function renderSettings() {
 }
 
 /* ============================================================
+   [НОВОЕ] МАГАЗИН
+   ============================================================ */
+function renderShop() {
+  const app = el("div", { class: "app slide-in" });
+  app.appendChild(renderTopbar());
+  app.appendChild(el("div", { class: "back-bar" }, [
+    el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
+  ]));
+  app.appendChild(el("h1", { class: "section-title" }, "Магазин"));
+  app.appendChild(el("p", { class: "section-sub" }, `Твой баланс: ⚡ ${state.xp}`));
+
+  // Медали
+  app.appendChild(el("h3", { style: "margin-bottom:12px;font-size:1rem;" }, "🏅 Медали (украшение, навсегда)"));
+  const grid = el("div", { class: "medal-grid" });
+  MEDALS.forEach(m => {
+    const owned = state.medals.has(m.id);
+    const active = state.activeMedal === m.id;
+    const canBuy = !owned && state.xp >= m.price;
+    grid.appendChild(el("div", {
+      class: "medal-card" + (owned ? " owned" : "") + (active ? " active" : "")
+    }, [
+      owned ? el("div", { class: "medal-badge", html: "✓" }) : null,
+      el("span", { class: "medal-emoji" }, m.emoji),
+      el("div", { class: "medal-name" }, m.name),
+      el("div", { class: "medal-price" }, `⚡ ${m.price}`),
+      owned
+        ? el("button", {
+            class: "btn " + (active ? "btn-green" : "btn-ghost") + " btn-block",
+            style: "padding:8px 12px;font-size:0.82rem;",
+            onclick: () => {
+              state.activeMedal = active ? null : m.id;
+              saveState(); syncProfile(); render();
+            }
+          }, active ? "✓ Надета" : "Надеть")
+        : el("button", {
+            class: "btn btn-primary btn-block",
+            style: "padding:8px 12px;font-size:0.82rem;",
+            disabled: !canBuy ? "true" : null,
+            onclick: () => {
+              if (state.xp < m.price) return;
+              state.xp -= m.price;
+              state.medals.add(m.id);
+              state.activeMedal = m.id;
+              saveState(); syncProfile(); render();
+            }
+          }, canBuy ? "Купить" : "Не хватает")
+    ]));
+  });
+  app.appendChild(grid);
+
+  // Заморозка
+  app.appendChild(el("h3", { style: "margin:24px 0 12px;font-size:1rem;" }, "❄️ Заморозка серии"));
+  app.appendChild(el("div", { class: "settings-section" }, [
+    el("div", { class: "settings-row" }, [
+      el("div", {}, [
+        el("div", { class: "label" }, `Заморозка (${state.freezeCount}/${FREEZE_MAX})`),
+        el("div", { class: "desc" }, "Сохраняет серию при пропуске дня")
+      ]),
+      el("button", {
+        class: "btn btn-primary",
+        style: "padding:8px 16px;font-size:0.85rem;",
+        disabled: (state.xp < FREEZE_PRICE || state.freezeCount >= FREEZE_MAX) ? "true" : null,
+        onclick: () => {
+          if (state.xp < FREEZE_PRICE || state.freezeCount >= FREEZE_MAX) return;
+          state.xp -= FREEZE_PRICE;
+          state.freezeCount += 1;
+          saveState(); syncProfile(); render();
+        }
+      }, `Купить · ⚡${FREEZE_PRICE}`)
+    ])
+  ]));
+
+  root.appendChild(app);
+}
+
+/* ============================================================
+   [НОВОЕ] РАНКЕД
+   ============================================================ */
+async function renderRanked() {
+  const app = el("div", { class: "app slide-in" });
+  app.appendChild(renderTopbar());
+  app.appendChild(el("div", { class: "back-bar" }, [
+    el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
+  ]));
+  app.appendChild(el("h1", { class: "section-title" }, "Ранкед"));
+  app.appendChild(el("p", { class: "section-sub" }, "Соревнование по сезонному счёту. Раз в месяц сброс 70%, раз в 3 месяца — 100%."));
+
+  app.appendChild(el("div", { class: "card-panel" }, [
+    el("div", { class: "info-line" }, [
+      el("span", { class: "k" }, "Твой сезонный счёт"),
+      el("span", { class: "v", style: "color:var(--purple);" }, `🏆 ${state.seasonXp}`)
+    ]),
+    el("div", { class: "info-line" }, [
+      el("span", { class: "k" }, "Награда за 1 место"),
+      el("span", { class: "v" }, `+${RANKED_WIN_BONUS} XP и +${RANKED_WIN_BONUS} в сезон`)
+    ]),
+    el("div", { class: "info-line" }, [
+      el("span", { class: "k" }, "Курс"),
+      el("span", { class: "v" }, `${currentCourse().flag} ${currentCourse().name}`)
+    ])
+  ]));
+
+  const listBox = el("div", { id: "rankedList" }, [el("p", { class: "section-sub" }, "Загрузка...")]);
+  app.appendChild(listBox);
+  app.appendChild(el("button", {
+    class: "btn btn-ghost btn-block",
+    style: "margin-top:12px;",
+    onclick: async () => {
+      await syncRanked();
+      await refreshRankedList();
+    }
+  }, "🔄 Обновить"));
+  root.appendChild(app);
+  await refreshRankedList();
+}
+
+async function refreshRankedList() {
+  const box = document.getElementById("rankedList");
+  if (!box) return;
+  try {
+    const r = await fetch("/api/ranked/leaderboard", { cache: "no-store" });
+    const data = await r.json();
+    const rows = data.rows || [];
+    box.innerHTML = "";
+    if (rows.length === 0) {
+      box.appendChild(el("p", { class: "section-sub" }, "Пока никого нет. Синхронизируйся кнопкой ниже."));
+      return;
+    }
+    rows.forEach((row, i) => {
+      const isMe = state.user && row.username === state.user.username;
+      const cls = "rank-row" + (i === 0 ? " top1" : i === 1 ? " top2" : i === 2 ? " top3" : "") + (isMe ? " me" : "");
+      box.appendChild(el("div", { class: cls }, [
+        el("div", { class: "rank-pos" }, String(i + 1)),
+        el("div", { class: "rank-name" }, row.username + (isMe ? " (ты)" : "")),
+        el("div", { class: "rank-xp" }, `🏆 ${row.season_xp}`)
+      ]));
+    });
+  } catch (e) {
+    box.innerHTML = "";
+    box.appendChild(el("p", { class: "section-sub" }, "Не удалось загрузить лидерборд (офлайн)."));
+  }
+}
+
+/* ============================================================
+   [НОВОЕ] МОДУЛИ
+   ============================================================ */
+function getModules() {
+  const c = currentCourse();
+  // Модуль = категория слов + связанная грамматика + диалог (обёртка над существующим контентом)
+  const mods = [];
+  Object.entries(c.vocab).forEach(([key, cat], idx) => {
+    const learned = cat.words.filter(w => state.learnedWords.has(w.sr)).length;
+    const total = cat.words.length;
+    const pct = total ? Math.round((learned / total) * 100) : 0;
+    mods.push({
+      id: "vocab:" + key,
+      icon: cat.emoji,
+      title: cat.name,
+      sub: `Слова · ${learned}/${total}`,
+      pct,
+      done: pct === 100
+    });
+  });
+  c.grammar.forEach((g, idx) => {
+    const done = state.modulesDone.has("grammar:" + g.id);
+    mods.push({
+      id: "grammar:" + g.id,
+      icon: g.icon,
+      title: g.title,
+      sub: "Грамматика",
+      pct: done ? 100 : 0,
+      done
+    });
+  });
+  c.dialogues.forEach(d => {
+    const done = state.modulesDone.has("dialogue:" + d.id);
+    mods.push({
+      id: "dialogue:" + d.id,
+      icon: d.icon,
+      title: d.title,
+      sub: "Диалог",
+      pct: done ? 100 : 0,
+      done
+    });
+  });
+  return mods;
+}
+
+function renderModules() {
+  const app = el("div", { class: "app slide-in" });
+  app.appendChild(renderTopbar());
+  app.appendChild(el("div", { class: "back-bar" }, [
+    el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
+  ]));
+  app.appendChild(el("h1", { class: "section-title" }, "Модули · " + currentCourse().name));
+  app.appendChild(el("p", { class: "section-sub" }, "Пройди модуль на 100%, чтобы открыть следующий"));
+
+  const mods = getModules();
+  let prevDone = true;
+  mods.forEach((m, i) => {
+    const locked = !prevDone;
+    const card = el("div", { class: "module-card" + (locked ? " locked" : "") }, [
+      el("div", { class: "mod-icon", html: locked ? "🔒" : m.icon }),
+      el("div", { class: "mod-body" }, [
+        el("div", { class: "mod-title" }, m.title),
+        el("div", { style: "font-size:0.78rem;color:var(--muted);" }, m.sub),
+        el("div", { class: "mod-bar" }, [
+          el("div", { class: "mod-bar-inner", style: `width:${m.pct}%;` })
+        ]),
+        el("div", { class: "mod-pct" }, `${m.pct}%`)
+      ]),
+      el("button", {
+        class: "btn btn-primary",
+        style: "padding:8px 14px;font-size:0.82rem;",
+        disabled: locked ? "true" : null,
+        onclick: () => {
+          if (locked) return;
+          // ведём в соответствующий раздел
+          if (m.id.startsWith("vocab:")) {
+            state.currentCat = m.id.slice(6);
+            state.screen = "vocab-cat";
+          } else if (m.id.startsWith("grammar:")) {
+            const g = currentCourse().grammar.find(x => "grammar:" + x.id === m.id);
+            if (g) { state.currentGrammar = g; state.screen = "grammar-topic"; }
+          } else if (m.id.startsWith("dialogue:")) {
+            const idx = currentCourse().dialogues.findIndex(x => "dialogue:" + x.id === m.id);
+            if (idx >= 0) { state.currentDialogue = idx; state.screen = "dialogue"; }
+          }
+          render();
+        }
+      }, locked ? "🔒" : m.done ? "Повторить" : "Учить")
+    ]);
+    app.appendChild(card);
+    prevDone = m.done;
+  });
+  root.appendChild(app);
+}
+
+/* ============================================================
+   [НОВОЕ] КУРСЫ
+   ============================================================ */
+function renderCourses() {
+  const app = el("div", { class: "app slide-in" });
+  app.appendChild(renderTopbar());
+  app.appendChild(el("div", { class: "back-bar" }, [
+    el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })
+  ]));
+  app.appendChild(el("h1", { class: "section-title" }, "Курсы"));
+  app.appendChild(el("p", { class: "section-sub" }, "Выбери язык для изучения. Прогресс по каждому курсу хранится отдельно."));
+
+  const grid = el("div", { class: "course-grid" });
+  Object.values(COURSES).forEach(c => {
+    grid.appendChild(el("button", {
+      class: "course-card" + (state.course === c.code ? " active" : ""),
+      onclick: () => { switchCourse(c.code); render(); }
+    }, [
+      el("span", { class: "cc-flag" }, c.flag),
+      el("div", { class: "cc-name" }, c.name),
+      el("div", { class: "cc-code" }, c.code)
+    ]));
+  });
+  app.appendChild(grid);
+  root.appendChild(app);
+}
+
+/* ============================================================
    ЗАПУСК
    ============================================================ */
 loadState();
 applyTheme();
+checkDailyStreak(); // --- [НОВОЕ] проверка серии при заходе ---
 render();
 checkChatOnline().then(() => { if (state.screen === "chat") render(); });
+// --- [НОВОЕ] синхронизация при старте, если залогинен ---
+if (state.user) { syncProfile(); syncRanked(); }
 </script>
 </body>
 </html>
