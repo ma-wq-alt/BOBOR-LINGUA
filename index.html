@@ -1,962 +1,1266 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BOBOR-LINGUO — учи языки</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>">
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  
-  :root, [data-theme="dark"] {
-    --bg: #0d1117; --bg2: #161b25; --card: #1c2333; --card2: #252d40;
-    --border: #2d3549; --text: #eef2fa; --muted: #7d8ba5;
-    --serbian: #c6363c; --serbian2: #e04a50;
-    --blue: #3b82f6; --green: #10b981; --green2: #059669;
-    --yellow: #f59e0b; --purple: #8b5cf6; --red: #ef4444; --gold: #fbbf24;
-    --shadow: 0 8px 32px rgba(0,0,0,0.4);
-    --radius: 16px;
-  }
-  
-  [data-theme="light"] {
-    --bg: #f5f7fb; --bg2: #e8ecf3; --card: #ffffff; --card2: #eef1f7;
-    --border: #d8dfea; --text: #1a2233; --muted: #6b7891;
-    --serbian: #c6363c; --serbian2: #e04a50;
-    --blue: #2563eb; --green: #059669; --green2: #047857;
-    --yellow: #d97706; --purple: #7c3aed; --red: #dc2626; --gold: #d97706;
-    --shadow: 0 8px 32px rgba(0,0,0,0.1);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOBOR-LINGUO — учи языки</title>
+    <link rel="icon" href="/images/beaver.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-  body { 
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; 
-    background: var(--bg); 
-    color: var(--text); 
-    min-height: 100vh; 
-    line-height: 1.6; 
-    overflow-x: hidden; 
-    transition: background 0.4s ease, color 0.4s ease; 
-  }
+        :root {
+            --bg: #58cc02;
+            --bg-dark: #46a302;
+            --card: #ffffff;
+            --card-hover: #f7f7f7;
+            --text: #3c3c3c;
+            --text-muted: #777777;
+            --border: #e5e5e5;
+            --shadow: 0 4px 0 #e5e5e5;
+            --shadow-active: 0 0 0 #e5e5e5;
+            --green: #58cc02;
+            --green-dark: #46a302;
+            --green-light: #89e219;
+            --red: #ff4b4b;
+            --red-dark: #ea2b2b;
+            --blue: #1cb0f6;
+            --blue-dark: #1899d6;
+            --yellow: #ffc800;
+            --yellow-dark: #e5a100;
+            --purple: #ce82ff;
+            --purple-dark: #a855f7;
+            --gold: #fbbf24;
+        }
 
-  /* Анимации */
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-30px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-  
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.9); }
-    to { opacity: 1; transform: scale(1); }
-  }
-  
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-  }
-  
-  @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-5px); }
-    75% { transform: translateX(5px); }
-  }
+        [data-theme="dark"] {
+            --bg: #131f24;
+            --bg-dark: #0d1418;
+            --card: #202f36;
+            --card-hover: #2a3b44;
+            --text: #ffffff;
+            --text-muted: #999999;
+            --border: #37464f;
+            --shadow: 0 4px 0 #0d1418;
+            --shadow-active: 0 0 0 #0d1418;
+            --green: #58cc02;
+            --green-dark: #46a302;
+            --green-light: #89e219;
+        }
 
-  .fade-in { animation: fadeIn 0.5s ease forwards; }
-  .slide-in { animation: slideIn 0.4s ease forwards; }
-  .scale-in { animation: scaleIn 0.3s ease forwards; }
-  .shake { animation: shake 0.4s ease; }
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+            transition: background 0.3s ease;
+        }
 
-  .app { max-width: 720px; margin: 0 auto; padding: 20px 18px 120px; min-height: 100vh; }
-  
-  .topbar { 
-    display: flex; align-items: center; justify-content: space-between; 
-    margin-bottom: 24px; gap: 10px; position: sticky; top: 0; 
-    padding: 12px 0; background: linear-gradient(180deg, var(--bg) 70%, transparent); 
-    z-index: 10; backdrop-filter: blur(10px);
-  }
-  
-  .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; cursor: pointer; transition: transform 0.2s; }
-  .brand:hover { transform: scale(1.02); }
-  
-  .brand-logo { 
-    width: 48px; height: 48px; border-radius: 14px; 
-    background: linear-gradient(135deg, var(--serbian), var(--serbian2)); 
-    display: grid; place-items: center; font-size: 1.6rem; 
-    box-shadow: 0 4px 12px rgba(198,54,60,0.3);
-    transition: transform 0.3s;
-  }
-  .brand-logo:hover { transform: rotate(5deg) scale(1.1); }
-  
-  .brand-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 14px;
-  }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-  .stats-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-  
-  .stats-pill { 
-    display: flex; align-items: center; gap: 6px; 
-    background: var(--card); border: 1px solid var(--border); 
-    padding: 8px 14px; border-radius: 24px; 
-    font-size: 0.85rem; font-weight: 700;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .stats-pill:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
-  .stats-pill .val { color: var(--yellow); }
-  .stats-pill.streak .val { color: var(--serbian2); }
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
 
-  .icon-btn { 
-    width: 42px; height: 42px; border-radius: 14px; 
-    background: var(--card); border: 1px solid var(--border); 
-    color: var(--text); cursor: pointer; 
-    display: grid; place-items: center; font-size: 1.1rem;
-    transition: all 0.3s;
-  }
-  .icon-btn:hover { transform: scale(1.1); background: var(--card2); }
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
 
-  .lang-selector { 
-    display: flex; gap: 10px; overflow-x: auto; 
-    padding-bottom: 12px; margin-bottom: 24px; 
-    scrollbar-width: none;
-  }
-  .lang-selector::-webkit-scrollbar { display: none; }
-  
-  .lang-btn { 
-    background: var(--card); border: 2px solid var(--border); 
-    border-radius: 18px; padding: 12px 18px; 
-    font-weight: 700; font-size: 1rem; cursor: pointer; 
-    transition: all 0.3s; white-space: nowrap; 
-    display: flex; align-items: center; gap: 8px; color: var(--text);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .lang-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
-  .lang-btn.active { 
-    border-color: var(--serbian); 
-    background: linear-gradient(135deg, rgba(198,54,60,0.15), rgba(224,74,80,0.1));
-    transform: scale(1.05);
-  }
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-6px);
+            }
+            75% {
+                transform: translateX(6px);
+            }
+        }
 
-  .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
-  
-  .home-card { 
-    background: var(--card); border: 2px solid var(--border); 
-    border-radius: 28px; padding: 32px 24px; text-align: center; 
-    cursor: pointer; transition: all 0.3s;
-    box-shadow: var(--shadow);
-    position: relative;
-    overflow: hidden;
-  }
-  .home-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, transparent, rgba(198,54,60,0.05));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .home-card:hover { 
-    transform: translateY(-6px); 
-    border-color: var(--serbian);
-    box-shadow: 0 12px 40px rgba(198,54,60,0.2);
-  }
-  .home-card:hover::before { opacity: 1; }
-  .home-card .icon { font-size: 3.5rem; margin-bottom: 16px; display: block; transition: transform 0.3s; }
-  .home-card:hover .icon { transform: scale(1.1); }
-  .home-card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
-  .home-card p { font-size: 0.85rem; color: var(--muted); }
+        @keyframes pop {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
 
-  .path-container { 
-    display: flex; flex-direction: column; align-items: center; 
-    gap: 28px; padding: 24px 0; position: relative; 
-  }
-  
-  .path-node { 
-    width: 76px; height: 76px; border-radius: 50%; 
-    background: var(--card); border: 4px solid var(--border); 
-    display: flex; align-items: center; justify-content: center; 
-    font-size: 2.2rem; cursor: pointer; transition: all 0.3s; 
-    position: relative;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-  }
-  .path-node:hover:not(.locked) { 
-    transform: scale(1.15); 
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  }
-  .path-node.locked { filter: grayscale(1); opacity: 0.5; cursor: not-allowed; }
-  .path-node.done { 
-    border-color: var(--green); 
-    background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,150,105,0.1));
-    box-shadow: 0 4px 16px rgba(16,185,129,0.3);
-  }
+        @keyframes bounce {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.08);
+            }
+        }
 
-  .lesson-header { text-align: center; margin-bottom: 28px; }
-  
-  .alpha-grid { 
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); 
-    gap: 14px; margin-bottom: 28px; 
-  }
-  
-  .alpha-btn { 
-    aspect-ratio: 1; background: var(--card); 
-    border: 2px solid var(--border); border-radius: 18px; 
-    font-size: 2rem; font-weight: 900; cursor: pointer; 
-    display: flex; flex-direction: column; align-items: center; 
-    justify-content: center; transition: all 0.3s; color: var(--text); 
-    position: relative;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .alpha-btn:hover { 
-    transform: scale(1.08); 
-    border-color: var(--blue);
-    box-shadow: 0 6px 20px rgba(59,130,246,0.3);
-  }
-  .alpha-btn.done { 
-    background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.15)); 
-    border-color: var(--green); color: var(--green);
-    box-shadow: 0 4px 16px rgba(16,185,129,0.3);
-  }
-  .alpha-btn .pair { font-size: 0.75rem; color: var(--muted); margin-top: 4px; font-weight: 600; }
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
 
-  .letter-display { 
-    text-align: center; background: var(--card); 
-    border-radius: 28px; padding: 36px; margin-bottom: 28px; 
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-  }
-  .letter-display .big-char { 
-    font-size: 6rem; font-weight: 900; 
-    color: var(--serbian2); line-height: 1; margin-bottom: 12px;
-    animation: scaleIn 0.5s ease;
-  }
-  .letter-display .sound { 
-    font-size: 1.3rem; color: var(--blue); 
-    font-weight: 700; margin-bottom: 24px; 
-  }
+        .slide-in {
+            animation: slideIn 0.4s ease forwards;
+        }
 
-  .custom-audio-btn { 
-    background: var(--card2); border: 1px solid var(--border); 
-    color: var(--text); padding: 10px 18px; border-radius: 12px; 
-    cursor: pointer; font-weight: 700; 
-    display: inline-flex; align-items: center; gap: 8px; 
-    transition: all 0.3s; margin: 4px; font-size: 0.95rem;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .custom-audio-btn:hover { 
-    background: var(--border); 
-    transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
+        .scale-in {
+            animation: scaleIn 0.3s ease forwards;
+        }
 
-  .word-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 28px; }
-  
-  .word-row { 
-    background: var(--card); border: 1px solid var(--border); 
-    border-radius: 18px; padding: 18px 22px; 
-    display: flex; justify-content: space-between; align-items: center; 
-    flex-wrap: wrap; gap: 12px;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .word-row:hover { 
-    transform: translateX(5px); 
-    border-color: var(--blue);
-    box-shadow: 0 4px 16px rgba(59,130,246,0.2);
-  }
+        .shake {
+            animation: shake 0.4s ease;
+        }
 
-  .grammar-box { 
-    background: var(--card); border: 1px solid var(--border); 
-    border-radius: 24px; padding: 28px; margin-bottom: 28px;
-    box-shadow: var(--shadow);
-  }
+        .pop {
+            animation: pop 0.3s ease;
+        }
 
-  .quiz-option { 
-    background: var(--card); border: 2px solid var(--border); 
-    border-radius: 16px; padding: 18px 22px; margin-bottom: 12px; 
-    cursor: pointer; transition: all 0.3s; font-weight: 600;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    position: relative;
-    overflow: hidden;
-  }
-  .quiz-option::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.05));
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .quiz-option:hover:not(.disabled):not(.correct):not(.wrong) { 
-    transform: translateX(8px); 
-    border-color: var(--blue);
-    box-shadow: 0 6px 20px rgba(59,130,246,0.3);
-  }
-  .quiz-option:hover::before { opacity: 1; }
-  .quiz-option.correct { 
-    background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.15)); 
-    border-color: var(--green); color: var(--green);
-    box-shadow: 0 4px 16px rgba(16,185,129,0.4);
-    animation: scaleIn 0.3s ease;
-  }
-  .quiz-option.wrong { 
-    background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(220,38,38,0.15)); 
-    border-color: var(--red); color: var(--red);
-    box-shadow: 0 4px 16px rgba(239,68,68,0.4);
-    animation: shake 0.4s ease;
-  }
-  .quiz-option.disabled { 
-    cursor: not-allowed; 
-    opacity: 0.6;
-  }
+        .app {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 16px;
+            min-height: 100vh;
+        }
 
-  .lib-item { 
-    background: var(--card); border: 1px solid var(--border); 
-    border-radius: 18px; padding: 18px; margin-bottom: 14px;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .lib-item:hover { 
-    transform: translateX(5px); 
-    border-color: var(--gold);
-    box-shadow: 0 4px 16px rgba(251,191,36,0.2);
-  }
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg);
+            padding: 10px 0;
+        }
 
-  .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  
-  .shop-item { 
-    background: var(--card); border: 1px solid var(--border); 
-    border-radius: 18px; padding: 18px; text-align: center;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .shop-item:hover { 
-    transform: translateY(-5px); 
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  }
-  .shop-item.owned { 
-    border-color: var(--green); 
-    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05));
-  }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--text);
+            text-decoration: none;
+        }
 
-  .rank-row { 
-    display: flex; align-items: center; gap: 14px; 
-    background: var(--card); border: 1px solid var(--border); 
-    border-radius: 16px; padding: 14px 18px; margin-bottom: 10px;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .rank-row:hover { transform: translateX(5px); }
-  .rank-row.me { 
-    border-color: var(--serbian); 
-    background: linear-gradient(135deg, rgba(198,54,60,0.1), rgba(224,74,80,0.05));
-    box-shadow: 0 4px 16px rgba(198,54,60,0.2);
-  }
+        .brand-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--green-light);
+        }
 
-  .btn { 
-    border: none; border-radius: 16px; padding: 18px 28px; 
-    font-size: 1.05rem; font-weight: 800; cursor: pointer; 
-    transition: all 0.3s; width: 100%; display: block; 
-    text-align: center; margin-top: 12px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    position: relative;
-    overflow: hidden;
-  }
-  .btn::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%; right: 0; bottom: 0;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-    transition: left 0.5s;
-  }
-  .btn:hover::before { left: 100%; }
-  .btn:hover { 
-    transform: translateY(-3px); 
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-  }
-  .btn:active { transform: translateY(0); }
-  
-  .btn-primary { 
-    background: linear-gradient(135deg, var(--serbian), var(--serbian2)); 
-    color: #fff; 
-  }
-  .btn-green { 
-    background: linear-gradient(135deg, var(--green), var(--green2)); 
-    color: #fff; 
-  }
-  .btn-ghost { background: var(--card2); color: var(--text); }
+        .brand-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-  .back-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
-  
-  .back-btn { 
-    width: 48px; height: 48px; border-radius: 14px; 
-    background: var(--card); border: 1px solid var(--border); 
-    color: var(--text); cursor: pointer; 
-    display: grid; place-items: center; font-size: 1.2rem;
-    transition: all 0.3s;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-  .back-btn:hover { 
-    transform: translateX(-5px); 
-    background: var(--card2);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  }
+        .stats {
+            display: flex;
+            gap: 8px;
+        }
 
-  .success-screen { text-align: center; padding: 48px 24px; animation: scaleIn 0.5s ease; }
-  
-  .auth-tabs { display: flex; gap: 12px; margin-bottom: 24px; }
-  
-  .auth-tab { 
-    flex: 1; padding: 12px; background: var(--card); 
-    border: 1px solid var(--border); border-radius: 12px; 
-    cursor: pointer; font-weight: 700; text-align: center;
-    transition: all 0.3s;
-  }
-  .auth-tab:hover { background: var(--card2); }
-  .auth-tab.active { 
-    background: linear-gradient(135deg, var(--serbian), var(--serbian2)); 
-    color: #fff; border-color: var(--serbian);
-    box-shadow: 0 4px 16px rgba(198,54,60,0.3);
-  }
+        .stat-pill {
+            background: var(--card);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.1s;
+        }
 
-  @media (max-width: 480px) { 
-    .home-grid { grid-template-columns: 1fr; } 
-    .brand-logo { width: 42px; height: 42px; }
-  }
-</style>
+        .stat-pill:active {
+            transform: translateY(2px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .stat-pill .val {
+            color: var(--yellow);
+        }
+
+        .stat-pill.streak .val {
+            color: var(--red);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            padding: 6px;
+            transition: transform 0.1s;
+        }
+
+        .icon-btn:active {
+            transform: translateY(4px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .icon-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .lang-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .lang-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .lang-btn {
+            background: var(--card);
+            border: 2px solid var(--border);
+            padding: 10px 16px;
+            border-radius: 16px;
+            font-weight: 800;
+            white-space: nowrap;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.1s;
+        }
+
+        .lang-btn:active {
+            transform: translateY(4px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .lang-btn.active {
+            border-color: var(--green);
+            background: var(--green);
+            color: #fff;
+        }
+
+        .home-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .home-card {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: transform 0.1s;
+        }
+
+        .home-card:active {
+            transform: translateY(4px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .home-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            object-fit: contain;
+        }
+
+        .home-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+
+        .home-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .path-container {
+            position: relative;
+            padding: 20px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .path-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-50%);
+            border-radius: 4px;
+            z-index: 0;
+        }
+
+        .path-node {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--green);
+            border: 4px solid var(--green-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            z-index: 1;
+            cursor: pointer;
+            box-shadow: 0 6px 0 var(--green-dark);
+            position: relative;
+            transition: transform 0.1s;
+        }
+
+        .path-node:active {
+            transform: translateY(6px);
+            box-shadow: none;
+        }
+
+        .path-node.locked {
+            background: var(--border);
+            border-color: var(--text-muted);
+            box-shadow: 0 6px 0 var(--text-muted);
+            filter: grayscale(1);
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .path-node.done {
+            background: var(--yellow);
+            border-color: var(--yellow-dark);
+            box-shadow: 0 6px 0 var(--yellow-dark);
+        }
+
+        .path-label {
+            position: absolute;
+            top: 80px;
+            width: 150px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: var(--text);
+        }
+
+        .lesson-header {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 1.5rem;
+            font-weight: 900;
+        }
+
+        .word-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .word-item {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.1s;
+        }
+
+        .word-item:active {
+            transform: translateY(2px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .grammar-box {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .quiz-option {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: all 0.2s;
+        }
+
+        .quiz-option:active:not(.disabled) {
+            transform: translateY(4px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .quiz-option.correct {
+            background: #d7ffb8;
+            border-color: var(--green);
+            color: var(--green-dark);
+            animation: pop 0.3s;
+        }
+
+        .quiz-option.wrong {
+            background: #ffdfe0;
+            border-color: var(--red);
+            color: var(--red);
+            animation: shake 0.4s;
+        }
+
+        .quiz-option.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border-radius: 16px;
+            border: none;
+            font-weight: 900;
+            font-size: 1rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            transition: transform 0.1s;
+        }
+
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .btn-primary {
+            background: var(--green);
+            color: #fff;
+            border-bottom: 4px solid var(--green-dark);
+        }
+
+        .btn-primary:active {
+            border-bottom: 0;
+            margin-top: 24px;
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 2px solid var(--border);
+            color: var(--text-muted);
+            box-shadow: none;
+        }
+
+        .btn-blue {
+            background: var(--blue);
+            color: #fff;
+            border-bottom: 4px solid var(--blue-dark);
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: #fff;
+            border-bottom: 4px solid var(--green-dark);
+        }
+
+        .auth-box {
+            background: var(--card);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 50px;
+            box-shadow: var(--shadow);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            background: var(--bg);
+            color: var(--text);
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+
+        .audio-btn {
+            background: var(--bg);
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            font-size: 1.2rem;
+            transition: transform 0.1s;
+        }
+
+        .audio-btn:active {
+            transform: scale(0.95);
+        }
+
+        .lib-item {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            margin-bottom: 10px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        .lib-item:active {
+            transform: translateY(2px);
+            box-shadow: var(--shadow-active);
+        }
+
+        .shop-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .shop-item {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+
+        .shop-item.owned {
+            border-color: var(--green);
+            background: var(--green-light);
+        }
+
+        .rank-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+            box-shadow: var(--shadow);
+        }
+
+        .rank-row.me {
+            border-color: var(--green);
+            background: var(--green-light);
+        }
+
+        .success-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        @media (max-width: 480px) {
+            .home-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="root"></div>
+    <div id="root"></div>
 
-<script>
-const COURSES_META = {
-  sr: { flag: "🇷🇸", name: "Сербский" }, tr: { flag: "🇹🇷", name: "Турецкий" },
-  pl: { flag: "🇵🇱", name: "Польский" }, be: { flag: "🇧🇾", name: "Белорусский" },
-  kk: { flag: "🇰🇿", name: "Казахский" }, tt: { flag: "🏳️", name: "Татарский" }
-};
+    <script>
+        // Конфигурация курсов
+        const COURSES = {
+            sr: { flag: "🇷🇸", name: "Сербский" },
+            tr: { flag: "🇹🇷", name: "Турецкий" },
+            pl: { flag: "🇵🇱", name: "Польский" },
+            be: { flag: "🇧🇾", name: "Белорусский" },
+            kk: { flag: "🇰🇿", name: "Казахский" },
+            tt: { flag: "🏳️", name: "Татарский" }
+        };
 
-const state = {
-  screen: "auth", user: null, settings: { theme: "dark" }, authMode: "login",
-  xp: 0, streak: 0, currentCourse: "sr",
-  progress: {}, alphaProgress: {}, medals: [], currentUnit: null, lessonStep: "words", currentAlphaLetter: null, quizIdx: 0,
-  lastDaily: null, courseData: null, loading: false, lessonsToday: 0, lastLessonDate: null
-};
+        // Состояние приложения
+        let S = {
+            screen: 'auth',
+            user: null,
+            theme: 'light',
+            course: 'sr',
+            xp: 0,
+            streak: 0,
+            progress: {},
+            alpha: {},
+            medals: [],
+            unit: null,
+            step: 'words',
+            letter: null,
+            qi: 0,
+            loading: false,
+            data: null
+        };
 
-let mediaRecorder;
-let audioChunks = [];
-
-function getUfaDate() {
-  const now = new Date();
-  const ufaTime = new Date(now.getTime() + (5 * 60 * 60 * 1000)); 
-  if (ufaTime.getUTCHours() < 7) ufaTime.setUTCDate(ufaTime.getUTCDate() - 1);
-  return ufaTime.toISOString().split('T')[0];
-}
-
-function checkDailyLimit() {
-  const today = getUfaDate();
-  if (state.lastLessonDate !== today) {
-    state.lessonsToday = 0;
-    state.lastLessonDate = today;
-  }
-  if (state.lessonsToday >= 2) {
-    alert("Лимит уроков на сегодня исчерпан (2/2). Жди 7:00 утра по Уфе.");
-    return false;
-  }
-  return true;
-}
-
-function saveState() {
-  const progObj = {}; 
-  for (const k in state.progress) progObj[k] = Array.from(state.progress[k]);
-  
-  const alphaObj = {}; 
-  for (const k in state.alphaProgress) alphaObj[k] = Array.from(state.alphaProgress[k]);
-
-  localStorage.setItem("bobor_state_v9", JSON.stringify({
-    user: state.user, settings: state.settings, xp: state.xp, streak: state.streak, currentCourse: state.currentCourse,
-    progress: progObj, alphaProgress: alphaObj, medals: state.medals, lastDaily: state.lastDaily,
-    lessonsToday: state.lessonsToday, lastLessonDate: state.lastLessonDate
-  }));
-
-  if (state.user) {
-    fetch("/api/sync-progress", {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ 
-        username: state.user.email, 
-        xp: state.xp, 
-        streak: state.streak, 
-        medals: state.medals, 
-        last_daily: state.lastDaily, 
-        units_done: progObj, 
-        lessons_today: state.lessonsToday 
-      })
-    }).catch(e => console.error("Sync error", e));
-  }
-}
-
-function loadState() {
-  try {
-    const raw = localStorage.getItem("bobor_state_v9");
-    if (!raw) return;
-    const data = JSON.parse(raw);
-    if (data.user) { state.user = data.user; state.screen = "home"; }
-    if (data.settings) state.settings = data.settings;
-    state.xp = data.xp || 0; state.streak = data.streak || 0; state.currentCourse = data.currentCourse || "sr";
-    state.medals = data.medals || []; state.lastDaily = data.lastDaily || null;
-    state.lessonsToday = data.lessonsToday || 0; state.lastLessonDate = data.lastLessonDate || null;
-    
-    if (data.progress) {
-      for (const k in data.progress) state.progress[k] = new Set(data.progress[k]);
-    }
-    if (data.alphaProgress) {
-      for (const k in data.alphaProgress) state.alphaProgress[k] = new Set(data.alphaProgress[k]);
-    }
-  } catch (e) { console.error("Load error", e); }
-}
-
-const el = (tag, attrs = {}, children = []) => {
-  const e = document.createElement(tag);
-  for (const [k, v] of Object.entries(attrs)) {
-    if (k === "class") e.className = v;
-    else if (k === "html") e.innerHTML = v;
-    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
-    else e.setAttribute(k, v);
-  }
-  (Array.isArray(children) ? children : [children]).forEach(c => {
-    if (c === null || c === undefined || c === false) return;
-    if (typeof c === "string" || typeof c === "number") e.appendChild(document.createTextNode(String(c)));
-    else e.appendChild(c);
-  });
-  return e;
-};
-
-function playTTS(text, langCode) {
-  if (!window.speechSynthesis) return;
-  window.speechSynthesis.cancel();
-  const utter = new SpeechSynthesisUtterance(text);
-  utter.lang = langCode || "ru-RU";
-  const voices = window.speechSynthesis.getVoices();
-  const voice = voices.find(v => v.lang.startsWith(langCode.split('-')[0]));
-  if (voice) utter.voice = voice;
-  window.speechSynthesis.speak(utter);
-}
-
-function getAudioKey(text) {
-  return `${state.currentCourse}_${text.trim()}`;
-}
-
-function renderAudioButton(text) {
-  const key = getAudioKey(text);
-  return el("div", { style: "display:flex; gap:8px; align-items:center; flex-wrap:wrap;" }, [
-    el("button", { class: "custom-audio-btn", onclick: async () => {
-      try {
-        const res = await fetch(`/api/get-audio/${encodeURIComponent(key)}`);
-        const data = await res.json();
-        if (data.audio) { 
-          const audio = new Audio(data.audio);
-          audio.play(); 
-          return; 
-        }
-      } catch (e) {}
-      playTTS(text, state.courseData?.speechLang || "ru-RU");
-    }}, "🔊 Слушать"),
-    
-    state.user?.role === "admin" ? el("button", { class: "custom-audio-btn", onclick: async () => {
-      if (confirm("Записать свой голос? 3 секунды.")) {
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-          mediaRecorder = new MediaRecorder(stream);
-          audioChunks = [];
-          mediaRecorder.ondataavailable = (event) => { audioChunks.push(event.data); };
-          mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-            const reader = new FileReader();
-            reader.readAsDataURL(audioBlob); 
-            reader.onloadend = async () => {
-              await fetch("/api/save-audio", {
-                method: "POST", headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ key, audioBase64: reader.result, role: state.user.role })
-              });
-              alert("Аудио сохранено!");
-              render();
-            };
-          };
-          mediaRecorder.start();
-          setTimeout(() => { mediaRecorder.stop(); stream.getTracks().forEach(track => track.stop()); }, 3000);
-        } catch (e) { alert("Нет доступа к микрофону."); }
-      }
-    }}, "🎙️ Записать") : null,
-
-    state.user?.role === "admin" ? el("button", { class: "custom-audio-btn", style: "color: var(--red);", onclick: async () => {
-      if (confirm("Удалить озвучку?")) {
-        await fetch("/api/delete-audio", {
-          method: "POST", headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ key, role: state.user.role })
-        });
-        alert("Удалено");
-        render();
-      }
-    }}, "🗑️ Удалить") : null
-  ]);
-}
-
-async function loadCourseData() {
-  state.loading = true; render();
-  try {
-    const res = await fetch(`/data/${state.currentCourse}.json`);
-    state.courseData = await res.json();
-  } catch (e) { state.courseData = { name: "Ошибка", units: [] }; }
-  state.loading = false; render();
-}
-
-const root = document.getElementById("root");
-
-function render() {
-  root.innerHTML = "";
-  document.documentElement.setAttribute("data-theme", state.settings.theme);
-  if (!state.user && state.screen !== "auth") state.screen = "auth";
-  const screens = { auth: renderAuth, home: renderHome, learn: renderLearn, lesson: renderLesson, library: renderLibrary, shop: renderShop, ranked: renderRanked, settings: renderSettings };
-  (screens[state.screen] || renderHome)();
-}
-
-function renderAuth() {
-  const wrap = el("div", { class: "fade-in", style: "min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;" });
-  wrap.appendChild(el("div", { style: "width:100%;max-width:420px;background:var(--card);padding:40px;border-radius:28px;border:1px solid var(--border);box-shadow:var(--shadow);" }, [
-    el("h1", { style: "font-size:1.8rem;text-align:center;margin-bottom:12px;font-weight:900;" }, "BOBOR-LINGUO"),
-    el("p", { style: "text-align:center;color:var(--muted);margin-bottom:28px;font-size:1.05rem;" }, "Вход в систему"),
-    el("div", { class: "auth-tabs" }, [
-      el("div", { class: "auth-tab " + (state.authMode === "login" ? "active" : ""), onclick: () => { state.authMode = "login"; render(); } }, "Вход"),
-      el("div", { class: "auth-tab " + (state.authMode === "register" ? "active" : ""), onclick: () => { state.authMode = "register"; render(); } }, "Регистрация")
-    ]),
-    el("form", {
-      onsubmit: async (e) => {
-        e.preventDefault();
-        const email = e.target.email.value.trim();
-        const pass = e.target.pass.value.trim();
-        if (!email || !pass) return;
-        const endpoint = state.authMode === "login" ? "/api/login" : "/api/register";
-        const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password: pass }) });
-        const data = await res.json();
-        if (data.success) {
-          if (state.authMode === "register") { alert("Аккаунт создан!"); state.authMode = "login"; render(); }
-          else { state.user = data.user; state.screen = "home"; saveState(); render(); }
-        } else alert(data.error || "Ошибка");
-      }
-    }, [
-      el("input", { name: "email", type: "email", placeholder: "Email", style: "width:100%;padding:16px;border-radius:14px;border:1px solid var(--border);background:var(--bg2);color:var(--text);margin-bottom:18px;outline:none;font-size:1rem;transition:all 0.3s;", onfocus: (e) => e.target.style.borderColor = "var(--serbian)", onblur: (e) => e.target.style.borderColor = "var(--border)" }),
-      el("input", { name: "pass", type: "password", placeholder: "Пароль", style: "width:100%;padding:16px;border-radius:14px;border:1px solid var(--border);background:var(--bg2);color:var(--text);margin-bottom:18px;outline:none;font-size:1rem;transition:all 0.3s;", onfocus: (e) => e.target.style.borderColor = "var(--serbian)", onblur: (e) => e.target.style.borderColor = "var(--border)" }),
-      el("button", { class: "btn btn-primary", type: "submit" }, state.authMode === "login" ? "Войти" : "Зарегистрироваться")
-    ])
-  ]));
-  root.appendChild(wrap);
-}
-
-function renderHome() {
-  const app = el("div", { class: "app fade-in" });
-  app.appendChild(el("div", { class: "topbar" }, [
-    el("div", { class: "brand", onclick: () => { state.screen = "home"; render(); } }, [
-      el("div", { class: "brand-logo" }, "🦫"), 
-      el("span", {}, "BOBOR LINGUO")
-    ]),
-    el("div", { class: "stats-group" }, [
-      el("div", { class: "stats-pill streak" }, [el("span", {}, "🔥"), el("span", { class: "val" }, String(state.streak))]),
-      el("div", { class: "stats-pill" }, [el("span", {}, "⚡"), el("span", { class: "val" }, String(state.xp))]),
-      el("button", { class: "icon-btn", html: "⚙️", onclick: () => { state.screen = "settings"; render(); } })
-    ])
-  ]));
-
-  app.appendChild(el("div", { class: "lang-selector" }, Object.keys(COURSES_META).map(code => 
-    el("div", { class: "lang-btn " + (state.currentCourse === code ? "active" : ""), onclick: () => { state.currentCourse = code; saveState(); render(); } }, [COURSES_META[code].flag, " " + COURSES_META[code].name])
-  )));
-
-  app.appendChild(el("h1", { class: "slide-in", style: "font-size:2rem;margin-bottom:12px;font-weight:900;" }, "Привет, " + (state.user?.email || "друг") + "! 👋"));
-  app.appendChild(el("p", { class: "slide-in", style: "color:var(--muted);margin-bottom:28px;font-size:1.1rem;" }, `Уроков сегодня: ${state.lessonsToday}/2`));
-  
-  app.appendChild(el("div", { class: "home-grid" }, [
-    el("div", { class: "home-card scale-in", style: "animation-delay: 0.1s", onclick: () => { state.screen = "learn"; loadCourseData(); } }, [el("span", { class: "icon" }, "🎓"), el("h2", {}, "Обучение"), el("p", {}, "Пошаговый путь")]),
-    el("div", { class: "home-card scale-in", style: "animation-delay: 0.2s", onclick: () => { state.screen = "library"; loadCourseData(); } }, [el("span", { class: "icon" }, "📚"), el("h2", {}, "Библиотека"), el("p", {}, "Пройденное")]),
-    el("div", { class: "home-card scale-in", style: "animation-delay: 0.3s", onclick: () => { state.screen = "shop"; render(); } }, [el("span", { class: "icon" }, "🛒"), el("h2", {}, "Магазин"), el("p", {}, "Медали")]),
-    el("div", { class: "home-card scale-in", style: "animation-delay: 0.4s", onclick: () => { state.screen = "ranked"; render(); } }, [el("span", { class: "icon" }, "🏆"), el("h2", {}, "Ранкед"), el("p", {}, "Лидеры")])
-  ]));
-  root.appendChild(app);
-}
-
-function renderLearn() {
-  const app = el("div", { class: "app fade-in" });
-  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  if (state.loading || !state.courseData) { app.appendChild(el("p", { style: "text-align:center;margin-top:40px;font-size:1.2rem;" }, "Загрузка...")); root.appendChild(app); return; }
-  app.appendChild(el("h1", { style: "text-align:center;margin-bottom:24px;font-size:2rem;font-weight:900;" }, state.courseData.name));
-  const path = el("div", { class: "path-container" });
-  const courseProgress = state.progress[state.currentCourse] || new Set();
-  let prevDone = true;
-
-  state.courseData.units.forEach((unit, idx) => {
-    const isDone = courseProgress.has(unit.id);
-    const isLocked = !prevDone;
-    const node = el("div", { 
-      class: `path-node ${isLocked ? 'locked' : ''} ${isDone ? 'done' : ''}`,
-      style: `animation: scaleIn 0.4s ease ${idx * 0.05}s backwards`,
-      onclick: () => {
-        if (isLocked) return;
-        if (!isDone && !checkDailyLimit()) return;
-        
-        state.currentUnit = unit;
-        state.lessonStep = unit.alphabet ? "alphabet_grid" : "words";
-        state.quizIdx = 0; state.currentAlphaLetter = null;
-        state.screen = "lesson"; render();
-      }
-    }, [el("span", {}, isDone ? "✅" : (isLocked ? "🔒" : "▶️"))]);
-    
-    const label = el("div", { style: "position:absolute;top:85px;font-size:0.85rem;font-weight:700;color:var(--muted);white-space:nowrap;width:160px;text-align:center;left:50%;transform:translateX(-50%);" }, unit.title);
-    node.appendChild(label);
-    path.appendChild(node);
-    prevDone = isDone;
-  });
-  app.appendChild(path);
-  root.appendChild(app);
-}
-
-function renderLesson() {
-  const unit = state.currentUnit;
-  const app = el("div", { class: "app fade-in" });
-  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "learn"; render(); } })]));
-
-  if (state.lessonStep === "alphabet_grid") {
-    app.appendChild(el("h2", { class: "lesson-header" }, "Алфавит"));
-    const grid = el("div", { class: "alpha-grid" });
-    const learned = state.alphaProgress[state.currentCourse] || new Set();
-    
-    (unit.alphabet?.table || []).forEach((a, i) => {
-      const isDone = learned.has(i);
-      grid.appendChild(el("div", { 
-        class: "alpha-btn" + (isDone ? " done" : ""), 
-        style: `animation: scaleIn 0.3s ease ${i * 0.03}s backwards`,
-        onclick: () => { state.currentAlphaLetter = a; state.lessonStep = "alphabet_card"; render(); } 
-      }, [
-        el("div", {}, a.char),
-        el("div", { class: "pair" }, `[${a.sound}]`),
-        isDone ? el("div", { style: "color:var(--green);font-size:0.85rem;margin-top:6px;" }, "✓") : null
-      ]));
-    });
-    app.appendChild(grid);
-    if (learned.size === (unit.alphabet?.table?.length || 0)) {
-      app.appendChild(el("button", { class: "btn btn-green", onclick: () => { state.lessonStep = "words"; render(); } }, "Дальше: Слова"));
-    }
-  }
-  else if (state.lessonStep === "alphabet_card") {
-    const a = state.currentAlphaLetter;
-    const wrongSounds = (unit.alphabet?.table || []).filter(x => x.sound !== a.sound).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.sound);
-    const options = [a.sound, ...wrongSounds].sort(() => 0.5 - Math.random());
-
-    app.appendChild(el("div", { class: "letter-display" }, [
-      el("div", { class: "big-char" }, a.char),
-      el("div", { class: "sound" }, `Пример: ${a.ex}`),
-      el("div", { style: "display:flex;justify-content:center;margin-bottom:24px;" }, [renderAudioButton(a.ex)]),
-      el("p", { style: "text-align:center;font-weight:800;margin-bottom:16px;font-size:1.1rem;" }, "Какой звук обозначает эта буква?"),
-      el("div", { style: "display:flex;flex-direction:column;gap:10px;" }, 
-        options.map(opt => {
-          const btn = el("div", { class: "quiz-option" }, `[${opt}]`);
-          btn.onclick = () => {
-            if (btn.classList.contains("disabled") || btn.classList.contains("correct")) return;
-            
-            if (opt === a.sound) {
-              btn.classList.add("correct");
-              document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
-              setTimeout(() => {
-                if (!state.alphaProgress[state.currentCourse]) state.alphaProgress[state.currentCourse] = new Set();
-                state.alphaProgress[state.currentCourse].add(unit.alphabet.table.indexOf(a));
-                saveState(); state.lessonStep = "alphabet_grid"; render();
-              }, 1200);
-            } else {
-              btn.classList.add("wrong");
-              btn.classList.add("disabled");
-              setTimeout(() => {
-                btn.classList.remove("wrong");
-              }, 800);
+        // Утилита для создания элементов
+        const el = (tag, attrs = {}, children = []) => {
+            const e = document.createElement(tag);
+            for (let k in attrs) {
+                if (k === 'class') {
+                    e.className = attrs[k];
+                } else if (k.startsWith('on')) {
+                    e.addEventListener(k.slice(2), attrs[k]);
+                } else {
+                    e.setAttribute(k, attrs[k]);
+                }
             }
-          };
-          return btn;
-        })
-      )
-    ]));
-  }
-  else if (state.lessonStep === "words") {
-    app.appendChild(el("h2", { class: "lesson-header" }, "Слова"));
-    const grid = el("div", { class: "word-grid" });
-    unit.words.forEach((w, i) => {
-      grid.appendChild(el("div", { 
-        class: "word-row",
-        style: `animation: slideIn 0.4s ease ${i * 0.05}s backwards`
-      }, [
-        el("div", {}, [el("div", { style: "font-size:1.15rem;font-weight:800;" }, w.sr), el("div", { style: "color:var(--muted);font-size:0.95rem;" }, w.ru)]),
-        renderAudioButton(w.sr)
-      ]));
-    });
-    app.appendChild(grid);
-    app.appendChild(el("button", { class: "btn btn-primary", onclick: () => { state.lessonStep = "grammar"; render(); } }, "Дальше: Грамматика"));
-  }
-  else if (state.lessonStep === "grammar") {
-    app.appendChild(el("h2", { class: "lesson-header" }, "Грамматика"));
-    app.appendChild(el("div", { class: "grammar-box" }, [
-      el("h3", { style: "color:var(--blue);margin-bottom:12px;font-size:1.3rem;" }, unit.grammar.title),
-      el("div", { style: "margin-bottom:18px;font-size:1.05rem;line-height:1.7;" }, unit.grammar.rules)
-    ]));
-    if (unit.grammar.examples) {
-      unit.grammar.examples.forEach((ex, i) => {
-        app.appendChild(el("div", { 
-          style: "background:var(--card);padding:14px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);",
-          class: "slide-in"
-        }, [
-          el("div", {}, [el("div", { style: "font-weight:800;font-size:1.05rem;" }, ex.sr), el("div", { style: "color:var(--muted);font-size:0.9rem;" }, ex.ru)]),
-          renderAudioButton(ex.sr)
-        ]));
-      });
-    }
-    app.appendChild(el("button", { class: "btn btn-blue", style: "margin-top:24px;background:linear-gradient(135deg, var(--blue), #2563eb);color:#fff;", onclick: () => { state.lessonStep = "quiz"; render(); } }, "Дальше: Тест"));
-  }
-  else if (state.lessonStep === "quiz") {
-    if (state.quizIdx >= unit.quiz.length) {
-      const isCompleted = state.progress[state.currentCourse]?.has(unit.id);
-      
-      if (!isCompleted) {
-         state.progress[state.currentCourse] = state.progress[state.currentCourse] || new Set();
-         state.progress[state.currentCourse].add(unit.id);
-         state.xp += 50; 
-         state.lessonsToday++; 
-      }
-      
-      saveState();
-      app.appendChild(el("div", { class: "success-screen" }, [
-        el("div", { style: "font-size:5rem;margin-bottom:20px;" }, "🏆"),
-        el("h2", { style: "font-size:2rem;margin-bottom:12px;" }, isCompleted ? "Повторение завершено!" : "Юнит пройден!"),
-        el("p", { style: "font-size:1.2rem;color:var(--muted);margin-bottom:24px;" }, isCompleted ? "Молодец, что повторяешь!" : "+50 XP. Открыт следующий урок!"),
-        el("button", { class: "btn btn-green", onclick: () => { state.screen = "learn"; render(); } }, "К списку")
-      ]));
-      root.appendChild(app); return;
-    }
-    const q = unit.quiz[state.quizIdx];
-    app.appendChild(el("h2", { class: "lesson-header" }, `Вопрос ${state.quizIdx + 1}`));
-    app.appendChild(el("p", { style: "font-size:1.3rem;font-weight:800;text-align:center;margin-bottom:24px;line-height:1.5;" }, q.q));
-    q.options.forEach((opt, i) => {
-      const btn = el("div", { 
-        class: "quiz-option",
-        style: `animation: slideIn 0.4s ease ${i * 0.1}s backwards`
-      }, opt);
-      btn.onclick = () => {
-        if (btn.classList.contains("disabled") || btn.classList.contains("correct")) return;
-        
-        if (i === q.correct) {
-          btn.classList.add("correct");
-          document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
-          setTimeout(() => { state.quizIdx++; render(); }, 1200);
-        } else {
-          btn.classList.add("wrong");
-          btn.classList.add("disabled");
-          setTimeout(() => {
-            btn.classList.remove("wrong");
-            btn.classList.remove("disabled");
-          }, 800);
+            (Array.isArray(children) ? children : [children]).forEach(c => {
+                if (c != null && c !== false) {
+                    e.appendChild(typeof c === 'string' ? document.createTextNode(c) : c);
+                }
+            });
+            return e;
+        };
+
+        // Сохранение состояния
+        function save() {
+            localStorage.setItem('bobor_v2', JSON.stringify({
+                user: S.user,
+                theme: S.theme,
+                xp: S.xp,
+                streak: S.streak,
+                course: S.course,
+                progress: Object.fromEntries(Object.entries(S.progress).map(([k, v]) => [k, [...v]])),
+                alpha: Object.fromEntries(Object.entries(S.alpha).map(([k, v]) => [k, [...v]])),
+                medals: S.medals
+            }));
+            if (S.user) {
+                fetch('/api/sync-progress', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: S.user.email,
+                        xp: S.xp,
+                        streak: S.streak,
+                        medals: S.medals,
+                        units_done: Object.fromEntries(Object.entries(S.progress).map(([k, v]) => [k, [...v]]))
+                    })
+                }).catch(() => {});
+            }
         }
-      };
-      app.appendChild(btn);
-    });
-  }
-  root.appendChild(app);
-}
 
-function renderLibrary() {
-  const app = el("div", { class: "app fade-in" });
-  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Библиотека"));
-  if (state.loading || !state.courseData) { root.appendChild(app); return; }
-  const courseProgress = state.progress[state.currentCourse] || new Set();
-  const doneUnits = state.courseData.units.filter(u => courseProgress.has(u.id));
-  
-  if (doneUnits.length === 0) app.appendChild(el("p", { style: "text-align:center;color:var(--muted);font-size:1.2rem;margin-top:40px;" }, "Тут пусто. Начни обучение!"));
-  else doneUnits.forEach((u, i) => {
-    app.appendChild(el("div", { 
-      class: "lib-item",
-      style: `animation: slideIn 0.4s ease ${i * 0.05}s backwards`
-    }, [
-      el("h4", { style: "color:var(--gold);margin-bottom:10px;font-size:1.1rem;" }, `${u.icon} ${u.title}`),
-      el("p", { style: "font-size:0.9rem;color:var(--muted);margin-bottom:12px;" }, u.grammar.title),
-      el("button", { class: "btn btn-ghost", style: "margin-top:12px;padding:10px;font-size:0.95rem;", onclick: () => { state.currentUnit = u; state.lessonStep = u.alphabet ? "alphabet_grid" : "words"; state.quizIdx = 0; state.screen = "lesson"; render(); } }, "Повторить (без XP)")
-    ]));
-  });
-  root.appendChild(app);
-}
+        // Загрузка состояния
+        function load() {
+            try {
+                const d = JSON.parse(localStorage.getItem('bobor_v2'));
+                if (d) {
+                    S.user = d.user;
+                    S.theme = d.theme || 'light';
+                    S.xp = d.xp || 0;
+                    S.streak = d.streak || 0;
+                    S.course = d.course || 'sr';
+                    S.medals = d.medals || [];
+                    S.progress = Object.fromEntries(Object.entries(d.progress || {}).map(([k, v]) => [k, new Set(v)]));
+                    S.alpha = Object.fromEntries(Object.entries(d.alpha || {}).map(([k, v]) => [k, new Set(v)]));
+                    if (S.user) S.screen = 'home';
+                }
+            } catch (e) {
+                console.error('Load error:', e);
+            }
+        }
 
-function renderShop() {
-  const app = el("div", { class: "app fade-in" });
-  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Магазин"));
-  const medals = [
-    { id: "m1", name: "Обычная", emoji: "🥉", price: 1200 }, { id: "m2", name: "Дерево", emoji: "🪵", price: 2000 },
-    { id: "m3", name: "Железо", emoji: "⚙️", price: 3400 }, { id: "m4", name: "Алмаз", emoji: "💎", price: 4000 },
-    { id: "m5", name: "Незерит", emoji: "🔥", price: 5000 }
-  ];
-  const grid = el("div", { class: "shop-grid" });
-  medals.forEach((m, i) => {
-    const owned = state.medals.includes(m.id);
-    grid.appendChild(el("div", { 
-      class: "shop-item " + (owned ? "owned" : ""),
-      style: `animation: scaleIn 0.4s ease ${i * 0.1}s backwards`
-    }, [
-      el("div", { style: "font-size:2.5rem;margin-bottom:10px;" }, m.emoji),
-      el("div", { style: "font-weight:800;font-size:1.1rem;margin-bottom:8px;" }, m.name),
-      el("div", { style: "color:var(--yellow);margin-bottom:12px;font-weight:700;font-size:1.05rem;" }, `⚡ ${m.price}`),
-      el("button", { class: "btn " + (owned ? "btn-ghost" : "btn-primary"), onclick: () => {
-        if (owned) return;
-        if (state.xp >= m.price) { state.xp -= m.price; state.medals.push(m.id); saveState(); render(); }
-        else alert("Не хватает XP!");
-      }}, owned ? "Куплено" : "Купить")
-    ]));
-  });
-  app.appendChild(grid);
-  root.appendChild(app);
-}
+        // Загрузка курса
+        async function loadCourse() {
+            S.loading = true;
+            render();
+            try {
+                const r = await fetch(`/data/${S.course}.json`);
+                S.data = await r.json();
+            } catch (e) {
+                S.data = { name: "Ошибка", units: [] };
+            }
+            S.loading = false;
+            render();
+        }
 
-function renderRanked() {
-  const app = el("div", { class: "app fade-in" });
-  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Ранкед"));
-  const fake = [{ n: "Marko", x: 1500 }, { n: "Ana", x: 1200 }, { n: state.user?.email || "Вы", x: state.xp }, { n: "Ivan", x: 500 }].sort((a,b)=>b.x-a.x);
-  fake.forEach((r, i) => {
-    app.appendChild(el("div", { 
-      class: "rank-row " + (r.n === state.user?.email ? "me" : ""),
-      style: `animation: slideIn 0.4s ease ${i * 0.1}s backwards`
-    }, [
-      el("div", { style: "font-weight:900;width:28px;font-size:1.1rem;" }, `${i+1}`),
-      el("div", { style: "flex:1;font-weight:700;font-size:1.05rem;" }, r.n),
-      el("div", { style: "color:var(--purple);font-weight:800;font-size:1.05rem;" }, `⚡ ${r.x}`)
-    ]));
-  });
-  root.appendChild(app);
-}
+        // Главный рендер
+        function render() {
+            const root = document.getElementById('root');
+            root.innerHTML = '';
+            document.documentElement.setAttribute('data-theme', S.theme);
 
-function renderSettings() {
-  const app = el("div", { class: "app fade-in" });
-  app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Настройки"));
-  app.appendChild(el("div", { style: "background:var(--card);padding:24px;border-radius:20px;margin-bottom:18px;border:1px solid var(--border);box-shadow:var(--shadow);" }, [
-    el("h3", { style: "margin-bottom:12px;font-size:1.3rem;" }, "Профиль"),
-    el("p", { style: "color:var(--muted);margin-bottom:8px;font-size:1.05rem;" }, `Email: ${state.user?.email}`),
-    el("p", { style: "color:var(--muted);font-size:1.05rem;" }, `XP: ${state.xp} · Серия: ${state.streak}`),
-    el("button", { class: "btn btn-ghost", style: "margin-top:16px;", onclick: () => { state.user = null; state.screen = "auth"; saveState(); render(); } }, "Выйти")
-  ]));
-  app.appendChild(el("div", { style: "background:var(--card);padding:24px;border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);" }, [
-    el("h3", { style: "margin-bottom:12px;font-size:1.3rem;" }, "Тема"),
-    el("button", { class: "btn btn-ghost", onclick: () => { state.settings.theme = state.settings.theme === "dark" ? "light" : "dark"; saveState(); render(); } }, "Переключить тему")
-  ]));
-  root.appendChild(app);
-}
+            if (!S.user && S.screen !== 'auth') S.screen = 'auth';
 
-loadState();
-render();
-</script>
+            if (S.screen === 'auth') renderAuth(root);
+            else if (S.screen === 'home') renderHome(root);
+            else if (S.screen === 'learn') renderLearn(root);
+            else if (S.screen === 'lesson') renderLesson(root);
+            else if (S.screen === 'library') renderLibrary(root);
+            else if (S.screen === 'shop') renderShop(root);
+            else if (S.screen === 'ranked') renderRanked(root);
+            else if (S.screen === 'settings') renderSettings(root);
+        }
+
+        // Экран авторизации
+        function renderAuth(root) {
+            const box = el('div', { class: 'auth-box' }, [
+                el('h1', { style: 'text-align:center;margin-bottom:20px' }, 'BOBOR-LINGUO'),
+                el('input', { type: 'email', placeholder: 'Email', id: 'email' }),
+                el('input', { type: 'password', placeholder: 'Пароль', id: 'pass' }),
+                el('button', {
+                    class: 'btn btn-primary',
+                    onclick: async () => {
+                        const em = document.getElementById('email').value;
+                        const pw = document.getElementById('pass').value;
+                        if (!em || !pw) return;
+                        const r = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email: em, password: pw })
+                        });
+                        const d = await r.json();
+                        if (d.success) {
+                            S.user = d.user;
+                            S.screen = 'home';
+                            save();
+                            render();
+                        } else {
+                            alert(d.error || 'Ошибка входа');
+                        }
+                    }
+                }, 'Войти'),
+                el('p', {
+                    style: 'text-align:center;margin-top:15px;font-size:0.9rem;color:var(--text-muted);cursor:pointer',
+                    onclick: () => alert('Регистрация пока закрыта')
+                }, 'Нет аккаунта?')
+            ]);
+            root.appendChild(box);
+        }
+
+        // Главный экран
+        function renderHome(root) {
+            const app = el('div', { class: 'app' });
+
+            // Верхняя панель
+            app.appendChild(el('div', { class: 'topbar' }, [
+                el('a', { class: 'brand', onclick: () => { S.screen = 'home'; render(); } }, [
+                    el('div', { class: 'brand-logo' }, el('img', { src: '/images/beaver.png' })),
+                    el('span', {}, 'BOBOR')
+                ]),
+                el('div', { class: 'stats' }, [
+                    el('div', { class: 'stat-pill streak' }, ['🔥 ', S.streak]),
+                    el('div', { class: 'stat-pill' }, ['⚡ ', S.xp]),
+                    el('div', {
+                        class: 'icon-btn',
+                        onclick: () => { S.screen = 'settings'; render(); }
+                    }, el('img', { src: '/images/settings.png' }))
+                ])
+            ]));
+
+            // Выбор языка
+            const scroll = el('div', { class: 'lang-scroll' });
+            Object.keys(COURSES).forEach(c => {
+                scroll.appendChild(el('div', {
+                    class: 'lang-btn ' + (S.course === c ? 'active' : ''),
+                    onclick: () => { S.course = c; save(); render(); }
+                }, [COURSES[c].flag, ' ', COURSES[c].name]));
+            });
+            app.appendChild(scroll);
+
+            // Приветствие
+            app.appendChild(el('h1', {
+                style: 'margin-bottom:20px;font-size:1.8rem'
+            }, `Привет, ${S.user?.email?.split('@')[0] || 'друг'}! 👋`));
+
+            // Сетка карточек
+            const grid = el('div', { class: 'home-grid' });
+            const cards = [
+                { id: 'learn', icon: '/images/learn.png', title: 'Обучение', desc: 'Путь' },
+                { id: 'library', icon: '📚', title: 'Библиотека', desc: 'Пройденное' },
+                { id: 'shop', icon: '/images/shop.png', title: 'Магазин', desc: 'Медали' },
+                { id: 'ranked', icon: '/images/ranked.png', title: 'Ранкед', desc: 'Лидеры' }
+            ];
+            cards.forEach(c => {
+                const isImg = c.icon.startsWith('/');
+                grid.appendChild(el('div', {
+                    class: 'home-card',
+                    onclick: () => {
+                        S.screen = c.id;
+                        if (c.id === 'learn' || c.id === 'library') loadCourse();
+                        else render();
+                    }
+                }, [
+                    isImg ? el('img', { src: c.icon }) : el('div', { style: 'font-size:3rem;margin-bottom:10px' }, c.icon),
+                    el('h3', {}, c.title),
+                    el('p', {}, c.desc)
+                ]));
+            });
+            app.appendChild(grid);
+            root.appendChild(app);
+        }
+
+        // Экран обучения
+        function renderLearn(root) {
+            const app = el('div', { class: 'app' });
+            app.appendChild(el('div', { class: 'topbar' }, [
+                el('div', {
+                    class: 'icon-btn',
+                    onclick: () => { S.screen = 'home'; render(); }
+                }, '←'),
+                el('h2', { style: 'flex:1;text-align:center' }, S.data?.name || 'Курс')
+            ]));
+
+            if (S.loading) {
+                app.appendChild(el('p', { style: 'text-align:center;margin-top:50px' }, 'Загрузка...'));
+                root.appendChild(app);
+                return;
+            }
+            if (!S.data) {
+                app.appendChild(el('p', { style: 'text-align:center;margin-top:50px' }, 'Ошибка загрузки'));
+                root.appendChild(app);
+                return;
+            }
+
+            const path = el('div', { class: 'path-container' });
+            path.appendChild(el('div', { class: 'path-line' }));
+
+            const prog = S.progress[S.course] || new Set();
+            let prevDone = true;
+
+            S.data.units.forEach((u, i) => {
+                const done = prog.has(u.id);
+                const locked = !prevDone;
+                const node = el('div', {
+                    class: `path-node ${locked ? 'locked' : ''} ${done ? 'done' : ''}`,
+                    onclick: () => {
+                        if (locked) return;
+                        S.unit = u;
+                        S.step = u.alphabet ? 'alpha_grid' : 'words';
+                        S.qi = 0;
+                        S.screen = 'lesson';
+                        render();
+                    }
+                }, [el('span', {}, done ? '✓' : (locked ? '🔒' : '▶'))]);
+
+                node.appendChild(el('div', { class: 'path-label' }, u.title));
+                path.appendChild(node);
+                prevDone = done;
+            });
+
+            app.appendChild(path);
+            root.appendChild(app);
+        }
+
+        // Экран урока
+        function renderLesson(root) {
+            const app = el('div', { class: 'app' });
+            app.appendChild(el('div', { class: 'topbar' }, [
+                el('div', {
+                    class: 'icon-btn',
+                    onclick: () => { S.screen = 'learn'; render(); }
+                }, '✕')
+            ]));
+
+            const u = S.unit;
+            if (!u) return;
+
+            // Сетка алфавита
+            if (S.step === 'alpha_grid') {
+                app.appendChild(el('h2', { class: 'lesson-header' }, 'Алфавит'));
+                const grid = el('div', {
+                    class: 'home-grid',
+                    style: 'grid-template-columns:repeat(auto-fill, minmax(70px, 1fr))'
+                });
+                const learned = S.alpha[S.course] || new Set();
+
+                (u.alphabet?.table || []).forEach((x, i) => {
+                    const done = learned.has(i);
+                    grid.appendChild(el('div', {
+                        class: 'home-card ' + (done ? 'done' : ''),
+                        style: done ? 'border-color:var(--green);background:#d7ffb8;' : '',
+                        onclick: () => { S.letter = x; S.step = 'alpha_card'; render(); }
+                    }, [
+                        el('div', { style: 'font-size:2rem;font-weight:900' }, x.char),
+                        el('div', { style: 'font-size:0.8rem;color:var(--text-muted)' }, `[${x.sound}]`)
+                    ]));
+                });
+                app.appendChild(grid);
+                if (learned.size === (u.alphabet?.table?.length || 0)) {
+                    app.appendChild(el('button', {
+                        class: 'btn btn-green',
+                        onclick: () => { S.step = 'words'; render(); }
+                    }, 'Дальше: Слова'));
+                }
+            }
+
+            // Карточка буквы с квизом
+            else if (S.step === 'alpha_card') {
+                const x = S.letter;
+                const wrong = (u.alphabet?.table || [])
+                    .filter(y => y.sound !== x.sound)
+                    .sort(() => Math.random() - 0.5)
+                    .slice(0, 3)
+                    .map(y => y.sound);
+                const opts = [x.sound, ...wrong].sort(() => Math.random() - 0.5);
+
+                app.appendChild(el('div', { class: 'lesson-header' }, x.char));
+                app.appendChild(el('p', {
+                    style: 'text-align:center;margin-bottom:20px;font-size:1.2rem'
+                }, `Звук: [${x.sound}]`));
+                app.appendChild(el('p', {
+                    style: 'text-align:center;margin-bottom:30px;color:var(--text-muted)'
+                }, `Пример: ${x.ex}`));
+
+                const qBox = el('div', {});
+                opts.forEach(o => {
+                    const btn = el('div', { class: 'quiz-option' }, `[${o}]`);
+                    btn.onclick = () => {
+                        if (btn.classList.contains('disabled')) return;
+                        if (o === x.sound) {
+                            btn.classList.add('correct');
+                            document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
+                            setTimeout(() => {
+                                if (!S.alpha[S.course]) S.alpha[S.course] = new Set();
+                                S.alpha[S.course].add(u.alphabet.table.indexOf(x));
+                                save();
+                                S.step = 'alpha_grid';
+                                render();
+                            }, 1000);
+                        } else {
+                            btn.classList.add('wrong', 'disabled');
+                            setTimeout(() => {
+                                btn.classList.remove('wrong', 'disabled');
+                            }, 800);
+                        }
+                    };
+                    qBox.appendChild(btn);
+                });
+                app.appendChild(qBox);
+            }
+
+            // Слова
+            else if (S.step === 'words') {
+                app.appendChild(el('h2', { class: 'lesson-header' }, 'Слова'));
+                const list = el('div', { class: 'word-list' });
+                u.words.forEach(w => {
+                    list.appendChild(el('div', { class: 'word-item' }, [
+                        el('div', {}, [
+                            el('div', { style: 'font-weight:800;font-size:1.1rem' }, w.sr),
+                            el('div', { style: 'color:var(--text-muted);font-size:0.9rem' }, w.ru)
+                        ]),
+                        el('button', {
+                            class: 'audio-btn',
+                            onclick: () => {
+                                const utter = new SpeechSynthesisUtterance(w.sr);
+                                utter.lang = S.data.speechLang || 'ru-RU';
+                                speechSynthesis.speak(utter);
+                            }
+                        }, '🔊')
+                    ]));
+                });
+                app.appendChild(list);
+                app.appendChild(el('button', {
+                    class: 'btn btn-primary',
+                    onclick: () => { S.step = 'grammar'; render(); }
+                }, 'Дальше: Грамматика'));
+            }
+
+            // Грамматика
+            else if (S.step === 'grammar') {
+                app.appendChild(el('h2', { class: 'lesson-header' }, 'Грамматика'));
+                app.appendChild(el('div', { class: 'grammar-box' }, [
+                    el('h3', { style: 'color:var(--blue);margin-bottom:10px' }, u.grammar.title),
+                    el('p', { style: 'white-space:pre-wrap;line-height:1.6' }, u.grammar.rules)
+                ]));
+                if (u.grammar.examples) {
+                    u.grammar.examples.forEach(ex => {
+                        app.appendChild(el('div', {
+                            class: 'word-item',
+                            style: 'margin-bottom:10px'
+                        }, [
+                            el('div', { style: 'font-style:italic' }, ex.sr),
+                            el('div', { style: 'color:var(--text-muted)' }, ex.ru)
+                        ]));
+                    });
+                }
+                app.appendChild(el('button', {
+                    class: 'btn btn-blue',
+                    onclick: () => { S.step = 'quiz'; render(); }
+                }, 'Дальше: Тест'));
+            }
+
+            // Квиз
+            else if (S.step === 'quiz') {
+                if (S.qi >= u.quiz.length) {
+                    if (!S.progress[S.course]) S.progress[S.course] = new Set();
+                    S.progress[S.course].add(u.id);
+                    S.xp += 50;
+                    save();
+
+                    app.appendChild(el('div', { class: 'success-screen' }, [
+                        el('div', { style: 'font-size:5rem;margin-bottom:20px' }, '🎉'),
+                        el('h2', { style: 'margin-bottom:10px' }, 'Урок пройден!'),
+                        el('p', { style: 'color:var(--text-muted);margin-bottom:30px' }, '+50 XP'),
+                        el('button', {
+                            class: 'btn btn-primary',
+                            onclick: () => { S.screen = 'learn'; render(); }
+                        }, 'Продолжить')
+                    ]));
+                } else {
+                    const q = u.quiz[S.qi];
+                    app.appendChild(el('h2', {
+                        class: 'lesson-header'
+                    }, `Вопрос ${S.qi + 1}/${u.quiz.length}`));
+                    app.appendChild(el('p', {
+                        style: 'text-align:center;font-size:1.2rem;font-weight:700;margin-bottom:30px'
+                    }, q.q));
+
+                    const qBox = el('div', {});
+                    q.options.forEach((opt, i) => {
+                        const btn = el('div', { class: 'quiz-option' }, opt);
+                        btn.onclick = () => {
+                            if (btn.classList.contains('disabled')) return;
+                            if (i === q.correct) {
+                                btn.classList.add('correct');
+                                document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
+                                setTimeout(() => { S.qi++; render(); }, 1000);
+                            } else {
+                                btn.classList.add('wrong', 'disabled');
+                                setTimeout(() => {
+                                    btn.classList.remove('wrong', 'disabled');
+                                }, 800);
+                            }
+                        };
+                        qBox.appendChild(btn);
+                    });
+                    app.appendChild(qBox);
+                }
+            }
+
+            root.appendChild(app);
+        }
+
+        // Библиотека
+        function renderLibrary(root) {
+            const app = el('div', { class: 'app' });
+            app.appendChild(el('div', { class: 'topbar' }, [
+                el('div', {
+                    class: 'icon-btn',
+                    onclick: () => { S.screen = 'home'; render(); }
+                }, '←')
+            ]));
+            app.appendChild(el('h1', { style: 'margin-bottom:20px' }, 'Библиотека'));
+
+            if (S.loading) {
+                root.appendChild(app);
+                return;
+            }
+            const prog = S.progress[S.course] || new Set();
+            const done = S.data?.units.filter(u => prog.has(u.id)) || [];
+
+            if (!done.length) {
+                app.appendChild(el('p', {
+                    style: 'text-align:center;color:var(--text-muted);margin-top:50px'
+                }, 'Пока пусто. Пройди первый урок!'));
+            } else {
+                done.forEach(u => {
+                    app.appendChild(el('div', {
+                        class: 'lib-item',
+                        onclick: () => {
+                            S.unit = u;
+                            S.step = u.alphabet ? 'alpha_grid' : 'words';
+                            S.qi = 0;
+                            S.screen = 'lesson';
+                            render();
+                        }
+                    }, [
+                        el('div', { style: 'font-weight:800' }, `${u.icon || '📖'} ${u.title}`),
+                        el('div', { style: 'color:var(--green);font-size:0.8rem' }, 'ПОВТОРИТЬ')
+                    ]));
+                });
+            }
+            root.appendChild(app);
+        }
+
+        // Магазин
+        function renderShop(root) {
+            const app = el('div', { class: 'app' });
+            app.appendChild(el('div', { class: 'topbar' }, [
+                el('div', {
+                    class: 'icon-btn',
+                    onclick: () => { S.screen = 'home'; render(); }
+                }, '←')
+            ]));
+            app.appendChild(el('h1', { style: 'margin-bottom:20px' }, 'Магазин'));
+
+            const items = [
+                { id: 'm1', name: 'Бронза', price: 100, icon: '🥉' },
+                { id: 'm2', name: 'Серебро', price: 300, icon: '🥈' },
+                { id: 'm3', name: 'Золото', price: 500, icon: '🥇' }
+            ];
+
+            const grid = el('div', { class: 'shop-grid' });
+            items.forEach(it => {
+                const owned = S.medals.includes(it.id);
+                grid.appendChild(el('div', {
+                    class: 'shop-item' + (owned ? ' owned' : '')
+                }, [
+                    el('div', { style: 'font-size:3rem;margin-bottom:10px' }, it.icon),
+                    el('h3', {}, it.name),
+                    el('p', { style: 'color:var(--yellow);font-weight:800' }, `${it.price} XP`),
+                    el('button', {
+                        class: 'btn ' + (owned ? 'btn-ghost' : 'btn-primary'),
+                        style: 'margin-top:10px;padding:10px;font-size:0.8rem',
+                        onclick: () => {
+                            if (owned) return;
+                            if (S.xp >= it.price) {
+                                S.xp -= it.price;
+                                S.medals.push(it.id);
+                                save();
+                                render();
+                            } else {
+                                alert('Недостаточно XP!');
+                            }
+                        }
+                    }, owned ? 'Куплено' : 'Купить')
+                ]));
+            });
+            app.appendChild(grid);
+            root.appendChild(app);
+        }
+
+        // Ранкед
+        function renderRanked(root) {
+            const app = el('div', { class: 'app' });
+            app.appendChild(el('div', { class: 'topbar' }, [
+                el('div', {
+                    class: 'icon-btn',
+                    onclick: () => { S.screen = 'home'; render(); }
+                }, '←')
+            ]));
+            app.appendChild(el('h1', { style: 'margin-bottom:20px' }, 'Ранкед'));
+
+            const leaders = [
+                { n: 'BoborMaster', x: 5000 },
+                { n: 'Polyglot', x: 3200 },
+                { n: S.user?.email?.split('@')[0] || 'Вы', x: S.xp },
+                { n: 'Newbie', x: 100 }
+            ].sort((a, b) => b.x - a.x);
+
+            leaders.forEach((l, i) => {
+                const isMe = l.n === (S.user?.email?.split('@')[0] || 'Вы');
+                app.appendChild(el('div', {
+                    class: 'rank-row' + (isMe ? ' me' : '')
+                }, [
+                    el('div', { style: 'font-weight:900;width:30px' }, `#${i + 1}`),
+                    el('div', { style: 'flex:1;font-weight:700' }, l.n),
+                    el('div', { style: 'color:var(--yellow);font-weight:800' }, `${l.x} XP`)
+                ]));
+            });
+            root.appendChild(app);
+        }
+
+        // Настройки
+        function renderSettings(root) {
+            const app = el('div', { class: 'app' });
+            app.appendChild(el('div', { class: 'topbar' }, [
+                el('div', {
+                    class: 'icon-btn',
+                    onclick: () => { S.screen = 'home'; render(); }
+                }, '←')
+            ]));
+            app.appendChild(el('h1', { style: 'margin-bottom:20px' }, 'Настройки'));
+
+            app.appendChild(el('div', {
+                class: 'word-item',
+                style: 'margin-bottom:15px;cursor:pointer',
+                onclick: () => {
+                    S.theme = S.theme === 'light' ? 'dark' : 'light';
+                    save();
+                    render();
+                }
+            }, [
+                el('div', { style: 'font-weight:700' }, 'Темная тема'),
+                el('div', { style: 'font-size:1.5rem' }, S.theme === 'dark' ? '🌙' : '☀️')
+            ]));
+
+            app.appendChild(el('button', {
+                class: 'btn btn-ghost',
+                style: 'margin-top:30px;color:var(--red);border-color:var(--red)',
+                onclick: () => {
+                    S.user = null;
+                    S.screen = 'auth';
+                    save();
+                    render();
+                }
+            }, 'Выйти'));
+
+            root.appendChild(app);
+        }
+
+        // Инициализация
+        load();
+        render();
+    </script>
 </body>
 </html>
