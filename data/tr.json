@@ -12,404 +12,404 @@
         "title": "Türk alfabesi",
         "rules": "29 harf. Özel: Ç (ç), Ğ (yumuşak g, uzatır), I/İ (ı/i farkı!), Ö (ö), Ş (ş), Ü (ü). Ünlü uyumu: kalın (a,ı,o,u) ve ince (e,i,ö,ü) ünlüler asla karışmaz.",
         "table": [
-          { "char": "A a", "sound": "a", "ex": "Araba" },
-          { "char": "B b", "sound": "b", "ex": "Bal" },
-          { "char": "C c", "sound": "c", "ex": "Can" },
-          { "char": "Ç ç", "sound": "ç", "ex": "Çay" },
-          { "char": "D d", "sound": "d", "ex": "Deniz" },
-          { "char": "E e", "sound": "e", "ex": "Elma" },
-          { "char": "F f", "sound": "f", "ex": "Fıstık" },
-          { "char": "G g", "sound": "g", "ex": "Göz" },
-          { "char": "Ğ ğ", "sound": "ğ", "ex": "Dağ" },
-          { "char": "H h", "sound": "h", "ex": "Hava" },
-          { "char": "I ı", "sound": "ı", "ex": "Işık" },
-          { "char": "İ i", "sound": "i", "ex": "İki" },
-          { "char": "J j", "sound": "j", "ex": "Jale" },
-          { "char": "K k", "sound": "k", "ex": "Kedi" },
-          { "char": "L l", "sound": "l", "ex": "Lale" },
-          { "char": "M m", "sound": "m", "ex": "Masa" },
-          { "char": "N n", "sound": "n", "ex": "Nehir" },
-          { "char": "O o", "sound": "o", "ex": "Okul" },
-          { "char": "Ö ö", "sound": "ö", "ex": "Öğrenci" },
-          { "char": "P p", "sound": "p", "ex": "Para" },
-          { "char": "R r", "sound": "r", "ex": "Renk" },
-          { "char": "S s", "sound": "s", "ex": "Su" },
-          { "char": "Ş ş", "sound": "ş", "ex": "Şehir" },
-          { "char": "T t", "sound": "t", "ex": "Top" },
-          { "char": "U u", "sound": "u", "ex": "Uçak" },
-          { "char": "Ü ü", "sound": "ü", "ex": "Üzüm" },
-          { "char": "V v", "sound": "v", "ex": "Vapur" },
-          { "char": "Y y", "sound": "y", "ex": "Yol" },
-          { "char": "Z z", "sound": "z", "ex": "Zaman" }
+          {"char": "A a", "sound": "a", "ex": "Araba"},
+          {"char": "B b", "sound": "b", "ex": "Bal"},
+          {"char": "C c", "sound": "c", "ex": "Can"},
+          {"char": "Ç ç", "sound": "ç", "ex": "Çay"},
+          {"char": "D d", "sound": "d", "ex": "Deniz"},
+          {"char": "E e", "sound": "e", "ex": "Elma"},
+          {"char": "F f", "sound": "f", "ex": "Fıstık"},
+          {"char": "G g", "sound": "g", "ex": "Göz"},
+          {"char": "Ğ ğ", "sound": "ğ", "ex": "Dağ"},
+          {"char": "H h", "sound": "h", "ex": "Hava"},
+          {"char": "I ı", "sound": "ı", "ex": "Işık"},
+          {"char": "İ i", "sound": "i", "ex": "İki"},
+          {"char": "J j", "sound": "j", "ex": "Jale"},
+          {"char": "K k", "sound": "k", "ex": "Kedi"},
+          {"char": "L l", "sound": "l", "ex": "Lale"},
+          {"char": "M m", "sound": "m", "ex": "Masa"},
+          {"char": "N n", "sound": "n", "ex": "Nehir"},
+          {"char": "O o", "sound": "o", "ex": "Okul"},
+          {"char": "Ö ö", "sound": "ö", "ex": "Öğrenci"},
+          {"char": "P p", "sound": "p", "ex": "Para"},
+          {"char": "R r", "sound": "r", "ex": "Renk"},
+          {"char": "S s", "sound": "s", "ex": "Su"},
+          {"char": "Ş ş", "sound": "ş", "ex": "Şehir"},
+          {"char": "T t", "sound": "t", "ex": "Top"},
+          {"char": "U u", "sound": "u", "ex": "Uçak"},
+          {"char": "Ü ü", "sound": "ü", "ex": "Üzüm"},
+          {"char": "V v", "sound": "v", "ex": "Vapur"},
+          {"char": "Y y", "sound": "y", "ex": "Yol"},
+          {"char": "Z z", "sound": "z", "ex": "Zaman"}
         ]
       },
       "words": [],
-      "grammar": { "title": "Ünlü Uyumu Kuralı", "rules": "Kalın ünlülü kelimeye kalın ek, ince ünlülü kelimeye ince ek gelir:\n• Araba-LAR (kalın)\n• Ev-ler (ince)\n• Okul-da (kalın)\n• Defter-de (ince)" },
+      "grammar": {"title": "Ünlü Uyumu Kuralı", "rules": "Kalın ünlülü kelimeye kalın ek, ince ünlülü kelimeye ince ek gelir:\n• Araba-LAR (kalın)\n• Ev-ler (ince)\n• Okul-da (kalın)\n• Defter-de (ince)"},
       "quiz": []
     },
     {
       "id": "u2",
-      "title": "İsim Tamlamaları (Belirtisiz/Belirtili)",
+      "title": "İsim Tamlamaları",
       "icon": "🔗",
       "words": [
-        { "sr": "Kitap kapağı", "tr": "[kitap kapahy]", "ru": "Обложка книги" },
-        { "sr": "Araba kapısı", "tr": "[araba kapysy]", "ru": "Дверь машины" },
-        { "sr": "Okul bahçesi", "tr": "[okul bahchesi]", "ru": "Школьный двор" },
-        { "sr": "Çocuk oyuncağı", "tr": "[chodzhuk ojunjahy]", "ru": "Детская игрушка" },
-        { "sr": "Benim kitabım", "tr": "[benim kitabym]", "ru": "Моя книга" },
-        { "sr": "Senin araban", "tr": "[senin arabан]", "ru": "Твоя машина" },
-        { "sr": "Onun evi", "tr": "[onun evi]", "ru": "Его/её дом" },
-        { "sr": "Bizim okulumuz", "tr": "[bizim okulumuz]", "ru": "Наша школа" },
-        { "sr": "Sizin çocuğunuz", "tr": "[sizin chodzhugunuz]", "ru": "Ваш ребёнок" },
-        { "sr": "Onların bahçeleri", "tr": "[onlaryn bahcheleri]", "ru": "Их сад" }
+        {"sr": "Kitap kapağı", "tr": "[kitap kapahy]", "ru": "Обложка книги"},
+        {"sr": "Araba kapısı", "tr": "[araba kapysy]", "ru": "Дверь машины"},
+        {"sr": "Okul bahçesi", "tr": "[okul bahchesi]", "ru": "Школьный двор"},
+        {"sr": "Çocuk oyuncağı", "tr": "[chodzhuk ojunjahy]", "ru": "Детская игрушка"},
+        {"sr": "Benim kitabım", "tr": "[benim kitabym]", "ru": "Моя книга"},
+        {"sr": "Senin araban", "tr": "[senin araban]", "ru": "Твоя машина"},
+        {"sr": "Onun evi", "tr": "[onun evi]", "ru": "Его/её дом"},
+        {"sr": "Bizim okulumuz", "tr": "[bizim okulumuz]", "ru": "Наша школа"},
+        {"sr": "Sizin çocuğunuz", "tr": "[sizin chodzhugunuz]", "ru": "Ваш ребёнок"},
+        {"sr": "Onların bahçeleri", "tr": "[onlaryn bahcheleri]", "ru": "Их сад"}
       ],
       "grammar": {
         "title": "İsim Tamlaması: İki Tür",
-        "rules": "BELİRTİSİZ (определение общего типа):\n• Kitap kapağı (обложка книги вообще)\nBELİRTLİ (конкретная принадлежность):\n• BENİM kitab-IM (МОЯ конкретная книга)\n• SENİN araba-N (ТВОЯ конкретная машина)\nTamlayan + -(n)ın + Tamlanan + kişilik eki",
+        "rules": "BELİRTİSİZ (общее):\n• Kitap kapağı (обложка книги вообще)\nBELİRTLİ (конкретная):\n• BENİM kitab-IM (МОЯ книга)\n• SENİN araba-N (ТВОЯ машина)\nTamlayan + -(n)ın + Tamlanan + kişilik eki",
         "examples": [
-          { "sr": "Ali'nin kalemi masada.", "ru": "Ручка Али на столе." },
-          { "sr": "Kitap kapağı yırtık.", "ru": "Обложка книги порвана." }
+          {"sr": "Ali'nin kalemi masada.", "ru": "Ручка Али на столе."},
+          {"sr": "Kitap kapağı yırtık.", "ru": "Обложка книги порвана."}
         ]
       },
-      "quiz": [{ "q": "Hangisi belirtili tamlama?", "options": ["kitap kapağı", "benim kitabım", "araba kapısı"], "correct": 1 }]
+      "quiz": [{"q": "Hangisi belirtili tamlama?", "options": ["kitap kapağı", "benim kitabım", "araba kapısı"], "correct": 1}]
     },
     {
       "id": "u3",
-      "title": "Hal Ekleri: Yönelme ve Bulunma",
+      "title": "Yönelme ve Bulunma",
       "icon": "📍",
       "words": [
-        { "sr": "Gitmek", "tr": "[gitmek]", "ru": "Идти" },
-        { "sr": "Gelmek", "tr": "[gelmek]", "ru": "Приходить" },
-        { "sr": "Koşmak", "tr": "[koşmak]", "ru": "Бежать" },
-        { "sr": "Yürümek", "tr": "[yürümek]", "ru": "Ходить" },
-        { "sr": "Binmek", "tr": "[binmek]", "ru": "Садиться (в транспорт)" },
-        { "sr": "Olmak", "tr": "[olmak]", "ru": "Быть/Находиться" },
-        { "sr": "Durmak", "tr": "[durmak]", "ru": "Стоять" },
-        { "sr": "Yaşamak", "tr": "[yaşamak]", "ru": "Жить" },
-        { "sr": "Çalışmak", "tr": "[çalışmak]", "ru": "Работать" },
-        { "sr": "Beklemek", "tr": "[beklemek]", "ru": "Ждать" }
+        {"sr": "Gitmek", "tr": "[gitmek]", "ru": "Идти"},
+        {"sr": "Gelmek", "tr": "[gelmek]", "ru": "Приходить"},
+        {"sr": "Koşmak", "tr": "[koşmak]", "ru": "Бежать"},
+        {"sr": "Yürümek", "tr": "[yürümek]", "ru": "Ходить"},
+        {"sr": "Binmek", "tr": "[binmek]", "ru": "Садиться"},
+        {"sr": "Olmak", "tr": "[olmak]", "ru": "Быть"},
+        {"sr": "Durmak", "tr": "[durmak]", "ru": "Стоять"},
+        {"sr": "Yaşamak", "tr": "[yaşamak]", "ru": "Жить"},
+        {"sr": "Çalışmak", "tr": "[çalışmak]", "ru": "Работать"},
+        {"sr": "Beklemek", "tr": "[beklemek]", "ru": "Ждать"}
       ],
       "grammar": {
-        "title": "-e/-a (Yönelme) ve -de/-da (Bulunma)",
-        "rules": "YÖNELME (куда?): -e/-a\n• Eve git (домой)\n• Okula git (в школу)\nBULUNMA (где?): -de/-da/-te/-ta\n• Evde ol (дома)\n• Okulda çalış (в школе работай)\nÜnlü uyumu + ünsüz benzeşmesi!",
+        "title": "-e/-a и -de/-da",
+        "rules": "YÖNELME (куда?): -e/-a\n• Eve git (домой)\n• Okula git (в школу)\nBULUNMA (где?): -de/-da/-te/-ta\n• Evde ol (дома)\n• Okulda çalış (в школе)",
         "examples": [
-          { "sr": "Okula gidiyorum.", "ru": "Иду в школу." },
-          { "sr": "Evdeyim.", "ru": "Я дома." }
+          {"sr": "Okula gidiyorum.", "ru": "Иду в школу."},
+          {"sr": "Evdeyim.", "ru": "Я дома."}
         ]
       },
-      "quiz": [{ "q": "Nerede? 'Ev...'", "options": ["eve", "evde", "evden"], "correct": 1 }]
+      "quiz": [{"q": "Nerede? 'Ev...'", "options": ["eve", "evde", "evden"], "correct": 1}]
     },
     {
       "id": "u4",
-      "title": "Hal Ekleri: Ayrılma ve Belirtme",
+      "title": "Ayrılma ve Belirtme",
       "icon": "↔️",
       "words": [
-        { "sr": "Çıkmak", "tr": "[chykmak]", "ru": "Выходить" },
-        { "sr": "Ayrılmak", "tr": "[ajrylmak]", "ru": "Отделяться" },
-        { "sr": "Korkmak", "tr": "[korkmak]", "ru": "Бояться" },
-        { "sr": "Hoşlanmak", "tr": "[hoşlanmak]", "ru": "Нравиться" },
-        { "sr": "Sevmek", "tr": "[sevmek]", "ru": "Любить" },
-        { "sr": "Görmek", "tr": "[gormek]", "ru": "Видеть" },
-        { "sr": "Almak", "tr": "[almak]", "ru": "Брать" },
-        { "sr": "Yemek", "tr": "[yemek]", "ru": "Есть" },
-        { "sr": "İçmek", "tr": "[ichmek]", "ru": "Пить" },
-        { "sr": "Okumak", "tr": "[okumak]", "ru": "Читать" }
+        {"sr": "Çıkmak", "tr": "[chykmak]", "ru": "Выходить"},
+        {"sr": "Ayrılmak", "tr": "[ajrylmak]", "ru": "Отделяться"},
+        {"sr": "Korkmak", "tr": "[korkmak]", "ru": "Бояться"},
+        {"sr": "Hoşlanmak", "tr": "[hoşlanmak]", "ru": "Нравиться"},
+        {"sr": "Sevmek", "tr": "[sevmek]", "ru": "Любить"},
+        {"sr": "Görmek", "tr": "[gormek]", "ru": "Видеть"},
+        {"sr": "Almak", "tr": "[almak]", "ru": "Брать"},
+        {"sr": "Yemek", "tr": "[yemek]", "ru": "Есть"},
+        {"sr": "İçmek", "tr": "[ichmek]", "ru": "Пить"},
+        {"sr": "Okumak", "tr": "[okumak]", "ru": "Читать"}
       ],
       "grammar": {
-        "title": "-den/-dan (Ayrılma) ve -i/-ı (Belirtme)",
-        "rules": "AYRILMA (откуда?/чего?): -den/-dan\n• EvDEN çık (выйди из дома)\n• SütTEN hoşlan (любишь молоко)\nBELİRTME (кого? что?): -i/-ı/-ü/-u\n• Kitab-I gör (вижу КНИГУ)\n• Elma-YI ye (съешь ЯБЛОКО)\nKaynaştırma 'y' sesli bitenlerde!",
+        "title": "-den/-dan и -i/-ı",
+        "rules": "AYRILMA (откуда?): -den/-dan\n• EvDEN çık (из дома)\n• SütTEN hoşlan\nBELİRTME (кого/что?): -i/-ı/-ü/-u\n• Kitab-I gör (вижу КНИГУ)\n• Elma-YI ye (съешь ЯБЛОКО)",
         "examples": [
-          { "sr": "Okuldan geldim.", "ru": "Я пришёл из школы." },
-          { "sr": "Kitabı okudum.", "ru": "Я прочитал книгу." }
+          {"sr": "Okuldan geldim.", "ru": "Я пришёл из школы."},
+          {"sr": "Kitabı okudum.", "ru": "Я прочитал книгу."}
         ]
       },
-      "quiz": [{ "q": "Ne gördün? 'Kitab...'", "options": ["kitap", "kitabı", "kitaptan"], "correct": 1 }]
+      "quiz": [{"q": "Ne gördün? 'Kitab...'", "options": ["kitap", "kitabı", "kitaptan"], "correct": 1}]
     },
     {
       "id": "u5",
       "title": "Şimdiki Zaman (-iyor)",
       "icon": "▶️",
       "words": [
-        { "sr": "Gidiyorum", "tr": "[gidiorum]", "ru": "Я иду" },
-        { "sr": "Geliyorsun", "tr": "[geliosun]", "ru": "Ты приходишь" },
-        { "sr": "Yazıyor", "tr": "[jazyor]", "ru": "Он пишет" },
-        { "sr": "Okuyoruz", "tr": "[okuyoruz]", "ru": "Мы читаем" },
-        { "sr": "İçiyorsunuz", "tr": "[ichiyorsunuz]", "ru": "Вы пьёте" },
-        { "sr": "Bekliyorlar", "tr": "[bekliyorlar]", "ru": "Они ждут" },
-        { "sr": "Konuşuyorum", "tr": "[konushuiorum]", "ru": "Я говорю" },
-        { "sr": "Dinliyorsun", "tr": "[dinliorsun]", "ru": "Ты слушаешь" },
-        { "sr": "Anlıyor", "tr": "[anlyor]", "ru": "Он понимает" },
-        { "sr": "Düşünüyoruz", "tr": "[düşünüyoruz]", "ru": "Мы думаем" }
+        {"sr": "Gidiyorum", "tr": "[gidiorum]", "ru": "Я иду"},
+        {"sr": "Geliyorsun", "tr": "[geliosun]", "ru": "Ты приходишь"},
+        {"sr": "Yazıyor", "tr": "[jazyor]", "ru": "Он пишет"},
+        {"sr": "Okuyoruz", "tr": "[okuyoruz]", "ru": "Мы читаем"},
+        {"sr": "İçiyorsunuz", "tr": "[ichiyorsunuz]", "ru": "Вы пьёте"},
+        {"sr": "Bekliyorlar", "tr": "[bekliyorlar]", "ru": "Они ждут"},
+        {"sr": "Konuşuyorum", "tr": "[konushuiorum]", "ru": "Я говорю"},
+        {"sr": "Dinliyorsun", "tr": "[dinliorsun]", "ru": "Ты слушаешь"},
+        {"sr": "Anlıyor", "tr": "[anlyor]", "ru": "Он понимает"},
+        {"sr": "Düşünüyoruz", "tr": "[düşünüyoruz]", "ru": "Мы думаем"}
       ],
       "grammar": {
-        "title": "-iyor: Şimdiki Zaman",
-        "rules": "Fiil kökü + -iyor + kişi eki\n• Git-iyor-um (иду)\n• Gel-iyor-sun (приходишь)\nÖNEMLİ: 'i' düşer sesliyle başlayanlarda:\n• Bekle-yor-um (не 'bekleiyor')\n• Anlı-yor (не 'anlıiyor')\nBu zaman hem şu an hem genel alışkanlık için kullanılır.",
+        "title": "-iyor: Настоящее время",
+        "rules": "Fiil kökü + -iyor + kişi eki\n• Git-iyor-um (иду)\n• Gel-iyor-sun (приходишь)\n'i' düşer: Bekle-yor-um (не bekleiyor)\nAnlı-yor (не anlıiyor)",
         "examples": [
-          { "sr": "Şimdi kitap okuyorum.", "ru": "Сейчас читаю книгу." },
-          { "sr": "Her gün Türkçe çalışıyorum.", "ru": "Каждый день изучаю турецкий." }
+          {"sr": "Şimdi kitap okuyorum.", "ru": "Сейчас читаю книгу."},
+          {"sr": "Her gün Türkçe çalışıyorum.", "ru": "Каждый день изучаю турецкий."}
         ]
       },
-      "quiz": [{ "q": "Bekle + iyor = ?", "options": ["bekleiyor", "bekliyor", "bekluyor"], "correct": 1 }]
+      "quiz": [{"q": "Bekle + iyor = ?", "options": ["bekleiyor", "bekliyor", "bekluyor"], "correct": 1}]
     },
     {
       "id": "u6",
-      "title": "Gelecek Zaman (-ecek/-acak)",
+      "title": "Gelecek Zaman (-ecek)",
       "icon": "➡️",
       "words": [
-        { "sr": "Gideceğim", "tr": "[gidjedzhem]", "ru": "Я пойду" },
-        { "sr": "Geleceksin", "tr": "[geldzheksin]", "ru": "Ты придёшь" },
-        { "sr": "Yazacak", "tr": "[jazadjak]", "ru": "Он напишет" },
-        { "sr": "Okuyacağız", "tr": "[okujadzhağyz]", "ru": "Мы прочитаем" },
-        { "sr": "İçeceksiniz", "tr": "[ichedzheksiniz]", "ru": "Вы выпьете" },
-        { "sr": "Bekleyecekler", "tr": "[bekledzhekler]", "ru": "Они будут ждать" },
-        { "sr": "Konuşacağım", "tr": "[konushadzhahym]", "ru": "Я буду говорить" },
-        { "sr": "Dinleyeceksin", "tr": "[dinledzheksin]", "ru": "Ты будешь слушать" },
-        { "sr": "Anlayacak", "tr": "[anladzhak]", "ru": "Он поймёт" },
-        { "sr": "Düşüneceğiz", "tr": "[düşünedzheğiz]", "ru": "Мы подумаем" }
+        {"sr": "Gideceğim", "tr": "[gidjedzhem]", "ru": "Я пойду"},
+        {"sr": "Geleceksin", "tr": "[geldzheksin]", "ru": "Ты придёшь"},
+        {"sr": "Yazacak", "tr": "[jazadjak]", "ru": "Он напишет"},
+        {"sr": "Okuyacağız", "tr": "[okujadzhağyz]", "ru": "Мы прочитаем"},
+        {"sr": "İçeceksiniz", "tr": "[ichedzheksiniz]", "ru": "Вы выпьете"},
+        {"sr": "Bekleyecekler", "tr": "[bekledzhekler]", "ru": "Они будут ждать"},
+        {"sr": "Konuşacağım", "tr": "[konushadzhahym]", "ru": "Я буду говорить"},
+        {"sr": "Dinleyeceksin", "tr": "[dinledzheksin]", "ru": "Ты будешь слушать"},
+        {"sr": "Anlayacak", "tr": "[anladzhak]", "ru": "Он поймёт"},
+        {"sr": "Düşüneceğiz", "tr": "[düşünedzheğiz]", "ru": "Мы подумаем"}
       ],
       "grammar": {
-        "title": "-ecek/-acak: Gelecek Zaman",
-        "rules": "Fiil kökü + -ecek/-acak + kişi eki\n• Gid-ecek-im (пойду)\n• Gel-ecek-sin (придёшь)\nÜnlü uyumu: kalın sözcüklere -acak, ince sözcüklere -ecek\nKişi ekleri: -im, -sin, -, -iz, -siniz, -ler\nNot: -k yumuşar → -ğ: gideceğ-im",
+        "title": "-ecek/-acak: Будущее время",
+        "rules": "Fiil kökü + -ecek/-acak + kişi eki\n• Gid-ecek-im (пойду)\n• Gel-ecek-sin (придёшь)\nkalın → -acak, ince → -ecek\n-k yumuşar → -ğ: gideceğ-im",
         "examples": [
-          { "sr": "Yarın İstanbul'a gideceğim.", "ru": "Завтра поеду в Стамбул." },
-          { "sr": "Seni bekleyeceğim.", "ru": "Буду тебя ждать." }
+          {"sr": "Yarın İstanbul'a gideceğim.", "ru": "Завтра поеду в Стамбул."},
+          {"sr": "Seni bekleyeceğim.", "ru": "Буду тебя ждать."}
         ]
       },
-      "quiz": [{ "q": "Git + ecek + im = ?", "options": ["gidecekim", "gideceğim", "gidiceğim"], "correct": 1 }]
+      "quiz": [{"q": "Git + ecek + im = ?", "options": ["gidecekim", "gideceğim", "gidiceğim"], "correct": 1}]
     },
     {
       "id": "u7",
       "title": "Geçmiş Zaman (-di/-miş)",
       "icon": "⬅️",
       "words": [
-        { "sr": "Gittim", "tr": "[gitim]", "ru": "Я пошёл" },
-        { "sr": "Geldin", "tr": "[geldin]", "ru": "Ты пришёл" },
-        { "sr": "Yazdı", "tr": "[jazdy]", "ru": "Он написал" },
-        { "sr": "Okuduk", "tr": "[okuduk]", "ru": "Мы прочитали" },
-        { "sr": "İçtiniz", "tr": "[ichtiniz]", "ru": "Вы выпили" },
-        { "sr": "Beklediler", "tr": "[beklediler]", "ru": "Они подождали" },
-        { "sr": "Gitmişim", "tr": "[gitmishim]", "ru": "Оказывается, я пошёл" },
-        { "sr": "Gelmişsin", "tr": "[gelmishsin]", "ru": "Оказывается, ты пришёл" },
-        { "sr": "Yazmış", "tr": "[jazmish]", "ru": "Оказывается, он написал" },
-        { "sr": "Okumuşuz", "tr": "[okumushuz]", "ru": "Оказывается, мы прочитали" }
+        {"sr": "Gittim", "tr": "[gitim]", "ru": "Я пошёл"},
+        {"sr": "Geldin", "tr": "[geldin]", "ru": "Ты пришёл"},
+        {"sr": "Yazdı", "tr": "[jazdy]", "ru": "Он написал"},
+        {"sr": "Okuduk", "tr": "[okuduk]", "ru": "Мы прочитали"},
+        {"sr": "İçtiniz", "tr": "[ichtiniz]", "ru": "Вы выпили"},
+        {"sr": "Beklediler", "tr": "[beklediler]", "ru": "Они подождали"},
+        {"sr": "Gitmişim", "tr": "[gitmishim]", "ru": "Оказывается, я пошёл"},
+        {"sr": "Gelmişsin", "tr": "[gelmishsin]", "ru": "Оказывается, ты пришёл"},
+        {"sr": "Yazmış", "tr": "[jazmish]", "ru": "Оказывается, он написал"},
+        {"sr": "Okumuşuz", "tr": "[okumushuz]", "ru": "Оказывается, мы прочитали"}
       ],
       "grammar": {
-        "title": "-di (Görülen) vs -miş (Duyulan)",
-        "rules": "-Dİ (görülen geçmiş): Kendin gördün/bildin\n• Gittim (сам пошёл, знаю точно)\n-MİŞ (duyulan/dolaylı geçmiş): Başkasından duydun veya yeni fark ettin\n• Gitmişim (оказывается, я пошёл / кто-то сказал)\n-miş aynı zamanda hikaye anlatmada kullanılır!",
+        "title": "-di vs -miş",
+        "rules": "-Dİ (görülen): сам видел/знаю точно\n• Gittim (сам пошёл)\n-MİŞ (duyulan): услышал/вновь заметил\n• Gitmişim (оказывается, пошёл)\n-miş используется в рассказах",
         "examples": [
-          { "sr": "Dün sinemaya gittim. (kendim gördüm)", "ru": "Вчера ходил в кино. (сам видел)" },
-          { "sr": "Ahmet dün gelmiş. (biri söyledi)", "ru": "Ахмет вчера приходил. (кто-то сказал)" }
+          {"sr": "Dün sinemaya gittim.", "ru": "Вчера ходил в кино (сам видел)."},
+          {"sr": "Ahmet dün gelmiş.", "ru": "Ахмет вчера приходил (кто-то сказал)."}
         ]
       },
-      "quiz": [{ "q": "Başkasından duyduğun geçmiş:", "options": ["-di", "-miş", "-yor"], "correct": 1 }]
+      "quiz": [{"q": "Başkasından duyduğun geçmiş:", "options": ["-di", "-miş", "-yor"], "correct": 1}]
     },
     {
       "id": "u8",
-      "title": "Geniş Zaman (-r/-ar/-er)",
+      "title": "Geniş Zaman (-r/-ar)",
       "icon": "🔄",
       "words": [
-        { "sr": "Giderim", "tr": "[giderim]", "ru": "Я хожу (обычно)" },
-        { "sr": "Gelirsin", "tr": "[gelirsin]", "ru": "Ты приходишь (обычно)" },
-        { "sr": "Yazar", "tr": "[jazar]", "ru": "Он пишет (обычно)" },
-        { "sr": "Okuruz", "tr": "[okuruz]", "ru": "Мы читаем (обычно)" },
-        { "sr": "İçersiniz", "tr": "[ichersiniz]", "ru": "Вы пьёте (обычно)" },
-        { "sr": "Bekerler", "tr": "[bekerler]", "ru": "Они ждут (обычно)" },
-        { "sr": "Konuşurum", "tr": "[konushurum]", "ru": "Я говорю (обычно)" },
-        { "sr": "Dinlersin", "tr": "[dinlersin]", "ru": "Ты слушаешь (обычно)" },
-        { "sr": "Anlar", "tr": "[anlar]", "ru": "Он понимает (обычно)" },
-        { "sr": "Düşünürüz", "tr": "[düşünürüz]", "ru": "Мы думаем (обычно)" }
+        {"sr": "Giderim", "tr": "[giderim]", "ru": "Я хожу (обычно)"},
+        {"sr": "Gelirsin", "tr": "[gelirsin]", "ru": "Ты приходишь"},
+        {"sr": "Yazar", "tr": "[jazar]", "ru": "Он пишет"},
+        {"sr": "Okuruz", "tr": "[okuruz]", "ru": "Мы читаем"},
+        {"sr": "İçersiniz", "tr": "[ichersiniz]", "ru": "Вы пьёте"},
+        {"sr": "Bekerler", "tr": "[bekerler]", "ru": "Они ждут"},
+        {"sr": "Konuşurum", "tr": "[konushurum]", "ru": "Я говорю"},
+        {"sr": "Dinlersin", "tr": "[dinlersin]", "ru": "Ты слушаешь"},
+        {"sr": "Anlar", "tr": "[anlar]", "ru": "Он понимает"},
+        {"sr": "Düşünürüz", "tr": "[düşünürüz]", "ru": "Мы думаем"}
       ],
       "grammar": {
-        "title": "-r/-ar/-er: Geniş Zaman",
-        "rules": "Alışkanlık, genel doğrular, gelecek planları:\n• Her sabah kahve içerim. (alışkanlık)\n• Su 100 derecede kaynar. (genel doğru)\n• Yarın erken kalkarım. (plan)\nTek heceli fiillerde '-r': gel-ir, git-er\nÇok heceli fiillerde '-ar/-er': konuş-ar, bekle-r",
+        "title": "-r/-ar/-er: Обычное время",
+        "rules": "Alışkanlık, genel doğrular, planlar:\n• Her sabah kahve içerim (привычка)\n• Su 100 derecede kaynar (факт)\n• Yarın erken kalkarım (план)\nTek heceli: gel-ir, git-er\nÇok heceli: konuş-ar, bekle-r",
         "examples": [
-          { "sr": "Her yaz denize gideriz.", "ru": "Каждое лето ездим на море." },
-          { "sr": "Türkler çay sever.", "ru": "Турки любят чай." }
+          {"sr": "Her yaz denize gideriz.", "ru": "Каждое лето ездим на море."},
+          {"sr": "Türkler çay sever.", "ru": "Турки любят чай."}
         ]
       },
-      "quiz": [{ "q": "Alışkanlık için hangi zaman?", "options": ["-iyor", "-di", "-r/-ar/-er"], "correct": 2 }]
+      "quiz": [{"q": "Alışkanlık için hangi zaman?", "options": ["-iyor", "-di", "-r/-ar/-er"], "correct": 2}]
     },
     {
       "id": "u9",
-      "title": "Sıfat-Fiiller (-en/-an, -dik/-dık)",
+      "title": "Sıfat-Fiiller (-en/-dik)",
       "icon": "📝",
       "words": [
-        { "sr": "Gelen adam", "tr": "[gelen adam]", "ru": "Приходящий мужчина" },
-        { "sr": "Koşan çocuk", "tr": "[koşan chodzhuk]", "ru": "Бегущий ребёнок" },
-        { "sr": "Yazan öğrenci", "tr": "[jazan oyrendzhi]", "ru": "Пишущий ученик" },
-        { "sr": "Okuduğum kitap", "tr": "[okudugum kitap]", "ru": "Книга, которую я читал" },
-        { "sr": "Gördüğüm film", "tr": "[ gordugum film]", "ru": "Фильм, который я видел" },
-        { "sr": "Yediğim elma", "tr": "[yediyim elma]", "ru": "Яблоко, которое я съел" },
-        { "sr": "Aldığım hediye", "tr": "[aldighym hedije]", "ru": "Подарок, который я получил" },
-        { "sr": "Tanıdığım kişi", "tr": "[tanydighym kishi]", "ru": "Человек, которого я знаю" },
-        { "sr": "Sevdiğim müzik", "tr": "[sevdigim myuzik]", "ru": "Музыка, которую я люблю" },
-        { "sr": "Bildiğim dil", "tr": "[bildigim dil]", "ru": "Язык, который я знаю" }
+        {"sr": "Gelen adam", "tr": "[gelen adam]", "ru": "Приходящий мужчина"},
+        {"sr": "Koşan çocuk", "tr": "[koşan chodzhuk]", "ru": "Бегущий ребёнок"},
+        {"sr": "Yazan öğrenci", "tr": "[jazan oyrendzhi]", "ru": "Пишущий ученик"},
+        {"sr": "Okuduğum kitap", "tr": "[okudugum kitap]", "ru": "Книга, которую я читал"},
+        {"sr": "Gördüğüm film", "tr": "[gordugum film]", "ru": "Фильм, который я видел"},
+        {"sr": "Yediğim elma", "tr": "[yediyim elma]", "ru": "Яблоко, которое я съел"},
+        {"sr": "Aldığım hediye", "tr": "[aldighym hedije]", "ru": "Подарок, который я получил"},
+        {"sr": "Tanıdığım kişi", "tr": "[tanydighym kishi]", "ru": "Человек, которого я знаю"},
+        {"sr": "Sevdiğim müzik", "tr": "[sevdigim myuzik]", "ru": "Музыка, которую я люблю"},
+        {"sr": "Bildiğim dil", "tr": "[bildigim dil]", "ru": "Язык, который я знаю"}
       ],
       "grammar": {
-        "title": "Sıfat-Fiiller: -en/-an ve -dik/-dık",
-        "rules": "-EN/-AN (şimdiki/geniş zaman sıfat-fiil):\n• Gelen adam (приходящий мужчина)\n-DİK/-DIK (geçmiş zaman sıfat-fiil, iyelik alır):\n• Oku-DUĞ-UM kitap (книга, КОТОРУЮ Я читал)\n-dık mutlaka iyelik eki ALIR! Bu çok önemli!",
+        "title": "Sıfat-Fiiller",
+        "rules": "-EN/-AN (şimdiki/geniş):\n• Gelen adam (приходящий)\n-DİK/-DIK (geçmiş, iyelik alır):\n• Oku-DUĞ-UM kitap (которую Я читал)\n-dık ВСЕГДА берет iyelik eki!",
         "examples": [
-          { "sr": "Koşan çocuğu gördüm.", "ru": "Я видел бегущего ребёнка." },
-          { "sr": "Okuduğum kitap çok güzeldi.", "ru": "Книга, которую я читал, была очень красивой." }
+          {"sr": "Koşan çocuğu gördüm.", "ru": "Я видел бегущего ребёнка."},
+          {"sr": "Okuduğum kitap çok güzeldi.", "ru": "Книга, которую я читал, была красивой."}
         ]
       },
-      "quiz": [{ "q": "'Okuduğum' neden iyelik aldı?", "options": ["-en olduğu için", "-dik sıfat-fiil olduğu için", "gelecek zaman olduğu için"], "correct": 1 }]
+      "quiz": [{"q": "'Okuduğum' neden iyelik aldı?", "options": ["-en olduğu için", "-dik sıfat-fiil olduğu için", "gelecek zaman"], "correct": 1}]
     },
     {
       "id": "u10",
-      "title": "Zarf-Fiiller (-erek/-arak, -ip)",
+      "title": "Zarf-Fiiller (-erek/-ip)",
       "icon": "🏃",
       "words": [
-        { "sr": "Koşarak geldi", "tr": "[koşarak geldi]", "ru": "Пришёл бегом" },
-        { "sr": "Gülerek konuştu", "tr": "[gülerek konushtu]", "ru": "Говорил смеясь" },
-        { "sr": "Ağlayarak anlattı", "tr": "[ahylajarak anlaty]", "ru": "Рассказывал плача" },
-        { "sr": "Yürüyerek gitti", "tr": "[yürüyerek gitti]", "ru": "Пошёл пешком" },
-        { "sr": "Gelip oturdu", "tr": "[gelip oturdu]", "ru": "Пришёл и сел" },
-        { "sr": "Alıp verdi", "tr": "[alyp verdi]", "ru": "Взял и дал" },
-        { "sr": "Yiyip içti", "tr": "[yiyip ichti]", "ru": "Поел и попил" },
-        { "sr": "Okuyup yazdı", "tr": "[okujup jazdy]", "ru": "Прочитал и написал" },
-        { "sr": "Bakıp güldü", "tr": "[bakyp gyldy]", "ru": "Посмотрел и засмеялся" },
-        { "sr": "Dinleyip öğrendi", "tr": "[dinlejip oyrendi]", "ru": "Послушал и выучил" }
+        {"sr": "Koşarak geldi", "tr": "[koşarak geldi]", "ru": "Пришёл бегом"},
+        {"sr": "Gülerek konuştu", "tr": "[gülerek konushtu]", "ru": "Говорил смеясь"},
+        {"sr": "Ağlayarak anlattı", "tr": "[ahylajarak anlaty]", "ru": "Рассказывал плача"},
+        {"sr": "Yürüyerek gitti", "tr": "[yürüyerek gitti]", "ru": "Пошёл пешком"},
+        {"sr": "Gelip oturdu", "tr": "[gelip oturdu]", "ru": "Пришёл и сел"},
+        {"sr": "Alıp verdi", "tr": "[alyp verdi]", "ru": "Взял и дал"},
+        {"sr": "Yiyip içti", "tr": "[yiyip ichti]", "ru": "Поел и попил"},
+        {"sr": "Okuyup yazdı", "tr": "[okujup jazdy]", "ru": "Прочитал и написал"},
+        {"sr": "Bakıp güldü", "tr": "[bakyp gyldy]", "ru": "Посмотрел и засмеялся"},
+        {"sr": "Dinleyip öğrendi", "tr": "[dinlejip oyrendi]", "ru": "Послушал и выучил"}
       ],
       "grammar": {
-        "title": "Zarf-Fiiller: Durum ve Sıralama",
-        "rules": "-EREK/-ARAK (nasıl? durum):\n• Koşarak geldi (как пришёл? бегом)\n-IP (sıralama, önce-sonra):\n• Gelip oturdu (пришёл И сел)\n-ip ile iki eylem yan yana gelir, ikincisi ana fiildir!",
+        "title": "Zarf-Fiiller",
+        "rules": "-EREK/-ARAK (nasıl? durum):\n• Koşarak geldi (как? бегом)\n-IP (sıralama):\n• Gelip oturdu (пришёл И сел)\n-ip: два действия подряд, второе — главное",
         "examples": [
-          { "sr": "Şarkı söyleyerek yürüdü.", "ru": "Шёл, напевая песню." },
-          { "sr": "Eve gelip yemek yedi.", "ru": "Пришёл домой и поел." }
+          {"sr": "Şarkı söyleyerek yürüdü.", "ru": "Шёл, напевая песню."},
+          {"sr": "Eve gelip yemek yedi.", "ru": "Пришёл домой и поел."}
         ]
       },
-      "quiz": [{ "q": "'Koşarak' ne sorusuna cevap verir?", "options": ["ne zaman?", "nasıl?", "neden?"], "correct": 1 }]
+      "quiz": [{"q": "'Koşarak' ne sorusuna cevap verir?", "options": ["ne zaman?", "nasıl?", "neden?"], "correct": 1}]
     },
     {
       "id": "u11",
-      "title": "Edilgen Çatı (-il/-ın/-n)",
+      "title": "Edilgen Çatı",
       "icon": "🔄",
       "words": [
-        { "sr": "Yapılmak", "tr": "[japylmak]", "ru": "Быть сделанным" },
-        { "sr": "Yazılmak", "tr": "[jazylmak]", "ru": "Быть написанным" },
-        { "sr": "Okunmak", "tr": "[okunmak]", "ru": "Быть прочитанным" },
-        { "sr": "Görülmek", "tr": "[gorulmek]", "ru": "Быть увиденным" },
-        { "sr": "Sevilmek", "tr": "[sevilmek]", "ru": "Быть любимым" },
-        { "sr": "Bilinmek", "tr": "[bilmek]", "ru": "Быть известным" },
-        { "sr": "Anlaşılmak", "tr": "[anlashylmak]", "ru": "Быть понятым" },
-        { "sr": "Dinlenmek", "tr": "[dinlenmek]", "ru": "Быть услышанным" },
-        { "sr": "Açılmak", "tr": "[achylmak]", "ru": "Быть открытым" },
-        { "sr": "Kapatılmak", "tr": "[kapatylmak]", "ru": "Быть закрытым" }
+        {"sr": "Yapılmak", "tr": "[japylmak]", "ru": "Быть сделанным"},
+        {"sr": "Yazılmak", "tr": "[jazylmak]", "ru": "Быть написанным"},
+        {"sr": "Okunmak", "tr": "[okunmak]", "ru": "Быть прочитанным"},
+        {"sr": "Görülmek", "tr": "[gorulmek]", "ru": "Быть увиденным"},
+        {"sr": "Sevilmek", "tr": "[sevilmek]", "ru": "Быть любимым"},
+        {"sr": "Bilinmek", "tr": "[bilmek]", "ru": "Быть известным"},
+        {"sr": "Anlaşılmak", "tr": "[anlashylmak]", "ru": "Быть понятым"},
+        {"sr": "Dinlenmek", "tr": "[dinlenmek]", "ru": "Быть услышанным"},
+        {"sr": "Açılmak", "tr": "[achylmak]", "ru": "Быть открытым"},
+        {"sr": "Kapatılmak", "tr": "[kapatylmak]", "ru": "Быть закрытым"}
       ],
       "grammar": {
-        "title": "Edilgen: Yapıcı belli değil",
-        "rules": "Fiil + -il/-ın/-n + zaman eki\n• Yap-ıl-dı (сделано — кем? неизвестно)\n• Yaz-ıl-ıyor (пишется — сейчас)\n• Gör-ül-dü (увидели — кем?不重要)\nÖnemli: Edilgen'de yapıcı (özne) yok veya belirsizdir!",
+        "title": "Edilgen: Страдательный залог",
+        "rules": "Fiil + -il/-ın/-n + zaman eki\n• Yap-ıl-dı (сделано — кем? неважно)\n• Yaz-ıl-ıyor (пишется)\n• Gör-ül-dü (увидели)\nEdilgen'de yapıcı yok veya belirsiz!",
         "examples": [
-          { "sr": "Bu ev 1990'da yapıldı.", "ru": "Этот дом был построен в 1990." },
-          { "sr": "Kapı açıldı.", "ru": "Дверь открылась." }
+          {"sr": "Bu ev 1990'da yapıldı.", "ru": "Этот дом был построен в 1990."},
+          {"sr": "Kapı açıldı.", "ru": "Дверь открылась."}
         ]
       },
-      "quiz": [{ "q": "Edilgen çatıda özne var mı?", "options": ["evet, bellidir", "hayır, belirsizdir", "bazen vardır"], "correct": 1 }]
+      "quiz": [{"q": "Edilgen çatıda özne var mı?", "options": ["evet, bellidir", "hayır, belirsizdir", "bazen vardır"], "correct": 1}]
     },
     {
       "id": "u12",
-      "title": "Ettirgen Çatı (-dır/-tir)",
+      "title": "Ettirgen Çatı",
       "icon": "👉",
       "words": [
-        { "sr": "Yaptırmak", "tr": "[japtyrmak]", "ru": "Заставить сделать" },
-        { "sr": "Yazdırmak", "tr": "[jazdyrmak]", "ru": "Заставить написать" },
-        { "sr": "Okutmak", "tr": "[okutmak]", "ru": "Заставить читать" },
-        { "sr": "Gördürmek", "tr": "[ gordurmek]", "ru": "Показать (заставить увидеть)" },
-        { "sr": "Sevdirmek", "tr": "[sevdirmek]", "ru": "Заставить полюбить" },
-        { "sr": "Biltirmek", "tr": "[biltirmek]", "ru": "Дать знать" },
-        { "sr": "Anlatmak", "tr": "[anlatmak]", "ru": "Рассказать (заставить понять)" },
-        { "sr": "Dinletmek", "tr": "[dinletmek]", "ru": "Дать послушать" },
-        { "sr": "Açtırmak", "tr": "[achtyrmak]", "ru": "Заставить открыть" },
-        { "sr": "Kapattırmak", "tr": "[kapattyrmak]", "ru": "Заставить закрыть" }
+        {"sr": "Yaptırmak", "tr": "[japtyrmak]", "ru": "Заставить сделать"},
+        {"sr": "Yazdırmak", "tr": "[jazdyrmak]", "ru": "Заставить написать"},
+        {"sr": "Okutmak", "tr": "[okutmak]", "ru": "Заставить читать"},
+        {"sr": "Gördürmek", "tr": "[gordurmek]", "ru": "Показать"},
+        {"sr": "Sevdirmek", "tr": "[sevdirmek]", "ru": "Заставить полюбить"},
+        {"sr": "Biltirmek", "tr": "[biltirmek]", "ru": "Дать знать"},
+        {"sr": "Anlatmak", "tr": "[anlatmak]", "ru": "Рассказать"},
+        {"sr": "Dinletmek", "tr": "[dinletmek]", "ru": "Дать послушать"},
+        {"sr": "Açtırmak", "tr": "[achtyrmak]", "ru": "Заставить открыть"},
+        {"sr": "Kapattırmak", "tr": "[kapattyrmak]", "ru": "Заставить закрыть"}
       ],
       "grammar": {
-        "title": "Ettirgen: Başkasına yaptırmak",
-        "rules": "Fiil + -dır/-tir/-t + zaman eki\n• Yap-tır-dı (заставил сделать / дал сделать)\n• Yaz-dır-ıyor (заставляет писать)\nÖnemli: Ettirgen'de işi yapan başkasıdır, özneyi yaptırandır!\n• Doktor dişi çek-tir-di (врач дал вырвать зуб — сам не вырывал)",
+        "title": "Ettirgen: Каузатив",
+        "rules": "Fiil + -dır/-tir/-t + zaman eki\n• Yap-tır-dı (заставил сделать)\n• Yaz-dır-ıyor (заставляет писать)\nİşi yapan başkasıdır!\n• Doktor dişi çek-tir-di (врач дал вырвать)",
         "examples": [
-          { "sr": "Saçımı kestirdim.", "ru": "Я постригся (дал кому-то постричь)." },
-          { "sr": "Mektubu yazdırdı.", "ru": "Он дал написать письмо." }
+          {"sr": "Saçımı kestirdim.", "ru": "Я постригся (дал кому-то)."},
+          {"sr": "Mektubu yazdırdı.", "ru": "Он дал написать письмо."}
         ]
       },
-      "quiz": [{ "q": "'Saçımı kestirdim' kim kesti?", "options": ["ben", "berber", "bilmiyorum"], "correct": 1 }]
+      "quiz": [{"q": "'Saçımı kestirdim' kim kesti?", "options": ["ben", "berber", "bilmiyorum"], "correct": 1}]
     },
     {
       "id": "u13",
-      "title": "Dönüşlü Çatı (-ın/-n)",
+      "title": "Dönüşlü Çatı",
       "icon": "🪞",
       "words": [
-        { "sr": "Yıkanmak", "tr": "[jykanmak]", "ru": "Мыться" },
-        { "sr": "Taranmak", "tr": "[taranmak]", "ru": "Расчёсываться" },
-        { "sr": "Giymek", "tr": "[gijmek]", "ru": "Одеваться" },
-        { "sr": "Soyunmak", "tr": "[sojunmak]", "ru": "Раздеваться" },
-        { "sr": "Hazırlanmak", "tr": "[hazrylanmak]", "ru": "Готовиться" },
-        { "sr": "Dinlenmek", "tr": "[dinlenmek]", "ru": "Отдыхать" },
-        { "sr": "Değişmek", "tr": "[degishmek]", "ru": "Меняться" },
-        { "sr": "Görüşmek", "tr": "[ gorushmek]", "ru": "Встречаться" },
-        { "sr": "Konuşmak", "tr": "[konushmak]", "ru": "Разговаривать" },
-        { "sr": "Anlaşmak", "tr": "[anlashmak]", "ru": "Договариваться" }
+        {"sr": "Yıkanmak", "tr": "[jykanmak]", "ru": "Мыться"},
+        {"sr": "Taranmak", "tr": "[taranmak]", "ru": "Расчёсываться"},
+        {"sr": "Giymek", "tr": "[gijmek]", "ru": "Одеваться"},
+        {"sr": "Soyunmak", "tr": "[sojunmak]", "ru": "Раздеваться"},
+        {"sr": "Hazırlanmak", "tr": "[hazrylanmak]", "ru": "Готовиться"},
+        {"sr": "Dinlenmek", "tr": "[dinlenmek]", "ru": "Отдыхать"},
+        {"sr": "Değişmek", "tr": "[degishmek]", "ru": "Меняться"},
+        {"sr": "Görüşmek", "tr": "[gorushmek]", "ru": "Встречаться"},
+        {"sr": "Konuşmak", "tr": "[konushmak]", "ru": "Разговаривать"},
+        {"sr": "Anlaşmak", "tr": "[anlashmak]", "ru": "Договариваться"}
       ],
       "grammar": {
-        "title": "Dönüşlü: İş özneye döner",
-        "rules": "Fiil + -ın/-n\n• Yıka-n-mak (мыться — себя мыть)\n• Tara-n-mak (расчёсываться — себя расчёсывать)\nÖnemli: Dönüşlü'de işi yapan VE işten etkilenen AYNI kişidir!\nKarşılaştır: Yıkamak (кого-то мыть) vs Yıkanmak (себя мыть)",
+        "title": "Dönüşlü: Возвратный залог",
+        "rules": "Fiil + -ın/-n\n• Yıka-n-mak (мыться — себя)\n• Tara-n-mak (расчёсываться — себя)\nİşi yapan VE etkilenen AYNI kişi!\nYıkamak (кого-то) vs Yıkanmak (себя)",
         "examples": [
-          { "sr": "Sabahları erken yıkanırım.", "ru": "По утрам рано моюсь." },
-          { "sr": "Kendini taradı.", "ru": "Он расчесался." }
+          {"sr": "Sabahları erken yıkanırım.", "ru": "По утрам рано моюсь."},
+          {"sr": "Kendini taradı.", "ru": "Он расчесался."}
         ]
       },
-      "quiz": [{ "q": "'Yıkanmak' dönüşlü mü?", "options": ["evet", "hayır", "ettirgen"], "correct": 0 }]
+      "quiz": [{"q": "'Yıkanmak' dönüşlü mü?", "options": ["evet", "hayır", "ettirgen"], "correct": 0}]
     },
     {
       "id": "u14",
       "title": "Koşul Cümlesi (-se/-sa)",
       "icon": "❓",
       "words": [
-        { "sr": "Gelirsem", "tr": "[gelirsem]", "ru": "Если приду" },
-        { "sr": "Gidersen", "tr": "[gidersen]", "ru": "Если пойдёшь" },
-        { "sr": "Yaparsa", "tr": "[japarsa]", "ru": "Если сделает" },
-        { "sr": "Okursak", "tr": "[okursak]", "ru": "Если прочитаем" },
-        { "sr": "İçerseniz", "tr": "[icherseniz]", "ru": "Если выпьете" },
-        { "sr": "Bekerlerse", "tr": "[bekerlerse]", "ru": "Если подождут" },
-        { "sr": "Konuşursam", "tr": "[konushursam]", "ru": "Если заговорю" },
-        { "sr": "Dinlersen", "tr": "[dinlersen]", "ru": "Если послушаешь" },
-        { "sr": "Anlarsa", "tr": "[anlarsa]", "ru": "Если поймёт" },
-        { "sr": "Düşünürsek", "tr": "[düşünürsek]", "ru": "Если подумаем" }
+        {"sr": "Gelirsem", "tr": "[gelirsem]", "ru": "Если приду"},
+        {"sr": "Gidersen", "tr": "[gidersen]", "ru": "Если пойдёшь"},
+        {"sr": "Yaparsa", "tr": "[japarsa]", "ru": "Если сделает"},
+        {"sr": "Okursak", "tr": "[okursak]", "ru": "Если прочитаем"},
+        {"sr": "İçerseniz", "tr": "[icherseniz]", "ru": "Если выпьете"},
+        {"sr": "Bekerlerse", "tr": "[bekerlerse]", "ru": "Если подождут"},
+        {"sr": "Konuşursam", "tr": "[konushursam]", "ru": "Если заговорю"},
+        {"sr": "Dinlersen", "tr": "[dinlersen]", "ru": "Если послушаешь"},
+        {"sr": "Anlarsa", "tr": "[anlarsa]", "ru": "Если поймёт"},
+        {"sr": "Düşünürsek", "tr": "[düşünürsek]", "ru": "Если подумаем"}
       ],
       "grammar": {
-        "title": "-se/-sa: Koşul Eki",
-        "rules": "Fiil + -se/-sa + kişi eki\n• Gel-ir-se-m (если приду)\n• Git-er-se-n (если пойдёшь)\nKoşul cümlesinde iki kısım var:\n1. Koşul: Gelirsem (если приду)\n2. Sonuç: seni görürüm (увижу тебя)\nOlumsuz: Gelmezsem (если не приду)",
+        "title": "-se/-sa: Условное наклонение",
+        "rules": "Fiil + -se/-sa + kişi eki\n• Gel-ir-se-m (если приду)\n• Git-er-se-n (если пойдёшь)\nKoşul + Sonuç:\n• Gelirsem, seni görürüm\nOlumsuz: Gelmezsem (если не приду)",
         "examples": [
-          { "sr": "Erken kalkarsan otobüse yetişirsin.", "ru": "Если встанешь рано, успеешь на автобус." },
-          { "sr": "Yağmur yağmazsa pikniğe gideriz.", "ru": "Если не будет дождя, пойдём на пикник." }
+          {"sr": "Erken kalkarsan otobüse yetişirsin.", "ru": "Если встанешь рано, успеешь на автобус."},
+          {"sr": "Yağmur yağmazsa pikniğe gideriz.", "ru": "Если не будет дождя, пойдём на пикник."}
         ]
       },
-      "quiz": [{ "q": "Koşul eki hangisi?", "options": ["-iyor", "-se/-sa", "-di"], "correct": 1 }]
+      "quiz": [{"q": "Koşul eki hangisi?", "options": ["-iyor", "-se/-sa", "-di"], "correct": 1}]
     },
     {
       "id": "u15",
       "title": "İstek ve Emir Kipi",
       "icon": "🙏",
       "words": [
-        { "sr": "Gideyim", "tr": "[gidejim]", "ru": "Давай я пойду" },
-        { "sr": "Gidelim", "tr": "[gidelim]", "ru": "Давай пойдём" },
-        { "sr": "Yapayım", "tr": "[japajym]", "ru": "Давай я сделаю" },
-        { "sr": "Yapalım", "tr": "[japalym]", "ru": "Давай сделаем" },
-        { "sr": "Oku", "tr": "[oku]", "ru": "Читай! (ты)" },
-        { "sr": "Okusun", "tr": "[okusun]", "ru": "Пусть читает (он)" },
-        { "sr": "Okuyun", "tr": "[okujun]", "ru": "Читайте! (вы)" },
-        { "sr": "Okusunlar", "tr": "[okusunlar]", "ru": "Пусть читают (они)" },
-        { "sr": "Gelme", "tr": "[gelme]", "ru": "Не приходи!" },
-        { "sr": "Gitmeyin", "tr": "[gitmejin]", "ru": "Не ходите!" }
+        {"sr": "Gideyim", "tr": "[gidejim]", "ru": "Давай я пойду"},
+        {"sr": "Gidelim", "tr": "[gidelim]", "ru": "Давай пойдём"},
+        {"sr": "Yapayım", "tr": "[japajym]", "ru": "Давай я сделаю"},
+        {"sr": "Yapalım", "tr": "[japalym]", "ru": "Давай сделаем"},
+        {"sr": "Oku", "tr": "[oku]", "ru": "Читай! (ты)"},
+        {"sr": "Okusun", "tr": "[okusun]", "ru": "Пусть читает (он)"},
+        {"sr": "Okuyun", "tr": "[okujun]", "ru": "Читайте! (вы)"},
+        {"sr": "Okusunlar", "tr": "[okusunlar]", "ru": "Пусть читают (они)"},
+        {"sr": "Gelme", "tr": "[gelme]", "ru": "Не приходи!"},
+        {"sr": "Gitmeyin", "tr": "[gitmejin]", "ru": "Не ходите!"}
       ],
       "grammar": {
-        "title": "İstek (-e/-a) ve Emir",
-        "rules": "İSTEK (1. tekil/çoğul): -e/-a + kişi eki\n• Gide-y-im (давай я пойду)\n• Gide-l-im (давай пойдём)\nEMİR (2./3. kişi):\n• Oku! (читай! — 2. tekil, ek yok)\n• Oku-sun! (пусть читает — 3. tekil)\n• Oku-y-un! (читайте — 2. çoğul)\nOlumsuz emir: Fiil + -me/-ma + emir eki",
+        "title": "İstek ve Emir",
+        "rules": "İSTEK (1. kişi): -e/-a + kişi eki\n• Gide-y-im (давай я пойду)\n• Gide-l-im (давай пойдём)\nEMİR (2./3. kişi):\n• Oku! (2. tekil, ek yok)\n• Oku-sun! (3. tekil)\n• Oku-y-un! (2. çoğul)\nOlumsuz: Fiil + -me/-ma",
         "examples": [
-          { "sr": "Hadi gidelim!", "ru": "Давай пойдём!" },
-          { "sr": "Buraya gelme!", "ru": "Не приходи сюда!" }
+          {"sr": "Hadi gidelim!", "ru": "Давай пойдём!"},
+          {"sr": "Buraya gelme!", "ru": "Не приходи сюда!"}
         ]
       },
-      "quiz": [{ "q": "'Gidelim' hangi kip?", "options": ["emir", "istek", "şimdiki"], "correct": 1 }]
+      "quiz": [{"q": "'Gidelim' hangi kip?", "options": ["emir", "istek", "şimdiki"], "correct": 1}]
     }
   ]
 }
