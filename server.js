@@ -3,7 +3,7 @@ import OpenAI from "openai";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import { createClient } from "@libsql/client"; // Библиотека Turso
+import { createClient } from "@libsql/client"; 
 
 dotenv.config();
 
@@ -33,8 +33,7 @@ async function initDB() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✅ Таблица bobor_progress в Turso готова");
-
+    
     const cols = await db.execute("PRAGMA table_info(bobor_progress)");
     const existing = new Set(cols.rows.map(r => r.name));
     const newCols = [
@@ -44,15 +43,14 @@ async function initDB() {
       ["last_daily", "DATE DEFAULT NULL"],
       ["season_xp", "INTEGER DEFAULT 0"],
       ["season_id", "TEXT DEFAULT NULL"],
-      ["course", "TEXT DEFAULT 'sr'"]
+      ["course", "TEXT DEFAULT 'sr'"],
+      ["units_done", "TEXT DEFAULT '[]'"]
     ];
     for (const [name, def] of newCols) {
       if (!existing.has(name)) {
         await db.execute(`ALTER TABLE bobor_progress ADD COLUMN ${name} ${def}`);
-        console.log(`  ➕ добавлена колонка ${name}`);
       }
     }
-    console.log("✅ Колонки bobor_progress проверены");
 
     await db.execute(`
       CREATE TABLE IF NOT EXISTS bobor_ranked (
@@ -63,7 +61,7 @@ async function initDB() {
         updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
-    console.log("✅ Таблица bobor_ranked в Turso готова");
+    console.log("✅ База данных готова");
   } catch (e) {
     console.error("❌ Ошибка базы Turso:", e.message);
   }
@@ -83,7 +81,6 @@ app.get("/api/health", (req, res) => {
   res.json({ ok: true, openai: !!openai, model: "gemini-2.0-flash", turso: !!db });
 });
 
-// --- [НОВОЕ] buildSystemPrompt(course) ---
 const COURSE_NAMES = {
   sr: "serbian", be: "belarusian", kk: "kazakh",
   tt: "tatar", pl: "polish", tr: "turkish"
@@ -134,126 +131,37 @@ app.post("/api/chat", async (req, res) => {
   }
 });
 
-// --- ПРОГРЕСС (TURSO) ---
-app.post("/api/progress", async (req, res) => {
-  const { username, xp, streak, learnedWords } = req.body;
-  if (!db) return res.json({ success: false, error: "no_db" });
-  if (!username) return res.status(400).json({ error: "no_username" });
-
-  try {
-    await db.execute({
-      sql: `INSERT INTO bobor_progress (username, xp, streak, learned_words) 
-            VALUES (?, ?, ?, ?) 
-            ON CONFLICT(username) DO UPDATE SET 
-            xp = ?, streak = ?, learned_words = ?, updated_at = CURRENT_TIMESTAMP`,
-      args: [username, xp, streak, JSON.stringify(learnedWords), xp, streak, JSON.stringify(learnedWords)]
-    });
-    res.json({ success: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.get("/api/progress/:username", async (req, res) => {
-  if (!db) return res.json(null);
-  try {
-    const r = await db.execute({
-      sql: "SELECT * FROM bobor_progress WHERE username = ?",
-      args: [req.params.username]
-    });
-    res.json(r.rows[0] || null);
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-// --- РАНКЕД ---
+// --- РАНКЕД И ПРОФИЛЬ ---
 app.post("/api/ranked/sync", async (req, res) => {
   const { username, seasonXp, seasonId, course } = req.body || {};
-  if (!db) return res.json({ success: false, error: "no_db" });
-  if (!username) return res.status(400).json({ error: "no_username" });
+  if (!db) return res.json({ success: false });
   try {
     await db.execute({
-      sql: `INSERT INTO bobor_ranked (username, season_xp, season_id, course)
-            VALUES (?, ?, ?, ?)
-            ON CONFLICT(username) DO UPDATE SET
-            season_xp = ?, season_id = ?, course = ?, updated_at = CURRENT_TIMESTAMP`,
-      args: [username, Number(seasonXp) || 0, seasonId || null, course || "sr",
-             Number(seasonXp) || 0, seasonId || null, course || "sr"]
+      sql: `INSERT INTO bobor_ranked (username, season_xp, season_id, course) VALUES (?, ?, ?, ?) ON CONFLICT(username) DO UPDATE SET season_xp = ?, season_id = ?, course = ?, updated_at = CURRENT_TIMESTAMP`,
+      args: [username, Number(seasonXp) || 0, seasonId || null, course || "sr", Number(seasonXp) || 0, seasonId || null, course || "sr"]
     });
     res.json({ success: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get("/api/ranked/leaderboard", async (req, res) => {
   if (!db) return res.json({ rows: [] });
   try {
-    const r = await db.execute(
-      "SELECT username, season_xp, course FROM bobor_ranked ORDER BY season_xp DESC LIMIT 50"
-    );
+    const r = await db.execute("SELECT username, season_xp FROM bobor_ranked ORDER BY season_xp DESC LIMIT 50");
     res.json({ rows: r.rows });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
-
-app.post("/api/ranked/close-season", async (req, res) => {
-  if (!db) return res.json({ success: false, error: "no_db" });
-  const mode = (req.body && req.body.mode) === "quarter" ? "quarter" : "month";
-  try {
-    const top = await db.execute(
-      "SELECT username, season_xp FROM bobor_ranked ORDER BY season_xp DESC LIMIT 1"
-    );
-    const winner = top.rows[0] || null;
-
-    if (mode === "quarter") {
-      await db.execute("UPDATE bobor_ranked SET season_xp = 0, updated_at = CURRENT_TIMESTAMP");
-    } else {
-      await db.execute("UPDATE bobor_ranked SET season_xp = CAST(season_xp * 0.3 AS INTEGER), updated_at = CURRENT_TIMESTAMP");
-    }
-
-    if (winner && winner.username) {
-      await db.execute({
-        sql: `UPDATE bobor_progress
-              SET xp = xp + 300, season_xp = COALESCE(season_xp,0) + 300, updated_at = CURRENT_TIMESTAMP
-              WHERE username = ?`,
-        args: [winner.username]
-      });
-      await db.execute({
-        sql: `UPDATE bobor_ranked
-              SET season_xp = season_xp + 300, updated_at = CURRENT_TIMESTAMP
-              WHERE username = ?`,
-        args: [winner.username]
-      });
-    }
-
-    res.json({ success: true, mode, winner: winner ? winner.username : null });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.post("/api/profile/sync", async (req, res) => {
-  const { username, medals, activeMedal, freezeCount, lastDaily, seasonXp, seasonId, course } = req.body || {};
-  if (!db) return res.json({ success: false, error: "no_db" });
-  if (!username) return res.status(400).json({ error: "no_username" });
+  const { username, medals, activeMedal, freezeCount, lastDaily, seasonXp, seasonId, course, unitsDone } = req.body || {};
+  if (!db) return res.json({ success: false });
   try {
     await db.execute({
-      sql: `INSERT INTO bobor_progress (username, medals, active_medal, freeze_count, last_daily, season_xp, season_id, course)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT(username) DO UPDATE SET
-            medals = ?, active_medal = ?, freeze_count = ?, last_daily = ?, season_xp = ?, season_id = ?, course = ?, updated_at = CURRENT_TIMESTAMP`,
-      args: [username, JSON.stringify(medals || []), activeMedal || null,
-             Number(freezeCount) || 0, lastDaily || null, Number(seasonXp) || 0, seasonId || null, course || "sr",
-             JSON.stringify(medals || []), activeMedal || null,
-             Number(freezeCount) || 0, lastDaily || null, Number(seasonXp) || 0, seasonId || null, course || "sr"]
+      sql: `INSERT INTO bobor_progress (username, medals, active_medal, freeze_count, last_daily, season_xp, season_id, course, units_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ON CONFLICT(username) DO UPDATE SET medals=?, active_medal=?, freeze_count=?, last_daily=?, season_xp=?, season_id=?, course=?, units_done=?, updated_at=CURRENT_TIMESTAMP`,
+      args: [username, JSON.stringify(medals||[]), activeMedal, freezeCount, lastDaily, seasonXp, seasonId, course, JSON.stringify(unitsDone||[]), JSON.stringify(medals||[]), activeMedal, freezeCount, lastDaily, seasonXp, seasonId, course, JSON.stringify(unitsDone||[])]
     });
     res.json({ success: true });
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
+  } catch (e) { res.status(500).json({ error: e.message }); }
 });
 
 app.get("*", (req, res) => {
