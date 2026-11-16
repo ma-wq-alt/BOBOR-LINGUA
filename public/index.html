@@ -86,6 +86,13 @@
 <div id="root"></div>
 
 <script>
+// --- Safe DOM Clearing to prevent NotFoundError ---
+function safeClear(node) {
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+}
+
 const COURSES_META = {
   sr: { flag: "🇷🇸", name: "Сербский" }, tr: { flag: "🇹🇷", name: "Турецкий" },
   pl: { flag: "🇵🇱", name: "Польский" }, be: { flag: "🇧🇾", name: "Белорусский" },
@@ -104,9 +111,7 @@ let audioChunks = [];
 
 function getUfaDate() {
   const now = new Date();
-  // Смещение Уфы UTC+5
   const ufaTime = new Date(now.getTime() + (5 * 60 * 60 * 1000)); 
-  // Корректировка, если время меньше 7 утра по Уфе, считаем прошлый день
   if (ufaTime.getUTCHours() < 7) ufaTime.setUTCDate(ufaTime.getUTCDate() - 1);
   return ufaTime.toISOString().split('T')[0];
 }
@@ -125,7 +130,6 @@ function checkDailyLimit() {
 }
 
 function saveState() {
-  // Преобразуем Set в Array для сохранения
   const progObj = {}; 
   for (const k in state.progress) progObj[k] = Array.from(state.progress[k]);
   
@@ -165,7 +169,6 @@ function loadState() {
     state.medals = data.medals || []; state.lastDaily = data.lastDaily || null;
     state.lessonsToday = data.lessonsToday || 0; state.lastLessonDate = data.lastLessonDate || null;
     
-    // Преобразуем Array обратно в Set
     if (data.progress) {
       for (const k in data.progress) state.progress[k] = new Set(data.progress[k]);
     }
@@ -193,18 +196,15 @@ const el = (tag, attrs = {}, children = []) => {
 
 function playTTS(text, langCode) {
   if (!window.speechSynthesis) return;
-  // Отменяем предыдущую речь, чтобы не накладывалась
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = langCode || "ru-RU";
   const voices = window.speechSynthesis.getVoices();
-  // Пытаемся найти голос, соответствующий языку
   const voice = voices.find(v => v.lang.startsWith(langCode.split('-')[0]));
   if (voice) utter.voice = voice;
   window.speechSynthesis.speak(utter);
 }
 
-// Генерация ключа для аудио (очищаем от пробелов и спецсимволов для надежности)
 function getAudioKey(text) {
   return `${state.currentCourse}_${text.trim()}`;
 }
@@ -222,7 +222,6 @@ function renderAudioButton(text) {
           return; 
         }
       } catch (e) {}
-      // Fallback на TTS
       playTTS(text, state.courseData?.speechLang || "ru-RU");
     }}, "🔊 Слушать"),
     
@@ -265,11 +264,26 @@ function renderAudioButton(text) {
   ]);
 }
 
+// Auto-clean JSON keys/values to fix spaces from AI generation
+function cleanJsonKeys(obj) {
+  if (typeof obj !== 'object' || obj === null) return obj;
+  if (Array.isArray(obj)) return obj.map(cleanJsonKeys);
+  
+  const cleaned = {};
+  for (const [key, value] of Object.entries(obj)) {
+    const cleanKey = key.trim();
+    const cleanValue = typeof value === 'string' ? value.trim() : cleanJsonKeys(value);
+    cleaned[cleanKey] = cleanValue;
+  }
+  return cleaned;
+}
+
 async function loadCourseData() {
   state.loading = true; render();
   try {
     const res = await fetch(`/data/${state.currentCourse}.json`);
-    state.courseData = await res.json();
+    const rawData = await res.json();
+    state.courseData = cleanJsonKeys(rawData); // Fix spaces here!
   } catch (e) { state.courseData = { name: "Ошибка", units: [] }; }
   state.loading = false; render();
 }
@@ -277,7 +291,7 @@ async function loadCourseData() {
 const root = document.getElementById("root");
 
 function render() {
-  root.innerHTML = "";
+  safeClear(root); // Use safe clearing instead of innerHTML = ""
   document.documentElement.setAttribute("data-theme", state.settings.theme);
   if (!state.user && state.screen !== "auth") state.screen = "auth";
   const screens = { auth: renderAuth, home: renderHome, learn: renderLearn, lesson: renderLesson, library: renderLibrary, shop: renderShop, ranked: renderRanked, settings: renderSettings };
@@ -359,7 +373,6 @@ function renderLearn() {
       class: `path-node ${isLocked ? 'locked' : ''} ${isDone ? 'done' : ''}`,
       onclick: () => {
         if (isLocked) return;
-        // Проверка лимита только для новых уроков
         if (!isDone && !checkDailyLimit()) return;
         
         state.currentUnit = unit;
@@ -369,7 +382,6 @@ function renderLearn() {
       }
     }, [el("span", {}, isDone ? "✅" : (isLocked ? "🔒" : "▶️"))]);
     
-    // Подпись под кружком
     const label = el("div", { style: "position:absolute;top:80px;font-size:0.8rem;font-weight:800;color:var(--muted);white-space:nowrap;width:150px;text-align:center;left:50%;transform:translateX(-50%);" }, unit.title);
     node.appendChild(label);
     path.appendChild(node);
@@ -404,7 +416,6 @@ function renderLesson() {
   }
   else if (state.lessonStep === "alphabet_card") {
     const a = state.currentAlphaLetter;
-    // Генерация неправильных ответов
     const wrongSounds = (unit.alphabet?.table || []).filter(x => x.sound !== a.sound).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.sound);
     const options = [a.sound, ...wrongSounds].sort(() => 0.5 - Math.random());
 
@@ -467,8 +478,6 @@ function renderLesson() {
   }
   else if (state.lessonStep === "quiz") {
     if (state.quizIdx >= unit.quiz.length) {
-      // Начисляем XP только если урок еще не был пройден (или просто даем за прохождение теста)
-      // Но проверяем, не фармит ли пользователь через библиотеку
       const isCompleted = state.progress[state.currentCourse]?.has(unit.id);
       
       if (!isCompleted) {
