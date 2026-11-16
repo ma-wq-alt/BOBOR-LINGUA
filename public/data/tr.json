@@ -1,37 +1,51 @@
 {
   "code": "tr",
-  "name": "Турецкий",
+  "name": "Турецкий (0-B2)",
   "flag": "🇹🇷",
   "speechLang": "tr-TR",
   "units": [
     {
       "id": "u1",
-      "title": "Алфавит и Приветствия",
-      "icon": "👋",
-      "words": [
-        { "sr": "Merhaba", "tr": "[merhaba]", "ru": "Привет" },
-        { "sr": "Günaydın", "tr": "[günaydın]", "ru": "Доброе утро" },
-        { "sr": "İyi günler", "tr": "[iyi günler]", "ru": "Добрый день" },
-        { "sr": "İyi akşamlar", "tr": "[iyi akşamlar]", "ru": "Добрый вечер" },
-        { "sr": "Teşekkürler", "tr": "[teşekkürler]", "ru": "Спасибо" },
-        { "sr": "Lütfen", "tr": "[lütfen]", "ru": "Пожалуйста" },
-        { "sr": "Özür dilerim", "tr": "[özür dilerim]", "ru": "Извини" },
-        { "sr": "Hoşça kal", "tr": "[hoşça kal]", "ru": "До свидания" }
-      ],
-      "grammar": {
-        "title": "Алфавит",
-        "rules": "В турецком 29 букв. Особые буквы: Ç (ч), Ğ (мягкая г), I (ы), İ (и), Ö (ё), Ş (ш), Ü (ю).",
-        "examples": [
-          { "sr": "Ç = Ч", "ru": "Çay - чай" },
-          { "sr": "Ş = Ш", "ru": "Şehir - город" },
-          { "sr": "Ü = Ю", "ru": "Üzüm - виноград" }
+      "title": "Алфавит и Фонетика",
+      "icon": "🔤",
+      "alphabet": {
+        "title": "Турецкий алфавит",
+        "rules": "29 букв. Особые: Ç (ч), Ğ (мягкий г), I (ы), İ (и), Ö (ё), Ş (ш), Ü (ю). Гармония гласных - основа грамматики.",
+        "table": [
+          { "char": "A a", "sound": "а", "ex": "Araba" },
+          { "char": "B b", "sound": "б", "ex": "Bal" },
+          { "char": "C c", "sound": "дж", "ex": "Can" },
+          { "char": "Ç ç", "sound": "ч", "ex": "Çay" },
+          { "char": "D d", "sound": "д", "ex": "Deniz" },
+          { "char": "E e", "sound": "э", "ex": "Elma" },
+          { "char": "F f", "sound": "ф", "ex": "Fıstık" },
+          { "char": "G g", "sound": "г", "ex": "Göz" },
+          { "char": "Ğ ğ", "sound": "мягкий г", "ex": "Dağ" },
+          { "char": "H h", "sound": "х", "ex": "Hava" },
+          { "char": "I ı", "sound": "ы", "ex": "Işık" },
+          { "char": "İ i", "sound": "и", "ex": "İki" },
+          { "char": "J j", "sound": "ж", "ex": "Jale" },
+          { "char": "K k", "sound": "к", "ex": "Kedi" },
+          { "char": "L l", "sound": "л", "ex": "Lale" },
+          { "char": "M m", "sound": "м", "ex": "Masa" },
+          { "char": "N n", "sound": "н", "ex": "Nehir" },
+          { "char": "O o", "sound": "о", "ex": "Okul" },
+          { "char": "Ö ö", "sound": "ё", "ex": "Öğrenci" },
+          { "char": "P p", "sound": "п", "ex": "Para" },
+          { "char": "R r", "sound": "р", "ex": "Renk" },
+          { "char": "S s", "sound": "с", "ex": "Su" },
+          { "char": "Ş ş", "sound": "ш", "ex": "Şehir" },
+          { "char": "T t", "sound": "т", "ex": "Top" },
+          { "char": "U u", "sound": "у", "ex": "Uçak" },
+          { "char": "Ü ü", "sound": "ю", "ex": "Üzüm" },
+          { "char": "V v", "sound": "в", "ex": "Vapur" },
+          { "char": "Y y", "sound": "й", "ex": "Yol" },
+          { "char": "Z z", "sound": "з", "ex": "Zaman" }
         ]
       },
-      "quiz": [
-        { "q": "Как сказать «Спасибо»?", "options": ["Merhaba", "Lütfen", "Teşekkürler", "Hoşça kal"], "correct": 2 },
-        { "q": "Что означает «Günaydın»?", "options": ["Добрый вечер", "Доброе утро", "Привет", "Пока"], "correct": 1 },
-        { "q": "Какая буква читается как «Ч»?", "options": ["Ç", "Ş", "Ğ", "Ü"], "correct": 0 }
-      ]
+      "words": [],
+      "grammar": { "title": "Гармония гласных", "rules": "Основа турецкой грамматики. Гласные в слове делятся на твёрдые (a, ı, o, u) и мягкие (e, i, ö, ü). Окончания меняются в зависимости от последней гласной.", "examples": [] },
+      "quiz": []
     },
     {
       "id": "u2",
@@ -47,376 +61,475 @@
         { "sr": "Yedi", "tr": "[yedi]", "ru": "Семь" },
         { "sr": "Sekiz", "tr": "[sekiz]", "ru": "Восемь" },
         { "sr": "Dokuz", "tr": "[dokuz]", "ru": "Девять" },
-        { "sr": "On", "tr": "[on]", "ru": "Десять" }
+        { "sr": "On", "tr": "[on]", "ru": "Десять" },
+        { "sr": "Yirmi", "tr": "[yirmi]", "ru": "Двадцать" },
+        { "sr": "Yüz", "tr": "[yüz]", "ru": "Сто" },
+        { "sr": "Bin", "tr": "[bin]", "ru": "Тысяча" },
+        { "sr": "Ben", "tr": "[ben]", "ru": "Я" },
+        { "sr": "Sen", "tr": "[sen]", "ru": "Ты" },
+        { "sr": "O", "tr": "[o]", "ru": "Он/Она" },
+        { "sr": "Biz", "tr": "[biz]", "ru": "Мы" },
+        { "sr": "Siz", "tr": "[siz]", "ru": "Вы" },
+        { "sr": "Onlar", "tr": "[onlar]", "ru": "Они" }
       ],
-      "grammar": {
-        "title": "Личные местоимения",
-        "rules": "Ben (я), Sen (ты), O (он/она), Biz (мы), Siz (вы), Onlar (они).",
-        "examples": [
-          { "sr": "Ben öğrenciyim.", "ru": "Я студент." },
-          { "sr": "Sen iyisin.", "ru": "Ты хороший." },
-          { "sr": "O doktor.", "ru": "Он врач." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как будет «Пять»?", "options": ["Üç", "Dört", "Beş", "Altı"], "correct": 2 },
-        { "q": "Что означает «Sen»?", "options": ["Я", "Ты", "Он", "Мы"], "correct": 1 },
-        { "q": "Как сказать «Я студент»?", "options": ["Sen öğrencisin", "Ben öğrenciyim", "O öğrenci", "Biz öğrenciyiz"], "correct": 1 }
-      ]
+      "grammar": { "title": "Личные местоимения", "rules": "Ben (я), Sen (ты), O (он/она), Biz (мы), Siz (вы), Onlar (они). Глагол 'быть' выражается суффиксами.", "examples": [{ "sr": "Ben öğrenciyim.", "ru": "Я студент." }] },
+      "quiz": [{ "q": "Как будет «Пять»?", "options": ["Üç", "Dört", "Beş", "Altı"], "correct": 2 }]
     },
     {
       "id": "u3",
-      "title": "Семья и Глагол «Быть»",
-      "icon": "👨‍👩‍👧",
+      "title": "Семья и Дом (A1)",
+      "icon": "🏠",
       "words": [
+        { "sr": "Aile", "tr": "[aile]", "ru": "Семья" },
         { "sr": "Anne", "tr": "[anne]", "ru": "Мама" },
         { "sr": "Baba", "tr": "[baba]", "ru": "Папа" },
         { "sr": "Kardeş", "tr": "[kardeş]", "ru": "Брат/Сестра" },
         { "sr": "Abla", "tr": "[abla]", "ru": "Старшая сестра" },
+        { "sr": "Ağabey", "tr": "[ağabey]", "ru": "Старший брат" },
         { "sr": "Oğul", "tr": "[oğul]", "ru": "Сын" },
         { "sr": "Kız", "tr": "[kız]", "ru": "Дочь" },
-        { "sr": "Aile", "tr": "[aile]", "ru": "Семья" }
+        { "sr": "Büyükanne", "tr": "[büyükanne]", "ru": "Бабушка" },
+        { "sr": "Büyükbaba", "tr": "[büyükbaba]", "ru": "Дедушка" },
+        { "sr": "Amca", "tr": "[amca]", "ru": "Дядя (по отцу)" },
+        { "sr": "Dayı", "tr": "[dayı]", "ru": "Дядя (по матери)" },
+        { "sr": "Teyze", "tr": "[teyze]", "ru": "Тётя (по матери)" },
+        { "sr": "Hala", "tr": "[hala]", "ru": "Тётя (по отцу)" },
+        { "sr": "Kuzen", "tr": "[kuzen]", "ru": "Двоюродный брат/сестра" },
+        { "sr": "Koca", "tr": "[koca]", "ru": "Муж" },
+        { "sr": "Kar", "tr": "[kar]", "ru": "Жена" },
+        { "sr": "Ev", "tr": "[ev]", "ru": "Дом" },
+        { "sr": "Daire", "tr": "[daire]", "ru": "Квартира" },
+        { "sr": "Oda", "tr": "[oda]", "ru": "Комната" },
+        { "sr": "Mutfak", "tr": "[mutfak]", "ru": "Кухня" },
+        { "sr": "Banyo", "tr": "[banyo]", "ru": "Ванная" },
+        { "sr": "Salon", "tr": "[salon]", "ru": "Гостиная" },
+        { "sr": "Yatak odası", "tr": "[yatak odası]", "ru": "Спальня" },
+        { "sr": "Masa", "tr": "[masa]", "ru": "Стол" },
+        { "sr": "Sandalye", "tr": "[sandalye]", "ru": "Стул" },
+        { "sr": "Yatak", "tr": "[yatak]", "ru": "Кровать" },
+        { "sr": "Dolap", "tr": "[dolap]", "ru": "Шкаф" },
+        { "sr": "Pencere", "tr": "[pencere]", "ru": "Окно" },
+        { "sr": "Kapı", "tr": "[kapı]", "ru": "Дверь" },
+        { "sr": "Anahtar", "tr": "[anahtar]", "ru": "Ключ" },
+        { "sr": "Komşu", "tr": "[komşu]", "ru": "Сосед" }
       ],
-      "grammar": {
-        "title": "Глагол «Быть»",
-        "rules": "В турецком нет отдельного глагола «быть» в настоящем времени, он выражается суффиксами. Ben iyiyim (Я хороший).",
-        "examples": [
-          { "sr": "Ben iyiyim.", "ru": "Я хороший." },
-          { "sr": "Sen iyisin.", "ru": "Ты хороший." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Сестра»?", "options": ["Kardeş", "Abla", "Kız", "Anne"], "correct": 1 },
-        { "q": "Что означает «Baba»?", "options": ["Мама", "Папа", "Брат", "Дочь"], "correct": 1 },
-        { "q": "Как сказать «Я хороший»?", "options": ["Sen iyisin", "Ben iyiyim", "O iyi", "Biz iyiyiz"], "correct": 1 }
-      ]
+      "grammar": { "title": "Множественное число", "rules": "Образуется суффиксом -lar/-ler. Evler (дома), Odalar (комнаты).", "examples": [{ "sr": "İki kardeşim var.", "ru": "У меня два брата." }] },
+      "quiz": [{ "q": "Как сказать «Дом»?", "options": ["Daire", "Oda", "Ev", "Masa"], "correct": 2 }]
     },
     {
       "id": "u4",
-      "title": "Еда и Отрицание",
+      "title": "Еда и Ресторан (A1)",
       "icon": "🍽️",
       "words": [
         { "sr": "Su", "tr": "[su]", "ru": "Вода" },
         { "sr": "Ekmek", "tr": "[ekmek]", "ru": "Хлеб" },
         { "sr": "Süt", "tr": "[süt]", "ru": "Молоко" },
-        { "sr": "Kahve", "tr": "[kahve]", "ru": "Кофе" },
-        { "sr": "Çay", "tr": "[çay]", "ru": "Чай" },
         { "sr": "Et", "tr": "[et]", "ru": "Мясо" },
         { "sr": "Balık", "tr": "[balık]", "ru": "Рыба" },
-        { "sr": "Elma", "tr": "[elma]", "ru": "Яблоко" }
+        { "sr": "Elma", "tr": "[elma]", "ru": "Яблоко" },
+        { "sr": "Peynir", "tr": "[peynir]", "ru": "Сыр" },
+        { "sr": "Yumurta", "tr": "[yumurta]", "ru": "Яйцо" },
+        { "sr": "Kahve", "tr": "[kahve]", "ru": "Кофе" },
+        { "sr": "Çay", "tr": "[çay]", "ru": "Чай" },
+        { "sr": "Şarap", "tr": "[şarap]", "ru": "Вино" },
+        { "sr": "Bira", "tr": "[bira]", "ru": "Пиво" },
+        { "sr": "Şeker", "tr": "[şeker]", "ru": "Сахар" },
+        { "sr": "Tuz", "tr": "[tuz]", "ru": "Соль" },
+        { "sr": "Biber", "tr": "[biber]", "ru": "Перец" },
+        { "sr": "Yağ", "tr": "[yağ]", "ru": "Масло" },
+        { "sr": "Sebze", "tr": "[sebze]", "ru": "Овощи" },
+        { "sr": "Meyve", "tr": "[meyve]", "ru": "Фрукты" },
+        { "sr": "Kahvaltı", "tr": "[kahvaltı]", "ru": "Завтрак" },
+        { "sr": "Öğle yemeği", "tr": "[öğle yemeği]", "ru": "Обед" },
+        { "sr": "Akşam yemeği", "tr": "[akşam yemeği]", "ru": "Ужин" },
+        { "sr": "Restoran", "tr": "[restoran]", "ru": "Ресторан" },
+        { "sr": "Menü", "tr": "[menü]", "ru": "Меню" },
+        { "sr": "Hesap", "tr": "[hesap]", "ru": "Счёт" },
+        { "sr": "Garson", "tr": "[garson]", "ru": "Официант" },
+        { "sr": "Tabak", "tr": "[tabak]", "ru": "Тарелка" },
+        { "sr": "Çatal", "tr": "[çatal]", "ru": "Вилка" },
+        { "sr": "Bıçak", "tr": "[bıçak]", "ru": "Нож" },
+        { "sr": "Kaşık", "tr": "[kaşık]", "ru": "Ложка" },
+        { "sr": "Bardak", "tr": "[bardak]", "ru": "Стакан" }
       ],
-      "grammar": {
-        "title": "Отрицание",
-        "rules": "Отрицательная частица «değil» ставится после слова. Ben öğrenci değilim (Я не студент).",
-        "examples": [
-          { "sr": "Ben öğrenci değilim.", "ru": "Я не студент." },
-          { "sr": "Su yok.", "ru": "Воды нет." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Вода»?", "options": ["Ekmek", "Su", "Süt", "Kahve"], "correct": 1 },
-        { "q": "Что означает «Çay»?", "options": ["Кофе", "Чай", "Молоко", "Мясо"], "correct": 1 },
-        { "q": "Как сказать «Я не студент»?", "options": ["Ben öğrenciyim", "Ben öğrenci değilim", "Sen öğrencisin", "O öğrenci"], "correct": 1 }
-      ]
+      "grammar": { "title": "Отрицание", "rules": "Отрицание: değil (не) после существительного, -ma/-me после глагола. Yok (нет).", "examples": [{ "sr": "Ben öğrenci değilim.", "ru": "Я не студент." }] },
+      "quiz": [{ "q": "Как сказать «Счёт»?", "options": ["Hesap", "Para", "Fiyat", "Kasa"], "correct": 0 }]
     },
     {
       "id": "u5",
-      "title": "Путешествия и Вопросы",
-      "icon": "✈️",
-      "words": [
-        { "sr": "Havalimanı", "tr": "[havalimanı]", "ru": "Аэропорт" },
-        { "sr": "İstasyon", "tr": "[istasyon]", "ru": "Станция" },
-        { "sr": "Tren", "tr": "[tren]", "ru": "Поезд" },
-        { "sr": "Otobüs", "tr": "[otobüs]", "ru": "Автобус" },
-        { "sr": "Bilet", "tr": "[bilet]", "ru": "Билет" },
-        { "sr": "Otel", "tr": "[otel]", "ru": "Отель" },
-        { "sr": "Şehir", "tr": "[şehir]", "ru": "Город" }
-      ],
-      "grammar": {
-        "title": "Вопросы",
-        "rules": "Ne (что), Kim (кто), Nerede (где), Ne zaman (когда), Neden (почему), Nasıl (как).",
-        "examples": [
-          { "sr": "Bu nedir?", "ru": "Что это?" },
-          { "sr": "İstasyon nerede?", "ru": "Где станция?" }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Поезд»?", "options": ["Tren", "Otobüs", "Bilet", "Otel"], "correct": 0 },
-        { "q": "Что означает «Nerede»?", "options": ["Что", "Кто", "Где", "Когда"], "correct": 2 },
-        { "q": "Как спросить «Сколько стоит?»", "options": ["Bu nedir?", "Ne kadar?", "Nerede?", "Nasıl?"], "correct": 1 }
-      ]
-    },
-    {
-      "id": "u6",
-      "title": "Цвета и Диалоги",
-      "icon": "🎨",
-      "words": [
-        { "sr": "Kırmızı", "tr": "[kırmızı]", "ru": "Красный" },
-        { "sr": "Mavi", "tr": "[mavi]", "ru": "Синий" },
-        { "sr": "Yeşil", "tr": "[yeşil]", "ru": "Зелёный" },
-        { "sr": "Sarı", "tr": "[sarı]", "ru": "Жёлтый" },
-        { "sr": "Siyah", "tr": "[siyah]", "ru": "Чёрный" },
-        { "sr": "Beyaz", "tr": "[beyaz]", "ru": "Белый" }
-      ],
-      "grammar": {
-        "title": "Как представиться",
-        "rules": "Adın ne? (Как тебя зовут?) - Benim adım... (Меня зовут...).",
-        "examples": [
-          { "sr": "Benim adım Mark.", "ru": "Меня зовут Марк." },
-          { "sr": "Memnun oldum.", "ru": "Приятно познакомиться." }
-        ]
-      },
-      "quiz": [
-        { "q": "Какой цвет «Kırmızı»?", "options": ["Синий", "Зелёный", "Красный", "Чёрный"], "correct": 2 },
-        { "q": "Как сказать «Меня зовут Марк»?", "options": ["Ben Mark", "Benim adım Mark", "Sen Mark", "O Mark"], "correct": 1 },
-        { "q": "Что означает «Memnun oldum»?", "options": ["До свидания", "Как дела", "Приятно познакомиться", "Спасибо"], "correct": 2 }
-      ]
-    },
-    {
-      "id": "u7",
-      "title": "Время и Дни недели",
+      "title": "Время и Календарь (A1-A2)",
       "icon": "⏰",
       "words": [
         { "sr": "Bugün", "tr": "[bugün]", "ru": "Сегодня" },
         { "sr": "Yarın", "tr": "[yarın]", "ru": "Завтра" },
         { "sr": "Dün", "tr": "[dün]", "ru": "Вчера" },
+        { "sr": "Şimdi", "tr": "[şimdi]", "ru": "Сейчас" },
+        { "sr": "Sonra", "tr": "[sonra]", "ru": "Позже" },
+        { "sr": "Erken", "tr": "[erken]", "ru": "Рано" },
+        { "sr": "Geç", "tr": "[geç]", "ru": "Поздно" },
+        { "sr": "Saat", "tr": "[saat]", "ru": "Час" },
+        { "sr": "Dakika", "tr": "[dakika]", "ru": "Минута" },
+        { "sr": "Saniye", "tr": "[saniye]", "ru": "Секунда" },
+        { "sr": "Hafta", "tr": "[hafta]", "ru": "Неделя" },
+        { "sr": "Ay", "tr": "[ay]", "ru": "Месяц" },
+        { "sr": "Yıl", "tr": "[yıl]", "ru": "Год" },
         { "sr": "Pazartesi", "tr": "[pazartesi]", "ru": "Понедельник" },
         { "sr": "Salı", "tr": "[salı]", "ru": "Вторник" },
         { "sr": "Çarşamba", "tr": "[çarşamba]", "ru": "Среда" },
         { "sr": "Perşembe", "tr": "[perşembe]", "ru": "Четверг" },
         { "sr": "Cuma", "tr": "[cuma]", "ru": "Пятница" },
         { "sr": "Cumartesi", "tr": "[cumartesi]", "ru": "Суббота" },
-        { "sr": "Pazar", "tr": "[pazar]", "ru": "Воскресенье" }
+        { "sr": "Pazar", "tr": "[pazar]", "ru": "Воскресенье" },
+        { "sr": "İlkbahar", "tr": "[ilkbahar]", "ru": "Весна" },
+        { "sr": "Yaz", "tr": "[yaz]", "ru": "Лето" },
+        { "sr": "Sonbahar", "tr": "[sonbahar]", "ru": "Осень" },
+        { "sr": "Kış", "tr": "[kış]", "ru": "Зима" }
       ],
-      "grammar": {
-        "title": "Настоящее время (Глаголы)",
-        "rules": "Суффикс -yor. Ben gidiyorum (Я иду).",
-        "examples": [
-          { "sr": "Ben gidiyorum.", "ru": "Я иду." },
-          { "sr": "Sen geliyorsun.", "ru": "Ты приходишь." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Завтра»?", "options": ["Bugün", "Dün", "Yarın", "Pazar"], "correct": 2 },
-        { "q": "Что означает «Pazartesi»?", "options": ["Воскресенье", "Понедельник", "Среда", "Пятница"], "correct": 1 },
-        { "q": "Как сказать «Я иду»?", "options": ["Ben gidiyorum", "Sen geliyorsun", "O gidiyor", "Biz gidiyoruz"], "correct": 0 }
-      ]
+      "grammar": { "title": "Настоящее время", "rules": "Образуется суффиксом -yor. Ben gidiyorum (Я иду).", "examples": [{ "sr": "Ben çalışıyorum.", "ru": "Я работаю." }] },
+      "quiz": [{ "q": "Как сказать «Завтра»?", "options": ["Dün", "Bugün", "Yarın", "Şimdi"], "correct": 2 }]
     },
     {
-      "id": "u8",
-      "title": "Тело и Здоровье",
-      "icon": "🏥",
+      "id": "u6",
+      "title": "Город и Транспорт (A2)",
+      "icon": "✈️",
       "words": [
-        { "sr": "Kafa", "tr": "[kafa]", "ru": "Голова" },
-        { "sr": "Göz", "tr": "[göz]", "ru": "Глаз" },
-        { "sr": "El", "tr": "[el]", "ru": "Рука" },
-        { "sr": "Bacak", "tr": "[bacak]", "ru": "Нога" },
-        { "sr": "Kalp", "tr": "[kalp]", "ru": "Сердце" },
-        { "sr": "Doktor", "tr": "[doktor]", "ru": "Врач" },
-        { "sr": "Hastane", "tr": "[hastane]", "ru": "Больница" }
+        { "sr": "Şehir", "tr": "[şehir]", "ru": "Город" },
+        { "sr": "Sokak", "tr": "[sokak]", "ru": "Улица" },
+        { "sr": "Meydan", "tr": "[meydan]", "ru": "Площадь" },
+        { "sr": "Park", "tr": "[park]", "ru": "Парк" },
+        { "sr": "Köprü", "tr": "[köprü]", "ru": "Мост" },
+        { "sr": "Nehir", "tr": "[nehir]", "ru": "Река" },
+        { "sr": "Havalimanı", "tr": "[havalimanı]", "ru": "Аэропорт" },
+        { "sr": "İstasyon", "tr": "[istasyon]", "ru": "Станция" },
+        { "sr": "Tren", "tr": "[tren]", "ru": "Поезд" },
+        { "sr": "Otobüs", "tr": "[otobüs]", "ru": "Автобус" },
+        { "sr": "Tramvay", "tr": "[tramvay]", "ru": "Трамвай" },
+        { "sr": "Metro", "tr": "[metro]", "ru": "Метро" },
+        { "sr": "Taksi", "tr": "[taksi]", "ru": "Такси" },
+        { "sr": "Araba", "tr": "[araba]", "ru": "Автомобиль" },
+        { "sr": "Bilet", "tr": "[bilet]", "ru": "Билет" },
+        { "sr": "Otel", "tr": "[otel]", "ru": "Отель" },
+        { "sr": "Seyahat", "tr": "[seyahat]", "ru": "Путешествие" },
+        { "sr": "Sol", "tr": "[sol]", "ru": "Налево" },
+        { "sr": "Sağ", "tr": "[sağ]", "ru": "Направо" },
+        { "sr": "Düz", "tr": "[düz]", "ru": "Прямо" },
+        { "sr": "Uzak", "tr": "[uzak]", "ru": "Далеко" },
+        { "sr": "Yakın", "tr": "[yakın]", "ru": "Близко" },
+        { "sr": "Pasaport", "tr": "[pasaport]", "ru": "Паспорт" },
+        { "sr": "Vize", "tr": "[vize]", "ru": "Виза" },
+        { "sr": "Bagaj", "tr": "[bagaj]", "ru": "Багаж" },
+        { "sr": "Rezervasyon", "tr": "[rezervasyon]", "ru": "Бронирование" },
+        { "sr": "Yön", "tr": "[yön]", "ru": "Направление" },
+        { "sr": "Tatil", "tr": "[tatil]", "ru": "Отпуск" },
+        { "sr": "Harita", "tr": "[harita]", "ru": "Карта" }
       ],
-      "grammar": {
-        "title": "Модальные глаголы",
-        "rules": "İstemek (хотеть) и -ebilmek (мочь).",
-        "examples": [
-          { "sr": "Su istiyorum.", "ru": "Я хочу воду." },
-          { "sr": "Yardım edebilirim.", "ru": "Я могу помочь." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Голова»?", "options": ["Göz", "Kafa", "El", "Bacak"], "correct": 1 },
-        { "q": "Что означает «Doktor»?", "options": ["Больница", "Сердце", "Врач", "Глаз"], "correct": 2 },
-        { "q": "Как сказать «Я хочу»?", "options": ["İstiyorum", "Gidiyorum", "Biliyorum", "Yapıyorum"], "correct": 0 }
-      ]
+      "grammar": { "title": "Будущее время", "rules": "Образуется суффиксом -acak/-ecek. Ben gideceğim (Я пойду).", "examples": [{ "sr": "Ben seyahat edeceğim.", "ru": "Я буду путешествовать." }] },
+      "quiz": [{ "q": "Как сказать «Налево»?", "options": ["Sağ", "Sol", "Düz", "İleri"], "correct": 1 }]
     },
     {
-      "id": "u9",
-      "title": "Погода и Природа",
-      "icon": "☀️",
-      "words": [
-        { "sr": "Güneş", "tr": "[güneş]", "ru": "Солнце" },
-        { "sr": "Yağmur", "tr": "[yağmur]", "ru": "Дождь" },
-        { "sr": "Kar", "tr": "[kar]", "ru": "Снег" },
-        { "sr": "Rüzgar", "tr": "[rüzgar]", "ru": "Ветер" },
-        { "sr": "Hava", "tr": "[hava]", "ru": "Погода" },
-        { "sr": "Sıcak", "tr": "[sıcak]", "ru": "Тепло" },
-        { "sr": "Soğuk", "tr": "[soğuk]", "ru": "Холодно" }
-      ],
-      "grammar": {
-        "title": "Прошедшее время",
-        "rules": "Суффикс -dı/-di. Ben gittim (Я пошел).",
-        "examples": [
-          { "sr": "Ben gittim.", "ru": "Я пошел." },
-          { "sr": "O geldi.", "ru": "Он пришел." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Солнце»?", "options": ["Yağmur", "Güneş", "Kar", "Rüzgar"], "correct": 1 },
-        { "q": "Что означает «Sıcak»?", "options": ["Холодно", "Ветрено", "Тепло", "Солнечно"], "correct": 2 },
-        { "q": "Как сказать «Я пошел»?", "options": ["Ben gittim", "Sen gittin", "O gitti", "Biz gittik"], "correct": 0 }
-      ]
-    },
-    {
-      "id": "u10",
-      "title": "Одежда и Магазины",
-      "icon": "🛍️",
-      "words": [
-        { "sr": "Kıyafet", "tr": "[kıyafet]", "ru": "Одежда" },
-        { "sr": "Tişört", "tr": "[tişört]", "ru": "Футболка" },
-        { "sr": "Pantolon", "tr": "[pantolon]", "ru": "Брюки" },
-        { "sr": "Ayakkabı", "tr": "[ayakkabı]", "ru": "Обувь" },
-        { "sr": "Mağaza", "tr": "[mağaza]", "ru": "Магазин" },
-        { "sr": "Para", "tr": "[para]", "ru": "Деньги" },
-        { "sr": "Pahalı", "tr": "[pahalı]", "ru": "Дорого" },
-        { "sr": "Ucuz", "tr": "[ucuz]", "ru": "Дешево" }
-      ],
-      "grammar": {
-        "title": "Вежливая просьба",
-        "rules": "Lütfen (пожалуйста). ... istiyorum (Я хочу...).",
-        "examples": [
-          { "sr": "Bir kahve istiyorum.", "ru": "Я хочу кофе." },
-          { "sr": "Ne kadar?", "ru": "Сколько стоит?" }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Деньги»?", "options": ["Para", "Kıyafet", "Mağaza", "Ayakkabı"], "correct": 0 },
-        { "q": "Что означает «Pahalı»?", "options": ["Дешево", "Дорого", "Красиво", "Удобно"], "correct": 1 },
-        { "q": "Как сказать «Сколько стоит?»", "options": ["Bu nedir?", "Ne kadar?", "Nerede?", "Nasıl?"], "correct": 1 }
-      ]
-    },
-    {
-      "id": "u11",
-      "title": "Профессии и Работа",
+      "id": "u7",
+      "title": "Работа и Бизнес (B1)",
       "icon": "💼",
       "words": [
         { "sr": "İş", "tr": "[iş]", "ru": "Работа" },
-        { "sr": "Öğretmen", "tr": "[öğretmen]", "ru": "Учитель" },
-        { "sr": "Mühendis", "tr": "[mühendis]", "ru": "Инженер" },
-        { "sr": "Öğrenci", "tr": "[öğrenci]", "ru": "Студент" },
-        { "sr": "Çalışmak", "tr": "[çalışmak]", "ru": "Работать" },
-        { "sr": "Ofis", "tr": "[ofis]", "ru": "Офис" }
+        { "sr": "Para", "tr": "[para]", "ru": "Деньги" },
+        { "sr": "Maaş", "tr": "[maaş]", "ru": "Зарплата" },
+        { "sr": "Banka", "tr": "[banka]", "ru": "Банк" },
+        { "sr": "Sözleşme", "tr": "[sözleşme]", "ru": "Договор" },
+        { "sr": "Müşteri", "tr": "[müşteri]", "ru": "Клиент" },
+        { "sr": "Ofis", "tr": "[ofis]", "ru": "Офис" },
+        { "sr": "Toplantı", "tr": "[toplantı]", "ru": "Встреча" },
+        { "sr": "Proje", "tr": "[proje]", "ru": "Проект" },
+        { "sr": "Yatırım", "tr": "[yatırım]", "ru": "Инвестиция" },
+        { "sr": "Ekonomi", "tr": "[ekonomi]", "ru": "Экономика" },
+        { "sr": "Pazar", "tr": "[pazar]", "ru": "Рынок" },
+        { "sr": "Kriz", "tr": "[kriz]", "ru": "Кризис" },
+        { "sr": "İşsizlik", "tr": "[işsizlik]", "ru": "Безработица" },
+        { "sr": "Vergi", "tr": "[vergi]", "ru": "Налог" },
+        { "sr": "Kâr", "tr": "[kâr]", "ru": "Прибыль" },
+        { "sr": "Zarar", "tr": "[zarar]", "ru": "Убыток" },
+        { "sr": "Sermaye", "tr": "[sermaye]", "ru": "Капитал" },
+        { "sr": "Kredi", "tr": "[kredi]", "ru": "Кредит" },
+        { "sr": "Hesap", "tr": "[hesap]", "ru": "Счёт" },
+        { "sr": "Müdür", "tr": "[müdür]", "ru": "Директор" },
+        { "sr": "Çalışan", "tr": "[çalışan]", "ru": "Сотрудник" },
+        { "sr": "İlan", "tr": "[ilan]", "ru": "Объявление" },
+        { "sr": "Kariyer", "tr": "[kariyer]", "ru": "Карьера" },
+        { "sr": "Deneyim", "tr": "[deneyim]", "ru": "Опыт" }
       ],
-      "grammar": {
-        "title": "Будущее время",
-        "rules": "Суффикс -acak/-ecek. Ben gideceğim (Я пойду).",
-        "examples": [
-          { "sr": "Ben çalışacağım.", "ru": "Я буду работать." },
-          { "sr": "Sen gideceksin.", "ru": "Ты пойдешь." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Работа»?", "options": ["Okul", "İş", "Ofis", "Öğrenci"], "correct": 1 },
-        { "q": "Что означает «Öğretmen»?", "options": ["Студент", "Инженер", "Учитель", "Врач"], "correct": 2 },
-        { "q": "Как сказать «Я буду работать»?", "options": ["Ben çalışıyorum", "Ben çalıştım", "Ben çalışacağım", "Ben çalışabilirim"], "correct": 2 }
-      ]
+      "grammar": { "title": "Сослагательное наклонение", "rules": "Образуется с помощью -sa/-se. Если бы у меня были деньги, я бы купил дом.", "examples": [{ "sr": "Param olsaydı, ev alırdım.", "ru": "Если бы у меня были деньги, я бы купил дом." }] },
+      "quiz": [{ "q": "Как сказать «Деньги»?", "options": ["Para", "İş", "Maaş", "Hesap"], "correct": 0 }]
+    },
+    {
+      "id": "u8",
+      "title": "Технологии и Наука (B1-B2)",
+      "icon": "🔬",
+      "words": [
+        { "sr": "Gazete", "tr": "[gazete]", "ru": "Газета" },
+        { "sr": "Haberler", "tr": "[haberler]", "ru": "Новости" },
+        { "sr": "İnternet", "tr": "[internet]", "ru": "Интернет" },
+        { "sr": "Telefon", "tr": "[telefon]", "ru": "Телефон" },
+        { "sr": "Bilgisayar", "tr": "[bilgisayar]", "ru": "Компьютер" },
+        { "sr": "Uygulama", "tr": "[uygulama]", "ru": "Приложение" },
+        { "sr": "Veri", "tr": "[veri]", "ru": "Данные" },
+        { "sr": "Teknoloji", "tr": "[teknoloji]", "ru": "Технология" },
+        { "sr": "Araştırma", "tr": "[araştırma]", "ru": "Исследование" },
+        { "sr": "Bilim insanı", "tr": "[bilim insanı]", "ru": "Учёный" },
+        { "sr": "Yapay zeka", "tr": "[yapay zeka]", "ru": "Искусственный интеллект" },
+        { "sr": "Kaynak", "tr": "[kaynak]", "ru": "Источник" },
+        { "sr": "Gazeteci", "tr": "[gazeteci]", "ru": "Журналист" },
+        { "sr": "Makale", "tr": "[makale]", "ru": "Статья" },
+        { "sr": "Medya", "tr": "[medya]", "ru": "СМИ" },
+        { "sr": "Yazılım", "tr": "[yazılım]", "ru": "Программное обеспечение" },
+        { "sr": "Ağ", "tr": "[ağ]", "ru": "Сеть" },
+        { "sr": "Güvenlik", "tr": "[güvenlik]", "ru": "Безопасность" },
+        { "sr": "Deney", "tr": "[deney]", "ru": "Эксперимент" },
+        { "sr": "Teori", "tr": "[teori]", "ru": "Теория" },
+        { "sr": "Buluş", "tr": "[buluş]", "ru": "Открытие" },
+        { "sr": "Gelişim", "tr": "[gelişim]", "ru": "Развитие" },
+        { "sr": "İnovasyon", "tr": "[inovasyon]", "ru": "Инновация" },
+        { "sr": "Laboratuvar", "tr": "[laboratuvar]", "ru": "Лаборатория" },
+        { "sr": "Hipotez", "tr": "[hipotez]", "ru": "Гипотеза" }
+      ],
+      "grammar": { "title": "Прошедшее время", "rules": "Прошедшее время: -dı/-di. Ben gittim (Я пошёл).", "examples": [{ "sr": "Biz geldiğimizde, o çoktan gitmişti.", "ru": "Когда мы пришли, он уже ушёл." }] },
+      "quiz": [{ "q": "Что означает «Yapay zeka»?", "options": ["Искусственный интеллект", "Компьютер", "Интернет", "Приложение"], "correct": 0 }]
+    },
+    {
+      "id": "u9",
+      "title": "Политика и Общество (B2)",
+      "icon": "🏛️",
+      "words": [
+        { "sr": "Hükümet", "tr": "[hükümet]", "ru": "Власть" },
+        { "sr": "Muhalefet", "tr": "[muhalefet]", "ru": "Оппозиция" },
+        { "sr": "Seçim", "tr": "[seçim]", "ru": "Выборы" },
+        { "sr": "Toplum", "tr": "[toplum]", "ru": "Общество" },
+        { "sr": "Kanun", "tr": "[kanun]", "ru": "Закон" },
+        { "sr": "Özgürlük", "tr": "[özgürlük]", "ru": "Свобода" },
+        { "sr": "Sorumluluk", "tr": "[sorumluluk]", "ru": "Ответственность" },
+        { "sr": "Eleştiri", "tr": "[eleştiri]", "ru": "Критика" },
+        { "sr": "Görüş", "tr": "[görüş]", "ru": "Позиция" },
+        { "sr": "Haklar", "tr": "[haklar]", "ru": "Права" },
+        { "sr": "Demokrasi", "tr": "[demokrasi]", "ru": "Демократия" },
+        { "sr": "Vatandaş", "tr": "[vatandaş]", "ru": "Гражданин" },
+        { "sr": "Devlet", "tr": "[devlet]", "ru": "Государство" },
+        { "sr": "Parlamento", "tr": "[parlamento]", "ru": "Парламент" },
+        { "sr": "Protesto", "tr": "[protesto]", "ru": "Протест" },
+        { "sr": "Kampanya", "tr": "[kampanya]", "ru": "Кампания" },
+        { "sr": "Oylama", "tr": "[oylama]", "ru": "Голосование" },
+        { "sr": "Karar", "tr": "[karar]", "ru": "Решение" },
+        { "sr": "Reform", "tr": "[reform]", "ru": "Реформа" },
+        { "sr": "Kamuoyu", "tr": "[kamuoyu]", "ru": "Общественность" },
+        { "sr": "Anayasa", "tr": "[anayasa]", "ru": "Конституция" },
+        { "sr": "Bakan", "tr": "[bakan]", "ru": "Министр" },
+        { "sr": "Politika", "tr": "[politika]", "ru": "Политика" },
+        { "sr": "Sınır", "tr": "[sınır]", "ru": "Граница" },
+        { "sr": "Anlaşma", "tr": "[anlaşma]", "ru": "Соглашение" }
+      ],
+      "grammar": { "title": "Пассивный залог", "rules": "Пассивный залог образуется суффиксом -ıl/-il/-ul/-ül.", "examples": [{ "sr": "Burada sigara içilmez.", "ru": "Здесь не курят." }] },
+      "quiz": [{ "q": "Что значит «Burada Türkçe konuşuluyor»?", "options": ["Здесь говорят по-турецки", "Здесь учат турецкий", "Здесь живут турки"], "correct": 0 }]
+    },
+    {
+      "id": "u10",
+      "title": "Экология (B2)",
+      "icon": "🌍",
+      "words": [
+        { "sr": "Çevre", "tr": "[çevre]", "ru": "Окружающая среда" },
+        { "sr": "Kirlilik", "tr": "[kirlilik]", "ru": "Загрязнение" },
+        { "sr": "Sürdürülebilir kalkınma", "tr": "[sürdürülebilir kalkınma]", "ru": "Устойчивое развитие" },
+        { "sr": "İklim değişikliği", "tr": "[iklim değişikliği]", "ru": "Изменение климата" },
+        { "sr": "Geri dönüşüm", "tr": "[geri dönüşüm]", "ru": "Переработка" },
+        { "sr": "Enerji", "tr": "[enerji]", "ru": "Энергия" },
+        { "sr": "Doğal kaynaklar", "tr": "[doğal kaynaklar]", "ru": "Природные ресурсы" },
+        { "sr": "Koruma", "tr": "[koruma]", "ru": "Защита" },
+        { "sr": "Ekosistem", "tr": "[ekosistem]", "ru": "Экосистема" },
+        { "sr": "Biyolojik çeşitlilik", "tr": "[biyolojik çeşitlilik]", "ru": "Биоразнообразие" },
+        { "sr": "Orman", "tr": "[orman]", "ru": "Лес" },
+        { "sr": "Hava", "tr": "[hava]", "ru": "Воздух" },
+        { "sr": "Atık", "tr": "[atık]", "ru": "Отходы" },
+        { "sr": "Küresel ısınma", "tr": "[küresel ısınma]", "ru": "Глобальное потепление" },
+        { "sr": "Emisyon", "tr": "[emisyon]", "ru": "Выброс" },
+        { "sr": "Sorumlu davranış", "tr": "[sorumlu davranış]", "ru": "Ответственное поведение" },
+        { "sr": "Gezegen", "tr": "[gezegen]", "ru": "Планета" },
+        { "sr": "Önlemler", "tr": "[önlemler]", "ru": "Меры" },
+        { "sr": "Yenilenebilir kaynaklar", "tr": "[yenilenebilir kaynaklar]", "ru": "Возобновляемые источники" },
+        { "sr": "Plastik atıklar", "tr": "[plastik atıklar]", "ru": "Пластиковые отходы" },
+        { "sr": "Su kirliliği", "tr": "[su kirliliği]", "ru": "Загрязнение воды" },
+        { "sr": "Yeşil enerji", "tr": "[yeşil enerji]", "ru": "Зелёная энергия" },
+        { "sr": "Ekoloji", "tr": "[ekoloji]", "ru": "Экология" },
+        { "sr": "Doğa", "tr": "[doğa]", "ru": "Природа" }
+      ],
+      "grammar": { "title": "Сложные союзы", "rules": "Rağmen (несмотря на), Çünkü (потому что), İken (в то время как).", "examples": [{ "sr": "Yağmur yağmasına rağmen, dışarı çıkıyoruz.", "ru": "Хотя идёт дождь, мы идём на улицу." }] },
+      "quiz": [{ "q": "Что означает «Rağmen»?", "options": ["Потому что", "Несмотря на", "В то время как", "Если"], "correct": 1 }]
+    },
+    {
+      "id": "u11",
+      "title": "Медицина (B1-B2)",
+      "icon": "🏥",
+      "words": [
+        { "sr": "Sağlık", "tr": "[sağlık]", "ru": "Здравоохранение" },
+        { "sr": "Belirti", "tr": "[belirti]", "ru": "Симптом" },
+        { "sr": "Teşhis", "tr": "[teşhis]", "ru": "Диагноз" },
+        { "sr": "İlaç", "tr": "[ilaç]", "ru": "Лекарство" },
+        { "sr": "Ameliyat", "tr": "[ameliyat]", "ru": "Операция" },
+        { "sr": "Bağışıklık", "tr": "[bağışıklık]", "ru": "Иммунитет" },
+        { "sr": "Hastane", "tr": "[hastane]", "ru": "Больница" },
+        { "sr": "Doktor", "tr": "[doktor]", "ru": "Врач" },
+        { "sr": "Hasta", "tr": "[hasta]", "ru": "Пациент" },
+        { "sr": "Tedavi", "tr": "[tedavi]", "ru": "Терапия" },
+        { "sr": "Reçete", "tr": "[reçete]", "ru": "Рецепт" },
+        { "sr": "Eczane", "tr": "[eczane]", "ru": "Аптека" },
+        { "sr": "Hastalık", "tr": "[hastalık]", "ru": "Болезнь" },
+        { "sr": "Enfeksiyon", "tr": "[enfeksiyon]", "ru": "Инфекция" },
+        { "sr": "Virüs", "tr": "[virüs]", "ru": "Вирус" },
+        { "sr": "Aşı", "tr": "[aşı]", "ru": "Вакцина" },
+        { "sr": "Sağlık", "tr": "[sağlık]", "ru": "Здоровье" },
+        { "sr": "Ağrı", "tr": "[ağrı]", "ru": "Боль" },
+        { "sr": "Ateş", "tr": "[ateş]", "ru": "Температура" },
+        { "sr": "Kan basıncı", "tr": "[kan basıncı]", "ru": "Давление" },
+        { "sr": "Ambulans", "tr": "[ambulans]", "ru": "Скорая помощь" },
+        { "sr": "Muayene", "tr": "[muayene]", "ru": "Осмотр" },
+        { "sr": "İyileşme", "tr": "[iyileşme]", "ru": "Выздоровление" },
+        { "sr": "Alerji", "tr": "[alerji]", "ru": "Аллергия" },
+        { "sr": "Sigorta", "tr": "[sigorta]", "ru": "Страховка" }
+      ],
+      "grammar": { "title": "Модальные глаголы", "rules": "Zorundayım (должен), Lazım (нужно), -ebilmek (мочь), İstemek (хотеть).", "examples": [{ "sr": "Doktora gitmem gerekiyor.", "ru": "Я должен пойти к врачу." }] },
+      "quiz": [{ "q": "Как сказать «Я должен»?", "options": ["Yapabilirim", "Zorundayım", "İstiyorum"], "correct": 1 }]
     },
     {
       "id": "u12",
-      "title": "Дом и Мебель",
-      "icon": "🏠",
+      "title": "Спорт (B1)",
+      "icon": "⚽",
       "words": [
-        { "sr": "Ev", "tr": "[ev]", "ru": "Дом" },
-        { "sr": "Daire", "tr": "[daire]", "ru": "Квартира" },
-        { "sr": "Oda", "tr": "[oda]", "ru": "Комната" },
-        { "sr": "Masa", "tr": "[masa]", "ru": "Стол" },
-        { "sr": "Sandalye", "tr": "[sandalye]", "ru": "Стул" },
-        { "sr": "Pencere", "tr": "[pencere]", "ru": "Окно" },
-        { "sr": "Kapı", "tr": "[kapı]", "ru": "Дверь" }
+        { "sr": "Yarışma", "tr": "[yarışma]", "ru": "Соревнование" },
+        { "sr": "Antrenman", "tr": "[antrenman]", "ru": "Тренировка" },
+        { "sr": "Zafer", "tr": "[zafer]", "ru": "Победа" },
+        { "sr": "Yenilgi", "tr": "[yenilgi]", "ru": "Поражение" },
+        { "sr": "Takım", "tr": "[takım]", "ru": "Команда" },
+        { "sr": "Koç", "tr": "[koç]", "ru": "Тренер" },
+        { "sr": "Oyuncu", "tr": "[oyuncu]", "ru": "Игрок" },
+        { "sr": "Saha", "tr": "[saha]", "ru": "Поле" },
+        { "sr": "Stadyum", "tr": "[stadyum]", "ru": "Стадион" },
+        { "sr": "Taraftar", "tr": "[taraftar]", "ru": "Болельщик" },
+        { "sr": "Sonuç", "tr": "[sonuç]", "ru": "Результат" },
+        { "sr": "Gol", "tr": "[gol]", "ru": "Гол" },
+        { "sr": "Futbol", "tr": "[futbol]", "ru": "Футбол" },
+        { "sr": "Basketbol", "tr": "[basketbol]", "ru": "Баскетбол" },
+        { "sr": "Tenis", "tr": "[tenis]", "ru": "Теннис" },
+        { "sr": "Yüzme", "tr": "[yüzme]", "ru": "Плавание" },
+        { "sr": "Atletizm", "tr": "[atletizm]", "ru": "Атлетика" },
+        { "sr": "Fitness", "tr": "[fitness]", "ru": "Фитнес" },
+        { "sr": "Beslenme", "tr": "[beslenme]", "ru": "Питание" },
+        { "sr": "Egzersiz", "tr": "[egzersiz]", "ru": "Упражнение" },
+        { "sr": "Madalya", "tr": "[madalya]", "ru": "Медаль" },
+        { "sr": "Şampiyon", "tr": "[şampiyon]", "ru": "Чемпион" },
+        { "sr": "Kurallar", "tr": "[kurallar]", "ru": "Правила" },
+        { "sr": "Hakem", "tr": "[hakem]", "ru": "Судья" },
+        { "sr": "Rekor", "tr": "[rekor]", "ru": "Рекорд" }
       ],
-      "grammar": {
-        "title": "Предлоги места",
-        "rules": "İçinde (в), Üstünde (на), Yanında (рядом), Altında (под).",
-        "examples": [
-          { "sr": "Kitap masanın üstünde.", "ru": "Книга на столе." },
-          { "sr": "Ben odadayım.", "ru": "Я в комнате." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Дом»?", "options": ["Daire", "Oda", "Ev", "Masa"], "correct": 2 },
-        { "q": "Что означает «Pencere»?", "options": ["Дверь", "Окно", "Стол", "Стул"], "correct": 1 },
-        { "q": "Как сказать «Книга на столе»?", "options": ["Kitap odada", "Kitap masanın üstünde", "Kitap evde", "Kitap masanın altında"], "correct": 1 }
-      ]
+      "grammar": { "title": "Степени сравнения", "rules": "Сравнительная: iyi -> daha iyi. Превосходная: en iyi.", "examples": [{ "sr": "O benden daha iyi bir oyuncu.", "ru": "Он лучший игрок, чем я." }] },
+      "quiz": [{ "q": "Как сказать «Лучший»?", "options": ["İyi", "Daha iyi", "En iyi"], "correct": 2 }]
     },
     {
       "id": "u13",
-      "title": "Хобби и Спорт",
-      "icon": "⚽",
+      "title": "Право (B2)",
+      "icon": "⚖️",
       "words": [
-        { "sr": "Spor", "tr": "[spor]", "ru": "Спорт" },
-        { "sr": "Futbol", "tr": "[futbol]", "ru": "Футбол" },
-        { "sr": "Müzik", "tr": "[müzik]", "ru": "Музыка" },
-        { "sr": "Kitap", "tr": "[kitap]", "ru": "Книга" },
-        { "sr": "Film", "tr": "[film]", "ru": "Фильм" },
-        { "sr": "Oynamak", "tr": "[oynamak]", "ru": "Играть" },
-        { "sr": "Okumak", "tr": "[okumak]", "ru": "Читать" }
+        { "sr": "Mahkeme", "tr": "[mahkeme]", "ru": "Суд" },
+        { "sr": "Avukat", "tr": "[avukat]", "ru": "Адвокат" },
+        { "sr": "Karar", "tr": "[karar]", "ru": "Приговор" },
+        { "sr": "Suç", "tr": "[suç]", "ru": "Вина" },
+        { "sr": "Tanık", "tr": "[tanık]", "ru": "Свидетель" },
+        { "sr": "Kanıt", "tr": "[kanıt]", "ru": "Доказательство" },
+        { "sr": "Savcı", "tr": "[savcı]", "ru": "Прокурор" },
+        { "sr": "Savunma", "tr": "[savunma]", "ru": "Защита" },
+        { "sr": "Suçlama", "tr": "[suçlama]", "ru": "Обвинение" },
+        { "sr": "Suç", "tr": "[suç]", "ru": "Преступление" },
+        { "sr": "Ceza", "tr": "[ceza]", "ru": "Наказание" },
+        { "sr": "Hapishane", "tr": "[hapishane]", "ru": "Тюрьма" },
+        { "sr": "Hukuk", "tr": "[hukuk]", "ru": "Право" },
+        { "sr": "Yükümlülük", "tr": "[yükümlülük]", "ru": "Обязанность" },
+        { "sr": "Anlaşma", "tr": "[anlaşma]", "ru": "Соглашение" },
+        { "sr": "Taraf", "tr": "[taraf]", "ru": "Сторона" },
+        { "sr": "Süreç", "tr": "[süreç]", "ru": "Процесс" },
+        { "sr": "Şikayet", "tr": "[şikayet]", "ru": "Жалоба" },
+        { "sr": "Soruşturma", "tr": "[soruşturma]", "ru": "Расследование" },
+        { "sr": "Misyon", "tr": "[misyon]", "ru": "Миссия" },
+        { "sr": "Polis", "tr": "[polis]", "ru": "Полиция" },
+        { "sr": "Suçlu", "tr": "[suçlu]", "ru": "Преступник" },
+        { "sr": "Kurban", "tr": "[kurban]", "ru": "Жертва" },
+        { "sr": "İfade", "tr": "[ifade]", "ru": "Допрос" },
+        { "sr": "Adalet", "tr": "[adalet]", "ru": "Справедливость" }
       ],
-      "grammar": {
-        "title": "Инфинитив",
-        "rules": "Инфинитив заканчивается на -mak/-mek (oynamak, okumak).",
-        "examples": [
-          { "sr": "Futbol oynamayı seviyorum.", "ru": "Я люблю играть в футбол." },
-          { "sr": "Kitap okumayı seviyorum.", "ru": "Я люблю читать книги." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Спорт»?", "options": ["Müzik", "Futbol", "Spor", "Film"], "correct": 2 },
-        { "q": "Что означает «Okumak»?", "options": ["Играть", "Читать", "Петь", "Танцевать"], "correct": 1 },
-        { "q": "Как сказать «Я люблю играть»?", "options": ["Okumayı seviyorum", "Oynamayı seviyorum", "Müzik seviyorum", "Oynuyorum"], "correct": 1 }
-      ]
+      "grammar": { "title": "Косвенная речь", "rules": "Передаётся с помощью -dığını/-diğini.", "examples": [{ "sr": "Gazeteci haberlerin olacağını söyledi.", "ru": "Журналист сказал, что будут новости." }] },
+      "quiz": [{ "q": "Как сказать «Он сказал, что придёт»?", "options": ["Geleceğini söyledi", "Geldiğini söyledi", "Geldiğini söylüyor"], "correct": 0 }]
     },
     {
       "id": "u14",
-      "title": "Транспорт и Город",
-      "icon": "🚌",
+      "title": "Культура и Эмоции (B2)",
+      "icon": "❤️",
       "words": [
-        { "sr": "Araba", "tr": "[araba]", "ru": "Автомобиль" },
-        { "sr": "Bisiklet", "tr": "[bisiklet]", "ru": "Велосипед" },
-        { "sr": "Taksi", "tr": "[taksi]", "ru": "Такси" },
-        { "sr": "Park", "tr": "[park]", "ru": "Парк" },
-        { "sr": "Restoran", "tr": "[restoran]", "ru": "Ресторан" },
-        { "sr": "Fırın", "tr": "[fırın]", "ru": "Пекарня" },
-        { "sr": "Eczane", "tr": "[eczane]", "ru": "Аптека" }
+        { "sr": "Aşk", "tr": "[aşk]", "ru": "Любовь" },
+        { "sr": "Mutluluk", "tr": "[mutluluk]", "ru": "Счастье" },
+        { "sr": "Üzüntü", "tr": "[üzüntü]", "ru": "Грусть" },
+        { "sr": "Korku", "tr": "[korku]", "ru": "Страх" },
+        { "sr": "Umut", "tr": "[umut]", "ru": "Надежда" },
+        { "sr": "Güven", "tr": "[güven]", "ru": "Доверие" },
+        { "sr": "İlişki", "tr": "[ilişki]", "ru": "Отношение" },
+        { "sr": "Ortak", "tr": "[ortak]", "ru": "Партнёр" },
+        { "sr": "Dostluk", "tr": "[dostluk]", "ru": "Дружба" },
+        { "sr": "Kültür", "tr": "[kültür]", "ru": "Культура" },
+        { "sr": "Sanat", "tr": "[sanat]", "ru": "Искусство" },
+        { "sr": "Müzik", "tr": "[müzik]", "ru": "Музыка" },
+        { "sr": "Film", "tr": "[film]", "ru": "Фильм" },
+        { "sr": "Kitap", "tr": "[kitap]", "ru": "Книга" },
+        { "sr": "Gelenek", "tr": "[gelenek]", "ru": "Традиция" },
+        { "sr": "Stil", "tr": "[stil]", "ru": "Стиль" },
+        { "sr": "Sergi", "tr": "[sergi]", "ru": "Выставка" },
+        { "sr": "Seyirci", "tr": "[seyirci]", "ru": "Публика" },
+        { "sr": "İlham", "tr": "[ilham]", "ru": "Вдохновение" },
+        { "sr": "Yetenek", "tr": "[yetenek]", "ru": "Талант" },
+        { "sr": "Duygu", "tr": "[duygu]", "ru": "Эмоция" },
+        { "sr": "Anı", "tr": "[anı]", "ru": "Воспоминание" },
+        { "sr": "Tiyatro", "tr": "[tiyatro]", "ru": "Театр" },
+        { "sr": "Resim", "tr": "[resim]", "ru": "Картина" },
+        { "sr": "Miras", "tr": "[miras]", "ru": "Наследие" }
       ],
-      "grammar": {
-        "title": "Направление",
-        "rules": "Nerede? (Где?) и ... nereye? (Куда?).",
-        "examples": [
-          { "sr": "Park nerede?", "ru": "Где парк?" },
-          { "sr": "Restorana nasıl gidebilirim?", "ru": "Как добраться до ресторана?" }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Автомобиль»?", "options": ["Bisiklet", "Taksi", "Araba", "Tren"], "correct": 2 },
-        { "q": "Что означает «Fırın»?", "options": ["Аптека", "Ресторан", "Пекарня", "Парк"], "correct": 2 },
-        { "q": "Как спросить «Где парк?»", "options": ["Park nedir?", "Park nerede?", "Park nasıl?", "Park ne kadar?"], "correct": 1 }
-      ]
+      "grammar": { "title": "Относительные местоимения", "rules": "Hangi (который), Kim (кто), Ne (что).", "examples": [{ "sr": "Masada olan kitap benim.", "ru": "Книга, которая на столе, моя." }] },
+      "quiz": [{ "q": "Как сказать «Книга, которая на столе»?", "options": ["Masada olan kitap", "Masadaki kitap", "Masada kitap"], "correct": 1 }]
     },
     {
       "id": "u15",
-      "title": "Эмоции и Характер",
-      "icon": "😊",
+      "title": "Финансы (B2)",
+      "icon": "💰",
       "words": [
-        { "sr": "Mutlu", "tr": "[mutlu]", "ru": "Счастливый" },
-        { "sr": "Üzgün", "tr": "[üzgün]", "ru": "Грустный" },
-        { "sr": "Kızgın", "tr": "[kızgın]", "ru": "Злой" },
-        { "sr": "Yorgun", "tr": "[yorgun]", "ru": "Уставший" },
-        { "sr": "İyi", "tr": "[iyi]", "ru": "Хороший" },
-        { "sr": "Kötü", "tr": "[kötü]", "ru": "Плохой" },
-        { "sr": "Akıllı", "tr": "[akıllı]", "ru": "Умный" }
+        { "sr": "Sermaye", "tr": "[sermaye]", "ru": "Капитал" },
+        { "sr": "Kredi", "tr": "[kredi]", "ru": "Кредит" },
+        { "sr": "Banka", "tr": "[banka]", "ru": "Банк" },
+        { "sr": "Kur", "tr": "[kur]", "ru": "Курс" },
+        { "sr": "Ödeme", "tr": "[ödeme]", "ru": "Платёж" },
+        { "sr": "Hesap", "tr": "[hesap]", "ru": "Счёт" },
+        { "sr": "Vergi", "tr": "[vergi]", "ru": "Налог" },
+        { "sr": "Kazanç", "tr": "[kazanç]", "ru": "Заработок" },
+        { "sr": "Teklif", "tr": "[teklif]", "ru": "Предложение" },
+        { "sr": "Talep", "tr": "[talep]", "ru": "Спрос" },
+        { "sr": "Ürün", "tr": "[ürün]", "ru": "Продукт" },
+        { "sr": "Hizmet", "tr": "[hizmet]", "ru": "Услуга" },
+        { "sr": "Rekabet", "tr": "[rekabet]", "ru": "Конкуренция" },
+        { "sr": "Başarı", "tr": "[başarı]", "ru": "Успех" },
+        { "sr": "Büyüme", "tr": "[büyüme]", "ru": "Рост" },
+        { "sr": "Düşüş", "tr": "[düşüş]", "ru": "Падение" },
+        { "sr": "Finans", "tr": "[finans]", "ru": "Финансы" },
+        { "sr": "Bütçe", "tr": "[bütçe]", "ru": "Бюджет" },
+        { "sr": "Tasarruf", "tr": "[tasarruf]", "ru": "Сбережения" },
+        { "sr": "Faiz", "tr": "[faiz]", "ru": "Проценты" },
+        { "sr": "Temettü", "tr": "[temettü]", "ru": "Дивиденды" },
+        { "sr": "Borsa", "tr": "[borsa]", "ru": "Биржа" },
+        { "sr": "Hisse", "tr": "[hisse]", "ru": "Акция" },
+        { "sr": "İşlem", "tr": "[işlem]", "ru": "Транзакция" },
+        { "sr": "Ekonomi", "tr": "[ekonomi]", "ru": "Экономика" }
       ],
-      "grammar": {
-        "title": "Прилагательные",
-        "rules": "Прилагательные ставятся перед существительным. İyi adam (хороший человек).",
-        "examples": [
-          { "sr": "O iyi.", "ru": "Он хороший." },
-          { "sr": "Ben mutluyum.", "ru": "Я счастлив." }
-        ]
-      },
-      "quiz": [
-        { "q": "Как сказать «Счастливый»?", "options": ["Üzgün", "Mutlu", "Kızgın", "Yorgun"], "correct": 1 },
-        { "q": "Что означает «Yorgun»?", "options": ["Злой", "Уставший", "Умный", "Хороший"], "correct": 1 },
-        { "q": "Как сказать «Он хороший»?", "options": ["O iyi", "O kötü", "Ben iyi", "Sen iyi"], "correct": 0 }
-      ]
+      "grammar": { "title": "Условные предложения", "rules": "Eğer + настоящее время, + будущее время.", "examples": [{ "sr": "Sermaye yatırırsan, kâr edeceksin.", "ru": "Если вложишь капитал, получишь прибыль." }] },
+      "quiz": [{ "q": "Как сказать «Если будешь работать, заработаешь»?", "options": ["Çalışırsan, kazanacaksın", "Çalışırsan, kazandın", "Çalıştın, kazandın"], "correct": 0 }]
     }
   ]
 }
