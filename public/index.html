@@ -43,7 +43,7 @@
   .home-card h2 { font-size: 1.1rem; font-weight: 800; }
   .home-card p { font-size: 0.8rem; color: var(--muted); }
   .path-container { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 20px 0; position: relative; }
-  .path-node { width: 70px; height: 70px; border-radius: 50%; background: var(--card); border: 4px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.2s; }
+  .path-node { width: 70px; height: 70px; border-radius: 50%; background: var(--card); border: 4px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.2s; position: relative; }
   .path-node.locked { filter: grayscale(1); opacity: 0.6; cursor: not-allowed; }
   .path-node.done { border-color: var(--green); background: rgba(16,185,129,0.1); }
   .lesson-header { text-align: center; margin-bottom: 24px; }
@@ -54,10 +54,10 @@
   .letter-display { text-align: center; background: var(--card); border-radius: 24px; padding: 30px; margin-bottom: 24px; border: 1px solid var(--border); }
   .letter-display .big-char { font-size: 5rem; font-weight: 900; color: var(--serbian2); line-height: 1; margin-bottom: 10px; }
   .letter-display .sound { font-size: 1.2rem; color: var(--blue); font-weight: 700; margin-bottom: 20px; }
-  .custom-audio-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; margin: 0 4px; }
+  .custom-audio-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; margin: 4px; font-size: 0.9rem; }
   .custom-audio-btn:hover { background: var(--border); }
   .word-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
-  .word-row { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; }
+  .word-row { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
   .grammar-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
   .quiz-option { background: var(--card); border: 2px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; font-weight: 600; }
   .quiz-option.correct { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); }
@@ -69,7 +69,7 @@
   .shop-item.owned { border-color: var(--green); }
   .rank-row { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 16px; margin-bottom: 8px; }
   .rank-row.me { border-color: var(--serbian); background: rgba(198,54,60,0.08); }
-  .btn { border: none; border-radius: 14px; padding: 16px 24px; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: block; text-align: center; }
+  .btn { border: none; border-radius: 14px; padding: 16px 24px; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: block; text-align: center; margin-top: 10px; }
   .btn-primary { background: linear-gradient(135deg, var(--serbian), var(--serbian2)); color: #fff; }
   .btn-green { background: linear-gradient(135deg, var(--green), var(--green2)); color: #fff; }
   .btn-ghost { background: var(--card2); color: var(--text); }
@@ -104,7 +104,9 @@ let audioChunks = [];
 
 function getUfaDate() {
   const now = new Date();
-  const ufaTime = new Date(now.getTime() + (5 * 60 * 60 * 1000));
+  // Смещение Уфы UTC+5
+  const ufaTime = new Date(now.getTime() + (5 * 60 * 60 * 1000)); 
+  // Корректировка, если время меньше 7 утра по Уфе, считаем прошлый день
   if (ufaTime.getUTCHours() < 7) ufaTime.setUTCDate(ufaTime.getUTCDate() - 1);
   return ufaTime.toISOString().split('T')[0];
 }
@@ -123,18 +125,32 @@ function checkDailyLimit() {
 }
 
 function saveState() {
-  const progObj = {}; for (const k in state.progress) progObj[k] = [...state.progress[k]];
-  const alphaObj = {}; for (const k in state.alphaProgress) alphaObj[k] = [...state.alphaProgress[k]];
+  // Преобразуем Set в Array для сохранения
+  const progObj = {}; 
+  for (const k in state.progress) progObj[k] = Array.from(state.progress[k]);
+  
+  const alphaObj = {}; 
+  for (const k in state.alphaProgress) alphaObj[k] = Array.from(state.alphaProgress[k]);
+
   localStorage.setItem("bobor_state_v9", JSON.stringify({
     user: state.user, settings: state.settings, xp: state.xp, streak: state.streak, currentCourse: state.currentCourse,
     progress: progObj, alphaProgress: alphaObj, medals: state.medals, lastDaily: state.lastDaily,
     lessonsToday: state.lessonsToday, lastLessonDate: state.lastLessonDate
   }));
+
   if (state.user) {
     fetch("/api/sync-progress", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username: state.user.email, xp: state.xp, streak: state.streak, medals: state.medals, last_daily: state.lastDaily, units_done: progObj, lessons_today: state.lessonsToday })
-    }).catch(e => {});
+      body: JSON.stringify({ 
+        username: state.user.email, 
+        xp: state.xp, 
+        streak: state.streak, 
+        medals: state.medals, 
+        last_daily: state.lastDaily, 
+        units_done: progObj, 
+        lessons_today: state.lessonsToday 
+      })
+    }).catch(e => console.error("Sync error", e));
   }
 }
 
@@ -148,9 +164,15 @@ function loadState() {
     state.xp = data.xp || 0; state.streak = data.streak || 0; state.currentCourse = data.currentCourse || "sr";
     state.medals = data.medals || []; state.lastDaily = data.lastDaily || null;
     state.lessonsToday = data.lessonsToday || 0; state.lastLessonDate = data.lastLessonDate || null;
-    if (data.progress) for (const k in data.progress) state.progress[k] = new Set(data.progress[k]);
-    if (data.alphaProgress) for (const k in data.alphaProgress) state.alphaProgress[k] = new Set(data.alphaProgress[k]);
-  } catch (e) {}
+    
+    // Преобразуем Array обратно в Set
+    if (data.progress) {
+      for (const k in data.progress) state.progress[k] = new Set(data.progress[k]);
+    }
+    if (data.alphaProgress) {
+      for (const k in data.alphaProgress) state.alphaProgress[k] = new Set(data.alphaProgress[k]);
+    }
+  } catch (e) { console.error("Load error", e); }
 }
 
 const el = (tag, attrs = {}, children = []) => {
@@ -171,23 +193,36 @@ const el = (tag, attrs = {}, children = []) => {
 
 function playTTS(text, langCode) {
   if (!window.speechSynthesis) return;
+  // Отменяем предыдущую речь, чтобы не накладывалась
+  window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(text);
   utter.lang = langCode || "ru-RU";
   const voices = window.speechSynthesis.getVoices();
-  const voice = voices.find(v => v.lang.startsWith(langCode));
+  // Пытаемся найти голос, соответствующий языку
+  const voice = voices.find(v => v.lang.startsWith(langCode.split('-')[0]));
   if (voice) utter.voice = voice;
   window.speechSynthesis.speak(utter);
 }
 
+// Генерация ключа для аудио (очищаем от пробелов и спецсимволов для надежности)
+function getAudioKey(text) {
+  return `${state.currentCourse}_${text.trim()}`;
+}
+
 function renderAudioButton(text) {
-  const key = state.currentCourse + "_" + text;
+  const key = getAudioKey(text);
   return el("div", { style: "display:flex; gap:8px; align-items:center; flex-wrap:wrap;" }, [
     el("button", { class: "custom-audio-btn", onclick: async () => {
       try {
         const res = await fetch(`/api/get-audio/${encodeURIComponent(key)}`);
         const data = await res.json();
-        if (data.audio) { new Audio(data.audio).play(); return; }
+        if (data.audio) { 
+          const audio = new Audio(data.audio);
+          audio.play(); 
+          return; 
+        }
       } catch (e) {}
+      // Fallback на TTS
       playTTS(text, state.courseData?.speechLang || "ru-RU");
     }}, "🔊 Слушать"),
     
@@ -207,6 +242,7 @@ function renderAudioButton(text) {
                 method: "POST", headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ key, audioBase64: reader.result, role: state.user.role })
               });
+              alert("Аудио сохранено!");
               render();
             };
           };
@@ -222,6 +258,7 @@ function renderAudioButton(text) {
           method: "POST", headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ key, role: state.user.role })
         });
+        alert("Удалено");
         render();
       }
     }}, "🗑️ Удалить") : null
@@ -322,14 +359,19 @@ function renderLearn() {
       class: `path-node ${isLocked ? 'locked' : ''} ${isDone ? 'done' : ''}`,
       onclick: () => {
         if (isLocked) return;
+        // Проверка лимита только для новых уроков
         if (!isDone && !checkDailyLimit()) return;
+        
         state.currentUnit = unit;
         state.lessonStep = unit.alphabet ? "alphabet_grid" : "words";
         state.quizIdx = 0; state.currentAlphaLetter = null;
         state.screen = "lesson"; render();
       }
     }, [el("span", {}, isDone ? "✅" : (isLocked ? "🔒" : "▶️"))]);
-    node.appendChild(el("div", { style: "position:absolute;top:80px;font-size:0.8rem;font-weight:800;color:var(--muted);white-space:nowrap;" }, unit.title));
+    
+    // Подпись под кружком
+    const label = el("div", { style: "position:absolute;top:80px;font-size:0.8rem;font-weight:800;color:var(--muted);white-space:nowrap;width:150px;text-align:center;left:50%;transform:translateX(-50%);" }, unit.title);
+    node.appendChild(label);
     path.appendChild(node);
     prevDone = isDone;
   });
@@ -362,6 +404,7 @@ function renderLesson() {
   }
   else if (state.lessonStep === "alphabet_card") {
     const a = state.currentAlphaLetter;
+    // Генерация неправильных ответов
     const wrongSounds = (unit.alphabet?.table || []).filter(x => x.sound !== a.sound).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.sound);
     const options = [a.sound, ...wrongSounds].sort(() => 0.5 - Math.random());
 
@@ -424,13 +467,22 @@ function renderLesson() {
   }
   else if (state.lessonStep === "quiz") {
     if (state.quizIdx >= unit.quiz.length) {
-      state.progress[state.currentCourse] = state.progress[state.currentCourse] || new Set();
-      state.progress[state.currentCourse].add(unit.id);
-      state.xp += 50; state.lessonsToday++; saveState();
+      // Начисляем XP только если урок еще не был пройден (или просто даем за прохождение теста)
+      // Но проверяем, не фармит ли пользователь через библиотеку
+      const isCompleted = state.progress[state.currentCourse]?.has(unit.id);
+      
+      if (!isCompleted) {
+         state.progress[state.currentCourse] = state.progress[state.currentCourse] || new Set();
+         state.progress[state.currentCourse].add(unit.id);
+         state.xp += 50; 
+         state.lessonsToday++; 
+      }
+      
+      saveState();
       app.appendChild(el("div", { class: "success-screen" }, [
         el("div", { style: "font-size:4rem;" }, "🏆"),
-        el("h2", {}, "Юнит пройден!"),
-        el("p", {}, "+50 XP. Открыт следующий урок!"),
+        el("h2", {}, isCompleted ? "Повторение завершено!" : "Юнит пройден!"),
+        el("p", {}, isCompleted ? "Молодец, что повторяешь!" : "+50 XP. Открыт следующий урок!"),
         el("button", { class: "btn btn-green", onclick: () => { state.screen = "learn"; render(); } }, "К списку")
       ]));
       root.appendChild(app); return;
@@ -506,9 +558,9 @@ function renderRanked() {
   const app = el("div", { class: "app" });
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
   app.appendChild(el("h1", { style: "font-size:1.6rem;margin-bottom:20px;" }, "Ранкед"));
-  const fake = [{ n: "Marko", x: 1500 }, { n: "Ana", x: 1200 }, { n: state.user.email, x: state.xp }, { n: "Ivan", x: 500 }].sort((a,b)=>b.x-a.x);
+  const fake = [{ n: "Marko", x: 1500 }, { n: "Ana", x: 1200 }, { n: state.user?.email || "Вы", x: state.xp }, { n: "Ivan", x: 500 }].sort((a,b)=>b.x-a.x);
   fake.forEach((r, i) => {
-    app.appendChild(el("div", { class: "rank-row " + (r.n === state.user.email ? "me" : "") }, [
+    app.appendChild(el("div", { class: "rank-row " + (r.n === state.user?.email ? "me" : "") }, [
       el("div", { style: "font-weight:900;width:24px;" }, `${i+1}`),
       el("div", { style: "flex:1;font-weight:800;" }, r.n),
       el("div", { style: "color:var(--purple);font-weight:800;" }, `⚡ ${r.x}`)
