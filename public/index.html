@@ -81,7 +81,6 @@
   
   .custom-audio-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; }
   .custom-audio-btn:hover { background: var(--border); }
-  .custom-audio-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
   .word-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
   .word-row { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.2s; }
@@ -159,25 +158,16 @@ const COURSES_META = {
 };
 
 const state = {
-  screen: "auth",
-  user: null,
-  settings: { theme: "dark" },
-  xp: 0,
-  streak: 0,
-  currentCourse: "sr",
-  progress: {},
-  alphaProgress: {},
-  medals: [],
-  currentUnit: null,
-  lessonStep: "words",
-  currentAlphaLetter: null,
-  quizIdx: 0,
-  lastDaily: null,
-  courseData: null,
-  loading: false,
-  lessonsToday: 0,
-  lastLessonDate: null
+  screen: "auth", user: null, settings: { theme: "dark" },
+  xp: 0, streak: 0, currentCourse: "sr",
+  progress: {}, alphaProgress: {}, medals: [],
+  currentUnit: null, lessonStep: "words", currentAlphaLetter: null, quizIdx: 0,
+  lastDaily: null, courseData: null, loading: false,
+  lessonsToday: 0, lastLessonDate: null
 };
+
+let mediaRecorder;
+let audioChunks = [];
 
 function saveState() {
   const progObj = {};
@@ -185,28 +175,37 @@ function saveState() {
   const alphaObj = {};
   for (const k in state.alphaProgress) alphaObj[k] = [...state.alphaProgress[k]];
   
-  localStorage.setItem("bobor_state_v4", JSON.stringify({
+  localStorage.setItem("bobor_state_v6", JSON.stringify({
     user: state.user, settings: state.settings,
     xp: state.xp, streak: state.streak, currentCourse: state.currentCourse,
     progress: progObj, alphaProgress: alphaObj, medals: state.medals, 
     lastDaily: state.lastDaily, lessonsToday: state.lessonsToday, lastLessonDate: state.lastLessonDate
   }));
+  
+  if (state.user) {
+    fetch("/api/sync-progress", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: state.user.username, xp: state.xp, streak: state.streak,
+        medals: state.medals, last_daily: state.lastDaily,
+        units_done: progObj
+      })
+    }).catch(e => {});
+  }
 }
 
 function loadState() {
   try {
-    const raw = localStorage.getItem("bobor_state_v4");
+    const raw = localStorage.getItem("bobor_state_v6");
     if (!raw) return;
     const data = JSON.parse(raw);
     if (data.user) state.user = data.user;
     if (data.settings) state.settings = { ...state.settings, ...data.settings };
-    state.xp = data.xp || 0;
-    state.streak = data.streak || 0;
+    state.xp = data.xp || 0; state.streak = data.streak || 0;
     state.currentCourse = data.currentCourse || "sr";
-    state.medals = data.medals || [];
-    state.lastDaily = data.lastDaily || null;
-    state.lessonsToday = data.lessonsToday || 0;
-    state.lastLessonDate = data.lastLessonDate || null;
+    state.medals = data.medals || []; state.lastDaily = data.lastDaily || null;
+    state.lessonsToday = data.lessonsToday || 0; state.lastLessonDate = data.lastLessonDate || null;
     
     if (data.progress) for (const k in data.progress) state.progress[k] = new Set(data.progress[k]);
     if (data.alphaProgress) for (const k in data.alphaProgress) state.alphaProgress[k] = new Set(data.alphaProgress[k]);
@@ -228,24 +227,16 @@ function checkDailyStreak() {
     state.lessonsToday = 0;
     state.lastLessonDate = today;
   }
-  
   if (!state.lastDaily) {
-    state.streak = 1;
-    state.lastDaily = today;
-    saveState();
-    return;
+    state.streak = 1; state.lastDaily = today; saveState(); return;
   }
   if (state.lastDaily === today) return;
-  
   const last = new Date(state.lastDaily);
   const now = new Date(today);
   const diffDays = Math.round((now - last) / 86400000);
-  
   if (diffDays === 1) state.streak += 1;
   else if (diffDays > 1) state.streak = 1;
-  
-  state.lastDaily = today;
-  saveState();
+  state.lastDaily = today; saveState();
 }
 
 const el = (tag, attrs = {}, children = []) => {
@@ -265,29 +256,63 @@ const el = (tag, attrs = {}, children = []) => {
 };
 
 function renderAudioButton(text) {
-  return el("button", { class: "custom-audio-btn", onclick: () => {
-    // ЗДЕСЬ БУДЕТ ТВОЙ КОД ДЛЯ ВОСПРОИЗВЕДЕНИЯ
-    console.log("Озвучить: " + text);
-    alert("Озвучка: " + text);
-  } }, [
-    el("span", { html: "&#128266;" }),
-    el("span", {}, "Озвучить")
-  ]);
+  const key = state.currentCourse + "_" + text;
+  return el("button", { class: "custom-audio-btn", onclick: async () => {
+    try {
+      const res = await fetch(`/api/get-audio/${encodeURIComponent(key)}`);
+      const data = await res.json();
+      if (data.audio) {
+        const audio = new Audio(data.audio);
+        audio.play();
+        return;
+      }
+    } catch (e) {}
+
+    if (confirm("Записи нет. Записать голос?")) {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        mediaRecorder.ondataavailable = (event) => { audioChunks.push(event.data); };
+        mediaRecorder.onstop = () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+          const reader = new FileReader();
+          reader.readAsDataURL(audioBlob); 
+          reader.onloadend = async () => {
+            const base64Audio = reader.result;
+            try {
+              await fetch("/api/save-audio", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ key, audioBase64: base64Audio })
+              });
+              alert("Сохранено! Теперь доступно на всех устройствах.");
+            } catch (e) {
+              alert("Ошибка сохранения. Проверь интернет.");
+            }
+          };
+        };
+        mediaRecorder.start();
+        alert("Говори! Запись остановится через 3 секунды.");
+        setTimeout(() => {
+          mediaRecorder.stop();
+          stream.getTracks().forEach(track => track.stop());
+        }, 3000);
+      } catch (e) { alert("Нет доступа к микрофону."); }
+    }
+  } }, [el("span", {}, "🔊 Озвучить")]);
 }
 
 async function loadCourseData() {
-  state.loading = true;
-  render();
+  state.loading = true; render();
   try {
     const res = await fetch(`/data/${state.currentCourse}.json`);
     if (!res.ok) throw new Error("Файл не найден");
     state.courseData = await res.json();
   } catch (e) {
-    console.error("Ошибка загрузки:", e);
     state.courseData = { code: state.currentCourse, name: "Курс", flag: "🏳️", units: [] };
   }
-  state.loading = false;
-  render();
+  state.loading = false; render();
 }
 
 function changeLanguage(langCode) {
@@ -343,8 +368,7 @@ function renderAuth() {
         if (!username) return;
         state.user = { username };
         state.screen = "home";
-        saveState();
-        render();
+        saveState(); render();
       }
     }, [
       el("input", { name: "username", placeholder: "Твой никнейм", style: "width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--bg2);color:var(--text);margin-bottom:16px;outline:none;" }),
@@ -357,7 +381,6 @@ function renderAuth() {
 function renderHome() {
   const app = el("div", { class: "app" });
   app.appendChild(renderTopbar());
-
   app.appendChild(el("h3", { style: "font-size:0.9rem;color:var(--muted);margin-bottom:8px;" }, "Текущий язык:"));
   const langBar = el("div", { class: "lang-selector" });
   for (const code in COURSES_META) {
@@ -368,10 +391,8 @@ function renderHome() {
     }, [el("span", {}, meta.flag), el("span", {}, meta.name)]));
   }
   app.appendChild(langBar);
-
   app.appendChild(el("h1", { style: "font-size:1.8rem;font-weight:900;margin-bottom:8px;margin-top:20px;" }, "Привет, " + (state.user?.username || "друг") + "!"));
   app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;" }, "Выбери режим"));
-
   app.appendChild(el("div", { class: "home-grid" }, [
     el("div", { class: "home-card", onclick: () => { state.screen = "learn"; loadCourseData(); } }, [
       el("span", { class: "icon" }, "🎓"), el("h2", {}, "Обучение"), el("p", {}, "Пошаговый путь")
@@ -386,7 +407,6 @@ function renderHome() {
       el("span", { class: "icon" }, "🏆"), el("h2", {}, "Ранкед"), el("p", {}, "Лидерборд")
     ])
   ]));
-
   root.appendChild(app);
 }
 
@@ -394,49 +414,36 @@ function renderLearn() {
   const app = el("div", { class: "app" });
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-
   if (state.loading || !state.courseData) {
     app.appendChild(el("p", { style: "text-align:center;margin-top:40px;" }, "Загрузка курса..."));
-    root.appendChild(app);
-    return;
+    root.appendChild(app); return;
   }
-
   app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:4px;text-align:center;" }, "Обучение: " + state.courseData.name));
   app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;text-align:center;" }, "Пройди все юниты, чтобы стать мастером"));
-
   const path = el("div", { class: "path-container" });
   path.appendChild(el("div", { class: "path-line" }));
-
   const courseProgress = state.progress[state.currentCourse] || new Set();
   let prevDone = true;
-
   state.courseData.units.forEach((unit, idx) => {
     const isDone = courseProgress.has(unit.id);
     const isLocked = !prevDone;
     const offsetClass = idx % 2 === 0 ? "offset-left" : "offset-right";
-    
     let icon = "🔒";
-    if (isDone) icon = "✅";
-    else if (!isLocked) icon = "▶️";
-
+    if (isDone) icon = "✅"; else if (!isLocked) icon = "▶️";
     const node = el("div", { 
       class: `path-node ${isLocked ? 'locked' : ''} ${isDone ? 'done' : ''} ${offsetClass}`,
       onclick: () => {
         if (isLocked) return;
         state.currentUnit = unit;
         state.lessonStep = unit.alphabet ? "alphabet_grid" : "words";
-        state.quizIdx = 0;
-        state.currentAlphaLetter = null;
-        state.screen = "lesson";
-        render();
+        state.quizIdx = 0; state.currentAlphaLetter = null;
+        state.screen = "lesson"; render();
       }
     }, [el("span", {}, icon)]);
-    
     node.appendChild(el("div", { style: "position:absolute;top:80px;font-size:0.7rem;font-weight:800;color:var(--muted);white-space:nowrap;" }, unit.title));
     path.appendChild(node);
     prevDone = isDone;
   });
-
   app.appendChild(path);
   root.appendChild(app);
 }
@@ -444,48 +451,32 @@ function renderLearn() {
 function renderLesson() {
   const unit = state.currentUnit;
   if (!unit) { state.screen = "learn"; render(); return; }
-
   const app = el("div", { class: "app" });
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "learn"; render(); } })]));
 
   if (state.lessonStep === "alphabet_grid") {
-    app.appendChild(el("div", { class: "lesson-header" }, [
-      el("h2", {}, "Алфавит"), el("p", {}, "Нажми на каждую букву, чтобы выучить её")
-    ]));
-
+    app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Алфавит"), el("p", {}, "Нажми на каждую букву, чтобы выучить её")]));
     const grid = el("div", { class: "alpha-grid" });
     const learned = state.alphaProgress[state.currentCourse] || new Set();
-
     unit.alphabet.table.forEach((a, i) => {
       const isDone = learned.has(i);
-      const btn = el("div", { 
+      grid.appendChild(el("div", { 
         class: "alpha-btn" + (isDone ? " done" : ""),
-        onclick: () => {
-          state.currentAlphaLetter = a;
-          state.lessonStep = "alphabet_card";
-          render();
-        }
+        onclick: () => { state.currentAlphaLetter = a; state.lessonStep = "alphabet_card"; render(); }
       }, [
         el("div", {}, a.char),
         el("div", { class: "pair" }, `[${a.sound}]`),
         isDone ? el("div", { class: "check", html: "✓" }) : null
-      ]);
-      grid.appendChild(btn);
+      ]));
     });
     app.appendChild(grid);
-
     if (learned.size === unit.alphabet.table.length) {
-      app.appendChild(el("button", { class: "btn btn-green", onclick: () => {
-        state.lessonStep = "alphabet_quiz";
-        state.quizIdx = 0;
-        render();
-      } }, "Пройти тест (50 XP)"));
+      app.appendChild(el("button", { class: "btn btn-green", onclick: () => { state.lessonStep = "alphabet_quiz"; state.quizIdx = 0; render(); } }, "Пройти тест (50 XP)"));
     } else {
       app.appendChild(el("p", { style: "text-align:center;color:var(--muted);margin-bottom:16px;" }, `Изучено: ${learned.size} из ${unit.alphabet.table.length}`));
     }
   }
-
   else if (state.lessonStep === "alphabet_card") {
     const a = state.currentAlphaLetter;
     app.appendChild(el("div", { class: "letter-display" }, [
@@ -497,52 +488,37 @@ function renderLesson() {
         el("div", { class: "trans" }, "Пример использования")
       ])
     ]));
-
     app.appendChild(el("button", { class: "btn btn-primary", onclick: () => {
       if (!state.alphaProgress[state.currentCourse]) state.alphaProgress[state.currentCourse] = new Set();
       const idx = unit.alphabet.table.findIndex(x => x.char === a.char);
       state.alphaProgress[state.currentCourse].add(idx);
-      saveState();
-      state.lessonStep = "alphabet_grid";
-      render();
+      saveState(); state.lessonStep = "alphabet_grid"; render();
     } }, "Я выучил эту букву"));
   }
-
   else if (state.lessonStep === "alphabet_quiz") {
     if (state.quizIdx >= 10) {
       if (state.progress[state.currentCourse] === undefined) state.progress[state.currentCourse] = new Set();
       state.progress[state.currentCourse].add(unit.id);
-      state.xp += 50;
-      checkDailyStreak();
-      saveState();
-      
+      state.xp += 50; checkDailyStreak(); saveState();
       app.appendChild(el("div", { class: "success-screen" }, [
         el("div", { class: "emoji" }, "🏆"),
         el("h2", {}, "Алфавит пройден!"),
         el("p", {}, `Ты заработал 50 XP за знание всех букв!`),
         el("button", { class: "btn btn-green", onclick: () => { state.screen = "learn"; render(); } }, "К списку юнитов")
       ]));
-      root.appendChild(app);
-      return;
+      root.appendChild(app); return;
     }
-
     const randomLetter = unit.alphabet.table[Math.floor(Math.random() * unit.alphabet.table.length)];
     const wrongOptions = unit.alphabet.table.filter(x => x.sound !== randomLetter.sound).sort(() => 0.5 - Math.random()).slice(0, 3).map(x => x.sound);
     const options = [randomLetter.sound, ...wrongOptions].sort(() => 0.5 - Math.random());
-
-    app.appendChild(el("div", { class: "lesson-header" }, [
-      el("h2", {}, "Тест"), el("p", {}, `Вопрос ${state.quizIdx + 1} из 10`)
-    ]));
-
+    app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Тест"), el("p", {}, `Вопрос ${state.quizIdx + 1} из 10`)]));
     app.appendChild(el("div", { style: "font-size:2rem;font-weight:900;text-align:center;margin-bottom:20px;" }, randomLetter.char));
     app.appendChild(el("div", { style: "text-align:center;color:var(--muted);margin-bottom:20px;" }, "Какой звук обозначает эта буква?"));
-
     options.forEach(opt => {
       const btn = el("div", { class: "quiz-option" }, opt);
       btn.onclick = () => {
         if (btn.classList.contains("disabled")) return;
         document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
-        
         if (opt === randomLetter.sound) btn.classList.add("correct");
         else {
           btn.classList.add("wrong");
@@ -550,67 +526,51 @@ function renderLesson() {
             if (b.textContent === randomLetter.sound) b.classList.add("correct");
           });
         }
-        
         setTimeout(() => { state.quizIdx++; render(); }, 1000);
       };
       app.appendChild(btn);
     });
   }
-  
   else if (state.lessonStep === "words") {
     app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Слова"), el("p", {}, unit.title)]));
     const grid = el("div", { class: "word-grid" });
     unit.words.forEach(w => {
       grid.appendChild(el("div", { class: "word-row" }, [
-        el("div", {}, [
-          el("div", { class: "w-sr" }, w.sr),
-          el("div", { class: "w-ru" }, w.ru)
-        ]),
+        el("div", {}, [el("div", { class: "w-sr" }, w.sr), el("div", { class: "w-ru" }, w.ru)]),
         renderAudioButton(w.sr)
       ]));
     });
     app.appendChild(grid);
     app.appendChild(el("button", { class: "btn btn-primary", onclick: () => { state.lessonStep = "grammar"; render(); } }, "Дальше: Грамматика"));
   }
-  
   else if (state.lessonStep === "grammar") {
     app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Грамматика"), el("p", {}, unit.grammar.title)]));
     const box = el("div", { class: "grammar-box" }, [el("h3", {}, unit.grammar.title), el("div", { class: "rule" }, unit.grammar.rules)]);
     unit.grammar.examples.forEach(ex => {
       box.appendChild(el("div", { class: "ex" }, [
-        el("div", { style: "display:flex;justify-content:space-between;align-items:center;" }, [
-          el("b", {}, ex.sr),
-          renderAudioButton(ex.sr)
-        ]),
+        el("div", { style: "display:flex;justify-content:space-between;align-items:center;" }, [el("b", {}, ex.sr), renderAudioButton(ex.sr)]),
         el("span", { style: "color:var(--muted);display:block;margin-top:4px;font-size:0.85rem;" }, ex.ru)
       ]));
     });
     app.appendChild(box);
     app.appendChild(el("button", { class: "btn btn-blue", onclick: () => { state.lessonStep = "quiz"; render(); } }, "Дальше: Тест"));
   }
-  
   else if (state.lessonStep === "quiz") {
     if (state.quizIdx >= 10) {
       if (state.progress[state.currentCourse] === undefined) state.progress[state.currentCourse] = new Set();
       state.progress[state.currentCourse].add(unit.id);
-      state.xp += 20;
-      checkDailyStreak();
-      saveState();
-      
+      state.xp += 20; checkDailyStreak(); saveState();
       app.appendChild(el("div", { class: "success-screen" }, [
         el("div", { class: "emoji" }, "🎉"),
         el("h2", {}, "Юнит пройден!"),
         el("p", {}, `Ты заработал 20 XP. Огонек: ${state.streak} 🔥`),
         el("button", { class: "btn btn-green", onclick: () => { state.screen = "learn"; render(); } }, "Вернуться к списку")
       ]));
-      root.appendChild(app);
-      return;
+      root.appendChild(app); return;
     }
-
     const q = unit.quiz[state.quizIdx];
     app.appendChild(el("div", { class: "lesson-header" }, [el("h2", {}, "Тест"), el("p", {}, `Вопрос ${state.quizIdx + 1} из 10`)]));
     app.appendChild(el("div", { style: "font-size:1.2rem;font-weight:800;margin-bottom:20px;text-align:center;" }, q.q));
-
     q.options.forEach((opt, i) => {
       const btn = el("div", { class: "quiz-option" }, opt);
       btn.onclick = () => {
@@ -626,7 +586,6 @@ function renderLesson() {
       app.appendChild(btn);
     });
   }
-
   root.appendChild(app);
 }
 
@@ -636,11 +595,9 @@ function renderLibrary() {
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
   app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:4px;" }, "Библиотека"));
   app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;" }, "Только то, что ты уже прошел"));
-
   if (state.loading || !state.courseData) { root.appendChild(app); return; }
   const courseProgress = state.progress[state.currentCourse] || new Set();
   const doneUnits = state.courseData.units.filter(u => courseProgress.has(u.id));
-  
   if (doneUnits.length === 0) {
     app.appendChild(el("p", { style: "text-align:center;color:var(--muted);margin-top:40px;" }, "Тут пусто. Начни обучение!"));
   } else {
@@ -648,9 +605,7 @@ function renderLibrary() {
       app.appendChild(el("div", { class: "lib-item" }, [
         el("h4", {}, `${u.icon} ${u.title}`),
         el("div", { style: "margin-top:12px;" }, u.words.slice(0, 3).map(w => 
-          el("div", { style: "display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:4px;" }, [
-            el("span", {}, w.sr), el("span", { style: "color:var(--muted);" }, w.ru)
-          ])
+          el("div", { style: "display:flex;justify-content:space-between;font-size:0.85rem;margin-bottom:4px;" }, [el("span", {}, w.sr), el("span", { style: "color:var(--muted);" }, w.ru)])
         )),
         el("p", { style: "margin-top:10px;font-size:0.8rem;" }, u.grammar.title)
       ]));
@@ -664,7 +619,6 @@ function renderShop() {
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
   app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:24px;" }, "Магазин"));
-  
   const medals = [
     { id: "m1", name: "Обычная", emoji: "🥉", price: 1200 },
     { id: "m2", name: "Деревянная", emoji: "🪵", price: 2000 },
@@ -672,24 +626,20 @@ function renderShop() {
     { id: "m4", name: "Алмазная", emoji: "💎", price: 4000 },
     { id: "m5", name: "Незерит", emoji: "🔥", price: 5000 }
   ];
-
   const grid = el("div", { class: "shop-grid" });
   medals.forEach(m => {
     const owned = state.medals.includes(m.id);
-    const item = el("div", { class: "shop-item" + (owned ? " owned" : "") }, [
+    grid.appendChild(el("div", { class: "shop-item" + (owned ? " owned" : "") }, [
       el("div", { class: "s-icon" }, m.emoji),
       el("div", { class: "s-name" }, m.name),
       el("div", { class: "s-price" }, `⚡ ${m.price}`),
       el("button", { class: "btn " + (owned ? "btn-ghost" : "btn-primary"), onclick: () => {
         if (owned) return;
         if (state.xp >= m.price) {
-          state.xp -= m.price;
-          state.medals.push(m.id);
-          saveState(); render();
+          state.xp -= m.price; state.medals.push(m.id); saveState(); render();
         } else alert("Не хватает XP!");
       } }, owned ? "Куплено" : "Купить")
-    ]);
-    grid.appendChild(item);
+    ]));
   });
   app.appendChild(grid);
   root.appendChild(app);
@@ -700,15 +650,10 @@ function renderRanked() {
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
   app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:24px;" }, "Ранкед"));
-  
   const fakeRanks = [
-    { name: "Marko", xp: 1500 },
-    { name: "Ana", xp: 1200 },
-    { name: state.user.username, xp: state.xp },
-    { name: "Ivan", xp: 500 },
-    { name: "Petar", xp: 200 }
+    { name: "Marko", xp: 1500 }, { name: "Ana", xp: 1200 },
+    { name: state.user.username, xp: state.xp }, { name: "Ivan", xp: 500 }, { name: "Petar", xp: 200 }
   ].sort((a, b) => b.xp - a.xp);
-
   fakeRanks.forEach((r, i) => {
     app.appendChild(el("div", { class: "rank-row" + (r.name === state.user.username ? " me" : "") }, [
       el("div", { class: "rank-pos" }, `${i + 1}`),
@@ -724,14 +669,12 @@ function renderSettings() {
   app.appendChild(renderTopbar());
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
   app.appendChild(el("h1", { style: "font-size:1.6rem;font-weight:900;margin-bottom:24px;" }, "Настройки"));
-  
   app.appendChild(el("div", { style: "margin-bottom:20px;padding:20px;background:var(--card);border-radius:16px;" }, [
     el("h3", { style: "font-size:1rem;margin-bottom:8px;" }, "Профиль"),
     el("p", { style: "color:var(--muted);" }, `Никнейм: ${state.user?.username}`),
     el("p", { style: "color:var(--muted);" }, `XP: ${state.xp} · Серия: ${state.streak}`),
     el("button", { class: "btn btn-ghost", style: "margin-top:12px;", onclick: () => { state.user = null; state.screen = "auth"; saveState(); render(); } }, "Выйти")
   ]));
-
   app.appendChild(el("div", { style: "padding:20px;background:var(--card);border-radius:16px;" }, [
     el("h3", { style: "font-size:1rem;margin-bottom:8px;" }, "Тема"),
     el("button", { class: "btn btn-ghost", onclick: () => {
@@ -739,7 +682,6 @@ function renderSettings() {
       saveState(); render();
     } }, "Переключить тему")
   ]));
-
   root.appendChild(app);
 }
 
