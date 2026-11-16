@@ -1,0 +1,434 @@
+{
+  "code": "pl",
+  "name": "Польский",
+  "flag": "🇵🇱",
+  "speechLang": "pl-PL",
+  "units": [
+    {
+      "id": "u1",
+      "title": "Алфавит и Приветствия",
+      "icon": "👋",
+      "words": [
+        { "sr": "Cześć", "tr": "[cheshch]", "ru": "Привет" },
+        { "sr": "Dzień dobry", "tr": "[jen dobry]", "ru": "Добрый день" },
+        { "sr": "Dobry wieczór", "tr": "[dobry vechur]", "ru": "Добрый вечер" },
+        { "sr": "Dziękuję", "tr": "[jenkuye]", "ru": "Спасибо" },
+        { "sr": "Proszę", "tr": "[proshe]", "ru": "Пожалуйста" },
+        { "sr": "Przepraszam", "tr": "[psheprasham]", "ru": "Извините" },
+        { "sr": "Do widzenia", "tr": "[do vidzenya]", "ru": "До свидания" },
+        { "sr": "Tak", "tr": "[tak]", "ru": "Да" },
+        { "sr": "Nie", "tr": "[nye]", "ru": "Нет" }
+      ],
+      "grammar": {
+        "title": "Алфавит",
+        "rules": "В польском 32 буквы. Особые: Ą (он), Ć (чь), Ę (эн), Ł (у), Ń (нь), Ó (у), Ś (щь), Ź (жь), Ż (ж).",
+        "examples": [
+          { "sr": "Ł = У", "ru": "Łyżka - ложка" },
+          { "sr": "Ś = Щь", "ru": "Świat - мир" },
+          { "sr": "Ż = Ж", "ru": "Żaba - жаба" }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Спасибо»?", "options": ["Proszę", "Dziękuję", "Cześć", "Tak"], "correct": 1 },
+        { "q": "Что означает «Dzień dobry»?", "options": ["Добрый вечер", "До свидания", "Добрый день", "Как дела"], "correct": 2 },
+        { "q": "Какая буква читается как «У»?", "options": ["Ó", "Ł", "Ą", "Ę"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u2",
+      "title": "Числа и Местоимения",
+      "icon": "🔢",
+      "words": [
+        { "sr": "Jeden", "tr": "[eden]", "ru": "Один" },
+        { "sr": "Dwa", "tr": "[dva]", "ru": "Два" },
+        { "sr": "Trzy", "tr": "[tshy]", "ru": "Три" },
+        { "sr": "Cztery", "tr": "[chtery]", "ru": "Четыре" },
+        { "sr": "Pięć", "tr": "[pyench]", "ru": "Пять" },
+        { "sr": "Sześć", "tr": "[sheshch]", "ru": "Шесть" },
+        { "sr": "Siedem", "tr": "[shedem]", "ru": "Семь" },
+        { "sr": "Osiem", "tr": "[oshem]", "ru": "Восемь" },
+        { "sr": "Dziewięć", "tr": "[jevrench]", "ru": "Девять" },
+        { "sr": "Dziesięć", "tr": "[jeshench]", "ru": "Десять" }
+      ],
+      "grammar": {
+        "title": "Личные местоимения",
+        "rules": "Ja (я), Ty (ты), On (он), Ona (она), My (мы), Wy (вы), Oni/One (они).",
+        "examples": [
+          { "sr": "Jestem studentem.", "ru": "Я студент." },
+          { "sr": "Jesteś dobry.", "ru": "Ты хороший." },
+          { "sr": "On jest lekarzem.", "ru": "Он врач." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как будет «Пять»?", "options": ["Trzy", "Cztery", "Pięć", "Dwa"], "correct": 2 },
+        { "q": "Что означает «Ja»?", "options": ["Ты", "Он", "Мы", "Я"], "correct": 3 },
+        { "q": "Как сказать «Ты хороший»?", "options": ["Jestem dobry", "Jesteś dobry", "On jest dobry", "My jesteśmy dobrzy"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u3",
+      "title": "Семья и Глагол «Быть»",
+      "icon": "👨‍👩‍👧",
+      "words": [
+        { "sr": "Mama", "tr": "[mama]", "ru": "Мама" },
+        { "sr": "Tata", "tr": "[tata]", "ru": "Папа" },
+        { "sr": "Brat", "tr": "[brat]", "ru": "Брат" },
+        { "sr": "Siostra", "tr": "[shostra]", "ru": "Сестра" },
+        { "sr": "Syn", "tr": "[syn]", "ru": "Сын" },
+        { "sr": "Córka", "tr": "[tsurka]", "ru": "Дочь" },
+        { "sr": "Rodzina", "tr": "[rodzina]", "ru": "Семья" },
+        { "sr": "Babcia", "tr": "[babcha]", "ru": "Бабушка" },
+        { "sr": "Dziadek", "tr": "[jadek]", "ru": "Дедушка" }
+      ],
+      "grammar": {
+        "title": "Глагол «Быть» (Być)",
+        "rules": "Ja jestem (я есть), Ty jesteś (ты есть), On/Ona jest (он/она есть), My jesteśmy (мы есть), Wy jesteście (вы есть), Oni są (они есть).",
+        "examples": [
+          { "sr": "Jestem z Rosji.", "ru": "Я из России." },
+          { "sr": "Ona jest moją siostrą.", "ru": "Она моя сестра." },
+          { "sr": "Jesteśmy rodziną.", "ru": "Мы семья." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Сестра»?", "options": ["Brat", "Córka", "Siostra", "Mama"], "correct": 2 },
+        { "q": "Как будет «Мы семья»?", "options": ["Jestem rodziną", "Jesteś rodziną", "Jesteśmy rodziną", "Oni są rodziną"], "correct": 2 },
+        { "q": "Что означает «Syn»?", "options": ["Дочь", "Сын", "Брат", "Отец"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u4",
+      "title": "Еда и Отрицание",
+      "icon": "🍽️",
+      "words": [
+        { "sr": "Woda", "tr": "[voda]", "ru": "Вода" },
+        { "sr": "Chleb", "tr": "[khleb]", "ru": "Хлеб" },
+        { "sr": "Mleko", "tr": "[mleko]", "ru": "Молоко" },
+        { "sr": "Kawa", "tr": "[kava]", "ru": "Кофе" },
+        { "sr": "Herbata", "tr": "[herbata]", "ru": "Чай" },
+        { "sr": "Wino", "tr": "[vino]", "ru": "Вино" },
+        { "sr": "Mięso", "tr": "[myenso]", "ru": "Мясо" },
+        { "sr": "Ryba", "tr": "[ryba]", "ru": "Рыба" },
+        { "sr": "Jabłko", "tr": "[jabwko]", "ru": "Яблоко" }
+      ],
+      "grammar": {
+        "title": "Отрицание",
+        "rules": "Отрицание — частица «nie» перед глаголом. Nie wiem (Не знаю).",
+        "examples": [
+          { "sr": "Nie wiem.", "ru": "Не знаю." },
+          { "sr": "Nie rozumiem.", "ru": "Не понимаю." },
+          { "sr": "On nie jest tutaj.", "ru": "Он не здесь." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Вода»?", "options": ["Chleb", "Woda", "Mleko", "Kawa"], "correct": 1 },
+        { "q": "Что означает «Nie wiem»?", "options": ["Я знаю", "Не знаю", "Не понимаю", "Не хочу"], "correct": 1 },
+        { "q": "Как будет «Он не здесь»?", "options": ["On jest tutaj", "On nie jest tutaj", "Ja nie jestem tutaj", "Ty nie jesteś tutaj"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u5",
+      "title": "Путешествия и Вопросы",
+      "icon": "✈️",
+      "words": [
+        { "sr": "Lotnisko", "tr": "[lotnisko]", "ru": "Аэропорт" },
+        { "sr": "Dworzec", "tr": "[dvozhets]", "ru": "Вокзал" },
+        { "sr": "Pociąg", "tr": "[pochyong]", "ru": "Поезд" },
+        { "sr": "Autobus", "tr": "[autobus]", "ru": "Автобус" },
+        { "sr": "Bilet", "tr": "[bilet]", "ru": "Билет" },
+        { "sr": "Hotel", "tr": "[hotel]", "ru": "Отель" },
+        { "sr": "Miasto", "tr": "[myasto]", "ru": "Город" },
+        { "sr": "Ulica", "tr": "[ulitsa]", "ru": "Улица" }
+      ],
+      "grammar": {
+        "title": "Вопросительные слова",
+        "rules": "Co (Что), Kto (Кто), Gdzie (Где), Kiedy (Когда), Dlaczego (Почему), Jak (Как), Ile (Сколько).",
+        "examples": [
+          { "sr": "Co to jest?", "ru": "Что это?" },
+          { "sr": "Gdzie jest dworzec?", "ru": "Где вокзал?" },
+          { "sr": "Ile to kosztuje?", "ru": "Сколько стоит?" }
+        ]
+      },
+      "quiz": [
+        { "q": "Как будет «Поезд»?", "options": ["Pociąg", "Autobus", "Lotnisko", "Bilet"], "correct": 0 },
+        { "q": "Что означает «Gdzie jest dworzec?»", "options": ["Что это?", "Где вокзал?", "Сколько стоит?", "Кто это?"], "correct": 1 },
+        { "q": "Как спросить «Сколько стоит?»", "options": ["Co to jest?", "Gdzie jest hotel?", "Ile to kosztuje?", "Jak się masz?"], "correct": 2 }
+      ]
+    },
+    {
+      "id": "u6",
+      "title": "Цвета и Диалоги",
+      "icon": "🎨",
+      "words": [
+        { "sr": "Czerwony", "tr": "[chervony]", "ru": "Красный" },
+        { "sr": "Niebieski", "tr": "[nebeski]", "ru": "Синий" },
+        { "sr": "Zielony", "tr": "[zhelony]", "ru": "Зелёный" },
+        { "sr": "Żółty", "tr": "[zhouty]", "ru": "Жёлтый" },
+        { "sr": "Czarny", "tr": "[charny]", "ru": "Чёрный" },
+        { "sr": "Biały", "tr": "[byawy]", "ru": "Белый" },
+        { "sr": "Kolor", "tr": "[kolor]", "ru": "Цвет" }
+      ],
+      "grammar": {
+        "title": "Как представиться",
+        "rules": "Jak masz na imię? (Как тебя зовут?) - Mam na imię... (Меня зовут...).",
+        "examples": [
+          { "sr": "Mam na imię Marek.", "ru": "Меня зовут Марек." },
+          { "sr": "Jak masz na imię?", "ru": "Как тебя зовут?" },
+          { "sr": "Miło mi.", "ru": "Приятно познакомиться." }
+        ]
+      },
+      "quiz": [
+        { "q": "Какой цвет «Czerwony»?", "options": ["Синий", "Зелёный", "Красный", "Чёрный"], "correct": 2 },
+        { "q": "Как сказать «Меня зовут Марек»?", "options": ["Jestem Marek", "Mam na imię Marek", "Ty jesteś Marek", "On jest Marek"], "correct": 1 },
+        { "q": "Что означает «Miło mi»?", "options": ["До свидания", "Как дела", "Приятно познакомиться", "Спасибо"], "correct": 2 }
+      ]
+    },
+    {
+      "id": "u7",
+      "title": "Время и Дни недели",
+      "icon": "⏰",
+      "words": [
+        { "sr": "Dzisiaj", "tr": "[dzishay]", "ru": "Сегодня" },
+        { "sr": "Jutro", "tr": "[yutro]", "ru": "Завтра" },
+        { "sr": "Wczoraj", "tr": "[fchoray]", "ru": "Вчера" },
+        { "sr": "Poniedziałek", "tr": "[ponedzyawlek]", "ru": "Понедельник" },
+        { "sr": "Wtorek", "tr": "[ftorek]", "ru": "Вторник" },
+        { "sr": "Środa", "tr": "[shroda]", "ru": "Среда" },
+        { "sr": "Czwartek", "tr": "[chvartek]", "ru": "Четверг" },
+        { "sr": "Piątek", "tr": "[pyontek]", "ru": "Пятница" },
+        { "sr": "Sobota", "tr": "[sobota]", "ru": "Суббота" },
+        { "sr": "Niedziela", "tr": "[nedzhela]", "ru": "Воскресенье" }
+      ],
+      "grammar": {
+        "title": "Настоящее время (Глаголы)",
+        "rules": "Глаголы меняются по лицам. Например, «wiedzieć» (знать): wiem (я знаю), wiesz (ты знаешь), wie (он/она знает).",
+        "examples": [
+          { "sr": "Ja wiem.", "ru": "Я знаю." },
+          { "sr": "Ty wiesz.", "ru": "Ты знаешь." },
+          { "sr": "My wiemy.", "ru": "Мы знаем." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Завтра»?", "options": ["Dzisiaj", "Wczoraj", "Jutro", "Piątek"], "correct": 2 },
+        { "q": "Что означает «Poniedziałek»?", "options": ["Воскресенье", "Понедельник", "Среда", "Пятница"], "correct": 1 },
+        { "q": "Как будет «Ты знаешь»?", "options": ["Ja wiem", "Ty wiesz", "On wie", "My wiemy"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u8",
+      "title": "Тело и Здоровье",
+      "icon": "🏥",
+      "words": [
+        { "sr": "Głowa", "tr": "[gwova]", "ru": "Голова" },
+        { "sr": "Oko", "tr": "[oko]", "ru": "Глаз" },
+        { "sr": "Ręka", "tr": "[renka]", "ru": "Рука" },
+        { "sr": "Noga", "tr": "[noga]", "ru": "Нога" },
+        { "sr": "Serce", "tr": "[sertse]", "ru": "Сердце" },
+        { "sr": "Lekarz", "tr": "[lekarzh]", "ru": "Врач" },
+        { "sr": "Szpital", "tr": "[shpital]", "ru": "Больница" }
+      ],
+      "grammar": {
+        "title": "Модальные глаголы",
+        "rules": "Móc (мочь) и chcieć (хотеть). Ja mogę (я могу), Ja chcę (я хочу).",
+        "examples": [
+          { "sr": "Mogę pomóc.", "ru": "Я могу помочь." },
+          { "sr": "Chcę wodę.", "ru": "Я хочу воду." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Голова»?", "options": ["Oko", "Głowa", "Ręka", "Noga"], "correct": 1 },
+        { "q": "Что означает «Lekarz»?", "options": ["Больница", "Сердце", "Врач", "Глаз"], "correct": 2 },
+        { "q": "Как сказать «Я хочу»?", "options": ["Mogę", "Chcę", "Wiem", "Robię"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u9",
+      "title": "Погода и Природа",
+      "icon": "☀️",
+      "words": [
+        { "sr": "Słońce", "tr": "[swon-tse]", "ru": "Солнце" },
+        { "sr": "Deszcz", "tr": "[deshch]", "ru": "Дождь" },
+        { "sr": "Śnieg", "tr": "[shnyeg]", "ru": "Снег" },
+        { "sr": "Wiatr", "tr": "[vyatr]", "ru": "Ветер" },
+        { "sr": "Pogoda", "tr": "[pogoda]", "ru": "Погода" },
+        { "sr": "Ciepło", "tr": "[chepwo]", "ru": "Тепло" },
+        { "sr": "Zimno", "tr": "[zimno]", "ru": "Холодно" }
+      ],
+      "grammar": {
+        "title": "Прошедшее время",
+        "rules": "Прошедшее время: byłem (я был), byłam (я была).",
+        "examples": [
+          { "sr": "Byłem tam.", "ru": "Я был там." },
+          { "sr": "Ona była tutaj.", "ru": "Она была здесь." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Солнце»?", "options": ["Deszcz", "Słońce", "Śnieg", "Wiatr"], "correct": 1 },
+        { "q": "Что означает «Ciepło»?", "options": ["Холодно", "Ветрено", "Тепло", "Солнечно"], "correct": 2 },
+        { "q": "Как сказать «Я был»?", "options": ["Byłem", "Byłam", "Byłeś", "Był"], "correct": 0 }
+      ]
+    },
+    {
+      "id": "u10",
+      "title": "Одежда и Магазины",
+      "icon": "🛍️",
+      "words": [
+        { "sr": "Ubranie", "tr": "[ubranye]", "ru": "Одежда" },
+        { "sr": "Koszulka", "tr": "[koshulka]", "ru": "Футболка" },
+        { "sr": "Spodnie", "tr": "[spodnye]", "ru": "Брюки" },
+        { "sr": "Buty", "tr": "[buty]", "ru": "Обувь" },
+        { "sr": "Sklep", "tr": "[sklep]", "ru": "Магазин" },
+        { "sr": "Pieniądze", "tr": "[penyondze]", "ru": "Деньги" },
+        { "sr": "Drogo", "tr": "[drogo]", "ru": "Дорого" },
+        { "sr": "Tanio", "tr": "[tanio]", "ru": "Дешево" }
+      ],
+      "grammar": {
+        "title": "Вежливая просьба",
+        "rules": "Proszę (пожалуйста). ... proszę (Я прошу...).",
+        "examples": [
+          { "sr": "Proszę jedną kawę.", "ru": "Одну кофе, пожалуйста." },
+          { "sr": "Ile to kosztuje?", "ru": "Сколько стоит?" }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Деньги»?", "options": ["Pieniądze", "Ubranie", "Sklep", "Buty"], "correct": 0 },
+        { "q": "Что означает «Drogo»?", "options": ["Дешево", "Дорого", "Красиво", "Удобно"], "correct": 1 },
+        { "q": "Как сказать «Сколько стоит?»", "options": ["Co to jest?", "Ile to kosztuje?", "Gdzie jest sklep?", "Jak się masz?"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u11",
+      "title": "Профессии и Работа",
+      "icon": "💼",
+      "words": [
+        { "sr": "Praca", "tr": "[pratsa]", "ru": "Работа" },
+        { "sr": "Nauczyciel", "tr": "[nauchitsel]", "ru": "Учитель" },
+        { "sr": "Inżynier", "tr": "[inzhener]", "ru": "Инженер" },
+        { "sr": "Student", "tr": "[student]", "ru": "Студент" },
+        { "sr": "Pracować", "tr": "[pratsovach]", "ru": "Работать" },
+        { "sr": "Biuro", "tr": "[biuro]", "ru": "Офис" }
+      ],
+      "grammar": {
+        "title": "Будущее время",
+        "rules": "Будущее время: będę (я буду), będziesz (ты будешь), będzie (он/она будет).",
+        "examples": [
+          { "sr": "Będę pracować.", "ru": "Я буду работать." },
+          { "sr": "Będziesz się uczyć.", "ru": "Ты будешь учиться." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Работа»?", "options": ["Szkoła", "Praca", "Biuro", "Student"], "correct": 1 },
+        { "q": "Что означает «Nauczyciel»?", "options": ["Студент", "Инженер", "Учитель", "Врач"], "correct": 2 },
+        { "q": "Как сказать «Я буду работать»?", "options": ["Pracuję", "Pracowałem", "Będę pracować", "Mogę pracować"], "correct": 2 }
+      ]
+    },
+    {
+      "id": "u12",
+      "title": "Дом и Мебель",
+      "icon": "🏠",
+      "words": [
+        { "sr": "Dom", "tr": "[dom]", "ru": "Дом" },
+        { "sr": "Mieszkanie", "tr": "[myeshkanye]", "ru": "Квартира" },
+        { "sr": "Pokój", "tr": "[pokuy]", "ru": "Комната" },
+        { "sr": "Stół", "tr": "[stuw]", "ru": "Стол" },
+        { "sr": "Krzesło", "tr": "[ksheswo]", "ru": "Стул" },
+        { "sr": "Okno", "tr": "[okno]", "ru": "Окно" },
+        { "sr": "Drzwi", "tr": "[dzhvi]", "ru": "Дверь" }
+      ],
+      "grammar": {
+        "title": "Предлоги места",
+        "rules": "W (в), Na (на), Przy (у/около), Pod (под), Nad (над).",
+        "examples": [
+          { "sr": "Książka jest na stole.", "ru": "Книга на столе." },
+          { "sr": "Jestem w pokoju.", "ru": "Я в комнате." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Дом»?", "options": ["Mieszkanie", "Pokój", "Dom", "Stół"], "correct": 2 },
+        { "q": "Что означает «Okno»?", "options": ["Дверь", "Окно", "Стол", "Стул"], "correct": 1 },
+        { "q": "Как сказать «Книга на столе»?", "options": ["Książka jest w pokoju", "Książka jest na stole", "Książka jest w domu", "Książka jest pod stołem"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u13",
+      "title": "Хобби и Спорт",
+      "icon": "⚽",
+      "words": [
+        { "sr": "Sport", "tr": "[sport]", "ru": "Спорт" },
+        { "sr": "Piłka nożna", "tr": "[piwka nozhna]", "ru": "Футбол" },
+        { "sr": "Muzyka", "tr": "[muzika]", "ru": "Музыка" },
+        { "sr": "Książka", "tr": "[ksyonzhka]", "ru": "Книга" },
+        { "sr": "Film", "tr": "[film]", "ru": "Фильм" },
+        { "sr": "Grać", "tr": "[grach]", "ru": "Играть" },
+        { "sr": "Czytać", "tr": "[chytach]", "ru": "Читать" }
+      ],
+      "grammar": {
+        "title": "Инфинитив",
+        "rules": "Инфинитив обычно заканчивается на -ć (grać, czytać, pracować).",
+        "examples": [
+          { "sr": "Lubię grać w piłkę nożną.", "ru": "Я люблю играть в футбол." },
+          { "sr": "On lubi czytać książki.", "ru": "Он любит читать книги." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Спорт»?", "options": ["Muzyka", "Piłka nożna", "Sport", "Film"], "correct": 2 },
+        { "q": "Что означает «Czytać»?", "options": ["Играть", "Читать", "Петь", "Танцевать"], "correct": 1 },
+        { "q": "Как сказать «Я люблю играть»?", "options": ["Lubię czytać", "Lubię grać", "Lubię muzykę", "Gram"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u14",
+      "title": "Транспорт и Город",
+      "icon": "🚌",
+      "words": [
+        { "sr": "Samochód", "tr": "[samokhud]", "ru": "Автомобиль" },
+        { "sr": "Rower", "tr": "[rover]", "ru": "Велосипед" },
+        { "sr": "Taksówka", "tr": "[taksuvka]", "ru": "Такси" },
+        { "sr": "Park", "tr": "[park]", "ru": "Парк" },
+        { "sr": "Restauracja", "tr": "[restauratsya]", "ru": "Ресторан" },
+        { "sr": "Piekarnia", "tr": "[pekarnya]", "ru": "Пекарня" },
+        { "sr": "Apteka", "tr": "[apteka]", "ru": "Аптека" }
+      ],
+      "grammar": {
+        "title": "Направление",
+        "rules": "Gdzie jest...? (Где находится...?) и Jak dojść do...? (Как добраться до...?).",
+        "examples": [
+          { "sr": "Gdzie jest park?", "ru": "Где парк?" },
+          { "sr": "Jak dojść do restauracji?", "ru": "Как добраться до ресторана?" }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Автомобиль»?", "options": ["Rower", "Taksówka", "Samochód", "Pociąg"], "correct": 2 },
+        { "q": "Что означает «Piekarnia»?", "options": ["Аптека", "Ресторан", "Пекарня", "Парк"], "correct": 2 },
+        { "q": "Как спросить «Где парк?»", "options": ["Co to jest park?", "Gdzie jest park?", "Jak jest park?", "Ile kosztuje park?"], "correct": 1 }
+      ]
+    },
+    {
+      "id": "u15",
+      "title": "Эмоции и Характер",
+      "icon": "😊",
+      "words": [
+        { "sr": "Szczęśliwy", "tr": "[shchen-shlivy]", "ru": "Счастливый" },
+        { "sr": "Smutny", "tr": "[smutny]", "ru": "Грустный" },
+        { "sr": "Zły", "tr": "[zwy]", "ru": "Злой" },
+        { "sr": "Zmęczony", "tr": "[zmenchony]", "ru": "Уставший" },
+        { "sr": "Dobry", "tr": "[dobry]", "ru": "Хороший" },
+        { "sr": "Zły", "tr": "[zwy]", "ru": "Плохой" },
+        { "sr": "Inteligentny", "tr": "[inteligentny]", "ru": "Умный" }
+      ],
+      "grammar": {
+        "title": "Прилагательные",
+        "rules": "Прилагательные согласуются с существительными в роде, числе и падеже. Dobry (м.р.), Dobra (ж.р.), Dobre (с.р.).",
+        "examples": [
+          { "sr": "On jest dobry.", "ru": "Он хороший." },
+          { "sr": "Ona jest dobra.", "ru": "Она хорошая." },
+          { "sr": "Jestem szczęśliwy.", "ru": "Я счастлив." }
+        ]
+      },
+      "quiz": [
+        { "q": "Как сказать «Счастливый»?", "options": ["Smutny", "Szczęśliwy", "Zły", "Zmęczony"], "correct": 1 },
+        { "q": "Что означает «Zmęczony»?", "options": ["Злой", "Уставший", "Умный", "Хороший"], "correct": 1 },
+        { "q": "Как сказать «Она хорошая»?", "options": ["On jest dobry", "Ona jest dobra", "Jestem dobry", "Oni są dobrzy"], "correct": 1 }
+      ]
+    }
+  ]
+}
