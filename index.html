@@ -7,6 +7,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🦫</text></svg>">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  
   :root, [data-theme="dark"] {
     --bg: #0d1117; --bg2: #161b25; --card: #1c2333; --card2: #252d40;
     --border: #2d3549; --text: #eef2fa; --muted: #7d8ba5;
@@ -14,7 +15,9 @@
     --blue: #3b82f6; --green: #10b981; --green2: #059669;
     --yellow: #f59e0b; --purple: #8b5cf6; --red: #ef4444; --gold: #fbbf24;
     --shadow: 0 8px 32px rgba(0,0,0,0.4);
+    --radius: 16px;
   }
+  
   [data-theme="light"] {
     --bg: #f5f7fb; --bg2: #e8ecf3; --card: #ffffff; --card2: #eef1f7;
     --border: #d8dfea; --text: #1a2233; --muted: #6b7891;
@@ -23,76 +26,413 @@
     --yellow: #d97706; --purple: #7c3aed; --red: #dc2626; --gold: #d97706;
     --shadow: 0 8px 32px rgba(0,0,0,0.1);
   }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.5; overflow-x: hidden; transition: background 0.3s, color 0.3s; }
+
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif; 
+    background: var(--bg); 
+    color: var(--text); 
+    min-height: 100vh; 
+    line-height: 1.6; 
+    overflow-x: hidden; 
+    transition: background 0.4s ease, color 0.4s ease; 
+  }
+
+  /* Анимации */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  
+  @keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+  }
+  
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  .fade-in { animation: fadeIn 0.5s ease forwards; }
+  .slide-in { animation: slideIn 0.4s ease forwards; }
+  .scale-in { animation: scaleIn 0.3s ease forwards; }
+  .shake { animation: shake 0.4s ease; }
+
   .app { max-width: 720px; margin: 0 auto; padding: 20px 18px 120px; min-height: 100vh; }
-  .topbar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; gap: 10px; position: sticky; top: 0; padding: 8px 0; background: linear-gradient(180deg, var(--bg) 60%, transparent); z-index: 10; }
-  .brand { display: flex; align-items: center; gap: 10px; font-weight: 800; cursor: pointer; }
-  .brand-logo { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--serbian), var(--serbian2)); display: grid; place-items: center; font-size: 1.4rem; }
-  .stats-group { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
-  .stats-pill { display: flex; align-items: center; gap: 5px; background: var(--card); border: 1px solid var(--border); padding: 7px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 800; }
+  
+  .topbar { 
+    display: flex; align-items: center; justify-content: space-between; 
+    margin-bottom: 24px; gap: 10px; position: sticky; top: 0; 
+    padding: 12px 0; background: linear-gradient(180deg, var(--bg) 70%, transparent); 
+    z-index: 10; backdrop-filter: blur(10px);
+  }
+  
+  .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; cursor: pointer; transition: transform 0.2s; }
+  .brand:hover { transform: scale(1.02); }
+  
+  .brand-logo { 
+    width: 48px; height: 48px; border-radius: 14px; 
+    background: linear-gradient(135deg, var(--serbian), var(--serbian2)); 
+    display: grid; place-items: center; font-size: 1.6rem; 
+    box-shadow: 0 4px 12px rgba(198,54,60,0.3);
+    transition: transform 0.3s;
+  }
+  .brand-logo:hover { transform: rotate(5deg) scale(1.1); }
+  
+  .brand-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+  }
+
+  .stats-group { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; justify-content: flex-end; }
+  
+  .stats-pill { 
+    display: flex; align-items: center; gap: 6px; 
+    background: var(--card); border: 1px solid var(--border); 
+    padding: 8px 14px; border-radius: 24px; 
+    font-size: 0.85rem; font-weight: 700;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .stats-pill:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
   .stats-pill .val { color: var(--yellow); }
   .stats-pill.streak .val { color: var(--serbian2); }
-  .icon-btn { width: 38px; height: 38px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); color: var(--text); cursor: pointer; display: grid; place-items: center; font-size: 1rem; }
-  .lang-selector { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 20px; }
-  .lang-btn { background: var(--card); border: 2px solid var(--border); border-radius: 16px; padding: 10px 16px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 6px; color: var(--text); }
-  .lang-btn.active { border-color: var(--serbian); background: rgba(198,54,60,0.1); }
-  .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
-  .home-card { background: var(--card); border: 2px solid var(--border); border-radius: 24px; padding: 30px 20px; text-align: center; cursor: pointer; transition: all 0.25s; }
-  .home-card:hover { transform: translateY(-4px); border-color: var(--serbian); }
-  .home-card .icon { font-size: 3rem; margin-bottom: 12px; display: block; }
-  .home-card h2 { font-size: 1.1rem; font-weight: 800; }
-  .home-card p { font-size: 0.8rem; color: var(--muted); }
-  .path-container { display: flex; flex-direction: column; align-items: center; gap: 24px; padding: 20px 0; position: relative; }
-  .path-node { width: 70px; height: 70px; border-radius: 50%; background: var(--card); border: 4px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.2s; position: relative; }
-  .path-node.locked { filter: grayscale(1); opacity: 0.6; cursor: not-allowed; }
-  .path-node.done { border-color: var(--green); background: rgba(16,185,129,0.1); }
-  .lesson-header { text-align: center; margin-bottom: 24px; }
-  .alpha-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 12px; margin-bottom: 24px; }
-  .alpha-btn { aspect-ratio: 1; background: var(--card); border: 2px solid var(--border); border-radius: 16px; font-size: 1.8rem; font-weight: 900; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text); position: relative; }
-  .alpha-btn.done { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); }
-  .alpha-btn .pair { font-size: 0.7rem; color: var(--muted); margin-top: 2px; font-weight: 600; }
-  .letter-display { text-align: center; background: var(--card); border-radius: 24px; padding: 30px; margin-bottom: 24px; border: 1px solid var(--border); }
-  .letter-display .big-char { font-size: 5rem; font-weight: 900; color: var(--serbian2); line-height: 1; margin-bottom: 10px; }
-  .letter-display .sound { font-size: 1.2rem; color: var(--blue); font-weight: 700; margin-bottom: 20px; }
-  .custom-audio-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 8px 16px; border-radius: 10px; cursor: pointer; font-weight: 700; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; margin: 4px; font-size: 0.9rem; }
-  .custom-audio-btn:hover { background: var(--border); }
-  .word-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-bottom: 24px; }
-  .word-row { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
-  .grammar-box { background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 24px; margin-bottom: 24px; }
-  .quiz-option { background: var(--card); border: 2px solid var(--border); border-radius: 14px; padding: 16px 20px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; font-weight: 600; }
-  .quiz-option.correct { background: rgba(16,185,129,0.15); border-color: var(--green); color: var(--green); }
-  .quiz-option.wrong { background: rgba(239,68,68,0.15); border-color: var(--red); color: var(--red); }
-  .quiz-option.disabled { cursor: default; }
-  .lib-item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; }
-  .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .shop-item { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 16px; text-align: center; }
-  .shop-item.owned { border-color: var(--green); }
-  .rank-row { display: flex; align-items: center; gap: 12px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 12px 16px; margin-bottom: 8px; }
-  .rank-row.me { border-color: var(--serbian); background: rgba(198,54,60,0.08); }
-  .btn { border: none; border-radius: 14px; padding: 16px 24px; font-size: 1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; width: 100%; display: block; text-align: center; margin-top: 10px; }
-  .btn-primary { background: linear-gradient(135deg, var(--serbian), var(--serbian2)); color: #fff; }
-  .btn-green { background: linear-gradient(135deg, var(--green), var(--green2)); color: #fff; }
+
+  .icon-btn { 
+    width: 42px; height: 42px; border-radius: 14px; 
+    background: var(--card); border: 1px solid var(--border); 
+    color: var(--text); cursor: pointer; 
+    display: grid; place-items: center; font-size: 1.1rem;
+    transition: all 0.3s;
+  }
+  .icon-btn:hover { transform: scale(1.1); background: var(--card2); }
+
+  .lang-selector { 
+    display: flex; gap: 10px; overflow-x: auto; 
+    padding-bottom: 12px; margin-bottom: 24px; 
+    scrollbar-width: none;
+  }
+  .lang-selector::-webkit-scrollbar { display: none; }
+  
+  .lang-btn { 
+    background: var(--card); border: 2px solid var(--border); 
+    border-radius: 18px; padding: 12px 18px; 
+    font-weight: 700; font-size: 1rem; cursor: pointer; 
+    transition: all 0.3s; white-space: nowrap; 
+    display: flex; align-items: center; gap: 8px; color: var(--text);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .lang-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+  .lang-btn.active { 
+    border-color: var(--serbian); 
+    background: linear-gradient(135deg, rgba(198,54,60,0.15), rgba(224,74,80,0.1));
+    transform: scale(1.05);
+  }
+
+  .home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
+  
+  .home-card { 
+    background: var(--card); border: 2px solid var(--border); 
+    border-radius: 28px; padding: 32px 24px; text-align: center; 
+    cursor: pointer; transition: all 0.3s;
+    box-shadow: var(--shadow);
+    position: relative;
+    overflow: hidden;
+  }
+  .home-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(198,54,60,0.05));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .home-card:hover { 
+    transform: translateY(-6px); 
+    border-color: var(--serbian);
+    box-shadow: 0 12px 40px rgba(198,54,60,0.2);
+  }
+  .home-card:hover::before { opacity: 1; }
+  .home-card .icon { font-size: 3.5rem; margin-bottom: 16px; display: block; transition: transform 0.3s; }
+  .home-card:hover .icon { transform: scale(1.1); }
+  .home-card h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 8px; }
+  .home-card p { font-size: 0.85rem; color: var(--muted); }
+
+  .path-container { 
+    display: flex; flex-direction: column; align-items: center; 
+    gap: 28px; padding: 24px 0; position: relative; 
+  }
+  
+  .path-node { 
+    width: 76px; height: 76px; border-radius: 50%; 
+    background: var(--card); border: 4px solid var(--border); 
+    display: flex; align-items: center; justify-content: center; 
+    font-size: 2.2rem; cursor: pointer; transition: all 0.3s; 
+    position: relative;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  .path-node:hover:not(.locked) { 
+    transform: scale(1.15); 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .path-node.locked { filter: grayscale(1); opacity: 0.5; cursor: not-allowed; }
+  .path-node.done { 
+    border-color: var(--green); 
+    background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,150,105,0.1));
+    box-shadow: 0 4px 16px rgba(16,185,129,0.3);
+  }
+
+  .lesson-header { text-align: center; margin-bottom: 28px; }
+  
+  .alpha-grid { 
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(85px, 1fr)); 
+    gap: 14px; margin-bottom: 28px; 
+  }
+  
+  .alpha-btn { 
+    aspect-ratio: 1; background: var(--card); 
+    border: 2px solid var(--border); border-radius: 18px; 
+    font-size: 2rem; font-weight: 900; cursor: pointer; 
+    display: flex; flex-direction: column; align-items: center; 
+    justify-content: center; transition: all 0.3s; color: var(--text); 
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .alpha-btn:hover { 
+    transform: scale(1.08); 
+    border-color: var(--blue);
+    box-shadow: 0 6px 20px rgba(59,130,246,0.3);
+  }
+  .alpha-btn.done { 
+    background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.15)); 
+    border-color: var(--green); color: var(--green);
+    box-shadow: 0 4px 16px rgba(16,185,129,0.3);
+  }
+  .alpha-btn .pair { font-size: 0.75rem; color: var(--muted); margin-top: 4px; font-weight: 600; }
+
+  .letter-display { 
+    text-align: center; background: var(--card); 
+    border-radius: 28px; padding: 36px; margin-bottom: 28px; 
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+  .letter-display .big-char { 
+    font-size: 6rem; font-weight: 900; 
+    color: var(--serbian2); line-height: 1; margin-bottom: 12px;
+    animation: scaleIn 0.5s ease;
+  }
+  .letter-display .sound { 
+    font-size: 1.3rem; color: var(--blue); 
+    font-weight: 700; margin-bottom: 24px; 
+  }
+
+  .custom-audio-btn { 
+    background: var(--card2); border: 1px solid var(--border); 
+    color: var(--text); padding: 10px 18px; border-radius: 12px; 
+    cursor: pointer; font-weight: 700; 
+    display: inline-flex; align-items: center; gap: 8px; 
+    transition: all 0.3s; margin: 4px; font-size: 0.95rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .custom-audio-btn:hover { 
+    background: var(--border); 
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .word-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 28px; }
+  
+  .word-row { 
+    background: var(--card); border: 1px solid var(--border); 
+    border-radius: 18px; padding: 18px 22px; 
+    display: flex; justify-content: space-between; align-items: center; 
+    flex-wrap: wrap; gap: 12px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .word-row:hover { 
+    transform: translateX(5px); 
+    border-color: var(--blue);
+    box-shadow: 0 4px 16px rgba(59,130,246,0.2);
+  }
+
+  .grammar-box { 
+    background: var(--card); border: 1px solid var(--border); 
+    border-radius: 24px; padding: 28px; margin-bottom: 28px;
+    box-shadow: var(--shadow);
+  }
+
+  .quiz-option { 
+    background: var(--card); border: 2px solid var(--border); 
+    border-radius: 16px; padding: 18px 22px; margin-bottom: 12px; 
+    cursor: pointer; transition: all 0.3s; font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .quiz-option::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(255,255,255,0.05));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .quiz-option:hover:not(.disabled):not(.correct):not(.wrong) { 
+    transform: translateX(8px); 
+    border-color: var(--blue);
+    box-shadow: 0 6px 20px rgba(59,130,246,0.3);
+  }
+  .quiz-option:hover::before { opacity: 1; }
+  .quiz-option.correct { 
+    background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(5,150,105,0.15)); 
+    border-color: var(--green); color: var(--green);
+    box-shadow: 0 4px 16px rgba(16,185,129,0.4);
+    animation: scaleIn 0.3s ease;
+  }
+  .quiz-option.wrong { 
+    background: linear-gradient(135deg, rgba(239,68,68,0.2), rgba(220,38,38,0.15)); 
+    border-color: var(--red); color: var(--red);
+    box-shadow: 0 4px 16px rgba(239,68,68,0.4);
+    animation: shake 0.4s ease;
+  }
+  .quiz-option.disabled { 
+    cursor: not-allowed; 
+    opacity: 0.6;
+  }
+
+  .lib-item { 
+    background: var(--card); border: 1px solid var(--border); 
+    border-radius: 18px; padding: 18px; margin-bottom: 14px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .lib-item:hover { 
+    transform: translateX(5px); 
+    border-color: var(--gold);
+    box-shadow: 0 4px 16px rgba(251,191,36,0.2);
+  }
+
+  .shop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  
+  .shop-item { 
+    background: var(--card); border: 1px solid var(--border); 
+    border-radius: 18px; padding: 18px; text-align: center;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .shop-item:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+  .shop-item.owned { 
+    border-color: var(--green); 
+    background: linear-gradient(135deg, rgba(16,185,129,0.1), rgba(5,150,105,0.05));
+  }
+
+  .rank-row { 
+    display: flex; align-items: center; gap: 14px; 
+    background: var(--card); border: 1px solid var(--border); 
+    border-radius: 16px; padding: 14px 18px; margin-bottom: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .rank-row:hover { transform: translateX(5px); }
+  .rank-row.me { 
+    border-color: var(--serbian); 
+    background: linear-gradient(135deg, rgba(198,54,60,0.1), rgba(224,74,80,0.05));
+    box-shadow: 0 4px 16px rgba(198,54,60,0.2);
+  }
+
+  .btn { 
+    border: none; border-radius: 16px; padding: 18px 28px; 
+    font-size: 1.05rem; font-weight: 800; cursor: pointer; 
+    transition: all 0.3s; width: 100%; display: block; 
+    text-align: center; margin-top: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+  }
+  .btn:hover::before { left: 100%; }
+  .btn:hover { 
+    transform: translateY(-3px); 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+  }
+  .btn:active { transform: translateY(0); }
+  
+  .btn-primary { 
+    background: linear-gradient(135deg, var(--serbian), var(--serbian2)); 
+    color: #fff; 
+  }
+  .btn-green { 
+    background: linear-gradient(135deg, var(--green), var(--green2)); 
+    color: #fff; 
+  }
   .btn-ghost { background: var(--card2); color: var(--text); }
-  .back-bar { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
-  .back-btn { width: 44px; height: 44px; border-radius: 12px; background: var(--card); border: 1px solid var(--border); color: var(--text); cursor: pointer; display: grid; place-items: center; font-size: 1.1rem; }
-  .success-screen { text-align: center; padding: 40px 20px; }
-  .auth-tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-  .auth-tab { flex: 1; padding: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; font-weight: 800; text-align: center; }
-  .auth-tab.active { background: var(--serbian); color: #fff; border-color: var(--serbian); }
-  @media (max-width: 480px) { .home-grid { grid-template-columns: 1fr; } }
+
+  .back-bar { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
+  
+  .back-btn { 
+    width: 48px; height: 48px; border-radius: 14px; 
+    background: var(--card); border: 1px solid var(--border); 
+    color: var(--text); cursor: pointer; 
+    display: grid; place-items: center; font-size: 1.2rem;
+    transition: all 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .back-btn:hover { 
+    transform: translateX(-5px); 
+    background: var(--card2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .success-screen { text-align: center; padding: 48px 24px; animation: scaleIn 0.5s ease; }
+  
+  .auth-tabs { display: flex; gap: 12px; margin-bottom: 24px; }
+  
+  .auth-tab { 
+    flex: 1; padding: 12px; background: var(--card); 
+    border: 1px solid var(--border); border-radius: 12px; 
+    cursor: pointer; font-weight: 700; text-align: center;
+    transition: all 0.3s;
+  }
+  .auth-tab:hover { background: var(--card2); }
+  .auth-tab.active { 
+    background: linear-gradient(135deg, var(--serbian), var(--serbian2)); 
+    color: #fff; border-color: var(--serbian);
+    box-shadow: 0 4px 16px rgba(198,54,60,0.3);
+  }
+
+  @media (max-width: 480px) { 
+    .home-grid { grid-template-columns: 1fr; } 
+    .brand-logo { width: 42px; height: 42px; }
+  }
 </style>
 </head>
 <body>
 <div id="root"></div>
 
 <script>
-// --- Safe DOM Clearing to prevent NotFoundError ---
-function safeClear(node) {
-  while (node.firstChild) {
-    node.removeChild(node.firstChild);
-  }
-}
-
 const COURSES_META = {
   sr: { flag: "🇷🇸", name: "Сербский" }, tr: { flag: "🇹🇷", name: "Турецкий" },
   pl: { flag: "🇵🇱", name: "Польский" }, be: { flag: "🇧🇾", name: "Белорусский" },
@@ -264,26 +604,11 @@ function renderAudioButton(text) {
   ]);
 }
 
-// Auto-clean JSON keys/values to fix spaces from AI generation
-function cleanJsonKeys(obj) {
-  if (typeof obj !== 'object' || obj === null) return obj;
-  if (Array.isArray(obj)) return obj.map(cleanJsonKeys);
-  
-  const cleaned = {};
-  for (const [key, value] of Object.entries(obj)) {
-    const cleanKey = key.trim();
-    const cleanValue = typeof value === 'string' ? value.trim() : cleanJsonKeys(value);
-    cleaned[cleanKey] = cleanValue;
-  }
-  return cleaned;
-}
-
 async function loadCourseData() {
   state.loading = true; render();
   try {
     const res = await fetch(`/data/${state.currentCourse}.json`);
-    const rawData = await res.json();
-    state.courseData = cleanJsonKeys(rawData); // Fix spaces here!
+    state.courseData = await res.json();
   } catch (e) { state.courseData = { name: "Ошибка", units: [] }; }
   state.loading = false; render();
 }
@@ -291,7 +616,7 @@ async function loadCourseData() {
 const root = document.getElementById("root");
 
 function render() {
-  safeClear(root); // Use safe clearing instead of innerHTML = ""
+  root.innerHTML = "";
   document.documentElement.setAttribute("data-theme", state.settings.theme);
   if (!state.user && state.screen !== "auth") state.screen = "auth";
   const screens = { auth: renderAuth, home: renderHome, learn: renderLearn, lesson: renderLesson, library: renderLibrary, shop: renderShop, ranked: renderRanked, settings: renderSettings };
@@ -299,10 +624,10 @@ function render() {
 }
 
 function renderAuth() {
-  const wrap = el("div", { style: "min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;" });
-  wrap.appendChild(el("div", { style: "width:100%;max-width:400px;background:var(--card);padding:36px;border-radius:24px;border:1px solid var(--border);" }, [
-    el("h1", { style: "font-size:1.5rem;text-align:center;margin-bottom:8px;" }, "BOBOR-LINGUO"),
-    el("p", { style: "text-align:center;color:var(--muted);margin-bottom:24px;" }, "Вход в систему"),
+  const wrap = el("div", { class: "fade-in", style: "min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;" });
+  wrap.appendChild(el("div", { style: "width:100%;max-width:420px;background:var(--card);padding:40px;border-radius:28px;border:1px solid var(--border);box-shadow:var(--shadow);" }, [
+    el("h1", { style: "font-size:1.8rem;text-align:center;margin-bottom:12px;font-weight:900;" }, "BOBOR-LINGUO"),
+    el("p", { style: "text-align:center;color:var(--muted);margin-bottom:28px;font-size:1.05rem;" }, "Вход в систему"),
     el("div", { class: "auth-tabs" }, [
       el("div", { class: "auth-tab " + (state.authMode === "login" ? "active" : ""), onclick: () => { state.authMode = "login"; render(); } }, "Вход"),
       el("div", { class: "auth-tab " + (state.authMode === "register" ? "active" : ""), onclick: () => { state.authMode = "register"; render(); } }, "Регистрация")
@@ -322,8 +647,8 @@ function renderAuth() {
         } else alert(data.error || "Ошибка");
       }
     }, [
-      el("input", { name: "email", type: "email", placeholder: "Email", style: "width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--bg2);color:var(--text);margin-bottom:16px;outline:none;" }),
-      el("input", { name: "pass", type: "password", placeholder: "Пароль", style: "width:100%;padding:14px;border-radius:12px;border:1px solid var(--border);background:var(--bg2);color:var(--text);margin-bottom:16px;outline:none;" }),
+      el("input", { name: "email", type: "email", placeholder: "Email", style: "width:100%;padding:16px;border-radius:14px;border:1px solid var(--border);background:var(--bg2);color:var(--text);margin-bottom:18px;outline:none;font-size:1rem;transition:all 0.3s;", onfocus: (e) => e.target.style.borderColor = "var(--serbian)", onblur: (e) => e.target.style.borderColor = "var(--border)" }),
+      el("input", { name: "pass", type: "password", placeholder: "Пароль", style: "width:100%;padding:16px;border-radius:14px;border:1px solid var(--border);background:var(--bg2);color:var(--text);margin-bottom:18px;outline:none;font-size:1rem;transition:all 0.3s;", onfocus: (e) => e.target.style.borderColor = "var(--serbian)", onblur: (e) => e.target.style.borderColor = "var(--border)" }),
       el("button", { class: "btn btn-primary", type: "submit" }, state.authMode === "login" ? "Войти" : "Зарегистрироваться")
     ])
   ]));
@@ -331,9 +656,12 @@ function renderAuth() {
 }
 
 function renderHome() {
-  const app = el("div", { class: "app" });
+  const app = el("div", { class: "app fade-in" });
   app.appendChild(el("div", { class: "topbar" }, [
-    el("div", { class: "brand", onclick: () => { state.screen = "home"; render(); } }, [el("div", { class: "brand-logo", html: "🦫" }), el("span", {}, "BOBOR LINGUO")]),
+    el("div", { class: "brand", onclick: () => { state.screen = "home"; render(); } }, [
+      el("div", { class: "brand-logo" }, "🦫"), 
+      el("span", {}, "BOBOR LINGUO")
+    ]),
     el("div", { class: "stats-group" }, [
       el("div", { class: "stats-pill streak" }, [el("span", {}, "🔥"), el("span", { class: "val" }, String(state.streak))]),
       el("div", { class: "stats-pill" }, [el("span", {}, "⚡"), el("span", { class: "val" }, String(state.xp))]),
@@ -345,23 +673,23 @@ function renderHome() {
     el("div", { class: "lang-btn " + (state.currentCourse === code ? "active" : ""), onclick: () => { state.currentCourse = code; saveState(); render(); } }, [COURSES_META[code].flag, " " + COURSES_META[code].name])
   )));
 
-  app.appendChild(el("h1", { style: "font-size:1.8rem;margin-bottom:8px;" }, "Привет, " + (state.user?.email || "друг") + "!"));
-  app.appendChild(el("p", { style: "color:var(--muted);margin-bottom:24px;" }, `Уроков сегодня: ${state.lessonsToday}/2`));
+  app.appendChild(el("h1", { class: "slide-in", style: "font-size:2rem;margin-bottom:12px;font-weight:900;" }, "Привет, " + (state.user?.email || "друг") + "! 👋"));
+  app.appendChild(el("p", { class: "slide-in", style: "color:var(--muted);margin-bottom:28px;font-size:1.1rem;" }, `Уроков сегодня: ${state.lessonsToday}/2`));
   
   app.appendChild(el("div", { class: "home-grid" }, [
-    el("div", { class: "home-card", onclick: () => { state.screen = "learn"; loadCourseData(); } }, [el("span", { class: "icon" }, "🎓"), el("h2", {}, "Обучение"), el("p", {}, "Пошаговый путь")]),
-    el("div", { class: "home-card", onclick: () => { state.screen = "library"; loadCourseData(); } }, [el("span", { class: "icon" }, "📚"), el("h2", {}, "Библиотека"), el("p", {}, "Пройденное")]),
-    el("div", { class: "home-card", onclick: () => { state.screen = "shop"; render(); } }, [el("span", { class: "icon" }, "🛒"), el("h2", {}, "Магазин"), el("p", {}, "Медали")]),
-    el("div", { class: "home-card", onclick: () => { state.screen = "ranked"; render(); } }, [el("span", { class: "icon" }, "🏆"), el("h2", {}, "Ранкед"), el("p", {}, "Лидеры")])
+    el("div", { class: "home-card scale-in", style: "animation-delay: 0.1s", onclick: () => { state.screen = "learn"; loadCourseData(); } }, [el("span", { class: "icon" }, "🎓"), el("h2", {}, "Обучение"), el("p", {}, "Пошаговый путь")]),
+    el("div", { class: "home-card scale-in", style: "animation-delay: 0.2s", onclick: () => { state.screen = "library"; loadCourseData(); } }, [el("span", { class: "icon" }, "📚"), el("h2", {}, "Библиотека"), el("p", {}, "Пройденное")]),
+    el("div", { class: "home-card scale-in", style: "animation-delay: 0.3s", onclick: () => { state.screen = "shop"; render(); } }, [el("span", { class: "icon" }, "🛒"), el("h2", {}, "Магазин"), el("p", {}, "Медали")]),
+    el("div", { class: "home-card scale-in", style: "animation-delay: 0.4s", onclick: () => { state.screen = "ranked"; render(); } }, [el("span", { class: "icon" }, "🏆"), el("h2", {}, "Ранкед"), el("p", {}, "Лидеры")])
   ]));
   root.appendChild(app);
 }
 
 function renderLearn() {
-  const app = el("div", { class: "app" });
+  const app = el("div", { class: "app fade-in" });
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  if (state.loading || !state.courseData) { app.appendChild(el("p", { style: "text-align:center;margin-top:40px;" }, "Загрузка...")); root.appendChild(app); return; }
-  app.appendChild(el("h1", { style: "text-align:center;margin-bottom:20px;" }, state.courseData.name));
+  if (state.loading || !state.courseData) { app.appendChild(el("p", { style: "text-align:center;margin-top:40px;font-size:1.2rem;" }, "Загрузка...")); root.appendChild(app); return; }
+  app.appendChild(el("h1", { style: "text-align:center;margin-bottom:24px;font-size:2rem;font-weight:900;" }, state.courseData.name));
   const path = el("div", { class: "path-container" });
   const courseProgress = state.progress[state.currentCourse] || new Set();
   let prevDone = true;
@@ -371,6 +699,7 @@ function renderLearn() {
     const isLocked = !prevDone;
     const node = el("div", { 
       class: `path-node ${isLocked ? 'locked' : ''} ${isDone ? 'done' : ''}`,
+      style: `animation: scaleIn 0.4s ease ${idx * 0.05}s backwards`,
       onclick: () => {
         if (isLocked) return;
         if (!isDone && !checkDailyLimit()) return;
@@ -382,7 +711,7 @@ function renderLearn() {
       }
     }, [el("span", {}, isDone ? "✅" : (isLocked ? "🔒" : "▶️"))]);
     
-    const label = el("div", { style: "position:absolute;top:80px;font-size:0.8rem;font-weight:800;color:var(--muted);white-space:nowrap;width:150px;text-align:center;left:50%;transform:translateX(-50%);" }, unit.title);
+    const label = el("div", { style: "position:absolute;top:85px;font-size:0.85rem;font-weight:700;color:var(--muted);white-space:nowrap;width:160px;text-align:center;left:50%;transform:translateX(-50%);" }, unit.title);
     node.appendChild(label);
     path.appendChild(node);
     prevDone = isDone;
@@ -393,7 +722,7 @@ function renderLearn() {
 
 function renderLesson() {
   const unit = state.currentUnit;
-  const app = el("div", { class: "app" });
+  const app = el("div", { class: "app fade-in" });
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "learn"; render(); } })]));
 
   if (state.lessonStep === "alphabet_grid") {
@@ -403,10 +732,14 @@ function renderLesson() {
     
     (unit.alphabet?.table || []).forEach((a, i) => {
       const isDone = learned.has(i);
-      grid.appendChild(el("div", { class: "alpha-btn" + (isDone ? " done" : ""), onclick: () => { state.currentAlphaLetter = a; state.lessonStep = "alphabet_card"; render(); } }, [
+      grid.appendChild(el("div", { 
+        class: "alpha-btn" + (isDone ? " done" : ""), 
+        style: `animation: scaleIn 0.3s ease ${i * 0.03}s backwards`,
+        onclick: () => { state.currentAlphaLetter = a; state.lessonStep = "alphabet_card"; render(); } 
+      }, [
         el("div", {}, a.char),
         el("div", { class: "pair" }, `[${a.sound}]`),
-        isDone ? el("div", { style: "color:var(--green);font-size:0.8rem;margin-top:4px;" }, "✓") : null
+        isDone ? el("div", { style: "color:var(--green);font-size:0.85rem;margin-top:6px;" }, "✓") : null
       ]));
     });
     app.appendChild(grid);
@@ -422,26 +755,29 @@ function renderLesson() {
     app.appendChild(el("div", { class: "letter-display" }, [
       el("div", { class: "big-char" }, a.char),
       el("div", { class: "sound" }, `Пример: ${a.ex}`),
-      el("div", { style: "display:flex;justify-content:center;margin-bottom:20px;" }, [renderAudioButton(a.ex)]),
-      el("p", { style: "text-align:center;font-weight:800;margin-bottom:12px;" }, "Какой звук обозначает эта буква?"),
-      el("div", { style: "display:flex;flex-direction:column;gap:8px;" }, 
+      el("div", { style: "display:flex;justify-content:center;margin-bottom:24px;" }, [renderAudioButton(a.ex)]),
+      el("p", { style: "text-align:center;font-weight:800;margin-bottom:16px;font-size:1.1rem;" }, "Какой звук обозначает эта буква?"),
+      el("div", { style: "display:flex;flex-direction:column;gap:10px;" }, 
         options.map(opt => {
           const btn = el("div", { class: "quiz-option" }, `[${opt}]`);
           btn.onclick = () => {
-            if (btn.classList.contains("disabled")) return;
-            document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
-            if (opt === a.sound) btn.classList.add("correct");
-            else {
+            if (btn.classList.contains("disabled") || btn.classList.contains("correct")) return;
+            
+            if (opt === a.sound) {
+              btn.classList.add("correct");
+              document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
+              setTimeout(() => {
+                if (!state.alphaProgress[state.currentCourse]) state.alphaProgress[state.currentCourse] = new Set();
+                state.alphaProgress[state.currentCourse].add(unit.alphabet.table.indexOf(a));
+                saveState(); state.lessonStep = "alphabet_grid"; render();
+              }, 1200);
+            } else {
               btn.classList.add("wrong");
-              Array.from(document.querySelectorAll(".quiz-option")).forEach(b => {
-                if (b.textContent === `[${a.sound}]`) b.classList.add("correct");
-              });
+              btn.classList.add("disabled");
+              setTimeout(() => {
+                btn.classList.remove("wrong");
+              }, 800);
             }
-            setTimeout(() => {
-              if (!state.alphaProgress[state.currentCourse]) state.alphaProgress[state.currentCourse] = new Set();
-              state.alphaProgress[state.currentCourse].add(unit.alphabet.table.indexOf(a));
-              saveState(); state.lessonStep = "alphabet_grid"; render();
-            }, 1500);
           };
           return btn;
         })
@@ -451,9 +787,12 @@ function renderLesson() {
   else if (state.lessonStep === "words") {
     app.appendChild(el("h2", { class: "lesson-header" }, "Слова"));
     const grid = el("div", { class: "word-grid" });
-    unit.words.forEach(w => {
-      grid.appendChild(el("div", { class: "word-row" }, [
-        el("div", {}, [el("div", { style: "font-size:1.1rem;font-weight:800;" }, w.sr), el("div", { style: "color:var(--muted);" }, w.ru)]),
+    unit.words.forEach((w, i) => {
+      grid.appendChild(el("div", { 
+        class: "word-row",
+        style: `animation: slideIn 0.4s ease ${i * 0.05}s backwards`
+      }, [
+        el("div", {}, [el("div", { style: "font-size:1.15rem;font-weight:800;" }, w.sr), el("div", { style: "color:var(--muted);font-size:0.95rem;" }, w.ru)]),
         renderAudioButton(w.sr)
       ]));
     });
@@ -463,18 +802,21 @@ function renderLesson() {
   else if (state.lessonStep === "grammar") {
     app.appendChild(el("h2", { class: "lesson-header" }, "Грамматика"));
     app.appendChild(el("div", { class: "grammar-box" }, [
-      el("h3", { style: "color:var(--blue);margin-bottom:10px;" }, unit.grammar.title),
-      el("div", { style: "margin-bottom:16px;" }, unit.grammar.rules)
+      el("h3", { style: "color:var(--blue);margin-bottom:12px;font-size:1.3rem;" }, unit.grammar.title),
+      el("div", { style: "margin-bottom:18px;font-size:1.05rem;line-height:1.7;" }, unit.grammar.rules)
     ]));
     if (unit.grammar.examples) {
-      unit.grammar.examples.forEach(ex => {
-        app.appendChild(el("div", { style: "background:var(--card);padding:12px;border-radius:10px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;" }, [
-          el("div", {}, [el("div", { style: "font-weight:800;" }, ex.sr), el("div", { style: "color:var(--muted);font-size:0.85rem;" }, ex.ru)]),
+      unit.grammar.examples.forEach((ex, i) => {
+        app.appendChild(el("div", { 
+          style: "background:var(--card);padding:14px;border-radius:12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid var(--border);",
+          class: "slide-in"
+        }, [
+          el("div", {}, [el("div", { style: "font-weight:800;font-size:1.05rem;" }, ex.sr), el("div", { style: "color:var(--muted);font-size:0.9rem;" }, ex.ru)]),
           renderAudioButton(ex.sr)
         ]));
       });
     }
-    app.appendChild(el("button", { class: "btn btn-blue", style: "margin-top:20px;", onclick: () => { state.lessonStep = "quiz"; render(); } }, "Дальше: Тест"));
+    app.appendChild(el("button", { class: "btn btn-blue", style: "margin-top:24px;background:linear-gradient(135deg, var(--blue), #2563eb);color:#fff;", onclick: () => { state.lessonStep = "quiz"; render(); } }, "Дальше: Тест"));
   }
   else if (state.lessonStep === "quiz") {
     if (state.quizIdx >= unit.quiz.length) {
@@ -489,27 +831,36 @@ function renderLesson() {
       
       saveState();
       app.appendChild(el("div", { class: "success-screen" }, [
-        el("div", { style: "font-size:4rem;" }, "🏆"),
-        el("h2", {}, isCompleted ? "Повторение завершено!" : "Юнит пройден!"),
-        el("p", {}, isCompleted ? "Молодец, что повторяешь!" : "+50 XP. Открыт следующий урок!"),
+        el("div", { style: "font-size:5rem;margin-bottom:20px;" }, "🏆"),
+        el("h2", { style: "font-size:2rem;margin-bottom:12px;" }, isCompleted ? "Повторение завершено!" : "Юнит пройден!"),
+        el("p", { style: "font-size:1.2rem;color:var(--muted);margin-bottom:24px;" }, isCompleted ? "Молодец, что повторяешь!" : "+50 XP. Открыт следующий урок!"),
         el("button", { class: "btn btn-green", onclick: () => { state.screen = "learn"; render(); } }, "К списку")
       ]));
       root.appendChild(app); return;
     }
     const q = unit.quiz[state.quizIdx];
     app.appendChild(el("h2", { class: "lesson-header" }, `Вопрос ${state.quizIdx + 1}`));
-    app.appendChild(el("p", { style: "font-size:1.2rem;font-weight:800;text-align:center;margin-bottom:20px;" }, q.q));
+    app.appendChild(el("p", { style: "font-size:1.3rem;font-weight:800;text-align:center;margin-bottom:24px;line-height:1.5;" }, q.q));
     q.options.forEach((opt, i) => {
-      const btn = el("div", { class: "quiz-option" }, opt);
+      const btn = el("div", { 
+        class: "quiz-option",
+        style: `animation: slideIn 0.4s ease ${i * 0.1}s backwards`
+      }, opt);
       btn.onclick = () => {
-        if (btn.classList.contains("disabled")) return;
-        document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
-        if (i === q.correct) btn.classList.add("correct");
-        else {
+        if (btn.classList.contains("disabled") || btn.classList.contains("correct")) return;
+        
+        if (i === q.correct) {
+          btn.classList.add("correct");
+          document.querySelectorAll(".quiz-option").forEach(b => b.classList.add("disabled"));
+          setTimeout(() => { state.quizIdx++; render(); }, 1200);
+        } else {
           btn.classList.add("wrong");
-          document.querySelectorAll(".quiz-option")[q.correct].classList.add("correct");
+          btn.classList.add("disabled");
+          setTimeout(() => {
+            btn.classList.remove("wrong");
+            btn.classList.remove("disabled");
+          }, 800);
         }
-        setTimeout(() => { state.quizIdx++; render(); }, 1000);
       };
       app.appendChild(btn);
     });
@@ -518,40 +869,46 @@ function renderLesson() {
 }
 
 function renderLibrary() {
-  const app = el("div", { class: "app" });
+  const app = el("div", { class: "app fade-in" });
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:1.6rem;margin-bottom:20px;" }, "Библиотека"));
+  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Библиотека"));
   if (state.loading || !state.courseData) { root.appendChild(app); return; }
   const courseProgress = state.progress[state.currentCourse] || new Set();
   const doneUnits = state.courseData.units.filter(u => courseProgress.has(u.id));
   
-  if (doneUnits.length === 0) app.appendChild(el("p", { style: "text-align:center;color:var(--muted);" }, "Тут пусто. Начни обучение!"));
-  else doneUnits.forEach(u => {
-    app.appendChild(el("div", { class: "lib-item" }, [
-      el("h4", { style: "color:var(--gold);margin-bottom:8px;" }, `${u.icon} ${u.title}`),
-      el("p", { style: "font-size:0.85rem;color:var(--muted);" }, u.grammar.title),
-      el("button", { class: "btn btn-ghost", style: "margin-top:10px;padding:8px;", onclick: () => { state.currentUnit = u; state.lessonStep = u.alphabet ? "alphabet_grid" : "words"; state.quizIdx = 0; state.screen = "lesson"; render(); } }, "Повторить (без XP)")
+  if (doneUnits.length === 0) app.appendChild(el("p", { style: "text-align:center;color:var(--muted);font-size:1.2rem;margin-top:40px;" }, "Тут пусто. Начни обучение!"));
+  else doneUnits.forEach((u, i) => {
+    app.appendChild(el("div", { 
+      class: "lib-item",
+      style: `animation: slideIn 0.4s ease ${i * 0.05}s backwards`
+    }, [
+      el("h4", { style: "color:var(--gold);margin-bottom:10px;font-size:1.1rem;" }, `${u.icon} ${u.title}`),
+      el("p", { style: "font-size:0.9rem;color:var(--muted);margin-bottom:12px;" }, u.grammar.title),
+      el("button", { class: "btn btn-ghost", style: "margin-top:12px;padding:10px;font-size:0.95rem;", onclick: () => { state.currentUnit = u; state.lessonStep = u.alphabet ? "alphabet_grid" : "words"; state.quizIdx = 0; state.screen = "lesson"; render(); } }, "Повторить (без XP)")
     ]));
   });
   root.appendChild(app);
 }
 
 function renderShop() {
-  const app = el("div", { class: "app" });
+  const app = el("div", { class: "app fade-in" });
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:1.6rem;margin-bottom:20px;" }, "Магазин"));
+  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Магазин"));
   const medals = [
     { id: "m1", name: "Обычная", emoji: "🥉", price: 1200 }, { id: "m2", name: "Дерево", emoji: "🪵", price: 2000 },
     { id: "m3", name: "Железо", emoji: "⚙️", price: 3400 }, { id: "m4", name: "Алмаз", emoji: "💎", price: 4000 },
     { id: "m5", name: "Незерит", emoji: "🔥", price: 5000 }
   ];
   const grid = el("div", { class: "shop-grid" });
-  medals.forEach(m => {
+  medals.forEach((m, i) => {
     const owned = state.medals.includes(m.id);
-    grid.appendChild(el("div", { class: "shop-item " + (owned ? "owned" : "") }, [
-      el("div", { style: "font-size:2rem;" }, m.emoji),
-      el("div", { style: "font-weight:800;" }, m.name),
-      el("div", { style: "color:var(--yellow);margin-bottom:8px;" }, `⚡ ${m.price}`),
+    grid.appendChild(el("div", { 
+      class: "shop-item " + (owned ? "owned" : ""),
+      style: `animation: scaleIn 0.4s ease ${i * 0.1}s backwards`
+    }, [
+      el("div", { style: "font-size:2.5rem;margin-bottom:10px;" }, m.emoji),
+      el("div", { style: "font-weight:800;font-size:1.1rem;margin-bottom:8px;" }, m.name),
+      el("div", { style: "color:var(--yellow);margin-bottom:12px;font-weight:700;font-size:1.05rem;" }, `⚡ ${m.price}`),
       el("button", { class: "btn " + (owned ? "btn-ghost" : "btn-primary"), onclick: () => {
         if (owned) return;
         if (state.xp >= m.price) { state.xp -= m.price; state.medals.push(m.id); saveState(); render(); }
@@ -564,32 +921,35 @@ function renderShop() {
 }
 
 function renderRanked() {
-  const app = el("div", { class: "app" });
+  const app = el("div", { class: "app fade-in" });
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:1.6rem;margin-bottom:20px;" }, "Ранкед"));
+  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Ранкед"));
   const fake = [{ n: "Marko", x: 1500 }, { n: "Ana", x: 1200 }, { n: state.user?.email || "Вы", x: state.xp }, { n: "Ivan", x: 500 }].sort((a,b)=>b.x-a.x);
   fake.forEach((r, i) => {
-    app.appendChild(el("div", { class: "rank-row " + (r.n === state.user?.email ? "me" : "") }, [
-      el("div", { style: "font-weight:900;width:24px;" }, `${i+1}`),
-      el("div", { style: "flex:1;font-weight:800;" }, r.n),
-      el("div", { style: "color:var(--purple);font-weight:800;" }, `⚡ ${r.x}`)
+    app.appendChild(el("div", { 
+      class: "rank-row " + (r.n === state.user?.email ? "me" : ""),
+      style: `animation: slideIn 0.4s ease ${i * 0.1}s backwards`
+    }, [
+      el("div", { style: "font-weight:900;width:28px;font-size:1.1rem;" }, `${i+1}`),
+      el("div", { style: "flex:1;font-weight:700;font-size:1.05rem;" }, r.n),
+      el("div", { style: "color:var(--purple);font-weight:800;font-size:1.05rem;" }, `⚡ ${r.x}`)
     ]));
   });
   root.appendChild(app);
 }
 
 function renderSettings() {
-  const app = el("div", { class: "app" });
+  const app = el("div", { class: "app fade-in" });
   app.appendChild(el("div", { class: "back-bar" }, [el("button", { class: "back-btn", html: "←", onclick: () => { state.screen = "home"; render(); } })]));
-  app.appendChild(el("h1", { style: "font-size:1.6rem;margin-bottom:20px;" }, "Настройки"));
-  app.appendChild(el("div", { style: "background:var(--card);padding:20px;border-radius:16px;margin-bottom:16px;" }, [
-    el("h3", { style: "margin-bottom:8px;" }, "Профиль"),
-    el("p", { style: "color:var(--muted);" }, `Email: ${state.user?.email}`),
-    el("p", { style: "color:var(--muted);" }, `XP: ${state.xp} · Серия: ${state.streak}`),
-    el("button", { class: "btn btn-ghost", style: "margin-top:12px;", onclick: () => { state.user = null; state.screen = "auth"; saveState(); render(); } }, "Выйти")
+  app.appendChild(el("h1", { style: "font-size:2rem;margin-bottom:24px;font-weight:900;" }, "Настройки"));
+  app.appendChild(el("div", { style: "background:var(--card);padding:24px;border-radius:20px;margin-bottom:18px;border:1px solid var(--border);box-shadow:var(--shadow);" }, [
+    el("h3", { style: "margin-bottom:12px;font-size:1.3rem;" }, "Профиль"),
+    el("p", { style: "color:var(--muted);margin-bottom:8px;font-size:1.05rem;" }, `Email: ${state.user?.email}`),
+    el("p", { style: "color:var(--muted);font-size:1.05rem;" }, `XP: ${state.xp} · Серия: ${state.streak}`),
+    el("button", { class: "btn btn-ghost", style: "margin-top:16px;", onclick: () => { state.user = null; state.screen = "auth"; saveState(); render(); } }, "Выйти")
   ]));
-  app.appendChild(el("div", { style: "background:var(--card);padding:20px;border-radius:16px;" }, [
-    el("h3", { style: "margin-bottom:8px;" }, "Тема"),
+  app.appendChild(el("div", { style: "background:var(--card);padding:24px;border-radius:20px;border:1px solid var(--border);box-shadow:var(--shadow);" }, [
+    el("h3", { style: "margin-bottom:12px;font-size:1.3rem;" }, "Тема"),
     el("button", { class: "btn btn-ghost", onclick: () => { state.settings.theme = state.settings.theme === "dark" ? "light" : "dark"; saveState(); render(); } }, "Переключить тему")
   ]));
   root.appendChild(app);
