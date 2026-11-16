@@ -21,7 +21,6 @@ const TURSO_URL = process.env.TURSO_URL;
 const TURSO_TOKEN = process.env.TURSO_TOKEN;
 const db = (TURSO_URL && TURSO_TOKEN) ? createClient({ url: TURSO_URL, authToken: TURSO_TOKEN }) : null;
 
-// Создание таблицы для прогресса при запуске
 async function initDB() {
   if (!db) return console.log("⚠️ Turso не настроен, прогресс будет только в браузере");
   try {
@@ -36,7 +35,6 @@ async function initDB() {
     `);
     console.log("✅ Таблица bobor_progress в Turso готова");
 
-    // --- [НОВОЕ] Аккуратное добавление колонок (без падений при повторном запуске) ---
     const cols = await db.execute("PRAGMA table_info(bobor_progress)");
     const existing = new Set(cols.rows.map(r => r.name));
     const newCols = [
@@ -56,7 +54,6 @@ async function initDB() {
     }
     console.log("✅ Колонки bobor_progress проверены");
 
-    // --- [НОВОЕ] Таблица ранкеда (общий лидерборд на все курсы) ---
     await db.execute(`
       CREATE TABLE IF NOT EXISTS bobor_ranked (
         username TEXT PRIMARY KEY,
@@ -86,14 +83,29 @@ app.get("/api/health", (req, res) => {
   res.json({ ok: true, openai: !!openai, model: "gemini-2.0-flash", turso: !!db });
 });
 
-const SYSTEM_PROMPT = `Ti si Marko, prijateljski bobar 🦫 koji pomaže ljudima da nauče srpski jezik.
+// --- [НОВОЕ] buildSystemPrompt(course) ---
+const COURSE_NAMES = {
+  sr: "serbian", be: "belarusian", kk: "kazakh",
+  tt: "tatar", pl: "polish", tr: "turkish"
+};
+const COURSE_NATIVE = {
+  sr: "српски", be: "беларуская", kk: "қазақша",
+  tt: "татарча", pl: "polski", tr: "türkçe"
+};
+
+function buildSystemPrompt(course) {
+  const name = COURSE_NAMES[course] || "serbian";
+  const native = COURSE_NATIVE[course] || "српски";
+  return `Ti si Marko, prijateljski bobar 🦫 koji pomaže ljudima da nauče ${name} jezik (${native}).
 PRAVILA:
-1. Uvek odgovaraj SAMO na srpskom jeziku.
+1. Uvek odgovaraj SAMO na ${name} jeziku (${native}).
 2. Odgovori kratki: 1-2 rečenice.
-3. Budi prijateljski i podstiči korisnika.`;
+3. Budi prijateljski i podstiči korisnika.
+4. Ako korisnik greši, blago ga ispravi.`;
+}
 
 app.post("/api/chat", async (req, res) => {
-  const { message, history } = req.body || {};
+  const { message, history, course } = req.body || {};
   if (!message) return res.status(400).json({ error: "empty message" });
 
   if (!openai) {
@@ -101,7 +113,7 @@ app.post("/api/chat", async (req, res) => {
   }
 
   try {
-    const messages = [{ role: "system", content: SYSTEM_PROMPT }];
+    const messages = [{ role: "system", content: buildSystemPrompt(course) }];
     if (Array.isArray(history)) {
       history.slice(-10).forEach(m => {
         messages.push({ role: m.who === "user" ? "user" : "assistant", content: m.sr });
@@ -155,8 +167,7 @@ app.get("/api/progress/:username", async (req, res) => {
   }
 });
 
-// --- [НОВОЕ] РАНКЕД ---
-// Синхронизация сезонного счёта игрока (общий лидерборд на все курсы)
+// --- РАНКЕД ---
 app.post("/api/ranked/sync", async (req, res) => {
   const { username, seasonXp, seasonId, course } = req.body || {};
   if (!db) return res.json({ success: false, error: "no_db" });
@@ -167,10 +178,8 @@ app.post("/api/ranked/sync", async (req, res) => {
             VALUES (?, ?, ?, ?)
             ON CONFLICT(username) DO UPDATE SET
             season_xp = ?, season_id = ?, course = ?, updated_at = CURRENT_TIMESTAMP`,
-      args: [
-        username, Number(seasonXp) || 0, seasonId || null, course || "sr",
-        Number(seasonXp) || 0, seasonId || null, course || "sr"
-      ]
+      args: [username, Number(seasonXp) || 0, seasonId || null, course || "sr",
+             Number(seasonXp) || 0, seasonId || null, course || "sr"]
     });
     res.json({ success: true });
   } catch (e) {
@@ -178,7 +187,6 @@ app.post("/api/ranked/sync", async (req, res) => {
   }
 });
 
-// Лидерборд топ-50
 app.get("/api/ranked/leaderboard", async (req, res) => {
   if (!db) return res.json({ rows: [] });
   try {
@@ -191,27 +199,21 @@ app.get("/api/ranked/leaderboard", async (req, res) => {
   }
 });
 
-// Закрытие сезона: сброс 70% (месяц) или 100% (3 месяца) + победителю +300/+300
-// Порядок: СНАЧАЛА сброс, ПОТОМ начисление победителю.
-// body: { mode: "month" | "quarter" }
 app.post("/api/ranked/close-season", async (req, res) => {
   if (!db) return res.json({ success: false, error: "no_db" });
   const mode = (req.body && req.body.mode) === "quarter" ? "quarter" : "month";
   try {
-    // 1) Находим победителя ДО сброса
     const top = await db.execute(
       "SELECT username, season_xp FROM bobor_ranked ORDER BY season_xp DESC LIMIT 1"
     );
     const winner = top.rows[0] || null;
 
-    // 2) Сброс
     if (mode === "quarter") {
       await db.execute("UPDATE bobor_ranked SET season_xp = 0, updated_at = CURRENT_TIMESTAMP");
     } else {
       await db.execute("UPDATE bobor_ranked SET season_xp = CAST(season_xp * 0.3 AS INTEGER), updated_at = CURRENT_TIMESTAMP");
     }
 
-    // 3) Победителю +300 в общий xp и +300 в сезонный (после сброса, чтобы не сгорели)
     if (winner && winner.username) {
       await db.execute({
         sql: `UPDATE bobor_progress
@@ -233,7 +235,6 @@ app.post("/api/ranked/close-season", async (req, res) => {
   }
 });
 
-// --- [НОВОЕ] Профиль с новыми полями (медали, заморозки, серия, курс) ---
 app.post("/api/profile/sync", async (req, res) => {
   const { username, medals, activeMedal, freezeCount, lastDaily, seasonXp, seasonId, course } = req.body || {};
   if (!db) return res.json({ success: false, error: "no_db" });
@@ -244,12 +245,10 @@ app.post("/api/profile/sync", async (req, res) => {
             VALUES (?, ?, ?, ?, ?, ?, ?, ?)
             ON CONFLICT(username) DO UPDATE SET
             medals = ?, active_medal = ?, freeze_count = ?, last_daily = ?, season_xp = ?, season_id = ?, course = ?, updated_at = CURRENT_TIMESTAMP`,
-      args: [
-        username, JSON.stringify(medals || []), activeMedal || null,
-        Number(freezeCount) || 0, lastDaily || null, Number(seasonXp) || 0, seasonId || null, course || "sr",
-        JSON.stringify(medals || []), activeMedal || null,
-        Number(freezeCount) || 0, lastDaily || null, Number(seasonXp) || 0, seasonId || null, course || "sr"
-      ]
+      args: [username, JSON.stringify(medals || []), activeMedal || null,
+             Number(freezeCount) || 0, lastDaily || null, Number(seasonXp) || 0, seasonId || null, course || "sr",
+             JSON.stringify(medals || []), activeMedal || null,
+             Number(freezeCount) || 0, lastDaily || null, Number(seasonXp) || 0, seasonId || null, course || "sr"]
     });
     res.json({ success: true });
   } catch (e) {
