@@ -1,2376 +1,1351 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOBOR-LINGUO — учи языки с бобром</title>
-    <link rel="icon" href="/images/beaver.png" type="image/png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        /* ============================================
-           БАЗОВЫЕ СТИЛИ И СБРОС
-           ============================================ */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        :root {
-            --primary: #58CC02;
-            --primary-dark: #46A302;
-            --primary-light: #89E219;
-            --secondary: #2B7A0B;
-            --accent: #1CB0F6;
-            --bg: #0F1724;
-            --bg-light: #1A2634;
-            --card: #1F2D3D;
-            --card-hover: #2A3A4D;
-            --text: #F8FAFC;
-            --text-muted: #94A3B8;
-            --border: #2D3E50;
-            --success: #58CC02;
-            --error: #FF4B4B;
-            --warning: #FFC800;
-            --purple: #CE82FF;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.2);
-            --shadow-green: 0 8px 24px rgba(88, 204, 2, 0.3);
-            --radius: 16px;
-            --radius-sm: 12px;
-            --radius-lg: 24px;
-        }
-
-        [data-theme="light"] {
-            --bg: #F0F4F8;
-            --bg-light: #FFFFFF;
-            --card: #FFFFFF;
-            --card-hover: #F7FAFC;
-            --text: #1A202C;
-            --text-muted: #4A5568;
-            --border: #CBD5E0;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-green: 0 8px 24px rgba(88, 204, 2, 0.25);
-        }
-
-        body {
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            font-family: 'Nunito', 'Segoe UI', Tahoma, sans-serif;
-            transition: background 0.3s ease, color 0.3s ease;
-            overflow-x: hidden;
-        }
-
-        /* Красивый скроллбар */
-        ::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--bg-light);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--primary-light);
-        }
-
-        /* ============================================
-           АНИМАЦИИ
-           ============================================ */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateX(-30px); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes scaleIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        @keyframes glow {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(88, 204, 2, 0.5); }
-            50% { box-shadow: 0 0 0 20px rgba(88, 204, 2, 0); }
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        .fade-in { animation: fadeIn 0.5s ease forwards; }
-        .slide-in { animation: slideIn 0.4s ease forwards; }
-        .slide-up { animation: slideUp 0.5s ease forwards; }
-        .scale-in { animation: scaleIn 0.3s ease forwards; }
-        .shake { animation: shake 0.4s ease; }
-        .pulse { animation: pulse 0.5s ease; }
-        .bounce { animation: bounce 1s ease infinite; }
-        .glow { animation: glow 2s ease infinite; }
-        .float { animation: float 3s ease-in-out infinite; }
-
-        /* ============================================
-           ОСНОВНОЙ КОНТЕЙНЕР
-           ============================================ */
-        .app {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            min-height: 100vh;
-        }
-
-        /* ============================================
-           ВЕРХНЯЯ ПАНЕЛЬ
-           ============================================ */
-        .topbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 16px 24px;
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid var(--border);
-            position: sticky;
-            top: 10px;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 1.5rem;
-            font-weight: 900;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .brand:hover {
-            transform: scale(1.05);
-        }
-
-        .brand-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            overflow: hidden;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: grid;
-            place-items: center;
-            box-shadow: var(--shadow-green);
-            transition: transform 0.3s;
-        }
-
-        .brand:hover .brand-logo {
-            transform: rotate(-8deg);
-        }
-
-        .brand-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .brand-text {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .stats {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--bg-light);
-            padding: 10px 16px;
-            border-radius: var(--radius);
-            font-weight: 800;
-            border: 1px solid var(--border);
-            transition: transform 0.2s;
-        }
-
-        .stat:hover {
-            transform: translateY(-2px);
-        }
-
-        .stat .val {
-            color: var(--warning);
-            font-size: 1.1rem;
-        }
-
-        .stat.streak .val {
-            color: var(--error);
-        }
-
-        .icon-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: var(--radius);
-            background: var(--bg-light);
-            border: 1px solid var(--border);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            padding: 8px;
-        }
-
-        .icon-btn:hover {
-            transform: scale(1.1) rotate(15deg);
-            background: var(--card-hover);
-            border-color: var(--primary);
-        }
-
-        .icon-btn img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        /* ============================================
-           СЕЛЕКТОР ЯЗЫКОВ
-           ============================================ */
-        .lang-selector {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            padding: 16px;
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            margin-bottom: 24px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-sm);
-            scroll-snap-type: x mandatory;
-        }
-
-        .lang-btn {
-            padding: 12px 20px;
-            background: var(--bg-light);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            cursor: pointer;
-            font-weight: 800;
-            white-space: nowrap;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            scroll-snap-align: start;
-            font-size: 0.95rem;
-        }
-
-        .lang-btn:hover {
-            transform: translateY(-3px);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .lang-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-color: var(--primary);
-            color: white;
-            box-shadow: var(--shadow-green);
-        }
-
-        /* ============================================
-           СЕТКА ГЛАВНОЙ — КНОПКИ С РАМКОЙ ПО КОНТУРУ
-           ============================================ */
-        .home-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .home-card {
-            background: var(--card);
-            border: 3px solid transparent;
-            border-radius: var(--radius-lg);
-            padding: 0;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: var(--shadow-sm);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .home-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: var(--radius-lg);
-            padding: 3px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light), var(--primary-dark));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-            z-index: 2;
-        }
-
-        .home-card:hover::before {
-            opacity: 1;
-        }
-
-        .home-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-green);
-        }
-
-        /* Картинка вписывается целиком, не обрезается */
-        .home-card-img-wrap {
-            width: 100%;
-            height: 160px;
-            overflow: hidden;
-            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
-            position: relative;
-            background: linear-gradient(135deg, var(--primary-light), var(--primary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
-
-        .home-card-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s;
-            border-radius: 8px;
-        }
-
-        .home-card:hover .home-card-img-wrap img {
-            transform: scale(1.08);
-        }
-
-        .home-card-body {
-            padding: 20px 24px 24px;
-            width: 100%;
-        }
-
-        .home-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
-            font-weight: 900;
-        }
-
-        .home-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ============================================
-           ДОРОЖКА УРОКОВ — ЛИНИЯ ПОД НАДПИСЯМИ
-           ============================================ */
-        .path-container {
-            position: relative;
-            padding: 20px 20px 60px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 50px;
-        }
-
-        .path-line {
-            position: absolute;
-            left: 50%;
-            top: 40px;
-            bottom: 40px;
-            width: 6px;
-            background: linear-gradient(180deg, var(--primary), var(--primary-light), var(--primary-dark));
-            transform: translateX(-50%);
-            border-radius: 3px;
-            z-index: 0;
-        }
-
-        .path-node-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            z-index: 1;
-        }
-
-        .path-node {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: var(--card);
-            border: 4px solid var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .path-node:hover:not(.locked) {
-            transform: scale(1.2);
-            box-shadow: var(--shadow-green);
-        }
-
-        .path-node.locked {
-            opacity: 0.4;
-            cursor: not-allowed;
-            border-color: var(--border);
-            filter: grayscale(1);
-        }
-
-        .path-node.done {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-color: var(--primary-light);
-            color: white;
-        }
-
-        .path-node.current {
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            border-color: var(--primary);
-            animation: glow 2s infinite;
-        }
-
-        /* Стилизация надписей на дорожке */
-        .path-label {
-            margin-top: 16px;
-            font-weight: 800;
-            font-size: 0.9rem;
-            text-align: center;
-            width: 200px;
-            color: var(--text);
-            background: var(--card);
-            padding: 8px 14px;
-            border-radius: 12px;
-            border: 2px solid var(--border);
-            box-shadow: var(--shadow-sm);
-            line-height: 1.3;
-            transition: all 0.2s;
-        }
-
-        .path-node-wrapper:hover .path-label {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-green);
-        }
-
-        /* ============================================
-           УРОК
-           ============================================ */
-        .lesson-header {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 900;
-            margin: 30px 0;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 16px;
-            background: var(--bg-light);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 24px;
-            border: 2px solid var(--border);
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            border-radius: 10px;
-            transition: width 0.5s ease;
-            box-shadow: 0 0 10px rgba(88, 204, 2, 0.5);
-        }
-
-        .word-list {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .word-item {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s;
-        }
-
-        .word-item:hover {
-            border-color: var(--primary);
-            transform: translateX(5px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .word-item .sr {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .word-item .ru {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-        }
-
-        .grammar-box {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .grammar-box h3 {
-            color: var(--primary);
-            font-size: 1.5rem;
-            margin-bottom: 16px;
-            font-weight: 900;
-        }
-
-        .grammar-box p {
-            line-height: 1.8;
-            font-size: 1.05rem;
-            margin-bottom: 16px;
-        }
-
-        .grammar-example {
-            background: var(--bg-light);
-            padding: 14px 18px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 10px;
-            border-left: 4px solid var(--primary);
-            transition: transform 0.2s;
-        }
-
-        .grammar-example:hover {
-            transform: translateX(5px);
-        }
-
-        .quiz-option {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: all 0.2s;
-        }
-
-        .quiz-option:hover:not(.disabled) {
-            border-color: var(--primary);
-            transform: translateX(10px);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .quiz-option.correct {
-            background: linear-gradient(135deg, var(--success), var(--primary-dark));
-            border-color: var(--primary-light);
-            color: white;
-            animation: pulse 0.5s;
-        }
-
-        .quiz-option.wrong {
-            background: linear-gradient(135deg, var(--error), #CC0000);
-            border-color: #CC0000;
-            color: white;
-            animation: shake 0.4s;
-        }
-
-        .quiz-option.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* ============================================
-           КНОПКИ
-           ============================================ */
-        .btn {
-            padding: 16px 32px;
-            border: none;
-            border-radius: var(--radius);
-            font-weight: 800;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 20px;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            box-shadow: var(--shadow-green);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(88, 204, 2, 0.4);
-        }
-
-        .btn-primary:active {
-            transform: translateY(0);
-        }
-
-        .btn-secondary {
-            background: var(--card);
-            border: 2px solid var(--border);
-            color: var(--text);
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: var(--error);
-            color: white;
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 75, 75, 0.4);
-        }
-
-        /* ============================================
-           АУДИО КНОПКИ
-           ============================================ */
-        .audio-btns {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .audio-btn {
-            background: var(--primary);
-            border: none;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.2s;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .audio-btn:hover {
-            transform: scale(1.15);
-            box-shadow: var(--shadow-green);
-        }
-
-        .custom-audio-btn {
-            background: var(--bg-light);
-            border: 2px solid var(--border);
-            color: var(--text);
-            padding: 8px 14px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.85rem;
-            transition: all 0.2s;
-        }
-
-        .custom-audio-btn:hover {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .custom-audio-btn.danger {
-            color: var(--error);
-        }
-
-        .custom-audio-btn.danger:hover {
-            background: var(--error);
-            color: white;
-        }
-
-        /* ============================================
-           АВТОРИЗАЦИЯ
-           ============================================ */
-        .auth-container {
-            max-width: 450px;
-            margin: 80px auto;
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            box-shadow: var(--shadow);
-            animation: slideUp 0.5s ease;
-        }
-
-        .auth-logo {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 20px;
-            display: block;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .auth-container h1 {
-            text-align: center;
-            font-size: 2rem;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 900;
-        }
-
-        .auth-container p {
-            text-align: center;
-            color: var(--text-muted);
-            margin-bottom: 30px;
-        }
-
-        .auth-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-        }
-
-        .auth-tab {
-            flex: 1;
-            padding: 12px;
-            background: var(--bg-light);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            font-weight: 800;
-            text-align: center;
-            transition: all 0.2s;
-        }
-
-        .auth-tab.active {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-color: var(--primary);
-            color: white;
-        }
-
-        .auth-tab:hover:not(.active) {
-            border-color: var(--primary);
-        }
-
-        input {
-            width: 100%;
-            padding: 14px;
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            margin-bottom: 16px;
-            background: var(--bg-light);
-            color: var(--text);
-            font-size: 1rem;
-            transition: all 0.2s;
-            font-family: inherit;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(88, 204, 2, 0.2);
-        }
-
-        /* ============================================
-           АЛФАВИТ
-           ============================================ */
-        .alpha-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-            gap: 12px;
-            margin-bottom: 30px;
-        }
-
-        .alpha-btn {
-            aspect-ratio: 1;
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            font-size: 1.8rem;
-            font-weight: 900;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s;
-            color: var(--text);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .alpha-btn:hover {
-            transform: scale(1.08);
-            border-color: var(--primary);
-            box-shadow: var(--shadow-green);
-        }
-
-        .alpha-btn.done {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-color: var(--primary-light);
-            color: white;
-        }
-
-        .alpha-btn .pair {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            margin-top: 4px;
-            font-weight: 600;
-        }
-
-        .alpha-btn.done .pair {
-            color: rgba(255,255,255,0.8);
-        }
-
-        .letter-display {
-            text-align: center;
-            background: var(--card);
-            border-radius: var(--radius-lg);
-            padding: 40px;
-            margin-bottom: 30px;
-            border: 2px solid var(--border);
-            box-shadow: var(--shadow);
-        }
-
-        .letter-display .big-char {
-            font-size: 6rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1;
-            margin-bottom: 16px;
-        }
-
-        .letter-display .sound {
-            font-size: 1.3rem;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        /* Letter detail card */
-        .letter-detail-card {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 30px;
-            margin-bottom: 24px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .letter-detail-card .detail-char {
-            font-size: 4rem;
-            font-weight: 900;
-            color: var(--primary);
-            text-align: center;
-            margin-bottom: 12px;
-        }
-
-        .letter-detail-card .detail-info {
-            text-align: center;
-            font-size: 1.1rem;
-            line-height: 1.8;
-            color: var(--text-muted);
-        }
-
-        .letter-detail-card .detail-info strong {
-            color: var(--text);
-        }
-
-        /* ============================================
-           УСПЕХ
-           ============================================ */
-        .success-screen {
-            text-align: center;
-            padding: 60px 20px;
-            animation: scaleIn 0.5s ease;
-        }
-
-        .success-screen .icon {
-            font-size: 6rem;
-            margin-bottom: 20px;
-            animation: bounce 1s ease infinite;
-        }
-
-        /* ============================================
-           НАВИГАЦИЯ
-           ============================================ */
-        .back-btn {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 12px 20px;
-            cursor: pointer;
-            font-weight: 800;
-            margin-bottom: 20px;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .back-btn:hover {
-            border-color: var(--primary);
-            transform: translateX(-5px);
-        }
-
-        /* ============================================
-           МАГАЗИН И РАНКЕД
-           ============================================ */
-        .shop-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 16px;
-        }
-
-        .shop-item {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            text-align: center;
-            transition: all 0.3s;
-        }
-
-        .shop-item:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow);
-        }
-
-        .shop-item.owned {
-            border-color: var(--primary);
-            background: rgba(88, 204, 2, 0.1);
-        }
-
-        .rank-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            padding: 16px 20px;
-            margin-bottom: 12px;
-            transition: all 0.2s;
-        }
-
-        .rank-row:hover {
-            transform: translateX(5px);
-        }
-
-        .rank-row.me {
-            border-color: var(--primary);
-            background: rgba(88, 204, 2, 0.1);
-            box-shadow: var(--shadow-green);
-        }
-
-        .lib-item {
-            background: var(--card);
-            border: 2px solid var(--border);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .lib-item:hover {
-            border-color: var(--primary);
-            transform: translateX(5px);
-        }
-
-        /* ============================================
-           АДАПТИВНОСТЬ
-           ============================================ */
-        @media (max-width: 768px) {
-            .home-grid {
-                grid-template-columns: 1fr;
-            }
-            .topbar {
-                flex-direction: column;
-                gap: 16px;
-                padding: 16px;
-            }
-            .stats {
-                width: 100%;
-                justify-content: center;
-            }
-            .lesson-header {
-                font-size: 1.5rem;
-            }
-            .letter-display .big-char {
-                font-size: 4rem;
-            }
-        }
-
-        /* ============================================
-           УТИЛИТЫ
-           ============================================ */
-        .text-center { text-align: center; }
-        .mt-20 { margin-top: 20px; }
-        .mb-20 { margin-bottom: 20px; }
-        .text-muted { color: var(--text-muted); }
-        .text-primary { color: var(--primary); }
-        .text-warning { color: var(--warning); }
-        .text-error { color: var(--error); }
-        .fw-900 { font-weight: 900; }
-        .fw-800 { font-weight: 800; }
-        .fw-700 { font-weight: 700; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BOBOR-LINGUO — учи языки с бобром</title>
+<link rel="icon" href="/images/beaver.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+:root {
+    --primary: #58CC02; --primary-dark: #46A302; --primary-light: #89E219;
+    --secondary: #2B7A0B; --accent: #1CB0F6;
+    --bg: #0F1724; --bg-light: #1A2634; --card: #1F2D3D; --card-hover: #2A3A4D;
+    --text: #F8FAFC; --text-muted: #94A3B8; --border: #2D3E50;
+    --success: #58CC02; --error: #FF4B4B; --warning: #FFC800; --purple: #CE82FF;
+    --shadow: 0 10px 30px rgba(0,0,0,0.4); --shadow-sm: 0 4px 12px rgba(0,0,0,0.2);
+    --shadow-green: 0 8px 24px rgba(88,204,2,0.3);
+    --radius: 16px; --radius-sm: 12px; --radius-lg: 24px;
+}
+[data-theme="light"] {
+    --bg: #F0F4F8; --bg-light: #FFFFFF; --card: #FFFFFF; --card-hover: #F7FAFC;
+    --text: #1A202C; --text-muted: #4A5568; --border: #CBD5E0;
+    --shadow: 0 10px 30px rgba(0,0,0,0.08); --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-green: 0 8px 24px rgba(88,204,2,0.25);
+}
+body { background: var(--bg); color: var(--text); min-height: 100vh; font-family: 'Nunito','Segoe UI',Tahoma,sans-serif; transition: background 0.3s ease, color 0.3s ease; overflow-x: hidden; }
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg-light); border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), var(--primary-dark)); border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: var(--primary-light); }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideIn { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+@keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+@keyframes glow { 0%,100% { box-shadow: 0 0 0 0 rgba(88,204,2,0.5); } 50% { box-shadow: 0 0 0 20px rgba(88,204,2,0); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.fade-in { animation: fadeIn 0.5s ease forwards; }
+.slide-in { animation: slideIn 0.4s ease forwards; }
+.slide-up { animation: slideUp 0.5s ease forwards; }
+.scale-in { animation: scaleIn 0.3s ease forwards; }
+.shake { animation: shake 0.4s ease; }
+.pulse { animation: pulse 0.5s ease; }
+.bounce { animation: bounce 1s ease infinite; }
+.glow { animation: glow 2s ease infinite; }
+.float { animation: float 3s ease-in-out infinite; }
+.app { max-width: 1200px; margin: 0 auto; padding: 20px; min-height: 100vh; }
+.topbar { display: flex; justify-content: space-between; align-items: center; padding: 16px 24px; background: var(--card); border-radius: var(--radius-lg); margin-bottom: 24px; box-shadow: var(--shadow-sm); border: 1px solid var(--border); position: sticky; top: 10px; z-index: 100; backdrop-filter: blur(10px); }
+.brand { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 900; cursor: pointer; transition: transform 0.2s; }
+.brand:hover { transform: scale(1.05); }
+.brand-logo { width: 48px; height: 48px; border-radius: 14px; overflow: hidden; background: linear-gradient(135deg, var(--primary), var(--primary-dark)); display: grid; place-items: center; box-shadow: var(--shadow-green); transition: transform 0.3s; }
+.brand:hover .brand-logo { transform: rotate(-8deg); }
+.brand-logo img { width: 100%; height: 100%; object-fit: cover; }
+.brand-text { background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.stats { display: flex; gap: 12px; align-items: center; }
+.stat { display: flex; align-items: center; gap: 8px; background: var(--bg-light); padding: 10px 16px; border-radius: var(--radius); font-weight: 800; border: 1px solid var(--border); transition: transform 0.2s; }
+.stat:hover { transform: translateY(-2px); }
+.stat .val { color: var(--warning); font-size: 1.1rem; }
+.stat.streak .val { color: var(--error); }
+.icon-btn { width: 48px; height: 48px; border-radius: var(--radius); background: var(--bg-light); border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 8px; }
+.icon-btn:hover { transform: scale(1.1) rotate(15deg); background: var(--card-hover); border-color: var(--primary); }
+.icon-btn img { width: 100%; height: 100%; object-fit: contain; }
+.lang-selector { display: flex; gap: 12px; overflow-x: auto; padding: 16px; background: var(--card); border-radius: var(--radius-lg); margin-bottom: 24px; border: 1px solid var(--border); box-shadow: var(--shadow-sm); scroll-snap-type: x mandatory; }
+.lang-btn { padding: 12px 20px; background: var(--bg-light); border: 2px solid var(--border); border-radius: var(--radius); cursor: pointer; font-weight: 800; white-space: nowrap; transition: all 0.2s; display: flex; align-items: center; gap: 8px; scroll-snap-align: start; font-size: 0.95rem; color: var(--text); }
+.lang-btn:hover { transform: translateY(-3px); border-color: var(--primary); box-shadow: var(--shadow-sm); }
+.lang-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-color: var(--primary); color: white; box-shadow: var(--shadow-green); }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 30px; }
+.home-card { background: var(--card); border: 3px solid transparent; border-radius: var(--radius-lg); padding: 0; text-align: center; cursor: pointer; transition: all 0.3s; box-shadow: var(--shadow-sm); position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; }
+.home-card::before { content: ''; position: absolute; inset: 0; border-radius: var(--radius-lg); padding: 3px; background: linear-gradient(135deg, var(--primary), var(--primary-light), var(--primary-dark)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 2; }
+.home-card:hover::before { opacity: 1; }
+.home-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-green); }
+.home-card-img-wrap { width: 100%; height: 160px; overflow: hidden; border-radius: var(--radius-lg) var(--radius-lg) 0 0; position: relative; background: linear-gradient(135deg, var(--primary-light), var(--primary)); display: flex; align-items: center; justify-content: center; padding: 16px; }
+.home-card-img-wrap img { width: 100%; height: 100%; object-fit: contain; transition: transform 0.3s; border-radius: 8px; }
+.home-card:hover .home-card-img-wrap img { transform: scale(1.08); }
+.home-card-body { padding: 20px 24px 24px; width: 100%; }
+.home-card h3 { font-size: 1.3rem; margin-bottom: 8px; font-weight: 900; }
+.home-card p { color: var(--text-muted); font-size: 0.9rem; }
+.path-container { position: relative; padding: 20px 20px 60px; display: flex; flex-direction: column; align-items: center; gap: 50px; }
+.path-line { position: absolute; left: 50%; top: 40px; bottom: 40px; width: 6px; background: linear-gradient(180deg, var(--primary), var(--primary-light), var(--primary-dark)); transform: translateX(-50%); border-radius: 3px; z-index: 0; }
+.path-node-wrapper { position: relative; display: flex; flex-direction: column; align-items: center; z-index: 1; }
+.path-node { width: 80px; height: 80px; border-radius: 50%; background: var(--card); border: 4px solid var(--primary); display: flex; align-items: center; justify-content: center; font-size: 2rem; cursor: pointer; transition: all 0.3s; box-shadow: var(--shadow-sm); }
+.path-node:hover:not(.locked) { transform: scale(1.2); box-shadow: var(--shadow-green); }
+.path-node.locked { opacity: 0.4; cursor: not-allowed; border-color: var(--border); filter: grayscale(1); }
+.path-node.done { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-color: var(--primary-light); color: white; }
+.path-node.current { background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-color: var(--primary); animation: glow 2s infinite; }
+.path-label { margin-top: 16px; font-weight: 800; font-size: 0.9rem; text-align: center; width: 200px; color: var(--text); background: var(--card); padding: 8px 14px; border-radius: 12px; border: 2px solid var(--border); box-shadow: var(--shadow-sm); line-height: 1.3; transition: all 0.2s; }
+.path-node-wrapper:hover .path-label { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-green); }
+.lesson-header { text-align: center; font-size: 2rem; font-weight: 900; margin: 30px 0; background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.progress-bar { width: 100%; height: 16px; background: var(--bg-light); border-radius: 10px; overflow: hidden; margin-bottom: 24px; border: 2px solid var(--border); }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius: 10px; transition: width 0.5s ease; box-shadow: 0 0 10px rgba(88,204,2,0.5); }
+.word-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 30px; }
+.word-item { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); padding: 20px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s; }
+.word-item:hover { border-color: var(--primary); transform: translateX(5px); box-shadow: var(--shadow-sm); }
+.word-item .sr { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+.word-item .ru { color: var(--text-muted); font-size: 0.95rem; }
+.grammar-box { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 30px; margin-bottom: 30px; box-shadow: var(--shadow-sm); }
+.grammar-box h3 { color: var(--primary); font-size: 1.5rem; margin-bottom: 16px; font-weight: 900; }
+.grammar-box p { line-height: 1.8; font-size: 1.05rem; margin-bottom: 16px; }
+.grammar-example { background: var(--bg-light); padding: 14px 18px; border-radius: var(--radius-sm); margin-bottom: 10px; border-left: 4px solid var(--primary); transition: transform 0.2s; }
+.grammar-example:hover { transform: translateX(5px); }
+.quiz-option { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 12px; cursor: pointer; font-weight: 700; font-size: 1.1rem; transition: all 0.2s; }
+.quiz-option:hover:not(.disabled) { border-color: var(--primary); transform: translateX(10px); box-shadow: var(--shadow-sm); }
+.quiz-option.correct { background: linear-gradient(135deg, var(--success), var(--primary-dark)); border-color: var(--primary-light); color: white; animation: pulse 0.5s; }
+.quiz-option.wrong { background: linear-gradient(135deg, var(--error), #CC0000); border-color: #CC0000; color: white; animation: shake 0.4s; }
+.quiz-option.disabled { opacity: 0.5; cursor: not-allowed; }
+.btn { padding: 16px 32px; border: none; border-radius: var(--radius); font-weight: 800; font-size: 1.1rem; cursor: pointer; transition: all 0.2s; margin-top: 20px; width: 100%; text-transform: uppercase; letter-spacing: 0.5px; }
+.btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: var(--shadow-green); }
+.btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(88,204,2,0.4); }
+.btn-primary:active { transform: translateY(0); }
+.btn-secondary { background: var(--card); border: 2px solid var(--border); color: var(--text); }
+.btn-secondary:hover { border-color: var(--primary); transform: translateY(-2px); }
+.btn-danger { background: var(--error); color: white; }
+.btn-danger:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,75,75,0.4); }
+.audio-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.custom-audio-btn { background: var(--bg-light); border: 2px solid var(--border); color: var(--text); padding: 8px 14px; border-radius: var(--radius-sm); cursor: pointer; font-weight: 700; font-size: 0.85rem; transition: all 0.2s; }
+.custom-audio-btn:hover { background: var(--primary); border-color: var(--primary); color: white; transform: translateY(-2px); }
+.custom-audio-btn.danger { color: var(--error); }
+.custom-audio-btn.danger:hover { background: var(--error); color: white; }
+.custom-audio-btn.playing { background: var(--primary); border-color: var(--primary-light); color: white; animation: pulse 0.5s infinite; }
+.custom-audio-btn.recording { background: var(--error); border-color: var(--error); color: white; animation: pulse 0.5s infinite; }
+.auth-container { max-width: 450px; margin: 80px auto; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 40px; box-shadow: var(--shadow); animation: slideUp 0.5s ease; }
+.auth-logo { width: 100px; height: 100px; margin: 0 auto 20px; display: block; animation: float 3s ease-in-out infinite; }
+.auth-container h1 { text-align: center; font-size: 2rem; margin-bottom: 10px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 900; }
+.auth-container p { text-align: center; color: var(--text-muted); margin-bottom: 30px; }
+.auth-tabs { display: flex; gap: 10px; margin-bottom: 30px; }
+.auth-tab { flex: 1; padding: 12px; background: var(--bg-light); border: 2px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; font-weight: 800; text-align: center; transition: all 0.2s; color: var(--text); }
+.auth-tab.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-color: var(--primary); color: white; }
+.auth-tab:hover:not(.active) { border-color: var(--primary); }
+input { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 16px; background: var(--bg-light); color: var(--text); font-size: 1rem; transition: all 0.2s; font-family: inherit; }
+input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(88,204,2,0.2); }
+.alpha-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 12px; margin-bottom: 30px; }
+.alpha-btn { aspect-ratio: 1; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); font-size: 1.8rem; font-weight: 900; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s; color: var(--text); box-shadow: var(--shadow-sm); }
+.alpha-btn:hover { transform: scale(1.08); border-color: var(--primary); box-shadow: var(--shadow-green); }
+.alpha-btn.done { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); border-color: var(--primary-light); color: white; }
+.alpha-btn .pair { font-size: 0.7rem; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
+.alpha-btn.done .pair { color: rgba(255,255,255,0.8); }
+.letter-display { text-align: center; background: var(--card); border-radius: var(--radius-lg); padding: 40px; margin-bottom: 30px; border: 2px solid var(--border); box-shadow: var(--shadow); }
+.letter-display .big-char { font-size: 6rem; font-weight: 900; background: linear-gradient(135deg, var(--primary), var(--primary-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1; margin-bottom: 16px; }
+.letter-display .sound { font-size: 1.3rem; color: var(--accent); font-weight: 700; margin-bottom: 20px; }
+.letter-detail-card { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 30px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+.letter-detail-card .detail-char { font-size: 4rem; font-weight: 900; color: var(--primary); text-align: center; margin-bottom: 12px; }
+.letter-detail-card .detail-info { text-align: center; font-size: 1.1rem; line-height: 1.8; color: var(--text-muted); }
+.letter-detail-card .detail-info strong { color: var(--text); }
+.success-screen { text-align: center; padding: 60px 20px; animation: scaleIn 0.5s ease; }
+.success-screen .icon { font-size: 6rem; margin-bottom: 20px; animation: bounce 1s ease infinite; }
+.back-btn { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-sm); padding: 12px 20px; cursor: pointer; font-weight: 800; margin-bottom: 20px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; color: var(--text); }
+.back-btn:hover { border-color: var(--primary); transform: translateX(-5px); }
+.shop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+.shop-item { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius-lg); padding: 24px; text-align: center; transition: all 0.3s; }
+.shop-item:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
+.shop-item.owned { border-color: var(--primary); background: rgba(88,204,2,0.1); }
+.rank-row { display: flex; align-items: center; gap: 16px; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); padding: 16px 20px; margin-bottom: 12px; transition: all 0.2s; }
+.rank-row:hover { transform: translateX(5px); }
+.rank-row.me { border-color: var(--primary); background: rgba(88,204,2,0.1); box-shadow: var(--shadow-green); }
+.lib-item { background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); padding: 20px; margin-bottom: 12px; cursor: pointer; transition: all 0.2s; }
+.lib-item:hover { border-color: var(--primary); transform: translateX(5px); }
+.no-audio-hint { background: var(--bg-light); border: 2px dashed var(--border); border-radius: var(--radius-sm); padding: 12px 16px; margin-top: 10px; color: var(--text-muted); font-size: 0.9rem; text-align: center; }
+@media (max-width: 768px) {
+    .home-grid { grid-template-columns: 1fr; }
+    .topbar { flex-direction: column; gap: 16px; padding: 16px; }
+    .stats { width: 100%; justify-content: center; }
+    .lesson-header { font-size: 1.5rem; }
+    .letter-display .big-char { font-size: 4rem; }
+}
+</style>
 </head>
 <body>
-    <div id="root"></div>
+<div id="root"></div>
+<script>
+// ============================================
+// КОНФИГУРАЦИЯ КУРСОВ
+// ============================================
+const COURSES = {
+    sr: { flag: "🇷🇸", name: "Сербский" },
+    tr: { flag: "🇹🇷", name: "Турецкий" },
+    pl: { flag: "🇵🇱", name: "Польский" },
+    be: { flag: "🇧🇾", name: "Белорусский" },
+    kk: { flag: "🇰🇿", name: "Казахский" },
+    tt: { flag: "🏳️", name: "Татарский" }
+};
 
-    <script>
-        /* ============================================
-           КОНФИГУРАЦИЯ КУРСОВ
-           ============================================ */
-        const COURSES = {
-            sr: { flag: "🇷🇸", name: "Сербский" },
-            tr: { flag: "🇹🇷", name: "Турецкий" },
-            pl: { flag: "🇵🇱", name: "Польский" },
-            be: { flag: "🇧🇾", name: "Белорусский" },
-            kk: { flag: "🇰🇿", name: "Казахский" },
-            tt: { flag: "🏳️", name: "Татарский" }
-        };
+// ============================================
+// СОСТОЯНИЕ ПРИЛОЖЕНИЯ
+// ============================================
+let state = {
+    screen: 'auth', user: null, theme: 'dark', course: 'sr', xp: 0, streak: 0,
+    progress: {}, alpha: {}, medals: [], unit: null, step: 'words', alphaStep: 1,
+    letter: null, qi: 0, loading: false, data: null, authMode: 'login',
+    lessonsToday: 0, lastLessonDate: null
+};
 
-        /* ============================================
-           СОСТОЯНИЕ ПРИЛОЖЕНИЯ
-           ============================================ */
-        let state = {
-            screen: 'auth',
-            user: null,
-            theme: 'dark',
-            course: 'sr',
-            xp: 0,
-            streak: 0,
-            progress: {},
-            alpha: {},
-            medals: [],
-            unit: null,
-            step: 'words',
-            alphaStep: 1,
-            letter: null,
-            qi: 0,
-            loading: false,
-            data: null,
-            authMode: 'login',
-            lessonsToday: 0,
-            lastLessonDate: null
-        };
+let mediaRecorder = null;
+let audioChunks = [];
+let currentAudio = null;
 
-        let mediaRecorder, audioChunks = [];
+// ============================================
+// УТИЛИТЫ ДАТЫ И ЛИМИТОВ
+// ============================================
+function getUfaDate() {
+    const now = new Date();
+    const ufaTime = new Date(now.getTime() + (5 * 60 * 60 * 1000));
+    if (ufaTime.getUTCHours() < 7) ufaTime.setUTCDate(ufaTime.getUTCDate() - 1);
+    return ufaTime.toISOString().split('T')[0];
+}
 
-        /* ============================================
-           УТИЛИТЫ ДАТЫ И ЛИМИТОВ
-           ============================================ */
-        function getUfaDate() {
-            const now = new Date();
-            const ufaTime = new Date(now.getTime() + (5 * 60 * 60 * 1000));
-            if (ufaTime.getUTCHours() < 7) ufaTime.setUTCDate(ufaTime.getUTCDate() - 1);
-            return ufaTime.toISOString().split('T')[0];
+function checkDailyLimit() {
+    const today = getUfaDate();
+    if (state.lastLessonDate !== today) {
+        state.lessonsToday = 0;
+        state.lastLessonDate = today;
+    }
+    if (state.lessonsToday >= 2) {
+        alert("Лимит уроков на сегодня исчерпан (2/2). Жди 7:00 утра по Уфе.");
+        return false;
+    }
+    return true;
+}
+
+// ============================================
+// СОХРАНЕНИЕ И ЗАГРУЗКА
+// ============================================
+function save() {
+    const progObj = {};
+    for (const k in state.progress) progObj[k] = Array.from(state.progress[k]);
+    const alphaObj = {};
+    for (const k in state.alpha) alphaObj[k] = Array.from(state.alpha[k]);
+    localStorage.setItem('bobor_v4', JSON.stringify({
+        user: state.user, theme: state.theme, xp: state.xp, streak: state.streak,
+        course: state.course, progress: progObj, alpha: alphaObj, medals: state.medals,
+        lessonsToday: state.lessonsToday, lastLessonDate: state.lastLessonDate
+    }));
+    if (state.user) {
+        fetch("/api/sync-progress", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: state.user.email, xp: state.xp, streak: state.streak,
+                medals: state.medals, last_daily: state.lastLessonDate,
+                units_done: progObj, lessons_today: state.lessonsToday
+            })
+        }).catch(e => console.error("Sync error", e));
+    }
+}
+
+function load() {
+    try {
+        const d = JSON.parse(localStorage.getItem('bobor_v4'));
+        if (d) {
+            state.user = d.user;
+            state.theme = d.theme || 'dark';
+            state.xp = d.xp || 0;
+            state.streak = d.streak || 0;
+            state.course = d.course || 'sr';
+            state.medals = d.medals || [];
+            state.lessonsToday = d.lessonsToday || 0;
+            state.lastLessonDate = d.lastLessonDate || null;
+            state.progress = Object.fromEntries(
+                Object.entries(d.progress || {}).map(([k, v]) => [k, new Set(v)])
+            );
+            state.alpha = Object.fromEntries(
+                Object.entries(d.alpha || {}).map(([k, v]) => [k, new Set(v)])
+            );
+            if (state.user) state.screen = 'home';
         }
+    } catch (e) { console.error("Load error", e); }
+}
 
-        function checkDailyLimit() {
-            const today = getUfaDate();
-            if (state.lastLessonDate !== today) {
-                state.lessonsToday = 0;
-                state.lastLessonDate = today;
+// ============================================
+// ЗАГРУЗКА КУРСА
+// ============================================
+function cleanJson(obj) {
+    if (typeof obj !== 'object' || obj === null) return obj;
+    if (Array.isArray(obj)) return obj.map(cleanJson);
+    const cleaned = {};
+    for (const [key, value] of Object.entries(obj)) {
+        const cleanKey = key.trim();
+        const cleanValue = typeof value === 'string' ? value.trim() : cleanJson(value);
+        cleaned[cleanKey] = cleanValue;
+    }
+    return cleaned;
+}
+
+async function loadCourse() {
+    state.loading = true;
+    render();
+    try {
+        const r = await fetch(`/data/${state.course}.json`);
+        const raw = await r.json();
+        state.data = cleanJson(raw);
+    } catch (e) {
+        state.data = { name: "Ошибка", units: [] };
+    }
+    state.loading = false;
+    render();
+}
+
+// ============================================
+// УТИЛИТА СОЗДАНИЯ ЭЛЕМЕНТОВ
+// ============================================
+const el = (tag, attrs = {}, children = []) => {
+    const e = document.createElement(tag);
+    for (let k in attrs) {
+        if (k === 'class') e.className = attrs[k];
+        else if (k === 'html') e.innerHTML = attrs[k];
+        else if (k.startsWith('on')) e.addEventListener(k.slice(2), attrs[k]);
+        else if (k === 'style') e.style.cssText = attrs[k];
+        else e.setAttribute(k, attrs[k]);
+    }
+    const flatChildren = Array.isArray(children) ? children.flat(Infinity) : [children];
+    flatChildren.forEach(c => {
+        if (c == null || c === false) return;
+        if (typeof c === 'string' || typeof c === 'number') {
+            e.appendChild(document.createTextNode(String(c)));
+        } else if (c instanceof Node) {
+            e.appendChild(c);
+        }
+    });
+    return e;
+};
+
+// ============================================
+// ОЗВУЧКА — ТОЛЬКО СВОЯ, GOOGLE TTS УДАЛЁН
+// ============================================
+function getAudioKey(text) {
+    return `${state.course}_${text.trim()}`;
+}
+
+function stopCurrentAudio() {
+    if (currentAudio) {
+        try { currentAudio.pause(); } catch(e) {}
+        currentAudio = null;
+    }
+    document.querySelectorAll('.custom-audio-btn.playing').forEach(b => b.classList.remove('playing'));
+}
+
+function playCustomAudio(key, btnEl) {
+    fetch(`/api/get-audio/${encodeURIComponent(key)}`)
+        .then(res => res.json())
+        .then(data => {
+            if (!data.audio) {
+                alert('⚠️ Озвучка для этого слова ещё не записана.\nСкажи админу чтобы записал через кнопку "🎙️ Записать".');
+                return;
             }
-            if (state.lessonsToday >= 2) {
-                alert("Лимит уроков на сегодня исчерпан (2/2). Жди 7:00 утра по Уфе.");
-                return false;
-            }
-            return true;
-        }
-
-        /* ============================================
-           СОХРАНЕНИЕ И ЗАГРУЗКА
-           ============================================ */
-        function save() {
-            const progObj = {};
-            for (const k in state.progress) progObj[k] = Array.from(state.progress[k]);
-            const alphaObj = {};
-            for (const k in state.alpha) alphaObj[k] = Array.from(state.alpha[k]);
-            localStorage.setItem('bobor_v4', JSON.stringify({
-                user: state.user,
-                theme: state.theme,
-                xp: state.xp,
-                streak: state.streak,
-                course: state.course,
-                progress: progObj,
-                alpha: alphaObj,
-                medals: state.medals,
-                lessonsToday: state.lessonsToday,
-                lastLessonDate: state.lastLessonDate
-            }));
-            if (state.user) {
-                fetch("/api/sync-progress", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        username: state.user.email,
-                        xp: state.xp,
-                        streak: state.streak,
-                        medals: state.medals,
-                        last_daily: state.lastLessonDate,
-                        units_done: progObj,
-                        lessons_today: state.lessonsToday
-                    })
-                }).catch(e => console.error("Sync error", e));
-            }
-        }
-
-        function load() {
-            try {
-                const d = JSON.parse(localStorage.getItem('bobor_v4'));
-                if (d) {
-                    state.user = d.user;
-                    state.theme = d.theme || 'dark';
-                    state.xp = d.xp || 0;
-                    state.streak = d.streak || 0;
-                    state.course = d.course || 'sr';
-                    state.medals = d.medals || [];
-                    state.lessonsToday = d.lessonsToday || 0;
-                    state.lastLessonDate = d.lastLessonDate || null;
-                    state.progress = Object.fromEntries(
-                        Object.entries(d.progress || {}).map(([k, v]) => [k, new Set(v)])
-                    );
-                    state.alpha = Object.fromEntries(
-                        Object.entries(d.alpha || {}).map(([k, v]) => [k, new Set(v)])
-                    );
-                    if (state.user) state.screen = 'home';
-                }
-            } catch (e) {
-                console.error("Load error", e);
-            }
-        }
-
-        /* ============================================
-           ЗАГРУЗКА КУРСА
-           ============================================ */
-        function cleanJson(obj) {
-            if (typeof obj !== 'object' || obj === null) return obj;
-            if (Array.isArray(obj)) return obj.map(cleanJson);
-            const cleaned = {};
-            for (const [key, value] of Object.entries(obj)) {
-                const cleanKey = key.trim();
-                const cleanValue = typeof value === 'string' ? value.trim() : cleanJson(value);
-                cleaned[cleanKey] = cleanValue;
-            }
-            return cleaned;
-        }
-
-        async function loadCourse() {
-            state.loading = true;
-            render();
-            try {
-                const r = await fetch(`/data/${state.course}.json`);
-                const raw = await r.json();
-                state.data = cleanJson(raw);
-            } catch (e) {
-                state.data = { name: "Ошибка", units: [] };
-            }
-            state.loading = false;
-            render();
-        }
-
-        /* ============================================
-           УТИЛИТА СОЗДАНИЯ ЭЛЕМЕНТОВ
-           ============================================ */
-        const el = (tag, attrs = {}, children = []) => {
-            const e = document.createElement(tag);
-            for (let k in attrs) {
-                if (k === 'class') e.className = attrs[k];
-                else if (k === 'html') e.innerHTML = attrs[k];
-                else if (k.startsWith('on')) e.addEventListener(k.slice(2), attrs[k]);
-                else if (k === 'style') e.style.cssText = attrs[k];
-                else e.setAttribute(k, attrs[k]);
-            }
-            const flatChildren = Array.isArray(children) ? children.flat(Infinity) : [children];
-            flatChildren.forEach(c => {
-                if (c == null || c === false) return;
-                if (typeof c === 'string' || typeof c === 'number') {
-                    e.appendChild(document.createTextNode(String(c)));
-                } else if (c instanceof Node) {
-                    e.appendChild(c);
-                }
-            });
-            return e;
-        };
-
-        /* ============================================
-           ОЗВУЧКА
-           ============================================ */
-        function playTTS(text, langCode) {
-            if (!window.speechSynthesis) return;
-            window.speechSynthesis.cancel();
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.lang = langCode || 'ru-RU';
-            const voices = window.speechSynthesis.getVoices();
-            const voice = voices.find(v => v.lang.startsWith(langCode.split('-')[0]));
-            if (voice) utter.voice = voice;
-            window.speechSynthesis.speak(utter);
-        }
-
-        function getAudioKey(text) {
-            return `${state.course}_${text.trim()}`;
-        }
-
-        function renderAudioButton(text) {
-            const key = getAudioKey(text);
-            const container = el('div', { class: 'audio-btns' });
-
-            const playBtn = el('button', {
-                class: 'custom-audio-btn',
-                onclick: async () => {
-                    try {
-                        const res = await fetch(`/api/get-audio/${encodeURIComponent(key)}`);
-                        const data = await res.json();
-                        if (data.audio) {
-                            new Audio(data.audio).play();
-                            return;
-                        }
-                    } catch (e) {}
-                    playTTS(text, state.data?.speechLang || 'ru-RU');
-                }
-            }, '🔊 Слушать');
-            container.appendChild(playBtn);
-
-            if (state.user?.role === 'admin') {
-                const recBtn = el('button', {
-                    class: 'custom-audio-btn',
-                    onclick: async () => {
-                        if (confirm("Записать свой голос? 3 секунды.")) {
-                            try {
-                                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                                mediaRecorder = new MediaRecorder(stream);
-                                audioChunks = [];
-                                mediaRecorder.ondataavailable = (event) => {
-                                    audioChunks.push(event.data);
-                                };
-                                mediaRecorder.onstop = () => {
-                                    const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-                                    const reader = new FileReader();
-                                    reader.readAsDataURL(audioBlob);
-                                    reader.onloadend = async () => {
-                                        await fetch("/api/save-audio", {
-                                            method: "POST",
-                                            headers: { "Content-Type": "application/json" },
-                                            body: JSON.stringify({
-                                                key,
-                                                audioBase64: reader.result,
-                                                role: state.user.role
-                                            })
-                                        });
-                                        alert("Аудио сохранено!");
-                                        render();
-                                    };
-                                };
-                                mediaRecorder.start();
-                                setTimeout(() => {
-                                    mediaRecorder.stop();
-                                    stream.getTracks().forEach(track => track.stop());
-                                }, 3000);
-                            } catch (e) {
-                                alert("Нет доступа к микрофону.");
-                            }
-                        }
-                    }
-                }, '🎙️ Записать');
-                container.appendChild(recBtn);
-
-                const delBtn = el('button', {
-                    class: 'custom-audio-btn danger',
-                    onclick: async () => {
-                        if (confirm("Удалить озвучку?")) {
-                            await fetch("/api/delete-audio", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ key, role: state.user.role })
-                            });
-                            alert("Удалено");
-                            render();
-                        }
-                    }
-                }, '🗑️ Удалить');
-                container.appendChild(delBtn);
-            }
-
-            return container;
-        }
-
-        /* ============================================
-           ГЛАВНЫЙ РЕНДЕР
-           ============================================ */
-        function render() {
-            const root = document.getElementById('root');
-            root.innerHTML = '';
-            document.documentElement.setAttribute('data-theme', state.theme);
-
-            if (!state.user && state.screen !== 'auth') state.screen = 'auth';
-
-            const screens = {
-                auth: renderAuth,
-                home: renderHome,
-                learn: renderLearn,
-                lesson: renderLesson,
-                library: renderLibrary,
-                shop: renderShop,
-                ranked: renderRanked,
-                settings: renderSettings
+            stopCurrentAudio();
+            const audio = new Audio(data.audio);
+            currentAudio = audio;
+            if (btnEl) btnEl.classList.add('playing');
+            audio.onended = () => {
+                if (btnEl) btnEl.classList.remove('playing');
+                currentAudio = null;
             };
-
-            (screens[state.screen] || renderHome)(root);
-        }
-
-        /* ============================================
-           АВТОРИЗАЦИЯ
-           ============================================ */
-        function renderAuth(root) {
-            const container = el('div', { class: 'auth-container fade-in' });
-
-            const logo = el('img', {
-                class: 'auth-logo',
-                src: '/images/beaver.png',
-                alt: 'Бобёр'
+            audio.onerror = (err) => {
+                if (btnEl) btnEl.classList.remove('playing');
+                currentAudio = null;
+                console.error('Audio play error:', err);
+                alert('❌ Не удалось воспроизвести аудио. Попробуй перезаписать.');
+            };
+            audio.play().catch(err => {
+                if (btnEl) btnEl.classList.remove('playing');
+                currentAudio = null;
+                console.error('Play rejected:', err);
+                alert('❌ Браузер заблокировал воспроизведение. Нажми кнопку ещё раз.');
             });
-            container.appendChild(logo);
+        })
+        .catch(err => {
+            console.error('Fetch audio error:', err);
+            alert('❌ Ошибка загрузки аудио с сервера.');
+        });
+}
 
-            container.appendChild(el('h1', {}, 'BOBOR-LINGUO'));
-            container.appendChild(el('p', {}, 'Учи языки с бобром'));
+function recordCustomAudio(key, btnEl) {
+    if (!navigator.mediaDevices || !window.MediaRecorder) {
+        alert('❌ Браузер не поддерживает запись аудио.');
+        return;
+    }
+    if (confirm("Записать озвучку? 3 секунды. Говори в микрофон.")) {
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                // Определяем поддерживаемый MIME тип
+                let mimeType = 'audio/webm;codecs=opus';
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    mimeType = 'audio/webm';
+                }
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    mimeType = 'audio/mp4';
+                }
+                if (!MediaRecorder.isTypeSupported(mimeType)) {
+                    mimeType = '';
+                }
 
-            const tabs = el('div', { class: 'auth-tabs' });
-            const loginTab = el('div', {
-                class: 'auth-tab' + (state.authMode === 'login' ? ' active' : ''),
-                onclick: () => { state.authMode = 'login'; render(); }
-            }, 'Вход');
-            const registerTab = el('div', {
-                class: 'auth-tab' + (state.authMode === 'register' ? ' active' : ''),
-                onclick: () => { state.authMode = 'register'; render(); }
-            }, 'Регистрация');
-            tabs.appendChild(loginTab);
-            tabs.appendChild(registerTab);
-            container.appendChild(tabs);
+                const options = mimeType ? { mimeType } : {};
+                mediaRecorder = new MediaRecorder(stream, options);
+                audioChunks = [];
 
-            const form = el('form', {
-                onsubmit: async (e) => {
-                    e.preventDefault();
-                    const email = e.target.email.value.trim();
-                    const password = e.target.password.value.trim();
+                if (btnEl) btnEl.classList.add('recording');
 
-                    if (!email || !password) {
-                        alert('Заполни все поля');
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data && event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    stream.getTracks().forEach(track => track.stop());
+                    if (btnEl) btnEl.classList.remove('recording');
+
+                    if (audioChunks.length === 0) {
+                        alert('❌ Ничего не записано. Попробуй ещё раз.');
                         return;
                     }
 
-                    try {
-                        const endpoint = state.authMode === 'login' ? '/api/login' : '/api/register';
-                        const res = await fetch(endpoint, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ email, password })
-                        });
-                        const data = await res.json();
-
-                        if (data.success) {
-                            if (state.authMode === 'register') {
-                                alert('Аккаунт создан! Теперь войди');
-                                state.authMode = 'login';
-                                render();
+                    const actualType = mediaRecorder.mimeType || 'audio/webm';
+                    const audioBlob = new Blob(audioChunks, { type: actualType });
+                    const reader = new FileReader();
+                    reader.onloadend = async () => {
+                        try {
+                            const res = await fetch("/api/save-audio", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({
+                                    key: key,
+                                    audioBase64: reader.result,
+                                    role: state.user.role
+                                })
+                            });
+                            const data = await res.json();
+                            if (data.success) {
+                                alert("✅ Озвучка сохранена! Теперь нажми 🔊 Слушать.");
                             } else {
-                                state.user = data.user;
-                                state.screen = 'home';
-                                save();
-                                render();
+                                alert("❌ Не удалось сохранить: " + (data.error || 'неизвестная ошибка'));
                             }
-                        } else {
-                            alert(data.error || 'Ошибка');
-                        }
-                    } catch (e) {
-                        alert('Ошибка соединения');
-                    }
-                }
-            });
-
-            form.appendChild(el('input', {
-                type: 'email',
-                name: 'email',
-                placeholder: 'Email',
-                required: true
-            }));
-            form.appendChild(el('input', {
-                type: 'password',
-                name: 'password',
-                placeholder: 'Пароль',
-                required: true
-            }));
-            form.appendChild(el('button', {
-                type: 'submit',
-                class: 'btn btn-primary'
-            }, state.authMode === 'login' ? 'Войти' : 'Создать аккаунт'));
-
-            container.appendChild(form);
-            root.appendChild(container);
-        }
-
-        /* ============================================
-           ГЛАВНАЯ СТРАНИЦА
-           ============================================ */
-        function renderHome(root) {
-            const app = el('div', { class: 'app fade-in' });
-
-            const topbar = el('div', { class: 'topbar' });
-            const brand = el('div', {
-                class: 'brand',
-                onclick: () => { state.screen = 'home'; render(); }
-            });
-            const brandLogo = el('div', { class: 'brand-logo' });
-            brandLogo.appendChild(el('img', { src: '/images/beaver.png', alt: '🦫' }));
-            brand.appendChild(brandLogo);
-            brand.appendChild(el('span', { class: 'brand-text' }, 'BOBOR'));
-            topbar.appendChild(brand);
-
-            const stats = el('div', { class: 'stats' });
-            stats.appendChild(el('div', { class: 'stat streak' }, [
-                el('span', {}, '🔥 '),
-                el('span', { class: 'val' }, state.streak)
-            ]));
-            stats.appendChild(el('div', { class: 'stat' }, [
-                el('span', {}, '⚡ '),
-                el('span', { class: 'val' }, state.xp)
-            ]));
-            const settingsBtn = el('div', {
-                class: 'icon-btn',
-                onclick: () => { state.screen = 'settings'; render(); }
-            });
-            settingsBtn.appendChild(el('img', { src: '/images/settings.png', alt: '⚙️' }));
-            stats.appendChild(settingsBtn);
-            topbar.appendChild(stats);
-            app.appendChild(topbar);
-
-            const langSelector = el('div', { class: 'lang-selector' });
-            Object.keys(COURSES).forEach(code => {
-                const btn = el('div', {
-                    class: 'lang-btn' + (state.course === code ? ' active' : ''),
-                    onclick: () => { state.course = code; save(); render(); }
-                });
-                btn.appendChild(document.createTextNode(COURSES[code].flag + ' ' + COURSES[code].name));
-                langSelector.appendChild(btn);
-            });
-            app.appendChild(langSelector);
-
-            const welcome = el('h1', {
-                class: 'slide-in',
-                style: 'font-size: 2rem; margin-bottom: 10px; font-weight: 900;'
-            }, `Привет, ${state.user?.email?.split('@')[0] || 'друг'}! 👋`);
-            app.appendChild(welcome);
-
-            const lessonsInfo = el('p', {
-                class: 'slide-in',
-                style: 'color: var(--text-muted); margin-bottom: 30px; font-size: 1rem;'
-            }, `Уроков сегодня: ${state.lessonsToday}/2`);
-            app.appendChild(lessonsInfo);
-
-            const grid = el('div', { class: 'home-grid' });
-
-            const cards = [
-                { id: 'learn', icon: '/images/learn.png', title: 'Обучение', desc: 'Начни путь' },
-                { id: 'library', icon: '📚', title: 'Библиотека', desc: 'Пройденные уроки' },
-                { id: 'shop', icon: '/images/shop.png', title: 'Магазин', desc: 'Медали и награды' },
-                { id: 'ranked', icon: '/images/ranked.png', title: 'Ранкед', desc: 'Таблица лидеров' }
-            ];
-
-            cards.forEach((card, i) => {
-                const cardEl = el('div', {
-                    class: 'home-card slide-in',
-                    style: `animation-delay: ${i * 0.1}s`,
-                    onclick: () => {
-                        state.screen = card.id;
-                        if (card.id === 'learn' || card.id === 'library') {
-                            loadCourse();
-                        } else {
-                            render();
-                        }
-                    }
-                });
-
-                if (card.icon.startsWith('/')) {
-                    const imgWrap = el('div', { class: 'home-card-img-wrap' });
-                    imgWrap.appendChild(el('img', { src: card.icon, alt: card.title }));
-                    cardEl.appendChild(imgWrap);
-                } else {
-                    const imgWrap = el('div', { class: 'home-card-img-wrap' });
-                    imgWrap.appendChild(el('div', { style: 'font-size: 4rem;' }, card.icon));
-                    cardEl.appendChild(imgWrap);
-                }
-
-                const body = el('div', { class: 'home-card-body' });
-                body.appendChild(el('h3', {}, card.title));
-                body.appendChild(el('p', {}, card.desc));
-                cardEl.appendChild(body);
-
-                grid.appendChild(cardEl);
-            });
-
-            app.appendChild(grid);
-            root.appendChild(app);
-        }
-
-        /* ============================================
-           ОБУЧЕНИЕ (ДОРОЖКА)
-           ============================================ */
-        function renderLearn(root) {
-            const app = el('div', { class: 'app fade-in' });
-
-            const backBtn = el('button', {
-                class: 'back-btn',
-                onclick: () => { state.screen = 'home'; render(); }
-            }, '← Назад');
-            app.appendChild(backBtn);
-
-            if (state.loading) {
-                app.appendChild(el('p', {
-                    style: 'text-align: center; font-size: 1.2rem; margin-top: 50px; color: var(--text-muted);'
-                }, 'Загрузка...'));
-                root.appendChild(app);
-                return;
-            }
-
-            if (!state.data) {
-                app.appendChild(el('p', {
-                    style: 'text-align: center; font-size: 1.2rem; margin-top: 50px; color: var(--text-muted);'
-                }, 'Ошибка загрузки курса'));
-                root.appendChild(app);
-                return;
-            }
-
-            app.appendChild(el('h1', {
-                style: 'text-align: center; font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
-            }, state.data.name));
-
-            const pathContainer = el('div', { class: 'path-container' });
-            pathContainer.appendChild(el('div', { class: 'path-line' }));
-
-            const prog = state.progress[state.course] || new Set();
-            let prevDone = true;
-
-            state.data.units.forEach((unit, i) => {
-                const done = prog.has(unit.id);
-                const locked = !prevDone;
-                const current = !done && !locked;
-
-                const wrapper = el('div', { class: 'path-node-wrapper' });
-
-                const node = el('div', {
-                    class: 'path-node' + (locked ? ' locked' : '') + (done ? ' done' : '') + (current ? ' current' : ''),
-                    onclick: () => {
-                        if (locked) return;
-                        if (!done && !checkDailyLimit()) return;
-                        state.unit = unit;
-                        state.step = unit.alphabet ? 'alpha' : (unit.words?.length ? 'words' : 'grammar');
-                        state.alphaStep = 1;
-                        state.qi = 0;
-                        state.letter = null;
-                        state.screen = 'lesson';
-                        render();
-                    }
-                });
-                node.appendChild(el('span', {}, done ? '✓' : (locked ? '🔒' : '⭐')));
-                wrapper.appendChild(node);
-
-                const label = el('div', { class: 'path-label' }, unit.title);
-                wrapper.appendChild(label);
-
-                pathContainer.appendChild(wrapper);
-                prevDone = done;
-            });
-
-            app.appendChild(pathContainer);
-            root.appendChild(app);
-        }
-
-        /* ============================================
-           УРОК
-           ============================================ */
-        function renderLesson(root) {
-            const app = el('div', { class: 'app fade-in' });
-
-            const backBtn = el('button', {
-                class: 'back-btn',
-                onclick: () => { state.screen = 'learn'; render(); }
-            }, '← Назад');
-            app.appendChild(backBtn);
-
-            const unit = state.unit;
-            if (!unit) return;
-
-            if (state.step === 'alpha') {
-                renderAlphaStep(app, unit);
-            } else if (state.step === 'letter_detail') {
-                renderLetterDetail(app, unit);
-            } else if (state.step === 'words') {
-                renderWordsStep(app, unit);
-            } else if (state.step === 'grammar') {
-                renderGrammarStep(app, unit);
-            } else if (state.step === 'quiz') {
-                renderQuizStep(app, unit);
-            } else if (state.step === 'final_test') {
-                renderFinalTest(app, unit);
-            }
-
-            root.appendChild(app);
-        }
-
-        /* ============================================
-           ДЕТАЛИ БУКВЫ (ПРИ КЛИКЕ В АЛФАВИТЕ)
-           ============================================ */
-        function renderLetterDetail(app, unit) {
-            const a = state.letter;
-            if (!a) { state.step = 'alpha'; render(); return; }
-
-            app.appendChild(el('h2', { class: 'lesson-header' }, `Буква "${a.char}"`));
-
-            const card = el('div', { class: 'letter-detail-card' });
-            card.appendChild(el('div', { class: 'detail-char' }, a.char));
-            const info = el('div', { class: 'detail-info' });
-            info.appendChild(el('div', {}, [`Звук: `, el('strong', {}, `[${a.sound}]`)]));
-            info.appendChild(el('div', { style: 'margin-top: 8px;' }, [`Пример: `, el('strong', {}, a.ex)]));
-            if (a.desc) {
-                info.appendChild(el('div', { style: 'margin-top: 8px;' }, a.desc));
-            }
-            card.appendChild(info);
-            app.appendChild(card);
-
-            app.appendChild(el('div', { style: 'display:flex;justify-content:center;margin-bottom:20px;' }, [renderAudioButton(a.ex)]));
-
-            if (state.user?.role === 'admin') {
-                const adminPanel = el('div', { class: 'grammar-box', style: 'margin-top:20px;' });
-                adminPanel.appendChild(el('h3', {}, 'Управление озвучкой'));
-                adminPanel.appendChild(el('p', { style: 'color:var(--text-muted);margin-bottom:16px;' }, 'Запиши свою озвучку для этой буквы или удали существующую.'));
-                adminPanel.appendChild(renderAudioButton(a.ex));
-                app.appendChild(adminPanel);
-            }
-
-            app.appendChild(el('button', {
-                class: 'btn btn-primary',
-                onclick: () => { state.step = 'alpha'; render(); }
-            }, '← Вернуться к алфавиту'));
-        }
-
-        /* ============================================
-           5 ШАГОВ АЛФАВИТА
-           ============================================ */
-        function renderAlphaStep(app, unit) {
-            const steps = ["Все буквы", "Тренировка (20)", "Правила чтения", "Диграфы", "Финальный тест"];
-            const step = state.alphaStep;
-
-            app.appendChild(el('h2', { class: 'lesson-header' }, `Алфавит: ${steps[step - 1]}`));
-
-            const progressBar = el('div', { class: 'progress-bar' });
-            progressBar.appendChild(el('div', {
-                class: 'progress-fill',
-                style: `width: ${step * 20}%`
-            }));
-            app.appendChild(progressBar);
-
-            if (step === 1) {
-                const grid = el('div', { class: 'alpha-grid' });
-                (unit.alphabet?.table || []).forEach((a, i) => {
-                    const card = el('div', {
-                        class: 'alpha-btn',
-                        onclick: () => {
-                            state.letter = a;
-                            state.step = 'letter_detail';
-                            render();
-                        }
-                    });
-                    card.appendChild(el('div', {}, a.char));
-                    card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
-                    grid.appendChild(card);
-                });
-                app.appendChild(grid);
-                app.appendChild(el('button', {
-                    class: 'btn btn-primary',
-                    onclick: () => { state.alphaStep = 2; render(); }
-                }, `Дальше: ${steps[1]} →`));
-            }
-            else if (step === 2) {
-                const table = unit.alphabet?.table || [];
-                const shuffled = [...table].sort(() => 0.5 - Math.random()).slice(0, 20);
-                const grid = el('div', { class: 'alpha-grid' });
-                shuffled.forEach(a => {
-                    const card = el('div', {
-                        class: 'alpha-btn',
-                        onclick: () => {
-                            state.letter = a;
-                            state.step = 'letter_detail';
-                            render();
-                        }
-                    });
-                    card.appendChild(el('div', {}, a.char));
-                    card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
-                    grid.appendChild(card);
-                });
-                app.appendChild(grid);
-                app.appendChild(el('button', {
-                    class: 'btn btn-primary',
-                    onclick: () => { state.alphaStep = 3; render(); }
-                }, `Дальше: ${steps[2]} →`));
-            }
-            else if (step === 3) {
-                const rulesBox = el('div', { class: 'grammar-box' });
-                rulesBox.appendChild(el('h3', {}, unit.alphabet?.title || 'Правила'));
-                rulesBox.appendChild(el('p', {}, unit.alphabet?.rules || ''));
-                app.appendChild(rulesBox);
-
-                if (unit.alphabet?.table) {
-                    unit.alphabet.table.slice(0, 10).forEach(a => {
-                        const ex = el('div', { class: 'grammar-example' });
-                        ex.appendChild(el('div', {
-                            style: 'font-weight: 800; font-size: 1.1rem; margin-bottom: 4px;'
-                        }, `${a.char} → [${a.sound}]`));
-                        ex.appendChild(el('div', {
-                            style: 'color: var(--text-muted); font-size: 0.9rem;'
-                        }, `Пример: ${a.ex}`));
-                        app.appendChild(ex);
-                    });
-                }
-
-                app.appendChild(el('button', {
-                    class: 'btn btn-primary',
-                    onclick: () => { state.alphaStep = 4; render(); }
-                }, `Дальше: ${steps[3]} →`));
-            }
-            else if (step === 4) {
-                const digraphs = (unit.alphabet?.table || []).filter(a => a.char.length > 2);
-                if (digraphs.length > 0) {
-                    const box = el('div', { class: 'grammar-box' });
-                    box.appendChild(el('h3', {}, 'Диграфы'));
-                    box.appendChild(el('p', {}, 'Сочетания букв, дающие один звук'));
-                    app.appendChild(box);
-
-                    digraphs.forEach(a => {
-                        const ex = el('div', { class: 'grammar-example' });
-                        ex.appendChild(el('div', {
-                            style: 'font-weight: 800; font-size: 1.1rem;'
-                        }, `${a.char} → [${a.sound}]`));
-                        ex.appendChild(el('div', {
-                            style: 'color: var(--text-muted);'
-                        }, `Пример: ${a.ex}`));
-                        app.appendChild(ex);
-                    });
-                } else {
-                    const box = el('div', { class: 'grammar-box' });
-                    box.appendChild(el('h3', {}, 'Перемешка'));
-                    box.appendChild(el('p', {}, 'Запомни все буквы!'));
-                    app.appendChild(box);
-
-                    const shuffled = [...unit.alphabet.table].sort(() => 0.5 - Math.random()).slice(0, 15);
-                    const grid = el('div', { class: 'alpha-grid' });
-                    shuffled.forEach(a => {
-                        const card = el('div', {
-                            class: 'alpha-btn',
-                            onclick: () => {
-                                state.letter = a;
-                                state.step = 'letter_detail';
-                                render();
-                            }
-                        });
-                        card.appendChild(el('div', {}, a.char));
-                        card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
-                        grid.appendChild(card);
-                    });
-                    app.appendChild(grid);
-                }
-                app.appendChild(el('button', {
-                    class: 'btn btn-primary',
-                    onclick: () => { state.alphaStep = 5; render(); }
-                }, `Дальше: ${steps[4]} →`));
-            }
-            else if (step === 5) {
-                app.appendChild(el('div', { class: 'letter-display' }, [
-                    el('h3', { style: 'margin-bottom: 16px; color: var(--primary);' }, 'Финальный тест по алфавиту'),
-                    el('p', { style: 'color: var(--text-muted); margin-bottom: 20px;' }, 'Выбери правильный звук для буквы')
-                ]));
-
-                const table = unit.alphabet?.table || [];
-                const a = table[Math.floor(Math.random() * table.length)];
-                const wrongSounds = table
-                    .filter(x => x.sound !== a.sound)
-                    .sort(() => 0.5 - Math.random())
-                    .slice(0, 3)
-                    .map(x => x.sound);
-                const options = [a.sound, ...wrongSounds].sort(() => 0.5 - Math.random());
-
-                const letterBox = el('div', { class: 'letter-display' });
-                letterBox.appendChild(el('div', { class: 'big-char' }, a.char));
-                letterBox.appendChild(el('div', { class: 'sound' }, `Пример: ${a.ex}`));
-                letterBox.appendChild(el('div', {
-                    style: 'display: flex; justify-content: center; margin-bottom: 20px;'
-                }, [renderAudioButton(a.ex)]));
-                app.appendChild(letterBox);
-
-                const optionsDiv = el('div', {
-                    style: 'display: flex; flex-direction: column; gap: 10px;'
-                });
-                options.forEach(opt => {
-                    const btn = el('div', { class: 'quiz-option' }, `[${opt}]`);
-                    btn.onclick = () => {
-                        if (btn.classList.contains('disabled')) return;
-                        if (opt === a.sound) {
-                            btn.classList.add('correct');
-                            document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
-                            setTimeout(() => {
-                                state.step = 'words';
-                                render();
-                            }, 1000);
-                        } else {
-                            btn.classList.add('wrong', 'disabled');
-                            setTimeout(() => {
-                                btn.classList.remove('wrong', 'disabled');
-                            }, 800);
+                        } catch (err) {
+                            console.error('Save audio error:', err);
+                            alert("❌ Ошибка сети при сохранении.");
                         }
                     };
-                    optionsDiv.appendChild(btn);
-                });
-                app.appendChild(optionsDiv);
-            }
-        }
+                    reader.onerror = () => alert('❌ Ошибка чтения аудио.');
+                    reader.readAsDataURL(audioBlob);
+                };
 
-        /* ============================================
-           СЛОВА
-           ============================================ */
-        function renderWordsStep(app, unit) {
-            app.appendChild(el('h2', { class: 'lesson-header' }, 'Слова'));
+                mediaRecorder.onerror = (err) => {
+                    console.error('Recorder error:', err);
+                    if (btnEl) btnEl.classList.remove('recording');
+                    stream.getTracks().forEach(track => track.stop());
+                    alert('❌ Ошибка записи.');
+                };
 
-            if (!unit.words || unit.words.length === 0) {
-                app.appendChild(el('p', {
-                    style: 'text-align: center; color: var(--text-muted); margin: 40px 0; font-size: 1.1rem;'
-                }, 'В этом уроке нет слов'));
-                app.appendChild(el('button', {
-                    class: 'btn btn-primary',
-                    onclick: () => { state.step = 'grammar'; render(); }
-                }, unit.grammar ? 'Дальше: Грамматика →' : 'Дальше: Тест →'));
-                return;
-            }
-
-            const list = el('div', { class: 'word-list' });
-            unit.words.forEach(w => {
-                const item = el('div', { class: 'word-item' });
-
-                const text = el('div', {});
-                text.appendChild(el('div', { class: 'sr' }, w.sr));
-                text.appendChild(el('div', { class: 'ru' }, w.ru));
-                item.appendChild(text);
-
-                item.appendChild(renderAudioButton(w.sr));
-                list.appendChild(item);
+                mediaRecorder.start();
+                setTimeout(() => {
+                    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                        mediaRecorder.stop();
+                    }
+                }, 3000);
+            })
+            .catch(err => {
+                console.error('Mic error:', err);
+                alert("❌ Нет доступа к микрофону. Разреши в настройках браузера.");
             });
-            app.appendChild(list);
+    }
+}
 
-            app.appendChild(el('button', {
-                class: 'btn btn-primary',
-                onclick: () => { state.step = 'grammar'; render(); }
-            }, unit.grammar ? 'Дальше: Грамматика →' : 'Дальше: Тест →'));
+function deleteCustomAudio(key) {
+    if (!confirm("Удалить озвучку?")) return;
+    fetch("/api/delete-audio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key: key, role: state.user.role })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("✅ Удалено");
+        } else {
+            alert("❌ Ошибка: " + (data.error || 'неизвестно'));
         }
+    })
+    .catch(err => {
+        console.error('Delete error:', err);
+        alert("❌ Ошибка сети.");
+    });
+}
 
-        /* ============================================
-           ГРАММАТИКА
-           ============================================ */
-        function renderGrammarStep(app, unit) {
-            if (!unit.grammar) {
-                state.step = 'quiz';
+function renderAudioButton(text) {
+    const key = getAudioKey(text);
+    const container = el('div', { class: 'audio-btns' });
+
+    const playBtn = el('button', {
+        class: 'custom-audio-btn',
+        onclick: () => playCustomAudio(key, playBtn)
+    }, '🔊 Слушать');
+    container.appendChild(playBtn);
+
+    if (state.user?.role === 'admin') {
+        const recBtn = el('button', {
+            class: 'custom-audio-btn',
+            onclick: () => recordCustomAudio(key, recBtn)
+        }, '🎙️ Записать');
+        container.appendChild(recBtn);
+
+        const delBtn = el('button', {
+            class: 'custom-audio-btn danger',
+            onclick: () => deleteCustomAudio(key)
+        }, '🗑️ Удалить');
+        container.appendChild(delBtn);
+    }
+
+    return container;
+}
+
+// ============================================
+// ГЛАВНЫЙ РЕНДЕР
+// ============================================
+function render() {
+    const root = document.getElementById('root');
+    root.innerHTML = '';
+    document.documentElement.setAttribute('data-theme', state.theme);
+    if (!state.user && state.screen !== 'auth') state.screen = 'auth';
+    const screens = {
+        auth: renderAuth, home: renderHome, learn: renderLearn, lesson: renderLesson,
+        library: renderLibrary, shop: renderShop, ranked: renderRanked, settings: renderSettings
+    };
+    (screens[state.screen] || renderHome)(root);
+}
+
+// ============================================
+// АВТОРИЗАЦИЯ
+// ============================================
+function renderAuth(root) {
+    const container = el('div', { class: 'auth-container fade-in' });
+    container.appendChild(el('img', { class: 'auth-logo', src: '/images/beaver.png', alt: 'Бобёр' }));
+    container.appendChild(el('h1', {}, 'BOBOR-LINGUO'));
+    container.appendChild(el('p', {}, 'Учи языки с бобром'));
+
+    const tabs = el('div', { class: 'auth-tabs' });
+    tabs.appendChild(el('div', {
+        class: 'auth-tab' + (state.authMode === 'login' ? ' active' : ''),
+        onclick: () => { state.authMode = 'login'; render(); }
+    }, 'Вход'));
+    tabs.appendChild(el('div', {
+        class: 'auth-tab' + (state.authMode === 'register' ? ' active' : ''),
+        onclick: () => { state.authMode = 'register'; render(); }
+    }, 'Регистрация'));
+    container.appendChild(tabs);
+
+    const form = el('form', {
+        onsubmit: async (e) => {
+            e.preventDefault();
+            const email = e.target.email.value.trim();
+            const password = e.target.password.value.trim();
+            if (!email || !password) { alert('Заполни все поля'); return; }
+            try {
+                const endpoint = state.authMode === 'login' ? '/api/login' : '/api/register';
+                const res = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if (state.authMode === 'register') {
+                        alert('Аккаунт создан! Теперь войди');
+                        state.authMode = 'login';
+                        render();
+                    } else {
+                        state.user = data.user;
+                        state.screen = 'home';
+                        save();
+                        render();
+                    }
+                } else {
+                    alert(data.error || 'Ошибка');
+                }
+            } catch (e) {
+                console.error('Login error:', e);
+                alert('Ошибка соединения. Проверь, запущен ли сервер.');
+            }
+        }
+    });
+    form.appendChild(el('input', { type: 'email', name: 'email', placeholder: 'Email', required: true }));
+    form.appendChild(el('input', { type: 'password', name: 'password', placeholder: 'Пароль', required: true }));
+    form.appendChild(el('button', {
+        type: 'submit', class: 'btn btn-primary'
+    }, state.authMode === 'login' ? 'Войти' : 'Создать аккаунт'));
+    container.appendChild(form);
+    root.appendChild(container);
+}
+
+// ============================================
+// ГЛАВНАЯ СТРАНИЦА
+// ============================================
+function renderHome(root) {
+    const app = el('div', { class: 'app fade-in' });
+
+    const topbar = el('div', { class: 'topbar' });
+    const brand = el('div', {
+        class: 'brand',
+        onclick: () => { state.screen = 'home'; render(); }
+    });
+    const brandLogo = el('div', { class: 'brand-logo' });
+    brandLogo.appendChild(el('img', { src: '/images/beaver.png', alt: '🦫' }));
+    brand.appendChild(brandLogo);
+    brand.appendChild(el('span', { class: 'brand-text' }, 'BOBOR'));
+    topbar.appendChild(brand);
+
+    const stats = el('div', { class: 'stats' });
+    stats.appendChild(el('div', { class: 'stat streak' }, [
+        el('span', {}, '🔥 '),
+        el('span', { class: 'val' }, String(state.streak))
+    ]));
+    stats.appendChild(el('div', { class: 'stat' }, [
+        el('span', {}, '⚡ '),
+        el('span', { class: 'val' }, String(state.xp))
+    ]));
+    const settingsBtn = el('div', {
+        class: 'icon-btn',
+        onclick: () => { state.screen = 'settings'; render(); }
+    });
+    settingsBtn.appendChild(el('img', { src: '/images/settings.png', alt: '⚙️' }));
+    stats.appendChild(settingsBtn);
+    topbar.appendChild(stats);
+    app.appendChild(topbar);
+
+    const langSelector = el('div', { class: 'lang-selector' });
+    Object.keys(COURSES).forEach(code => {
+        const btn = el('div', {
+            class: 'lang-btn' + (state.course === code ? ' active' : ''),
+            onclick: () => { state.course = code; save(); render(); }
+        });
+        btn.appendChild(document.createTextNode(COURSES[code].flag + ' ' + COURSES[code].name));
+        langSelector.appendChild(btn);
+    });
+    app.appendChild(langSelector);
+
+    app.appendChild(el('h1', {
+        class: 'slide-in',
+        style: 'font-size: 2rem; margin-bottom: 10px; font-weight: 900;'
+    }, `Привет, ${state.user?.email?.split('@')[0] || 'друг'}! 👋`));
+    app.appendChild(el('p', {
+        class: 'slide-in',
+        style: 'color: var(--text-muted); margin-bottom: 30px; font-size: 1rem;'
+    }, `Уроков сегодня: ${state.lessonsToday}/2`));
+
+    const grid = el('div', { class: 'home-grid' });
+    const cards = [
+        { id: 'learn', icon: '/images/learn.png', title: 'Обучение', desc: 'Начни путь' },
+        { id: 'library', icon: '📚', title: 'Библиотека', desc: 'Пройденные уроки' },
+        { id: 'shop', icon: '/images/shop.png', title: 'Магазин', desc: 'Медали и награды' },
+        { id: 'ranked', icon: '/images/ranked.png', title: 'Ранкед', desc: 'Таблица лидеров' }
+    ];
+    cards.forEach((card, i) => {
+        const cardEl = el('div', {
+            class: 'home-card slide-in',
+            style: `animation-delay: ${i * 0.1}s`,
+            onclick: () => {
+                state.screen = card.id;
+                if (card.id === 'learn' || card.id === 'library') { loadCourse(); }
+                else { render(); }
+            }
+        });
+        if (card.icon.startsWith('/')) {
+            const imgWrap = el('div', { class: 'home-card-img-wrap' });
+            imgWrap.appendChild(el('img', { src: card.icon, alt: card.title }));
+            cardEl.appendChild(imgWrap);
+        } else {
+            const imgWrap = el('div', { class: 'home-card-img-wrap' });
+            imgWrap.appendChild(el('div', { style: 'font-size: 4rem;' }, card.icon));
+            cardEl.appendChild(imgWrap);
+        }
+        const body = el('div', { class: 'home-card-body' });
+        body.appendChild(el('h3', {}, card.title));
+        body.appendChild(el('p', {}, card.desc));
+        cardEl.appendChild(body);
+        grid.appendChild(cardEl);
+    });
+    app.appendChild(grid);
+    root.appendChild(app);
+}
+
+// ============================================
+// ОБУЧЕНИЕ (ДОРОЖКА)
+// ============================================
+function renderLearn(root) {
+    const app = el('div', { class: 'app fade-in' });
+    app.appendChild(el('button', {
+        class: 'back-btn',
+        onclick: () => { state.screen = 'home'; render(); }
+    }, '← Назад'));
+
+    if (state.loading) {
+        app.appendChild(el('p', {
+            style: 'text-align: center; font-size: 1.2rem; margin-top: 50px; color: var(--text-muted);'
+        }, 'Загрузка...'));
+        root.appendChild(app); return;
+    }
+    if (!state.data) {
+        app.appendChild(el('p', {
+            style: 'text-align: center; font-size: 1.2rem; margin-top: 50px; color: var(--text-muted);'
+        }, 'Ошибка загрузки курса'));
+        root.appendChild(app); return;
+    }
+
+    app.appendChild(el('h1', {
+        style: 'text-align: center; font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
+    }, state.data.name));
+
+    const pathContainer = el('div', { class: 'path-container' });
+    pathContainer.appendChild(el('div', { class: 'path-line' }));
+
+    const prog = state.progress[state.course] || new Set();
+    let prevDone = true;
+
+    state.data.units.forEach((unit) => {
+        const done = prog.has(unit.id);
+        const locked = !prevDone;
+        const current = !done && !locked;
+
+        const wrapper = el('div', { class: 'path-node-wrapper' });
+        const node = el('div', {
+            class: 'path-node' + (locked ? ' locked' : '') + (done ? ' done' : '') + (current ? ' current' : ''),
+            onclick: () => {
+                if (locked) return;
+                if (!done && !checkDailyLimit()) return;
+                state.unit = unit;
+                state.step = unit.alphabet ? 'alpha' : (unit.words?.length ? 'words' : 'grammar');
+                state.alphaStep = 1;
+                state.qi = 0;
+                state.letter = null;
+                state.screen = 'lesson';
                 render();
-                return;
             }
+        });
+        node.appendChild(el('span', {}, done ? '✓' : (locked ? '🔒' : '⭐')));
+        wrapper.appendChild(node);
+        wrapper.appendChild(el('div', { class: 'path-label' }, unit.title));
+        pathContainer.appendChild(wrapper);
+        prevDone = done;
+    });
 
-            app.appendChild(el('h2', { class: 'lesson-header' }, 'Грамматика'));
+    app.appendChild(pathContainer);
+    root.appendChild(app);
+}
 
+// ============================================
+// УРОК
+// ============================================
+function renderLesson(root) {
+    const app = el('div', { class: 'app fade-in' });
+    app.appendChild(el('button', {
+        class: 'back-btn',
+        onclick: () => { state.screen = 'learn'; render(); }
+    }, '← Назад'));
+
+    const unit = state.unit;
+    if (!unit) return;
+
+    if (state.step === 'alpha') renderAlphaStep(app, unit);
+    else if (state.step === 'letter_detail') renderLetterDetail(app, unit);
+    else if (state.step === 'words') renderWordsStep(app, unit);
+    else if (state.step === 'grammar') renderGrammarStep(app, unit);
+    else if (state.step === 'quiz') renderQuizStep(app, unit);
+    else if (state.step === 'final_test') renderFinalTest(app, unit);
+
+    root.appendChild(app);
+}
+
+// ============================================
+// ДЕТАЛИ БУКВЫ (ПРИ КЛИКЕ В АЛФАВИТЕ)
+// ============================================
+function renderLetterDetail(app, unit) {
+    const a = state.letter;
+    if (!a) { state.step = 'alpha'; render(); return; }
+
+    app.appendChild(el('h2', { class: 'lesson-header' }, `Буква "${a.char}"`));
+
+    const card = el('div', { class: 'letter-detail-card' });
+    card.appendChild(el('div', { class: 'detail-char' }, a.char));
+    const info = el('div', { class: 'detail-info' });
+    info.appendChild(el('div', {}, [document.createTextNode('Звук: '), el('strong', {}, `[${a.sound}]`)]));
+    info.appendChild(el('div', { style: 'margin-top: 8px;' }, [document.createTextNode('Пример: '), el('strong', {}, a.ex)]));
+    if (a.desc) info.appendChild(el('div', { style: 'margin-top: 8px;' }, a.desc));
+    card.appendChild(info);
+    app.appendChild(card);
+
+    app.appendChild(el('div', {
+        style: 'display:flex;justify-content:center;margin-bottom:20px;'
+    }, [renderAudioButton(a.ex)]));
+
+    if (state.user?.role === 'admin') {
+        const adminPanel = el('div', { class: 'grammar-box', style: 'margin-top:20px;' });
+        adminPanel.appendChild(el('h3', {}, 'Управление озвучкой'));
+        adminPanel.appendChild(el('p', {
+            style: 'color:var(--text-muted);margin-bottom:16px;'
+        }, 'Нажми "🎙️ Записать" и произнеси букву/слово. Потом "🔊 Слушать" чтобы проверить.'));
+        adminPanel.appendChild(renderAudioButton(a.ex));
+        app.appendChild(adminPanel);
+    } else {
+        app.appendChild(el('div', { class: 'no-audio-hint' },
+            '💡 Если "🔊 Слушать" молчит — значит озвучка ещё не записана. Только админ может её записать.'
+        ));
+    }
+
+    app.appendChild(el('button', {
+        class: 'btn btn-primary',
+        onclick: () => { state.step = 'alpha'; render(); }
+    }, '← Вернуться к алфавиту'));
+}
+
+// ============================================
+// 5 ШАГОВ АЛФАВИТА
+// ============================================
+function renderAlphaStep(app, unit) {
+    const steps = ["Все буквы", "Тренировка (20)", "Правила чтения", "Диграфы", "Финальный тест"];
+    const step = state.alphaStep;
+
+    app.appendChild(el('h2', { class: 'lesson-header' }, `Алфавит: ${steps[step - 1]}`));
+    const progressBar = el('div', { class: 'progress-bar' });
+    progressBar.appendChild(el('div', {
+        class: 'progress-fill',
+        style: `width: ${step * 20}%`
+    }));
+    app.appendChild(progressBar);
+
+    if (step === 1) {
+        const grid = el('div', { class: 'alpha-grid' });
+        (unit.alphabet?.table || []).forEach((a) => {
+            const card = el('div', {
+                class: 'alpha-btn',
+                onclick: () => { state.letter = a; state.step = 'letter_detail'; render(); }
+            });
+            card.appendChild(el('div', {}, a.char));
+            card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
+            grid.appendChild(card);
+        });
+        app.appendChild(grid);
+        app.appendChild(el('button', {
+            class: 'btn btn-primary',
+            onclick: () => { state.alphaStep = 2; render(); }
+        }, `Дальше: ${steps[1]} →`));
+    }
+    else if (step === 2) {
+        const table = unit.alphabet?.table || [];
+        const shuffled = [...table].sort(() => 0.5 - Math.random()).slice(0, 20);
+        const grid = el('div', { class: 'alpha-grid' });
+        shuffled.forEach(a => {
+            const card = el('div', {
+                class: 'alpha-btn',
+                onclick: () => { state.letter = a; state.step = 'letter_detail'; render(); }
+            });
+            card.appendChild(el('div', {}, a.char));
+            card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
+            grid.appendChild(card);
+        });
+        app.appendChild(grid);
+        app.appendChild(el('button', {
+            class: 'btn btn-primary',
+            onclick: () => { state.alphaStep = 3; render(); }
+        }, `Дальше: ${steps[2]} →`));
+    }
+    else if (step === 3) {
+        const rulesBox = el('div', { class: 'grammar-box' });
+        rulesBox.appendChild(el('h3', {}, unit.alphabet?.title || 'Правила'));
+        rulesBox.appendChild(el('p', {}, unit.alphabet?.rules || ''));
+        app.appendChild(rulesBox);
+        if (unit.alphabet?.table) {
+            unit.alphabet.table.slice(0, 10).forEach(a => {
+                const ex = el('div', { class: 'grammar-example' });
+                ex.appendChild(el('div', {
+                    style: 'font-weight: 800; font-size: 1.1rem; margin-bottom: 4px;'
+                }, `${a.char} → [${a.sound}]`));
+                ex.appendChild(el('div', {
+                    style: 'color: var(--text-muted); font-size: 0.9rem;'
+                }, `Пример: ${a.ex}`));
+                app.appendChild(ex);
+            });
+        }
+        app.appendChild(el('button', {
+            class: 'btn btn-primary',
+            onclick: () => { state.alphaStep = 4; render(); }
+        }, `Дальше: ${steps[3]} →`));
+    }
+    else if (step === 4) {
+        const digraphs = (unit.alphabet?.table || []).filter(a => a.char.length > 2);
+        if (digraphs.length > 0) {
             const box = el('div', { class: 'grammar-box' });
-            box.appendChild(el('h3', {}, unit.grammar.title));
-            box.appendChild(el('p', {}, unit.grammar.rules));
+            box.appendChild(el('h3', {}, 'Диграфы'));
+            box.appendChild(el('p', {}, 'Сочетания букв, дающие один звук'));
             app.appendChild(box);
-
-            if (unit.grammar.examples) {
-                unit.grammar.examples.forEach(ex => {
-                    const item = el('div', { class: 'grammar-example' });
-                    item.appendChild(el('div', {
-                        style: 'font-weight: 800; font-size: 1.1rem; margin-bottom: 4px;'
-                    }, ex.sr));
-                    item.appendChild(el('div', {
-                        style: 'color: var(--text-muted); font-size: 0.95rem;'
-                    }, ex.ru));
-                    item.appendChild(renderAudioButton(ex.sr));
-                    app.appendChild(item);
-                });
-            }
-
-            app.appendChild(el('button', {
-                class: 'btn btn-primary',
-                onclick: () => { state.step = 'quiz'; render(); }
-            }, unit.quiz && unit.quiz.length ? 'Дальше: Тест →' : 'Завершить урок ✓'));
-        }
-
-        /* ============================================
-           ТЕСТ
-           ============================================ */
-        function renderQuizStep(app, unit) {
-            if (!unit.quiz || unit.quiz.length === 0) {
-                completeLesson(app, unit);
-                return;
-            }
-
-            if (state.qi >= unit.quiz.length) {
-                completeLesson(app, unit);
-                return;
-            }
-
-            const q = unit.quiz[state.qi];
-            app.appendChild(el('h2', {
-                class: 'lesson-header'
-            }, `Вопрос ${state.qi + 1} из ${unit.quiz.length}`));
-
-            app.appendChild(el('p', {
-                style: 'text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 40px; line-height: 1.5;'
-            }, q.q));
-
-            const qBox = el('div', {});
-            q.options.forEach((opt, i) => {
-                const btn = el('div', { class: 'quiz-option' }, opt);
-                btn.onclick = () => {
-                    if (btn.classList.contains('disabled')) return;
-
-                    if (i === q.correct) {
-                        btn.classList.add('correct');
-                        document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
-                        setTimeout(() => {
-                            state.qi++;
-                            render();
-                        }, 1000);
-                    } else {
-                        btn.classList.add('wrong', 'disabled');
-                        setTimeout(() => {
-                            btn.classList.remove('wrong', 'disabled');
-                        }, 800);
-                    }
-                };
-                qBox.appendChild(btn);
+            digraphs.forEach(a => {
+                const ex = el('div', { class: 'grammar-example' });
+                ex.appendChild(el('div', {
+                    style: 'font-weight: 800; font-size: 1.1rem;'
+                }, `${a.char} → [${a.sound}]`));
+                ex.appendChild(el('div', {
+                    style: 'color: var(--text-muted);'
+                }, `Пример: ${a.ex}`));
+                app.appendChild(ex);
             });
-            app.appendChild(qBox);
-        }
-
-        /* ============================================
-           ФИНАЛЬНЫЙ ТЕСТ ПО ЮНИТУ
-           ============================================ */
-        function renderFinalTest(app, unit) {
-            const finalQuestions = unit.finalTest || [];
-            if (finalQuestions.length === 0) {
-                completeUnit(app, unit);
-                return;
-            }
-
-            if (state.qi >= finalQuestions.length) {
-                completeUnit(app, unit);
-                return;
-            }
-
-            const q = finalQuestions[state.qi];
-            app.appendChild(el('h2', {
-                class: 'lesson-header'
-            }, `Финальный тест: Вопрос ${state.qi + 1} из ${finalQuestions.length}`));
-
-            app.appendChild(el('p', {
-                style: 'text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 40px; line-height: 1.5;'
-            }, q.q));
-
-            const qBox = el('div', {});
-            q.options.forEach((opt, i) => {
-                const btn = el('div', { class: 'quiz-option' }, opt);
-                btn.onclick = () => {
-                    if (btn.classList.contains('disabled')) return;
-
-                    if (i === q.correct) {
-                        btn.classList.add('correct');
-                        document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
-                        setTimeout(() => {
-                            state.qi++;
-                            render();
-                        }, 1000);
-                    } else {
-                        btn.classList.add('wrong', 'disabled');
-                        setTimeout(() => {
-                            btn.classList.remove('wrong', 'disabled');
-                        }, 800);
-                    }
-                };
-                qBox.appendChild(btn);
-            });
-            app.appendChild(qBox);
-        }
-
-        /* ============================================
-           ЗАВЕРШЕНИЕ УРОКА
-           ============================================ */
-        function completeLesson(app, unit) {
-            const isCompleted = state.progress[state.course]?.has(unit.id);
-            if (!isCompleted) {
-                state.progress[state.course] = state.progress[state.course] || new Set();
-                state.progress[state.course].add(unit.id);
-                state.xp += 50;
-                state.lessonsToday++;
-            }
-            save();
-
-            const success = el('div', { class: 'success-screen' });
-            success.appendChild(el('div', { class: 'icon' }, '🏆'));
-            success.appendChild(el('h2', {
-                style: 'font-size: 2.5rem; margin-bottom: 16px; font-weight: 900;'
-            }, isCompleted ? 'Повторение завершено!' : 'Урок пройден!'));
-            success.appendChild(el('p', {
-                style: 'color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;'
-            }, isCompleted ? 'Молодец, что повторяешь!' : '+50 XP. Открыт следующий урок!'));
-
-            if (unit.finalTest && unit.finalTest.length > 0 && !isCompleted) {
-                success.appendChild(el('button', {
-                    class: 'btn btn-primary',
-                    onclick: () => { state.step = 'final_test'; state.qi = 0; render(); }
-                }, 'Пройти финальный тест →'));
-            } else {
-                success.appendChild(el('button', {
-                    class: 'btn btn-primary',
-                    onclick: () => { state.screen = 'learn'; render(); }
-                }, 'К списку уроков'));
-            }
-
-            app.appendChild(success);
-        }
-
-        /* ============================================
-           ЗАВЕРШЕНИЕ ЮНИТА (ПОСЛЕ ФИНАЛЬНОГО ТЕСТА)
-           ============================================ */
-        function completeUnit(app, unit) {
-            state.xp += 100;
-            save();
-
-            const success = el('div', { class: 'success-screen' });
-            success.appendChild(el('div', { class: 'icon' }, '🎉'));
-            success.appendChild(el('h2', {
-                style: 'font-size: 2.5rem; margin-bottom: 16px; font-weight: 900;'
-            }, 'Юнит пройден!'));
-            success.appendChild(el('p', {
-                style: 'color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;'
-            }, '+100 XP за прохождение всего юнита!'));
-            success.appendChild(el('button', {
-                class: 'btn btn-primary',
-                onclick: () => { state.screen = 'learn'; render(); }
-            }, 'К списку уроков'));
-            app.appendChild(success);
-        }
-
-        /* ============================================
-           БИБЛИОТЕКА
-           ============================================ */
-        function renderLibrary(root) {
-            const app = el('div', { class: 'app fade-in' });
-
-            const backBtn = el('button', {
-                class: 'back-btn',
-                onclick: () => { state.screen = 'home'; render(); }
-            }, '← Назад');
-            app.appendChild(backBtn);
-
-            app.appendChild(el('h1', {
-                style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
-            }, 'Библиотека'));
-
-            if (state.loading) {
-                root.appendChild(app);
-                return;
-            }
-
-            const prog = state.progress[state.course] || new Set();
-            const done = state.data?.units.filter(u => prog.has(u.id)) || [];
-
-            if (!done.length) {
-                app.appendChild(el('p', {
-                    style: 'text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-top: 50px;'
-                }, 'Пока пусто. Пройди первый урок!'));
-            } else {
-                done.forEach(u => {
-                    const item = el('div', {
-                        class: 'lib-item',
-                        onclick: () => {
-                            state.unit = u;
-                            state.step = u.alphabet ? 'alpha' : (u.words?.length ? 'words' : 'grammar');
-                            state.alphaStep = 1;
-                            state.qi = 0;
-                            state.screen = 'lesson';
-                            render();
-                        }
-                    });
-                    item.appendChild(el('div', {
-                        style: 'font-weight: 900; font-size: 1.1rem; margin-bottom: 8px;'
-                    }, `${u.icon || '📖'} ${u.title}`));
-                    item.appendChild(el('div', {
-                        style: 'color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;'
-                    }, u.grammar?.title || ''));
-                    item.appendChild(el('div', {
-                        style: 'color: var(--primary); font-weight: 800; font-size: 0.9rem;'
-                    }, 'ПОВТОРИТЬ →'));
-                    app.appendChild(item);
-                });
-            }
-
-            root.appendChild(app);
-        }
-
-        /* ============================================
-           МАГАЗИН
-           ============================================ */
-        function renderShop(root) {
-            const app = el('div', { class: 'app fade-in' });
-
-            const backBtn = el('button', {
-                class: 'back-btn',
-                onclick: () => { state.screen = 'home'; render(); }
-            }, '← Назад');
-            app.appendChild(backBtn);
-
-            app.appendChild(el('h1', {
-                style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
-            }, 'Магазин'));
-
-            const items = [
-                { id: 'm1', name: 'Бронза', price: 1200, icon: '🥉' },
-                { id: 'm2', name: 'Серебро', price: 2000, icon: '🥈' },
-                { id: 'm3', name: 'Золото', price: 3400, icon: '🥇' },
-                { id: 'm4', name: 'Алмаз', price: 4000, icon: '💎' },
-                { id: 'm5', name: 'Незерит', price: 5000, icon: '🔥' }
-            ];
-
-            const grid = el('div', { class: 'shop-grid' });
-            items.forEach(it => {
-                const owned = state.medals.includes(it.id);
+        } else {
+            const box = el('div', { class: 'grammar-box' });
+            box.appendChild(el('h3', {}, 'Перемешка'));
+            box.appendChild(el('p', {}, 'Запомни все буквы!'));
+            app.appendChild(box);
+            const shuffled = [...(unit.alphabet?.table || [])].sort(() => 0.5 - Math.random()).slice(0, 15);
+            const grid = el('div', { class: 'alpha-grid' });
+            shuffled.forEach(a => {
                 const card = el('div', {
-                    class: 'shop-item' + (owned ? ' owned' : '')
+                    class: 'alpha-btn',
+                    onclick: () => { state.letter = a; state.step = 'letter_detail'; render(); }
                 });
-                card.appendChild(el('div', {
-                    style: 'font-size: 4rem; margin-bottom: 16px;'
-                }, it.icon));
-                card.appendChild(el('h3', {
-                    style: 'font-weight: 900; margin-bottom: 8px;'
-                }, it.name));
-                card.appendChild(el('p', {
-                    style: 'color: var(--warning); font-weight: 800; font-size: 1.2rem; margin-bottom: 16px;'
-                }, `⚡ ${it.price} XP`));
-                card.appendChild(el('button', {
-                    class: 'btn ' + (owned ? 'btn-secondary' : 'btn-primary'),
-                    style: 'margin-top: 0;',
-                    onclick: () => {
-                        if (owned) return;
-                        if (state.xp >= it.price) {
-                            state.xp -= it.price;
-                            state.medals.push(it.id);
-                            save();
-                            render();
-                        } else {
-                            alert('Недостаточно XP!');
-                        }
-                    }
-                }, owned ? '✓ Куплено' : 'Купить'));
+                card.appendChild(el('div', {}, a.char));
+                card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
                 grid.appendChild(card);
             });
             app.appendChild(grid);
-            root.appendChild(app);
         }
+        app.appendChild(el('button', {
+            class: 'btn btn-primary',
+            onclick: () => { state.alphaStep = 5; render(); }
+        }, `Дальше: ${steps[4]} →`));
+    }
+    else if (step === 5) {
+        app.appendChild(el('div', { class: 'letter-display' }, [
+            el('h3', { style: 'margin-bottom: 16px; color: var(--primary);' }, 'Финальный тест по алфавиту'),
+            el('p', { style: 'color: var(--text-muted); margin-bottom: 20px;' }, 'Выбери правильный звук для буквы')
+        ]));
 
-        /* ============================================
-           РАНКЕД
-           ============================================ */
-        function renderRanked(root) {
-            const app = el('div', { class: 'app fade-in' });
-
-            const backBtn = el('button', {
-                class: 'back-btn',
-                onclick: () => { state.screen = 'home'; render(); }
-            }, '← Назад');
-            app.appendChild(backBtn);
-
-            app.appendChild(el('h1', {
-                style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
-            }, 'Ранкед'));
-
-            const leaders = [
-                { n: 'BoborMaster', x: 5000 },
-                { n: 'Polyglot', x: 3200 },
-                { n: state.user?.email?.split('@')[0] || 'Вы', x: state.xp },
-                { n: 'Newbie', x: 100 }
-            ].sort((a, b) => b.x - a.x);
-
-            leaders.forEach((l, i) => {
-                const isMe = l.n === (state.user?.email?.split('@')[0] || 'Вы');
-                const row = el('div', {
-                    class: 'rank-row' + (isMe ? ' me' : '')
-                });
-                row.appendChild(el('div', {
-                    style: 'font-weight: 900; width: 40px; font-size: 1.3rem;'
-                }, `#${i + 1}`));
-                row.appendChild(el('div', {
-                    style: 'flex: 1; font-weight: 800; font-size: 1.1rem;'
-                }, l.n));
-                row.appendChild(el('div', {
-                    style: 'color: var(--warning); font-weight: 900; font-size: 1.2rem;'
-                }, `${l.x} XP`));
-                app.appendChild(row);
-            });
-
-            root.appendChild(app);
+        const table = unit.alphabet?.table || [];
+        if (table.length === 0) {
+            app.appendChild(el('p', {}, 'Нет данных алфавита'));
+            return;
         }
+        const a = table[Math.floor(Math.random() * table.length)];
+        const wrongSounds = table
+            .filter(x => x.sound !== a.sound)
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 3)
+            .map(x => x.sound);
+        const options = [a.sound, ...wrongSounds].sort(() => 0.5 - Math.random());
 
-        /* ============================================
-           НАСТРОЙКИ
-           ============================================ */
-        function renderSettings(root) {
-            const app = el('div', { class: 'app fade-in' });
+        const letterBox = el('div', { class: 'letter-display' });
+        letterBox.appendChild(el('div', { class: 'big-char' }, a.char));
+        letterBox.appendChild(el('div', { class: 'sound' }, `Пример: ${a.ex}`));
+        letterBox.appendChild(el('div', {
+            style: 'display: flex; justify-content: center; margin-bottom: 20px;'
+        }, [renderAudioButton(a.ex)]));
+        app.appendChild(letterBox);
 
-            const backBtn = el('button', {
-                class: 'back-btn',
-                onclick: () => { state.screen = 'home'; render(); }
-            }, '← Назад');
-            app.appendChild(backBtn);
+        const optionsDiv = el('div', { style: 'display: flex; flex-direction: column; gap: 10px;' });
+        options.forEach(opt => {
+            const btn = el('div', { class: 'quiz-option' }, `[${opt}]`);
+            btn.onclick = () => {
+                if (btn.classList.contains('disabled')) return;
+                if (opt === a.sound) {
+                    btn.classList.add('correct');
+                    document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
+                    setTimeout(() => { state.step = 'words'; render(); }, 1000);
+                } else {
+                    btn.classList.add('wrong', 'disabled');
+                    setTimeout(() => { btn.classList.remove('wrong', 'disabled'); }, 800);
+                }
+            };
+            optionsDiv.appendChild(btn);
+        });
+        app.appendChild(optionsDiv);
+    }
+}
 
-            app.appendChild(el('h1', {
-                style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
-            }, 'Настройки'));
+// ============================================
+// СЛОВА
+// ============================================
+function renderWordsStep(app, unit) {
+    app.appendChild(el('h2', { class: 'lesson-header' }, 'Слова'));
+    if (!unit.words || unit.words.length === 0) {
+        app.appendChild(el('p', {
+            style: 'text-align: center; color: var(--text-muted); margin: 40px 0; font-size: 1.1rem;'
+        }, 'В этом уроке нет слов'));
+        app.appendChild(el('button', {
+            class: 'btn btn-primary',
+            onclick: () => { state.step = 'grammar'; render(); }
+        }, unit.grammar ? 'Дальше: Грамматика →' : 'Дальше: Тест →'));
+        return;
+    }
+    const list = el('div', { class: 'word-list' });
+    unit.words.forEach(w => {
+        const item = el('div', { class: 'word-item' });
+        const text = el('div', {});
+        text.appendChild(el('div', { class: 'sr' }, w.sr));
+        if (w.tr) text.appendChild(el('div', {
+            style: 'color: var(--accent); font-size: 0.9rem; margin-bottom: 4px;'
+        }, w.tr));
+        text.appendChild(el('div', { class: 'ru' }, w.ru));
+        item.appendChild(text);
+        item.appendChild(renderAudioButton(w.sr));
+        list.appendChild(item);
+    });
+    app.appendChild(list);
+    app.appendChild(el('button', {
+        class: 'btn btn-primary',
+        onclick: () => { state.step = 'grammar'; render(); }
+    }, unit.grammar ? 'Дальше: Грамматика →' : 'Дальше: Тест →'));
+}
 
-            const profileBox = el('div', {
-                style: 'background: var(--card); padding: 24px; border-radius: var(--radius-lg); margin-bottom: 20px; border: 2px solid var(--border);'
-            });
-            profileBox.appendChild(el('h3', {
-                style: 'margin-bottom: 12px; font-size: 1.3rem; font-weight: 900;'
-            }, 'Профиль'));
-            profileBox.appendChild(el('p', {
-                style: 'color: var(--text-muted); margin-bottom: 8px;'
-            }, `Email: ${state.user?.email}`));
-            profileBox.appendChild(el('p', {
-                style: 'color: var(--text-muted); margin-bottom: 8px;'
-            }, `XP: ${state.xp} · Серия: ${state.streak}`));
-            profileBox.appendChild(el('p', {
-                style: 'color: var(--text-muted);'
-            }, `Уроков сегодня: ${state.lessonsToday}/2`));
-            app.appendChild(profileBox);
+// ============================================
+// ГРАММАТИКА
+// ============================================
+function renderGrammarStep(app, unit) {
+    if (!unit.grammar) { state.step = 'quiz'; render(); return; }
+    app.appendChild(el('h2', { class: 'lesson-header' }, 'Грамматика'));
+    const box = el('div', { class: 'grammar-box' });
+    box.appendChild(el('h3', {}, unit.grammar.title));
+    box.appendChild(el('p', {}, unit.grammar.rules));
+    app.appendChild(box);
+    if (unit.grammar.examples) {
+        unit.grammar.examples.forEach(ex => {
+            const item = el('div', { class: 'grammar-example' });
+            item.appendChild(el('div', {
+                style: 'font-weight: 800; font-size: 1.1rem; margin-bottom: 4px;'
+            }, ex.sr));
+            item.appendChild(el('div', {
+                style: 'color: var(--text-muted); font-size: 0.95rem;'
+            }, ex.ru));
+            item.appendChild(renderAudioButton(ex.sr));
+            app.appendChild(item);
+        });
+    }
+    app.appendChild(el('button', {
+        class: 'btn btn-primary',
+        onclick: () => { state.step = 'quiz'; render(); }
+    }, unit.quiz && unit.quiz.length ? 'Дальше: Тест →' : 'Завершить урок ✓'));
+}
 
-            const themeItem = el('div', {
-                class: 'word-item',
-                style: 'cursor: pointer; margin-bottom: 16px; padding: 20px;',
+// ============================================
+// ТЕСТ
+// ============================================
+function renderQuizStep(app, unit) {
+    if (!unit.quiz || unit.quiz.length === 0) { completeLesson(app, unit); return; }
+    if (state.qi >= unit.quiz.length) { completeLesson(app, unit); return; }
+    const q = unit.quiz[state.qi];
+    app.appendChild(el('h2', { class: 'lesson-header' }, `Вопрос ${state.qi + 1} из ${unit.quiz.length}`));
+    app.appendChild(el('p', {
+        style: 'text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 40px; line-height: 1.5;'
+    }, q.q));
+    const qBox = el('div', {});
+    q.options.forEach((opt, i) => {
+        const btn = el('div', { class: 'quiz-option' }, opt);
+        btn.onclick = () => {
+            if (btn.classList.contains('disabled')) return;
+            if (i === q.correct) {
+                btn.classList.add('correct');
+                document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
+                setTimeout(() => { state.qi++; render(); }, 1000);
+            } else {
+                btn.classList.add('wrong', 'disabled');
+                setTimeout(() => { btn.classList.remove('wrong', 'disabled'); }, 800);
+            }
+        };
+        qBox.appendChild(btn);
+    });
+    app.appendChild(qBox);
+}
+
+// ============================================
+// ФИНАЛЬНЫЙ ТЕСТ ПО ЮНИТУ
+// ============================================
+function renderFinalTest(app, unit) {
+    const finalQuestions = unit.finalTest || [];
+    if (finalQuestions.length === 0) { completeUnit(app, unit); return; }
+    if (state.qi >= finalQuestions.length) { completeUnit(app, unit); return; }
+    const q = finalQuestions[state.qi];
+    app.appendChild(el('h2', { class: 'lesson-header' }, `Финальный тест: Вопрос ${state.qi + 1} из ${finalQuestions.length}`));
+    app.appendChild(el('p', {
+        style: 'text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 40px; line-height: 1.5;'
+    }, q.q));
+    const qBox = el('div', {});
+    q.options.forEach((opt, i) => {
+        const btn = el('div', { class: 'quiz-option' }, opt);
+        btn.onclick = () => {
+            if (btn.classList.contains('disabled')) return;
+            if (i === q.correct) {
+                btn.classList.add('correct');
+                document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
+                setTimeout(() => { state.qi++; render(); }, 1000);
+            } else {
+                btn.classList.add('wrong', 'disabled');
+                setTimeout(() => { btn.classList.remove('wrong', 'disabled'); }, 800);
+            }
+        };
+        qBox.appendChild(btn);
+    });
+    app.appendChild(qBox);
+}
+
+// ============================================
+// ЗАВЕРШЕНИЕ УРОКА
+// ============================================
+function completeLesson(app, unit) {
+    const isCompleted = state.progress[state.course]?.has(unit.id);
+    if (!isCompleted) {
+        state.progress[state.course] = state.progress[state.course] || new Set();
+        state.progress[state.course].add(unit.id);
+        state.xp += 50;
+        state.lessonsToday++;
+    }
+    save();
+    const success = el('div', { class: 'success-screen' });
+    success.appendChild(el('div', { class: 'icon' }, '🏆'));
+    success.appendChild(el('h2', {
+        style: 'font-size: 2.5rem; margin-bottom: 16px; font-weight: 900;'
+    }, isCompleted ? 'Повторение завершено!' : 'Урок пройден!'));
+    success.appendChild(el('p', {
+        style: 'color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;'
+    }, isCompleted ? 'Молодец, что повторяешь!' : '+50 XP. Открыт следующий урок!'));
+    if (unit.finalTest && unit.finalTest.length > 0 && !isCompleted) {
+        success.appendChild(el('button', {
+            class: 'btn btn-primary',
+            onclick: () => { state.step = 'final_test'; state.qi = 0; render(); }
+        }, 'Пройти финальный тест →'));
+    } else {
+        success.appendChild(el('button', {
+            class: 'btn btn-primary',
+            onclick: () => { state.screen = 'learn'; render(); }
+        }, 'К списку уроков'));
+    }
+    app.appendChild(success);
+}
+
+// ============================================
+// ЗАВЕРШЕНИЕ ЮНИТА
+// ============================================
+function completeUnit(app, unit) {
+    state.xp += 100;
+    save();
+    const success = el('div', { class: 'success-screen' });
+    success.appendChild(el('div', { class: 'icon' }, '🎉'));
+    success.appendChild(el('h2', {
+        style: 'font-size: 2.5rem; margin-bottom: 16px; font-weight: 900;'
+    }, 'Юнит пройден!'));
+    success.appendChild(el('p', {
+        style: 'color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;'
+    }, '+100 XP за прохождение всего юнита!'));
+    success.appendChild(el('button', {
+        class: 'btn btn-primary',
+        onclick: () => { state.screen = 'learn'; render(); }
+    }, 'К списку уроков'));
+    app.appendChild(success);
+}
+
+// ============================================
+// БИБЛИОТЕКА
+// ============================================
+function renderLibrary(root) {
+    const app = el('div', { class: 'app fade-in' });
+    app.appendChild(el('button', {
+        class: 'back-btn',
+        onclick: () => { state.screen = 'home'; render(); }
+    }, '← Назад'));
+    app.appendChild(el('h1', {
+        style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
+    }, 'Библиотека'));
+    if (state.loading) { root.appendChild(app); return; }
+    const prog = state.progress[state.course] || new Set();
+    const done = state.data?.units.filter(u => prog.has(u.id)) || [];
+    if (!done.length) {
+        app.appendChild(el('p', {
+            style: 'text-align: center; color: var(--text-muted); font-size: 1.2rem; margin-top: 50px;'
+        }, 'Пока пусто. Пройди первый урок!'));
+    } else {
+        done.forEach(u => {
+            const item = el('div', {
+                class: 'lib-item',
                 onclick: () => {
-                    state.theme = state.theme === 'dark' ? 'light' : 'dark';
-                    save();
+                    state.unit = u;
+                    state.step = u.alphabet ? 'alpha' : (u.words?.length ? 'words' : 'grammar');
+                    state.alphaStep = 1;
+                    state.qi = 0;
+                    state.screen = 'lesson';
                     render();
                 }
             });
-            themeItem.appendChild(el('div', {
-                style: 'font-weight: 800; font-size: 1.1rem;'
-            }, 'Тема оформления'));
-            themeItem.appendChild(el('div', {
-                style: 'font-size: 1.5rem; margin-top: 8px;'
-            }, state.theme === 'dark' ? '🌙 Тёмная' : '☀️ Светлая'));
-            app.appendChild(themeItem);
+            item.appendChild(el('div', {
+                style: 'font-weight: 900; font-size: 1.1rem; margin-bottom: 8px;'
+            }, `${u.icon || '📖'} ${u.title}`));
+            item.appendChild(el('div', {
+                style: 'color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;'
+            }, u.grammar?.title || ''));
+            item.appendChild(el('div', {
+                style: 'color: var(--primary); font-weight: 800; font-size: 0.9rem;'
+            }, 'ПОВТОРИТЬ →'));
+            app.appendChild(item);
+        });
+    }
+    root.appendChild(app);
+}
 
-            const logoutBtn = el('button', {
-                class: 'btn btn-danger',
-                style: 'margin-top: 30px;',
-                onclick: () => {
-                    state.user = null;
-                    state.screen = 'auth';
+// ============================================
+// МАГАЗИН
+// ============================================
+function renderShop(root) {
+    const app = el('div', { class: 'app fade-in' });
+    app.appendChild(el('button', {
+        class: 'back-btn',
+        onclick: () => { state.screen = 'home'; render(); }
+    }, '← Назад'));
+    app.appendChild(el('h1', {
+        style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
+    }, 'Магазин'));
+    const items = [
+        { id: 'm1', name: 'Бронза', price: 1200, icon: '🥉' },
+        { id: 'm2', name: 'Серебро', price: 2000, icon: '🥈' },
+        { id: 'm3', name: 'Золото', price: 3400, icon: '🥇' },
+        { id: 'm4', name: 'Алмаз', price: 4000, icon: '💎' },
+        { id: 'm5', name: 'Незерит', price: 5000, icon: '🔥' }
+    ];
+    const grid = el('div', { class: 'shop-grid' });
+    items.forEach(it => {
+        const owned = state.medals.includes(it.id);
+        const card = el('div', { class: 'shop-item' + (owned ? ' owned' : '') });
+        card.appendChild(el('div', { style: 'font-size: 4rem; margin-bottom: 16px;' }, it.icon));
+        card.appendChild(el('h3', { style: 'font-weight: 900; margin-bottom: 8px;' }, it.name));
+        card.appendChild(el('p', {
+            style: 'color: var(--warning); font-weight: 800; font-size: 1.2rem; margin-bottom: 16px;'
+        }, `⚡ ${it.price} XP`));
+        card.appendChild(el('button', {
+            class: 'btn ' + (owned ? 'btn-secondary' : 'btn-primary'),
+            style: 'margin-top: 0;',
+            onclick: () => {
+                if (owned) return;
+                if (state.xp >= it.price) {
+                    state.xp -= it.price;
+                    state.medals.push(it.id);
                     save();
                     render();
+                } else {
+                    alert('Недостаточно XP!');
                 }
-            }, 'Выйти из аккаунта');
-            app.appendChild(logoutBtn);
+            }
+        }, owned ? '✓ Куплено' : 'Купить'));
+        grid.appendChild(card);
+    });
+    app.appendChild(grid);
+    root.appendChild(app);
+}
 
-            root.appendChild(app);
+// ============================================
+// РАНКЕД
+// ============================================
+function renderRanked(root) {
+    const app = el('div', { class: 'app fade-in' });
+    app.appendChild(el('button', {
+        class: 'back-btn',
+        onclick: () => { state.screen = 'home'; render(); }
+    }, '← Назад'));
+    app.appendChild(el('h1', {
+        style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
+    }, 'Ранкед'));
+    const leaders = [
+        { n: 'BoborMaster', x: 5000 },
+        { n: 'Polyglot', x: 3200 },
+        { n: state.user?.email?.split('@')[0] || 'Вы', x: state.xp },
+        { n: 'Newbie', x: 100 }
+    ].sort((a, b) => b.x - a.x);
+    leaders.forEach((l, i) => {
+        const isMe = l.n === (state.user?.email?.split('@')[0] || 'Вы');
+        const row = el('div', { class: 'rank-row' + (isMe ? ' me' : '') });
+        row.appendChild(el('div', {
+            style: 'font-weight: 900; width: 40px; font-size: 1.3rem;'
+        }, `#${i + 1}`));
+        row.appendChild(el('div', {
+            style: 'flex: 1; font-weight: 800; font-size: 1.1rem;'
+        }, l.n));
+        row.appendChild(el('div', {
+            style: 'color: var(--warning); font-weight: 900; font-size: 1.2rem;'
+        }, `${l.x} XP`));
+        app.appendChild(row);
+    });
+    root.appendChild(app);
+}
+
+// ============================================
+// НАСТРОЙКИ
+// ============================================
+function renderSettings(root) {
+    const app = el('div', { class: 'app fade-in' });
+    app.appendChild(el('button', {
+        class: 'back-btn',
+        onclick: () => { state.screen = 'home'; render(); }
+    }, '← Назад'));
+    app.appendChild(el('h1', {
+        style: 'font-size: 2rem; margin-bottom: 30px; font-weight: 900;'
+    }, 'Настройки'));
+
+    const profileBox = el('div', {
+        style: 'background: var(--card); padding: 24px; border-radius: var(--radius-lg); margin-bottom: 20px; border: 2px solid var(--border);'
+    });
+    profileBox.appendChild(el('h3', {
+        style: 'margin-bottom: 12px; font-size: 1.3rem; font-weight: 900;'
+    }, 'Профиль'));
+    profileBox.appendChild(el('p', {
+        style: 'color: var(--text-muted); margin-bottom: 8px;'
+    }, `Email: ${state.user?.email}`));
+    profileBox.appendChild(el('p', {
+        style: 'color: var(--text-muted); margin-bottom: 8px;'
+    }, `XP: ${state.xp} · Серия: ${state.streak}`));
+    profileBox.appendChild(el('p', {
+        style: 'color: var(--text-muted);'
+    }, `Уроков сегодня: ${state.lessonsToday}/2`));
+    app.appendChild(profileBox);
+
+    const themeItem = el('div', {
+        class: 'word-item',
+        style: 'cursor: pointer; margin-bottom: 16px; padding: 20px;',
+        onclick: () => {
+            state.theme = state.theme === 'dark' ? 'light' : 'dark';
+            save();
+            render();
         }
+    });
+    themeItem.appendChild(el('div', {
+        style: 'font-weight: 800; font-size: 1.1rem;'
+    }, 'Тема оформления'));
+    themeItem.appendChild(el('div', {
+        style: 'font-size: 1.5rem; margin-top: 8px;'
+    }, state.theme === 'dark' ? '🌙 Тёмная' : '☀️ Светлая'));
+    app.appendChild(themeItem);
 
-        /* ============================================
-           ЗАПУСК
-           ============================================ */
-        load();
-        render();
-    </script>
+    app.appendChild(el('button', {
+        class: 'btn btn-danger',
+        style: 'margin-top: 30px;',
+        onclick: () => {
+            state.user = null;
+            state.screen = 'auth';
+            save();
+            render();
+        }
+    }, 'Выйти из аккаунта'));
+    root.appendChild(app);
+}
+
+// ============================================
+// ЗАПУСК
+// ============================================
+load();
+render();
+</script>
 </body>
 </html>
