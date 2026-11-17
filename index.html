@@ -19,7 +19,6 @@
         }
 
         :root {
-            /* Зелёная палитра в стиле Duolingo */
             --primary: #58CC02;
             --primary-dark: #46A302;
             --primary-light: #89E219;
@@ -322,7 +321,7 @@
         }
 
         /* ============================================
-           СЕТКА ГЛАВНОЙ
+           СЕТКА ГЛАВНОЙ — КНОПКИ С РАМКОЙ ПО КОНТУРУ
            ============================================ */
         .home-grid {
             display: grid;
@@ -333,50 +332,67 @@
 
         .home-card {
             background: var(--card);
-            border: 2px solid var(--border);
+            border: 3px solid transparent;
             border-radius: var(--radius-lg);
-            padding: 30px 24px;
+            padding: 0;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: var(--shadow-sm);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .home-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, var(--primary), var(--primary-light));
-            transform: scaleX(0);
-            transition: transform 0.3s;
+            inset: 0;
+            border-radius: var(--radius-lg);
+            padding: 3px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light), var(--primary-dark));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
         }
 
         .home-card:hover::before {
-            transform: scaleX(1);
+            opacity: 1;
         }
 
         .home-card:hover {
             transform: translateY(-8px);
-            border-color: var(--primary);
             box-shadow: var(--shadow-green);
         }
 
-        .home-card .icon-img {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 16px;
-            display: block;
-            transition: transform 0.3s;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        .home-card-img-wrap {
+            width: 100%;
+            height: 140px;
+            overflow: hidden;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            position: relative;
         }
 
-        .home-card:hover .icon-img {
-            transform: scale(1.15) rotate(-5deg);
+        .home-card-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .home-card:hover .home-card-img-wrap img {
+            transform: scale(1.1);
+        }
+
+        .home-card-body {
+            padding: 20px 24px 24px;
+            width: 100%;
         }
 
         .home-card h3 {
@@ -391,22 +407,22 @@
         }
 
         /* ============================================
-           ДОРОЖКА УРОКОВ
+           ДОРОЖКА УРОКОВ — ЛИНИЯ ПОД НАДПИСЯМИ
            ============================================ */
         .path-container {
             position: relative;
-            padding: 40px 20px;
+            padding: 20px 20px 60px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 40px;
+            gap: 50px;
         }
 
         .path-line {
             position: absolute;
             left: 50%;
-            top: 0;
-            bottom: 0;
+            top: 40px;
+            bottom: 40px;
             width: 6px;
             background: linear-gradient(180deg, var(--primary), var(--primary-light), var(--primary-dark));
             transform: translateX(-50%);
@@ -414,8 +430,15 @@
             z-index: 0;
         }
 
-        .path-node {
+        .path-node-wrapper {
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .path-node {
             width: 80px;
             height: 80px;
             border-radius: 50%;
@@ -428,7 +451,6 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: var(--shadow-sm);
-            z-index: 1;
         }
 
         .path-node:hover:not(.locked) {
@@ -456,16 +478,16 @@
         }
 
         .path-label {
-            position: absolute;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 16px;
             font-weight: 800;
             font-size: 0.85rem;
             white-space: nowrap;
             text-align: center;
             width: 180px;
             color: var(--text-muted);
+            background: var(--bg);
+            padding: 4px 12px;
+            border-radius: 8px;
         }
 
         /* ============================================
@@ -881,6 +903,35 @@
             margin-bottom: 20px;
         }
 
+        /* Letter detail card */
+        .letter-detail-card {
+            background: var(--card);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 30px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .letter-detail-card .detail-char {
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .letter-detail-card .detail-info {
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-muted);
+        }
+
+        .letter-detail-card .detail-info strong {
+            color: var(--text);
+        }
+
         /* ============================================
            УСПЕХ
            ============================================ */
@@ -1180,7 +1231,7 @@
         }
 
         /* ============================================
-           УТИЛИТА СОЗДАНИЯ ЭЛЕМЕНТОВ (ИСПРАВЛЕНА)
+           УТИЛИТА СОЗДАНИЯ ЭЛЕМЕНТОВ
            ============================================ */
         const el = (tag, attrs = {}, children = []) => {
             const e = document.createElement(tag);
@@ -1500,13 +1551,20 @@
                 });
 
                 if (card.icon.startsWith('/')) {
-                    cardEl.appendChild(el('img', { class: 'icon-img', src: card.icon, alt: card.title }));
+                    const imgWrap = el('div', { class: 'home-card-img-wrap' });
+                    imgWrap.appendChild(el('img', { src: card.icon, alt: card.title }));
+                    cardEl.appendChild(imgWrap);
                 } else {
-                    cardEl.appendChild(el('div', { style: 'font-size: 4rem; margin-bottom: 16px;' }, card.icon));
+                    const imgWrap = el('div', { class: 'home-card-img-wrap', style: 'display:flex;align-items:center;justify-content:center;background:var(--bg-light)' });
+                    imgWrap.appendChild(el('div', { style: 'font-size: 4rem;' }, card.icon));
+                    cardEl.appendChild(imgWrap);
                 }
 
-                cardEl.appendChild(el('h3', {}, card.title));
-                cardEl.appendChild(el('p', {}, card.desc));
+                const body = el('div', { class: 'home-card-body' });
+                body.appendChild(el('h3', {}, card.title));
+                body.appendChild(el('p', {}, card.desc));
+                cardEl.appendChild(body);
+
                 grid.appendChild(cardEl);
             });
 
@@ -1517,7 +1575,8 @@
         /* ============================================
            ОБУЧЕНИЕ (ДОРОЖКА)
            ============================================ */
-        function renderLearn(root) {            const app = el('div', { class: 'app fade-in' });
+        function renderLearn(root) {
+            const app = el('div', { class: 'app fade-in' });
 
             const backBtn = el('button', {
                 class: 'back-btn',
@@ -1556,6 +1615,8 @@
                 const locked = !prevDone;
                 const current = !done && !locked;
 
+                const wrapper = el('div', { class: 'path-node-wrapper' });
+
                 const node = el('div', {
                     class: 'path-node' + (locked ? ' locked' : '') + (done ? ' done' : '') + (current ? ' current' : ''),
                     onclick: () => {
@@ -1570,13 +1631,13 @@
                         render();
                     }
                 });
-
                 node.appendChild(el('span', {}, done ? '✓' : (locked ? '🔒' : '⭐')));
+                wrapper.appendChild(node);
 
                 const label = el('div', { class: 'path-label' }, unit.title);
-                node.appendChild(label);
+                wrapper.appendChild(label);
 
-                pathContainer.appendChild(node);
+                pathContainer.appendChild(wrapper);
                 prevDone = done;
             });
 
@@ -1601,15 +1662,56 @@
 
             if (state.step === 'alpha') {
                 renderAlphaStep(app, unit);
+            } else if (state.step === 'letter_detail') {
+                renderLetterDetail(app, unit);
             } else if (state.step === 'words') {
                 renderWordsStep(app, unit);
             } else if (state.step === 'grammar') {
                 renderGrammarStep(app, unit);
             } else if (state.step === 'quiz') {
                 renderQuizStep(app, unit);
+            } else if (state.step === 'final_test') {
+                renderFinalTest(app, unit);
             }
 
             root.appendChild(app);
+        }
+
+        /* ============================================
+           ДЕТАЛИ БУКВЫ (ПРИ КЛИКЕ В АЛФАВИТЕ)
+           ============================================ */
+        function renderLetterDetail(app, unit) {
+            const a = state.letter;
+            if (!a) { state.step = 'alpha'; render(); return; }
+
+            app.appendChild(el('h2', { class: 'lesson-header' }, `Буква "${a.char}"`));
+
+            const card = el('div', { class: 'letter-detail-card' });
+            card.appendChild(el('div', { class: 'detail-char' }, a.char));
+            const info = el('div', { class: 'detail-info' });
+            info.appendChild(el('div', {}, [`Звук: `, el('strong', {}, `[${a.sound}]`)]));
+            info.appendChild(el('div', { style: 'margin-top: 8px;' }, [`Пример: `, el('strong', {}, a.ex)]));
+            if (a.desc) {
+                info.appendChild(el('div', { style: 'margin-top: 8px;' }, a.desc));
+            }
+            card.appendChild(info);
+            app.appendChild(card);
+
+            app.appendChild(el('div', { style: 'display:flex;justify-content:center;margin-bottom:20px;' }, [renderAudioButton(a.ex)]));
+
+            // Админские кнопки для записи/удаления озвучки этой буквы
+            if (state.user?.role === 'admin') {
+                const adminPanel = el('div', { class: 'grammar-box', style: 'margin-top:20px;' });
+                adminPanel.appendChild(el('h3', {}, 'Управление озвучкой'));
+                adminPanel.appendChild(el('p', { style: 'color:var(--text-muted);margin-bottom:16px;' }, 'Запиши свою озвучку для этой буквы или удали существующую.'));
+                adminPanel.appendChild(renderAudioButton(a.ex));
+                app.appendChild(adminPanel);
+            }
+
+            app.appendChild(el('button', {
+                class: 'btn btn-primary',
+                onclick: () => { state.step = 'alpha'; render(); }
+            }, '← Вернуться к алфавиту'));
         }
 
         /* ============================================
@@ -1634,7 +1736,11 @@
                 (unit.alphabet?.table || []).forEach((a, i) => {
                     const card = el('div', {
                         class: 'alpha-btn',
-                        onclick: () => { playTTS(a.ex, state.data?.speechLang); }
+                        onclick: () => {
+                            state.letter = a;
+                            state.step = 'letter_detail';
+                            render();
+                        }
                     });
                     card.appendChild(el('div', {}, a.char));
                     card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
@@ -1654,7 +1760,11 @@
                 shuffled.forEach(a => {
                     const card = el('div', {
                         class: 'alpha-btn',
-                        onclick: () => { playTTS(a.ex, state.data?.speechLang); }
+                        onclick: () => {
+                            state.letter = a;
+                            state.step = 'letter_detail';
+                            render();
+                        }
                     });
                     card.appendChild(el('div', {}, a.char));
                     card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
@@ -1719,7 +1829,14 @@
                     const shuffled = [...unit.alphabet.table].sort(() => 0.5 - Math.random()).slice(0, 15);
                     const grid = el('div', { class: 'alpha-grid' });
                     shuffled.forEach(a => {
-                        const card = el('div', { class: 'alpha-btn' });
+                        const card = el('div', {
+                            class: 'alpha-btn',
+                            onclick: () => {
+                                state.letter = a;
+                                state.step = 'letter_detail';
+                                render();
+                            }
+                        });
                         card.appendChild(el('div', {}, a.char));
                         card.appendChild(el('div', { class: 'pair' }, `[${a.sound}]`));
                         grid.appendChild(card);
@@ -1731,16 +1848,12 @@
                     onclick: () => { state.alphaStep = 5; render(); }
                 }, `Дальше: ${steps[4]} →`));
             }
-            // ШАГ 5: Финальный тест
+            // ШАГ 5: Финальный тест по алфавиту
             else if (step === 5) {
-                const display = el('div', { class: 'letter-display' });
-                display.appendChild(el('h3', {
-                    style: 'margin-bottom: 16px; color: var(--primary);'
-                }, 'Финальный тест по алфавиту'));
-                display.appendChild(el('p', {
-                    style: 'color: var(--text-muted); margin-bottom: 20px;'
-                }, 'Выбери правильный звук для буквы'));
-                app.appendChild(display);
+                app.appendChild(el('div', { class: 'letter-display' }, [
+                    el('h3', { style: 'margin-bottom: 16px; color: var(--primary);' }, 'Финальный тест по алфавиту'),
+                    el('p', { style: 'color: var(--text-muted); margin-bottom: 20px;' }, 'Выбери правильный звук для буквы')
+                ]));
 
                 const table = unit.alphabet?.table || [];
                 const a = table[Math.floor(Math.random() * table.length)];
@@ -1909,6 +2022,55 @@
         }
 
         /* ============================================
+           ФИНАЛЬНЫЙ ТЕСТ ПО ЮНИТУ
+           ============================================ */
+        function renderFinalTest(app, unit) {
+            const finalQuestions = unit.finalTest || [];
+            if (finalQuestions.length === 0) {
+                completeUnit(app, unit);
+                return;
+            }
+
+            if (state.qi >= finalQuestions.length) {
+                completeUnit(app, unit);
+                return;
+            }
+
+            const q = finalQuestions[state.qi];
+            app.appendChild(el('h2', {
+                class: 'lesson-header'
+            }, `Финальный тест: Вопрос ${state.qi + 1} из ${finalQuestions.length}`));
+
+            app.appendChild(el('p', {
+                style: 'text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 40px; line-height: 1.5;'
+            }, q.q));
+
+            const qBox = el('div', {});
+            q.options.forEach((opt, i) => {
+                const btn = el('div', { class: 'quiz-option' }, opt);
+                btn.onclick = () => {
+                    if (btn.classList.contains('disabled')) return;
+
+                    if (i === q.correct) {
+                        btn.classList.add('correct');
+                        document.querySelectorAll('.quiz-option').forEach(b => b.classList.add('disabled'));
+                        setTimeout(() => {
+                            state.qi++;
+                            render();
+                        }, 1000);
+                    } else {
+                        btn.classList.add('wrong', 'disabled');
+                        setTimeout(() => {
+                            btn.classList.remove('wrong', 'disabled');
+                        }, 800);
+                    }
+                };
+                qBox.appendChild(btn);
+            });
+            app.appendChild(qBox);
+        }
+
+        /* ============================================
            ЗАВЕРШЕНИЕ УРОКА
            ============================================ */
         function completeLesson(app, unit) {
@@ -1929,6 +2091,38 @@
             success.appendChild(el('p', {
                 style: 'color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;'
             }, isCompleted ? 'Молодец, что повторяешь!' : '+50 XP. Открыт следующий урок!'));
+
+            // Проверяем, есть ли финальный тест по юниту
+            if (unit.finalTest && unit.finalTest.length > 0 && !isCompleted) {
+                success.appendChild(el('button', {
+                    class: 'btn btn-primary',
+                    onclick: () => { state.step = 'final_test'; state.qi = 0; render(); }
+                }, 'Пройти финальный тест →'));
+            } else {
+                success.appendChild(el('button', {
+                    class: 'btn btn-primary',
+                    onclick: () => { state.screen = 'learn'; render(); }
+                }, 'К списку уроков'));
+            }
+
+            app.appendChild(success);
+        }
+
+        /* ============================================
+           ЗАВЕРШЕНИЕ ЮНИТА (ПОСЛЕ ФИНАЛЬНОГО ТЕСТА)
+           ============================================ */
+        function completeUnit(app, unit) {
+            state.xp += 100;
+            save();
+
+            const success = el('div', { class: 'success-screen' });
+            success.appendChild(el('div', { class: 'icon' }, '🎉'));
+            success.appendChild(el('h2', {
+                style: 'font-size: 2.5rem; margin-bottom: 16px; font-weight: 900;'
+            }, 'Юнит пройден!'));
+            success.appendChild(el('p', {
+                style: 'color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;'
+            }, '+100 XP за прохождение всего юнита!'));
             success.appendChild(el('button', {
                 class: 'btn btn-primary',
                 onclick: () => { state.screen = 'learn'; render(); }
