@@ -373,94 +373,101 @@ function playCustomAudio(key, btnEl) {
         });
 }
 
+// ============================================
+// ИСПРАВЛЕННАЯ ФУНКЦИЯ ЗАПИСИ (РУЧНОЙ СТОП)
+// ============================================
 function recordCustomAudio(key, btnEl) {
     if (!navigator.mediaDevices || !window.MediaRecorder) {
         alert('❌ Браузер не поддерживает запись аудио.');
         return;
     }
-    if (confirm("Записать озвучку? 3 секунды. Говори в микрофон.")) {
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                // Определяем поддерживаемый MIME тип
-                let mimeType = 'audio/webm;codecs=opus';
-                if (!MediaRecorder.isTypeSupported(mimeType)) {
-                    mimeType = 'audio/webm';
+
+    // Если уже идёт запись — останавливаем
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        return;
+    }
+
+    if (confirm("Начать запись? Нажми кнопку ещё раз чтобы остановить.")) {
+        navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                sampleRate: 22050
+            }
+        })
+        .then(stream => {
+            let mimeType = 'audio/webm;codecs=opus';
+            if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = 'audio/webm';
+            if (!MediaRecorder.isTypeSupported(mimeType)) mimeType = '';
+
+            const options = mimeType ? { mimeType, audioBitsPerSecond: 64000 } : { audioBitsPerSecond: 64000 };
+            mediaRecorder = new MediaRecorder(stream, options);
+            audioChunks = [];
+
+            if (btnEl) {
+                btnEl.classList.add('recording');
+                btnEl.textContent = '⏹ Стоп';
+            }
+
+            mediaRecorder.ondataavailable = (event) => {
+                if (event.data && event.data.size > 0) {
+                    audioChunks.push(event.data);
                 }
-                if (!MediaRecorder.isTypeSupported(mimeType)) {
-                    mimeType = 'audio/mp4';
+            };
+
+            mediaRecorder.onstop = () => {
+                stream.getTracks().forEach(track => track.stop());
+                if (btnEl) {
+                    btnEl.classList.remove('recording');
+                    btnEl.textContent = '🎙️ Записать';
                 }
-                if (!MediaRecorder.isTypeSupported(mimeType)) {
-                    mimeType = '';
+
+                if (audioChunks.length === 0) {
+                    alert('❌ Ничего не записано.');
+                    return;
                 }
 
-                const options = mimeType ? { mimeType } : {};
-                mediaRecorder = new MediaRecorder(stream, options);
-                audioChunks = [];
+                const actualType = mediaRecorder.mimeType || 'audio/webm';
+                const audioBlob = new Blob(audioChunks, { type: actualType });
+                const sizeKB = (audioBlob.size / 1024).toFixed(1);
+                console.log(`🎙️ Записано: ${sizeKB} KB`);
 
-                if (btnEl) btnEl.classList.add('recording');
-
-                mediaRecorder.ondataavailable = (event) => {
-                    if (event.data && event.data.size > 0) {
-                        audioChunks.push(event.data);
-                    }
-                };
-
-                mediaRecorder.onstop = () => {
-                    stream.getTracks().forEach(track => track.stop());
-                    if (btnEl) btnEl.classList.remove('recording');
-
-                    if (audioChunks.length === 0) {
-                        alert('❌ Ничего не записано. Попробуй ещё раз.');
-                        return;
-                    }
-
-                    const actualType = mediaRecorder.mimeType || 'audio/webm';
-                    const audioBlob = new Blob(audioChunks, { type: actualType });
-                    const reader = new FileReader();
-                    reader.onloadend = async () => {
-                        try {
-                            const res = await fetch("/api/save-audio", {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({
-                                    key: key,
-                                    audioBase64: reader.result,
-                                    role: state.user.role
-                                })
-                            });
-                            const data = await res.json();
-                            if (data.success) {
-                                alert("✅ Озвучка сохранена! Теперь нажми 🔊 Слушать.");
-                            } else {
-                                alert("❌ Не удалось сохранить: " + (data.error || 'неизвестная ошибка'));
-                            }
-                        } catch (err) {
-                            console.error('Save audio error:', err);
-                            alert("❌ Ошибка сети при сохранении.");
+                const reader = new FileReader();
+                reader.onloadend = async () => {
+                    try {
+                        const res = await fetch("/api/save-audio", {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ key, audioBase64: reader.result, role: state.user.role })
+                        });
+                        const data = await res.json();
+                        if (data.success) {
+                            alert(`✅ Сохранено! (${sizeKB} KB)`);
+                        } else {
+                            alert("❌ Ошибка: " + (data.error || 'неизвестно'));
                         }
-                    };
-                    reader.onerror = () => alert('❌ Ошибка чтения аудио.');
-                    reader.readAsDataURL(audioBlob);
-                };
-
-                mediaRecorder.onerror = (err) => {
-                    console.error('Recorder error:', err);
-                    if (btnEl) btnEl.classList.remove('recording');
-                    stream.getTracks().forEach(track => track.stop());
-                    alert('❌ Ошибка записи.');
-                };
-
-                mediaRecorder.start();
-                setTimeout(() => {
-                    if (mediaRecorder && mediaRecorder.state !== 'inactive') {
-                        mediaRecorder.stop();
+                    } catch (err) {
+                        console.error('Save error:', err);
+                        alert("❌ Ошибка сети.");
                     }
-                }, 3000);
-            })
-            .catch(err => {
-                console.error('Mic error:', err);
-                alert("❌ Нет доступа к микрофону. Разреши в настройках браузера.");
-            });
+                };
+                reader.readAsDataURL(audioBlob);
+            };
+
+            mediaRecorder.onerror = (err) => {
+                console.error('Recorder error:', err);
+                if (btnEl) { btnEl.classList.remove('recording'); btnEl.textContent = '🎙️ Записать'; }
+                stream.getTracks().forEach(track => track.stop());
+                alert('❌ Ошибка записи.');
+            };
+
+            mediaRecorder.start();
+        })
+        .catch(err => {
+            console.error('Mic error:', err);
+            alert("❌ Нет доступа к микрофону.");
+        });
     }
 }
 
