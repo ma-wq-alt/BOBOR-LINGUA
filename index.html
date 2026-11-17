@@ -48,12 +48,12 @@
             --bg-light: #FFFFFF;
             --card: #FFFFFF;
             --card-hover: #F7FAFC;
-            --text: #0F1724;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
+            --text: #1A202C;
+            --text-muted: #4A5568;
+            --border: #CBD5E0;
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-green: 0 8px 24px rgba(88, 204, 2, 0.2);
+            --shadow-green: 0 8px 24px rgba(88, 204, 2, 0.25);
         }
 
         body {
@@ -360,6 +360,7 @@
             opacity: 0;
             transition: opacity 0.3s;
             pointer-events: none;
+            z-index: 2;
         }
 
         .home-card:hover::before {
@@ -371,23 +372,30 @@
             box-shadow: var(--shadow-green);
         }
 
+        /* Картинка вписывается целиком, не обрезается */
         .home-card-img-wrap {
             width: 100%;
-            height: 140px;
+            height: 160px;
             overflow: hidden;
             border-radius: var(--radius-lg) var(--radius-lg) 0 0;
             position: relative;
+            background: linear-gradient(135deg, var(--primary-light), var(--primary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
         }
 
         .home-card-img-wrap img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             transition: transform 0.3s;
+            border-radius: 8px;
         }
 
         .home-card:hover .home-card-img-wrap img {
-            transform: scale(1.1);
+            transform: scale(1.08);
         }
 
         .home-card-body {
@@ -477,17 +485,27 @@
             animation: glow 2s infinite;
         }
 
+        /* Стилизация надписей на дорожке */
         .path-label {
             margin-top: 16px;
             font-weight: 800;
-            font-size: 0.85rem;
-            white-space: nowrap;
+            font-size: 0.9rem;
             text-align: center;
-            width: 180px;
-            color: var(--text-muted);
-            background: var(--bg);
-            padding: 4px 12px;
-            border-radius: 8px;
+            width: 200px;
+            color: var(--text);
+            background: var(--card);
+            padding: 8px 14px;
+            border-radius: 12px;
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            line-height: 1.3;
+            transition: all 0.2s;
+        }
+
+        .path-node-wrapper:hover .path-label {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-green);
         }
 
         /* ============================================
@@ -1555,7 +1573,7 @@
                     imgWrap.appendChild(el('img', { src: card.icon, alt: card.title }));
                     cardEl.appendChild(imgWrap);
                 } else {
-                    const imgWrap = el('div', { class: 'home-card-img-wrap', style: 'display:flex;align-items:center;justify-content:center;background:var(--bg-light)' });
+                    const imgWrap = el('div', { class: 'home-card-img-wrap' });
                     imgWrap.appendChild(el('div', { style: 'font-size: 4rem;' }, card.icon));
                     cardEl.appendChild(imgWrap);
                 }
@@ -1699,7 +1717,6 @@
 
             app.appendChild(el('div', { style: 'display:flex;justify-content:center;margin-bottom:20px;' }, [renderAudioButton(a.ex)]));
 
-            // Админские кнопки для записи/удаления озвучки этой буквы
             if (state.user?.role === 'admin') {
                 const adminPanel = el('div', { class: 'grammar-box', style: 'margin-top:20px;' });
                 adminPanel.appendChild(el('h3', {}, 'Управление озвучкой'));
@@ -1730,7 +1747,6 @@
             }));
             app.appendChild(progressBar);
 
-            // ШАГ 1: Все буквы
             if (step === 1) {
                 const grid = el('div', { class: 'alpha-grid' });
                 (unit.alphabet?.table || []).forEach((a, i) => {
@@ -1752,7 +1768,6 @@
                     onclick: () => { state.alphaStep = 2; render(); }
                 }, `Дальше: ${steps[1]} →`));
             }
-            // ШАГ 2: 20 случайных букв
             else if (step === 2) {
                 const table = unit.alphabet?.table || [];
                 const shuffled = [...table].sort(() => 0.5 - Math.random()).slice(0, 20);
@@ -1776,7 +1791,6 @@
                     onclick: () => { state.alphaStep = 3; render(); }
                 }, `Дальше: ${steps[2]} →`));
             }
-            // ШАГ 3: Правила чтения
             else if (step === 3) {
                 const rulesBox = el('div', { class: 'grammar-box' });
                 rulesBox.appendChild(el('h3', {}, unit.alphabet?.title || 'Правила'));
@@ -1801,7 +1815,6 @@
                     onclick: () => { state.alphaStep = 4; render(); }
                 }, `Дальше: ${steps[3]} →`));
             }
-            // ШАГ 4: Диграфы или перемешка
             else if (step === 4) {
                 const digraphs = (unit.alphabet?.table || []).filter(a => a.char.length > 2);
                 if (digraphs.length > 0) {
@@ -1848,7 +1861,6 @@
                     onclick: () => { state.alphaStep = 5; render(); }
                 }, `Дальше: ${steps[4]} →`));
             }
-            // ШАГ 5: Финальный тест по алфавиту
             else if (step === 5) {
                 app.appendChild(el('div', { class: 'letter-display' }, [
                     el('h3', { style: 'margin-bottom: 16px; color: var(--primary);' }, 'Финальный тест по алфавиту'),
@@ -2092,7 +2104,6 @@
                 style: 'color: var(--text-muted); font-size: 1.2rem; margin-bottom: 30px;'
             }, isCompleted ? 'Молодец, что повторяешь!' : '+50 XP. Открыт следующий урок!'));
 
-            // Проверяем, есть ли финальный тест по юниту
             if (unit.finalTest && unit.finalTest.length > 0 && !isCompleted) {
                 success.appendChild(el('button', {
                     class: 'btn btn-primary',
