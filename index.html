@@ -209,6 +209,9 @@ function getUfaDate() {
 }
 
 function checkDailyLimit() {
+    // ✅ Админу — безлимит
+    if (state.user?.role === 'admin') return true;
+    
     const today = getUfaDate();
     if (state.lastLessonDate !== today) {
         state.lessonsToday = 0;
