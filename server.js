@@ -4,356 +4,207 @@ import dotenv from "dotenv";
 import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
-import { createClient } from "@libsql/client";
 
-// Загрузка переменных окружения
 dotenv.config();
 
-// Получение пути к текущему файлу
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Инициализация Express
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware для парсинга JSON (увеличен лимит для аудио)
 app.use(express.json({ limit: "50mb" }));
 
-// Раздача статических файлов
 app.use(express.static(__dirname));
 app.use("/data", express.static(path.join(__dirname, "data")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-// Папка для аудио — создаём если нет
-const AUDIO_DIR = path.join(__dirname, "audio");
-if (!fs.existsSync(AUDIO_DIR)) {
-    fs.mkdirSync(AUDIO_DIR, { recursive: true });
-    console.log("📁 Папка audio создана");
+// ============================================
+// ХРАНИЛИЩЕ НА ДИСКЕ (вместо Turso)
+// ============================================
+const DATA_DIR = path.join(__dirname, "storage");
+const AUDIO_DIR = path.join(DATA_DIR, "audio");
+const USERS_FILE = path.join(DATA_DIR, "users.json");
+const PROGRESS_FILE = path.join(DATA_DIR, "progress.json");
+const AUDIO_INDEX_FILE = path.join(DATA_DIR, "audio-index.json");
+
+// Создаём папки и файлы если их нет
+function ensureStorage() {
+    if (!fs.existsSync(DATA_DIR)) fs.mkdirSync(DATA_DIR, { recursive: true });
+    if (!fs.existsSync(AUDIO_DIR)) fs.mkdirSync(AUDIO_DIR, { recursive: true });
+    if (!fs.existsSync(USERS_FILE)) fs.writeFileSync(USERS_FILE, JSON.stringify({}, null, 2));
+    if (!fs.existsSync(PROGRESS_FILE)) fs.writeFileSync(PROGRESS_FILE, JSON.stringify({}, null, 2));
+    if (!fs.existsSync(AUDIO_INDEX_FILE)) fs.writeFileSync(AUDIO_INDEX_FILE, JSON.stringify({}, null, 2));
+    console.log("📁 Хранилище готово:", DATA_DIR);
+}
+ensureStorage();
+
+// Чтение/запись JSON
+function readJSON(filePath) {
+    try {
+        const raw = fs.readFileSync(filePath, "utf-8");
+        return JSON.parse(raw);
+    } catch (e) {
+        return {};
+    }
 }
 
-// Подключение к базе данных Turso
-const TURSO_URL = process.env.TURSO_URL;
-const TURSO_TOKEN = process.env.TURSO_TOKEN;
-const db = (TURSO_URL && TURSO_TOKEN) ? createClient({
-    url: TURSO_URL,
-    authToken: TURSO_TOKEN
-}) : null;
+function writeJSON(filePath, data) {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), "utf-8");
+}
 
 // Данные администратора
 const ADMIN_EMAIL = "mar.maks999@gmail.com";
 const ADMIN_PASS = "1495";
 
-// Инициализация базы данных
-async function initDB() {
-    if (!db) {
-        console.log("⚠️ Turso не настроен");
-        return;
-    }
-
-    try {
-        // Создание таблицы пользователей
-        await db.execute(`
-            CREATE TABLE IF NOT EXISTS users (
-                email TEXT PRIMARY KEY,
-                password TEXT,
-                role TEXT DEFAULT 'user'
-            )
-        `);
-
-        // Создание таблицы аудио (audio_data теперь хранит путь к файлу, а не base64)
-        await db.execute(`
-            CREATE TABLE IF NOT EXISTS bobor_audio (
-                audio_key TEXT PRIMARY KEY,
-                audio_data TEXT,
-                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        // Создание таблицы прогресса
-        await db.execute(`
-            CREATE TABLE IF NOT EXISTS bobor_progress (
-                username TEXT PRIMARY KEY,
-                xp INTEGER DEFAULT 0,
-                streak INTEGER DEFAULT 0,
-                medals TEXT DEFAULT '[]',
-                last_daily TEXT,
-                units_done TEXT DEFAULT '[]',
-                lessons_today INTEGER DEFAULT 0,
-                updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            )
-        `);
-
-        // Создание администратора, если его нет
-        const adm = await db.execute({
-            sql: "SELECT * FROM users WHERE email = ?",
-            args: [ADMIN_EMAIL]
-        });
-
-        if (adm.rows.length === 0) {
-            await db.execute({
-                sql: "INSERT INTO users (email, password, role) VALUES (?, ?, ?)",
-                args: [ADMIN_EMAIL, ADMIN_PASS, "admin"]
-            });
-            console.log("✅ Администратор создан");
-        }
-
-        console.log("✅ База данных готова");
-    } catch (e) {
-        console.error("❌ Ошибка инициализации БД: ", e.message);
+// Создаём админа при старте
+function ensureAdmin() {
+    const users = readJSON(USERS_FILE);
+    if (!users[ADMIN_EMAIL]) {
+        users[ADMIN_EMAIL] = { email: ADMIN_EMAIL, password: ADMIN_PASS, role: "admin" };
+        writeJSON(USERS_FILE, users);
+        console.log("✅ Администратор создан");
     }
 }
-
-// Запуск инициализации
-initDB();
+ensureAdmin();
 
 // ============================================
 // API: Регистрация
 // ============================================
-app.post("/api/register", async (req, res) => {
+app.post("/api/register", (req, res) => {
     const { email, password } = req.body;
+    if (!email || !password) return res.status(400).json({ error: "Заполни все поля" });
 
-    if (!db) {
-        return res.status(500).json({ error: "База данных не настроена" });
-    }
+    const users = readJSON(USERS_FILE);
+    if (users[email]) return res.status(400).json({ error: "Email уже занят" });
 
-    try {
-        // Проверка существования пользователя
-        const check = await db.execute({
-            sql: "SELECT * FROM users WHERE email = ?",
-            args: [email]
-        });
-
-        if (check.rows.length > 0) {
-            return res.status(400).json({ error: "Email уже занят" });
-        }
-
-        // Создание нового пользователя
-        await db.execute({
-            sql: "INSERT INTO users (email, password, role) VALUES (?, ?, 'user')",
-            args: [email, password]
-        });
-
-        res.json({ success: true });
-    } catch (e) {
-        res.status(500).json({ error: e.message });
-    }
+    users[email] = { email, password, role: "user" };
+    writeJSON(USERS_FILE, users);
+    res.json({ success: true });
 });
 
 // ============================================
 // API: Вход
 // ============================================
-app.post("/api/login", async (req, res) => {
+app.post("/api/login", (req, res) => {
     const { email, password } = req.body;
 
-    // Проверка администратора
     if (email === ADMIN_EMAIL && password === ADMIN_PASS) {
-        return res.json({
-            success: true,
-            user: { email, role: "admin" }
-        });
+        return res.json({ success: true, user: { email, role: "admin" } });
     }
 
-    if (!db) {
-        return res.status(500).json({ error: "База данных не настроена" });
-    }
+    const users = readJSON(USERS_FILE);
+    const u = users[email];
+    if (!u) return res.status(401).json({ error: "Аккаунт не найден" });
+    if (u.password !== password) return res.status(401).json({ error: "Неверный пароль" });
 
-    try {
-        const u = await db.execute({
-            sql: "SELECT * FROM users WHERE email = ?",
-            args: [email]
-        });
-
-        if (u.rows.length === 0) {
-            return res.status(401).json({ error: "Аккаунт не найден" });
-        }
-
-        if (u.rows[0].password !== password) {
-            return res.status(401).json({ error: "Неверный пароль" });
-        }
-
-        res.json({
-            success: true,
-            user: {
-                email: u.rows[0].email,
-                role: u.rows[0].role
-            }
-        });
-    } catch (e) {
-        res.status(500).json({ error: e.message });
-    }
+    res.json({ success: true, user: { email: u.email, role: u.role } });
 });
 
 // ============================================
-// API: Сохранение аудио (В ФАЙЛ, а не в БД)
+// API: Сохранение аудио В ФАЙЛ
 // ============================================
-app.post("/api/save-audio", async (req, res) => {
+app.post("/api/save-audio", (req, res) => {
     const { key, audioBase64, role } = req.body;
 
-    console.log("🔍 Получен запрос на сохранение аудио:");
-    console.log("   Ключ:", key);
-    console.log("   Роль:", role);
-    console.log("   Тип audioBase64:", typeof audioBase64);
-    console.log("   Длина:", audioBase64 ? audioBase64.length : 0);
-    if (audioBase64) {
-        console.log("   Начало строки:", audioBase64.substring(0, 80));
+    console.log("🔍 save-audio:", { key, role, type: typeof audioBase64, len: audioBase64?.length });
+
+    if (role !== "admin") return res.status(403).json({ error: "Только администратор" });
+    if (!audioBase64 || typeof audioBase64 !== "string") {
+        return res.status(400).json({ error: "Аудио не передано" });
     }
 
-    if (role !== "admin") {
-        return res.status(403).json({ error: "Только администратор" });
+    // Парсим data URL. Допускаем варианты:
+    // data:audio/webm;base64,XXXX
+    // data:audio/webm;codecs=opus;base64,XXXX
+    // data:;base64,XXXX
+    const match = audioBase64.match(/^data:([^,]*?)?base64,(.+)$/);
+    if (!match) {
+        console.error("❌ Не распознан data URL. Начало:", audioBase64.substring(0, 100));
+        return res.status(400).json({ error: "Неверный формат аудио. Ожидался data URL." });
     }
 
-    if (!db) {
-        return res.status(500).json({ error: "База данных не настроена" });
-    }
-
-    if (!audioBase64 || typeof audioBase64 !== 'string') {
-        return res.status(400).json({ error: "Аудио не передано или имеет неверный тип" });
-    }
+    const mimePart = match[1] || "";
+    const base64Data = match[2];
 
     try {
-        // Парсим data URL: "data:audio/webm;base64,XXXX..." или "data:;base64,XXXX..."
-        const match = audioBase64.match(/^data:([^;]*)?;?base64,(.+)$/);
-        if (!match) {
-            console.error("❌ Regex не совпал. Первые 100 символов:", audioBase64.substring(0, 100));
-            return res.status(400).json({ error: "Неверный формат аудио. Ожидался data URL." });
-        }
-
-        const mimeType = match[1] || "audio/webm";
-        const base64Data = match[2];
         const buffer = Buffer.from(base64Data, "base64");
+        if (buffer.length === 0) return res.status(400).json({ error: "Аудио пустое" });
 
-        console.log(`   MIME тип: ${mimeType}, размер: ${buffer.length} байт`);
+        let ext = ".webm";
+        if (mimePart.includes("mp4")) ext = ".mp4";
+        else if (mimePart.includes("wav")) ext = ".wav";
+        else if (mimePart.includes("ogg")) ext = ".ogg";
 
-        // Определяем расширение
-        const ext = mimeType.includes("webm") ? ".webm" 
-                  : mimeType.includes("mp4") ? ".mp4" 
-                  : mimeType.includes("wav") ? ".wav" 
-                  : ".bin";
-        
-        // Безопасное имя файла (убираем спецсимволы)
         const safeKey = key.replace(/[^a-zA-Z0-9_\-]/g, "_");
         const fileName = `${safeKey}${ext}`;
         const filePath = path.join(AUDIO_DIR, fileName);
 
-        // Сохраняем файл на диск
         fs.writeFileSync(filePath, buffer);
-        console.log(`💾 Сохранено: ${filePath}`);
+        console.log(`💾 Файл сохранён: ${fileName} (${buffer.length} байт)`);
 
-        // В базе храним только короткий путь к файлу
-        const relativePath = `audio/${fileName}`;
-        await db.execute({
-            sql: `INSERT INTO bobor_audio (audio_key, audio_data) 
-                  VALUES (?, ?) 
-                  ON CONFLICT(audio_key) 
-                  DO UPDATE SET audio_data = ?`,
-            args: [key, relativePath, relativePath]
-        });
+        // Обновляем индекс
+        const index = readJSON(AUDIO_INDEX_FILE);
+        index[key] = {
+            file: fileName,
+            mime: mimePart || "audio/webm",
+            size: buffer.length,
+            updated: new Date().toISOString()
+        };
+        writeJSON(AUDIO_INDEX_FILE, index);
 
-        console.log(`✅ Запись в БД: ${key} -> ${relativePath}`);
-        res.json({ success: true, path: relativePath, size: buffer.length });
+        res.json({ success: true, file: fileName, size: buffer.length });
     } catch (e) {
-        console.error("❌ Ошибка сохранения аудио:", e.message);
+        console.error("❌ Ошибка сохранения:", e.message);
         res.status(500).json({ error: e.message });
     }
 });
 
 // ============================================
-// API: Получение аудио (ИЗ ФАЙЛА)
+// API: Получение аудио ИЗ ФАЙЛА
 // ============================================
-app.get("/api/get-audio/:key", async (req, res) => {
-    if (!db) {
+app.get("/api/get-audio/:key", (req, res) => {
+    const key = req.params.key;
+    const index = readJSON(AUDIO_INDEX_FILE);
+    const entry = index[key];
+
+    if (!entry) return res.json({ audio: null });
+
+    const filePath = path.join(AUDIO_DIR, entry.file);
+    if (!fs.existsSync(filePath)) {
+        console.log("⚠️ Файл потерян:", filePath);
         return res.json({ audio: null });
     }
 
     try {
-        const r = await db.execute({
-            sql: "SELECT audio_data FROM bobor_audio WHERE audio_key = ?",
-            args: [req.params.key]
-        });
-
-        if (r.rows.length === 0) {
-            return res.json({ audio: null });
-        }
-
-        const dbValue = r.rows[0].audio_data;
-
-        // Если в базе лежит путь к файлу (формат: "audio/ключ.webm")
-        if (dbValue && dbValue.startsWith("audio/")) {
-            const fullPath = path.join(__dirname, dbValue);
-            
-            if (!fs.existsSync(fullPath)) {
-                console.log(`⚠️ Файл не найден: ${fullPath}`);
-                return res.json({ audio: null });
-            }
-
-            const buffer = fs.readFileSync(fullPath);
-            const base64 = buffer.toString("base64");
-            
-            // Определяем MIME по расширению файла
-            const ext = path.extname(fullPath).toLowerCase();
-            const mimeMap = { 
-                ".webm": "audio/webm", 
-                ".mp4": "audio/mp4", 
-                ".wav": "audio/wav" 
-            };
-            const mime = mimeMap[ext] || "audio/webm";
-
-            return res.json({ audio: `data:${mime};base64,${base64}` });
-        }
-        
-        // Fallback: если там вдруг остался старый base64 напрямую
-        return res.json({ audio: dbValue });
-
+        const buffer = fs.readFileSync(filePath);
+        const base64 = buffer.toString("base64");
+        res.json({ audio: `data:${entry.mime};base64,${base64}` });
     } catch (e) {
-        console.error("❌ Ошибка получения аудио:", e.message);
-        res.status(500).json({ error: e.message });
+        console.error("❌ Ошибка чтения:", e.message);
+        res.json({ audio: null });
     }
 });
 
 // ============================================
-// API: Удаление аудио (файл + запись в БД)
+// API: Удаление аудио
 // ============================================
-app.post("/api/delete-audio", async (req, res) => {
+app.post("/api/delete-audio", (req, res) => {
     const { key, role } = req.body;
-
-    if (role !== "admin") {
-        return res.status(403).json({ error: "Только администратор" });
-    }
-
-    if (!db) {
-        return res.json({ success: false });
-    }
+    if (role !== "admin") return res.status(403).json({ error: "Только администратор" });
 
     try {
-        // Сначала получаем путь к файлу из БД
-        const r = await db.execute({
-            sql: "SELECT audio_data FROM bobor_audio WHERE audio_key = ?",
-            args: [key]
-        });
-
-        if (r.rows.length > 0) {
-            const dbValue = r.rows[0].audio_data;
-            
-            // Если это путь к файлу — удаляем файл с диска
-            if (dbValue && dbValue.startsWith("audio/")) {
-                const fullPath = path.join(__dirname, dbValue);
-                if (fs.existsSync(fullPath)) {
-                    fs.unlinkSync(fullPath);
-                    console.log(`🗑️ Удалён файл: ${fullPath}`);
-                }
-            }
+        const index = readJSON(AUDIO_INDEX_FILE);
+        const entry = index[key];
+        if (entry) {
+            const filePath = path.join(AUDIO_DIR, entry.file);
+            if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+            delete index[key];
+            writeJSON(AUDIO_INDEX_FILE, index);
+            console.log("🗑️ Удалено:", key);
         }
-
-        // Удаляем запись из БД
-        await db.execute({
-            sql: "DELETE FROM bobor_audio WHERE audio_key = ?",
-            args: [key]
-        });
-
         res.json({ success: true });
     } catch (e) {
-        console.error("❌ Ошибка удаления аудио:", e.message);
         res.status(500).json({ error: e.message });
     }
 });
@@ -361,38 +212,32 @@ app.post("/api/delete-audio", async (req, res) => {
 // ============================================
 // API: Синхронизация прогресса
 // ============================================
-app.post("/api/sync-progress", async (req, res) => {
+app.post("/api/sync-progress", (req, res) => {
     const { username, xp, streak, medals, last_daily, units_done, lessons_today } = req.body;
+    if (!username) return res.status(400).json({ error: "Нет username" });
 
-    if (!db) {
-        return res.json({ success: false });
-    }
+    const progress = readJSON(PROGRESS_FILE);
+    progress[username] = {
+        xp, streak, medals, last_daily, units_done, lessons_today,
+        updated: new Date().toISOString()
+    };
+    writeJSON(PROGRESS_FILE, progress);
+    res.json({ success: true });
+});
 
-    try {
-        await db.execute({
-            sql: `INSERT INTO bobor_progress 
-                  (username, xp, streak, medals, last_daily, units_done, lessons_today) 
-                  VALUES (?, ?, ?, ?, ?, ?, ?) 
-                  ON CONFLICT(username) 
-                  DO UPDATE SET xp=?, streak=?, medals=?, last_daily=?, units_done=?, lessons_today=?`,
-            args: [
-                username, xp, streak,
-                JSON.stringify(medals),
-                last_daily,
-                JSON.stringify(units_done),
-                lessons_today,
-                xp, streak,
-                JSON.stringify(medals),
-                last_daily,
-                JSON.stringify(units_done),
-                lessons_today
-            ]
-        });
-
-        res.json({ success: true });
-    } catch (e) {
-        res.status(500).json({ error: e.message });
-    }
+// ============================================
+// API: Получение прогресса (для ранкеда)
+// ============================================
+app.get("/api/leaderboard", (req, res) => {
+    const progress = readJSON(PROGRESS_FILE);
+    const list = Object.entries(progress)
+        .map(([username, data]) => ({
+            n: username.split("@")[0],
+            x: data.xp || 0
+        }))
+        .sort((a, b) => b.x - a.x)
+        .slice(0, 20);
+    res.json({ leaders: list });
 });
 
 // ============================================
@@ -408,11 +253,7 @@ if (process.env.GEMINI_API_KEY) {
 
 app.post("/api/chat", async (req, res) => {
     const { message, course } = req.body;
-
-    if (!openai) {
-        return res.json({ reply: "Офлайн режим" });
-    }
-
+    if (!openai) return res.json({ reply: "Офлайн режим" });
     try {
         const completion = await openai.chat.completions.create({
             model: "gemini-2.0-flash",
@@ -422,7 +263,6 @@ app.post("/api/chat", async (req, res) => {
             ],
             max_tokens: 100
         });
-
         res.json({ reply: completion.choices[0].message.content });
     } catch (e) {
         res.json({ reply: "Ошибка AI" });
@@ -430,16 +270,13 @@ app.post("/api/chat", async (req, res) => {
 });
 
 // ============================================
-// Обработка всех остальных запросов — отдаём index.html
+// SPA fallback
 // ============================================
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// ============================================
-// Запуск сервера
-// ============================================
 app.listen(PORT, () => {
     console.log(`🦫 Сервер запущен на порту ${PORT}`);
-    console.log(`📁 Аудио сохраняются в: ${AUDIO_DIR}`);
+    console.log(`📁 Хранилище: ${DATA_DIR}`);
 });
